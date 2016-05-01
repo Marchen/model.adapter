@@ -1,4 +1,10 @@
 # Test for gam in gam package.
 test__all(
-	substitute(gam(Sepal.Length ~ Petal.Length, data = iris)), "gam", "gam"
+	call = substitute(
+		gam(Sepal.Length ~ Petal.Length, data = iris, family = gaussian)
+	),
+	function.name = "gam",
+	package.name = "gam",
+	family = "gaussian"
 )
+

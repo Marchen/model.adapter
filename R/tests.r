@@ -29,23 +29,78 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 
 
 #-------------------------------------------------------------------------------
-#' Run all available test of model.adapter
+#'	Test for family() function.
 #'
-#' @param call call for a function to test.
-#' @param function.name character literal of function name to test.
+#'	@export
+#'	@inheritParams test__all
+#'	@inheritParams test__initialize
 #'
-#' @export
+#'	@examples
+#'	test__family(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
+#'		"lm", family = "gaussian"
+#'	)
+#-------------------------------------------------------------------------------
+test__family <- function(
+	call, function.name, family = NULL, env = parent.frame()
+) {
+	class.name <- get.class.name(function.name)
+	test_that(
+		sprintf("Get family of model.adapter.%s by call", class.name),
+		{
+			adapter <- model.adapter(call)
+			f <- adapter$family()
+			if (!is.null(f)) {
+				f <- format.family(f, "character")
+				expect_equal(f, family)
+			} else {
+				expect_null(f)
+			}
+		}
+	)
+	test_that(
+		sprintf("Get family of model.adapter.%s by object", class.name),
+		{
+			object <- eval(call, envir = env)
+			adapter <- model.adapter(object)
+			f <- adapter$family()
+			if (!is.null(f)) {
+				f <- format.family(f, "character")
+				expect_equal(f, family)
+			} else {
+				expect_null(f)
+			}
+		}
+	)
+}
+
+
+
+#-------------------------------------------------------------------------------
+#'	Run all available test of model.adapter
 #'
-#' @examples
-#'	test__all(substitute(lm(Sepal.Length ~ ., data = iris)), "lm")
+#'	@param call call for a function to test.
+#'	@param function.name character literal of function name to test.
+#'	@param family a character literal of family name.
+#'
+#'	@export
+#'
+#'	@examples
+#'	test__all(
+#'		substitute(glm(Sepal.Length ~ ., data = iris, family = gaussian)),
+#'		function.name = "lm",
+#'		family = "gaussian"
+#'	)
 #-------------------------------------------------------------------------------
 test__all <- function(
-	call, function.name, package.name = find.package(function.name)
+	call, function.name, package.name = find.package(function.name),
+	family = NULL
 ) {
 	# Load package
 	library(package.name, character.only = TRUE)
 	# Run tests
 	test__initialize(call, function.name, parent.frame())
+	test__family(call, function.name, family, parent.frame())
 	# Unload package
 	if (package.name != "stats") {
 		unloadNamespace(package.name)

@@ -1,4 +1,7 @@
 # Test for glm
 test__all(
-	substitute(glm(Sepal.Length ~ ., data = iris)), "glm"
+	call = substitute(glm(Sepal.Length ~ ., data = iris, family = gaussian)),
+	function.name = "glm",
+	family = "gaussian"
 )
+

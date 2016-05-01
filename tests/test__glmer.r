@@ -1,8 +1,9 @@
 # Test for glmer
 test__all(
-	substitute(
+	call = substitute(
 		glmer(Sepal.Length ~ . + (1 | Species), data = iris, family = Gamma)
 	),
-	"glmer"
+	function.name = "glmer",
+	family = "Gamma"
 )
 

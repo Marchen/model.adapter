@@ -1,12 +1,13 @@
 # Test for glmmML
 test__all(
-	substitute(
+	call = substitute(
 		glmmML(
 			as.integer(Sepal.Length) ~ ., data = iris, family = poisson,
 			cluster = Species
 		)
 	),
-	"glmmML"
+	function.name = "glmmML",
+	family = "poisson"
 )
 
 
