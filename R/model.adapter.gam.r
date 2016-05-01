@@ -1,14 +1,13 @@
-#-------------------------------------------------------------------------------
+ï»¿#-------------------------------------------------------------------------------
 #'	model.adapter class for gam
 #'
 #'	This reference class contains methods for \code{\link[mgcv]{gam}} in 
 #'	\emph{mgcv} package and \code{\link[gam]{gam}} in \emph{gam} package.
 #'	Following methods are overriden.
 #-------------------------------------------------------------------------------
-#	gamŠÖ”—p‚Ìmodel.adapterƒIƒuƒWƒFƒNƒg‚ÌƒWƒFƒlƒŒ[ƒ^[B
+#	gamé–¢æ•°ç”¨ã®model.adapterã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ãƒ¼ã€‚
 #-------------------------------------------------------------------------------
 model.adapter.gam <- setRefClass(
 	"model.adapter.gam", contains = "model.adapter"
 )
-
 

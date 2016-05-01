@@ -1,13 +1,15 @@
-#-------------------------------------------------------------------------------
+ï»¿#-------------------------------------------------------------------------------
 #'	model.adapter class for gbm
 #'
 #'	This reference class contains methods for \code{\link[gbm]{gbm}} in 
 #'	\emph{gbm} package.
 #'	Following methods are overriden.
 #-------------------------------------------------------------------------------
-#	gbmŠÖ”—p‚Ìmodel.adapterƒIƒuƒWƒFƒNƒg‚ÌƒWƒFƒlƒŒ[ƒ^[B
+#	gbmé–¢æ•°ç”¨ã®model.adapterã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¸ã‚§ãƒãƒ¬ãƒ¼ã‚¿ãƒ¼ã€‚
 #-------------------------------------------------------------------------------
 model.adapter.gbm <- setRefClass(
 	"model.adapter.gbm", contains = "model.adapter"
 )
+
+
 
