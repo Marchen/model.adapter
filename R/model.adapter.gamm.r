@@ -7,7 +7,7 @@
 #-------------------------------------------------------------------------------
 #	gamm関数用のmodel.adapterオブジェクトのジェネレーター。
 #-------------------------------------------------------------------------------
-.model.adapter.gamm <- setRefClass(
+model.adapter.gamm <- setRefClass(
 	"model.adapter.gamm", contains = "model.adapter"
 )
 
