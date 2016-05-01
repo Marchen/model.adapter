@@ -32,7 +32,7 @@ model.adapter <- function(x) {
 	original.call <- substitute(x)
 	if (is.call(original.call)) {
 	   	fun.name <- as.character(original.call[1])
-	   	code <- sprintf(".model.adapter.%s$new()", fun.name)
+	   	code <- sprintf("model.adapter.%s$new()", fun.name)
 	   	object <- eval(parse(text = code))
 	   	return(object)
 	}
