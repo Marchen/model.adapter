@@ -1,4 +1,4 @@
-﻿#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #'	model.adapter class for ranger
 #'
 #'	This reference class contains methods for \code{\link[ranger]{ranger}} in 

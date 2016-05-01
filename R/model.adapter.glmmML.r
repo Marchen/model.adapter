@@ -1,4 +1,4 @@
-﻿#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #'	model.adapter class for glmmML
 #'
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in 

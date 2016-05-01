@@ -1,4 +1,4 @@
-﻿#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #'	model.adapter class for cforest
 #'
 #'	This reference class contains methods for \code{\link[party]{cforest}} in 
