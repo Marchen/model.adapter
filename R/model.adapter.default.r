@@ -40,3 +40,38 @@ model.adapter <- function(x) {
 }
 
 
+#-------------------------------------------------------------------------------
+#'	Abstraction layer for model functions/objects.
+#'
+#'	This class encapsulates differences in specifications of statistical/machine
+#'	learning functions and model objects to provide standard way to access 
+#'	data and methods of models. To add support for a new modeling function,
+#'	new generator object of a reference class inheriting this class must be 
+#'	implimented and methods that cannot work well with the model should
+#'	be overriden.
+#'
+#'	@field call
+#'		a call for modeling function used for initialization of the class.
+#'	@field object
+#'		an object of a model used for initialization of the class.
+#'	@export
+#-------------------------------------------------------------------------------
+#	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
+#	ジェネレーターオブジェクト。
+#	この基底クラスを継承して、様々なモデルに対応させる。
+#
+#		Fields:
+#			call: 初期化に使ったcall。
+#			object: 初期化に使ったモデルの結果オブジェクト。
+#
+#		Methods:
+#			以下を参照。
+#-------------------------------------------------------------------------------
+model.adapter.default <- setRefClass(
+	"model.adapter",
+	fields = list(
+		call = "call",
+		object = "object"
+	)
+)
+
