@@ -1,4 +1,5 @@
 # Test for svm
 test__all(
-	substitute(svm(Sepal.Length ~ ., data = iris)), "svm"
+	call = substitute(svm(Sepal.Length ~ ., data = iris)),
+	function.name = "svm"
 )

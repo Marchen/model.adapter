@@ -1,4 +1,5 @@
 # Test for rpart
 test__all(
-	substitute(rpart(Sepal.Length ~ ., data = iris)), "rpart"
+	call = substitute(rpart(Sepal.Length ~ ., data = iris)),
+	function.name = "rpart"
 )

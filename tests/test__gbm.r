@@ -1,4 +1,5 @@
 # Test for gbm.
 test__all(
-	substitute(gbm(Sepal.Length ~ Petal.Length, data = iris)), "gbm"
+	call = substitute(gbm(Sepal.Length ~ Petal.Length, data = iris)),
+	function.name = "gbm"
 )

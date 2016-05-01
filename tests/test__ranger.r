@@ -1,4 +1,5 @@
 # Test for ranger
 test__all(
-	substitute(ranger(Sepal.Length ~ ., data = iris)), "ranger"
+	call = substitute(ranger(Sepal.Length ~ ., data = iris)),
+	function.name = "ranger"
 )

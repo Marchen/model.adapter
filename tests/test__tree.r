@@ -1,4 +1,5 @@
 # Test for tree
 test__all(
-	substitute(tree(Sepal.Length ~ ., data = iris)), "tree"
+	call = substitute(tree(Sepal.Length ~ ., data = iris)),
+	function.name = "tree"
 )

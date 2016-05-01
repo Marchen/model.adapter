@@ -1,5 +1,5 @@
 # Test for randomForest
 test__all(
-	substitute(randomForest(Sepal.Length ~ ., data = iris)),
-	"randomForest"
+	call = substitute(randomForest(Sepal.Length ~ ., data = iris)),
+	function.name = "randomForest"
 )

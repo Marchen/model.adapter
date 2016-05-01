@@ -1,4 +1,5 @@
 # Test for lm
 test__all(
-	substitute(lm(Sepal.Length ~ ., data = iris)), "lm"
+	call = substitute(lm(Sepal.Length ~ ., data = iris)),
+	function.name = "lm"
 )
