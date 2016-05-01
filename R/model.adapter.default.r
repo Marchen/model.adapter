@@ -137,7 +137,15 @@ model.adapter.default$methods(
 		if (!is.null(info$call)) {
 			return(info$call$family)
 		} else {
-			return(info$object$family)
+			if (isS4(info$object)) {
+				if ("family" %in% slotNames(info$object)) {
+					return(info$object@family)
+				} else {
+					return(NULL)
+				}
+			} else {
+				return(info$object$family)
+			}
 		}
 	}
 )
