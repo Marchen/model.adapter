@@ -29,7 +29,11 @@
 #
 #-------------------------------------------------------------------------------
 model.adapter <- function(x) {
-	original.call <- substitute(x)
+	if (!is.call(x)) {
+	   	original.call <- substitute(x)
+	} else {
+	   	original.call <- x
+	}
 	if (is.call(original.call)) {
 	   	fun.name <- as.character(original.call[1])
 	   	code <- sprintf("model.adapter.%s$new()", fun.name)
