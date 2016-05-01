@@ -30,9 +30,9 @@
 #-------------------------------------------------------------------------------
 model.adapter <- function(x) {
 	if (!is.call(x)) {
-	   	original.call <- substitute(x)
+		original.call <- substitute(x)
 	} else {
-	   	original.call <- x
+		original.call <- x
 	}
 	if (is.call(original.call)) {
 		fun.name <- as.character(original.call[1])
