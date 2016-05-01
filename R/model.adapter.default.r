@@ -84,6 +84,29 @@ model.adapter.default <- setRefClass(
 
 
 #-------------------------------------------------------------------------------
+#	コンストラクタ
+#	Args:
+#		x: モデルオブジェクトもしくはモデルの呼び出しを表すcall。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	initialize = function(x) {
+		"Initialize class
+		@param x model object or function call"
+		if (!is.call(x)) {
+		   	original.call <- substitute(x)
+		} else {
+		   	original.call <- x
+		}
+		if (is.call(original.call)) {
+		   	call <<- original.call
+		} else {
+			object.data <<- unclass(x)
+			class.name <<- class(x)
+		}
+	}
+)
+
+
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
