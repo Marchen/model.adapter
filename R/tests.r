@@ -1,12 +1,15 @@
 library(testthat)
 
 #-------------------------------------------------------------------------------
-#' Test initialization of model.adapter
+#'	Test for initialization of model.adapter
 #'
-#' @param call call for a function for testing.
-#' @param function.name character literal of function name.
-#' @param env environment in which call is evaluated.
+#'	@param env environment in which call is evaluated.
+#'	@inheritParams test__all
 #'
+#'	@example
+#'	test__initialize(lm(Sepal.Length ~ ., data = iris), "lm")
+#'	object <- lm(Sepal.Length ~ ., data = iris)
+#'	test__initialize(object, "lm")
 #-------------------------------------------------------------------------------
 test__initialize <- function(call, function.name, env = parent.frame()) {
 	class.name <- get.class.name(function.name)
