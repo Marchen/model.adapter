@@ -9,24 +9,20 @@ library(testthat)
 #'
 #-------------------------------------------------------------------------------
 test__initialize <- function(call, function.name, env = parent.frame()) {
+	class.name <- get.class.name(function.name)
 	test_that(
-		sprintf("Initialization of model.adapter.%s by call", function.name), {
+		sprintf("Initialization of model.adapter.%s by call", class.name),
+		{
 			adapter <- model.adapter(call)
-			expect_is(
-				adapter,
-				sprintf("model.adapter.%s", get.class.name(function.name))
-			)
+			expect_is(adapter, sprintf("model.adapter.%s", class.name))
 		}
 	)
 	test_that(
-		sprintf("Initialization of model.adapter.%s by object", function.name),
+		sprintf("Initialization of model.adapter.%s by object", class.name),
 		{
-	 		object <- eval(call, envir = env)
-	   		adapter <- model.adapter(object)
-			expect_is(
-				adapter,
-				sprintf("model.adapter.%s", get.class.name(function.name))
-			)
+			object <- eval(call, envir = env)
+			adapter <- model.adapter(object)
+			expect_is(adapter, sprintf("model.adapter.%s", class.name))
 		}
 	)
 }
