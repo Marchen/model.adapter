@@ -58,6 +58,8 @@ model.adapter <- function(x) {
 #'		a call for modeling function used for initialization of the class.
 #'	@field object.data
 #'		an object of a model used for initialization of the class.
+#'	@field class.name
+#'		class name of the original model object.
 #'	@export
 #-------------------------------------------------------------------------------
 #	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
@@ -67,6 +69,7 @@ model.adapter <- function(x) {
 #		Fields:
 #			call: 初期化に使ったcall。
 #			object.data: 初期化に使ったモデルの結果オブジェクト。
+#			class.name: モデルオブジェクトのクラス名。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
@@ -74,7 +77,8 @@ model.adapter.default <- setRefClass(
 	"model.adapter",
 	fields = list(
 		call = "call",
-		object.data = "list"
+		object.data = "list",
+		class.name = "character"
 	)
 )
 
