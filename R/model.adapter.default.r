@@ -54,12 +54,12 @@ model.adapter <- function(x) {
 #'	implimented and methods that cannot work well with the model should
 #'	be overriden.
 #'
-#'	@field call
+#'	@field info
+#'		a list of following information used for initialization.
+#'		\emph{call}: 
 #'		a call for modeling function used for initialization of the class.
-#'	@field object.data
+#'		\emph{object}:
 #'		an object of a model used for initialization of the class.
-#'	@field class.name
-#'		class name of the original model object.
 #'	@export
 #-------------------------------------------------------------------------------
 #	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
@@ -67,18 +67,16 @@ model.adapter <- function(x) {
 #	この基底クラスを継承して、様々なモデルに対応させる。
 #
 #		Fields:
-#			call: 初期化に使ったcall。
-#			object.data: 初期化に使ったモデルの結果オブジェクト。
-#			class.name: モデルオブジェクトのクラス名。
+#			info: 初期化に使った情報を格納。
+#			info$call: 初期化に使ったcall。
+#			info$object: 初期化に使ったオブジェクト。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
 model.adapter.default <- setRefClass(
 	"model.adapter",
 	fields = list(
-		call = "call",
-		object.data = "list",
-		class.name = "character"
+		info = "list"
 	)
 )
 
@@ -91,17 +89,16 @@ model.adapter.default <- setRefClass(
 model.adapter.default$methods(
 	initialize = function(x) {
 		"Initialize class
-		@param x model object or function call"
+			@param x model object or function call"
 		if (!is.call(x)) {
-		   	original.call <- substitute(x)
+			original.call <- substitute(x)
 		} else {
-		   	original.call <- x
+			original.call <- x
 		}
 		if (is.call(original.call)) {
-		   	call <<- original.call
+			info$call <<- original.call
 		} else {
-			object.data <<- unclass(x)
-			class.name <<- class(x)
+			info$object <<- x
 		}
 	}
 )
