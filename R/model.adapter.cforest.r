@@ -7,8 +7,8 @@
 #-------------------------------------------------------------------------------
 #	cforest関数用のmodel.adapterオブジェクトのジェネレーター。
 #-------------------------------------------------------------------------------
-model.adapter.cforest <- setRefClass(
-	"model.adapter.cforest", contains = "model.adapter"
+model.adapter.RandomForest <- setRefClass(
+	"model.adapter.RandomForest", contains = "model.adapter"
 )
 
 

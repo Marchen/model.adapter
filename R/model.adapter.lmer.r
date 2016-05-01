@@ -7,7 +7,9 @@
 #-------------------------------------------------------------------------------
 #	lmer関数用のmodel.adapterオブジェクトのジェネレーター。
 #-------------------------------------------------------------------------------
-model.adapter.lmer <- setRefClass(
-	"model.adapter.lmer", contains = "model.adapter"
+model.adapter.lmerMod <- setRefClass(
+	"model.adapter.lmerMod", contains = "model.adapter"
+)
+
 )
 

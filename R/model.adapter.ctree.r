@@ -7,8 +7,8 @@
 #-------------------------------------------------------------------------------
 #	ctree関数用のmodel.adapterオブジェクトのジェネレーター。
 #-------------------------------------------------------------------------------
-model.adapter.ctree <- setRefClass(
-	"model.adapter.ctree", contains = "model.adapter"
+model.adapter.BinaryTree <- setRefClass(
+	"model.adapter.BinaryTree", contains = "model.adapter"
 )
 
 

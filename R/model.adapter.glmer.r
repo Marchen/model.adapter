@@ -7,15 +7,15 @@
 #-------------------------------------------------------------------------------
 #	glmer関数用のmodel.adapterオブジェクトのジェネレーター。
 #-------------------------------------------------------------------------------
-model.adapter.glmer <- setRefClass(
-	"model.adapter.glmer", contains = "model.adapter"
+model.adapter.glmerMod <- setRefClass(
+	"model.adapter.glmerMod", contains = "model.adapter"
 )
 
 
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.glmer$methods(
+model.adapter.glmerMod$methods(
 	family = function() {
 	   	"Get family. If family was not specified, return NULL."
 	   	if (!is.null(call)) {
