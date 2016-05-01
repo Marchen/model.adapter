@@ -35,10 +35,10 @@ model.adapter <- function(x) {
 	   	original.call <- x
 	}
 	if (is.call(original.call)) {
-	   	fun.name <- as.character(original.call[1])
-	   	code <- sprintf("model.adapter.%s(x)", fun.name)
-	   	object <- eval(parse(text = code))
-	   	return(object)
+		fun.name <- as.character(original.call[1])
+		code <- sprintf("model.adapter.%s(original.call)", fun.name)
+		object <- eval(parse(text = code))
+		return(object)
 	}
 	UseMethod("model.adapter")
 }
