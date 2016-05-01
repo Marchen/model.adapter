@@ -109,13 +109,8 @@ model.adapter.default$methods(
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
 	object = function() {
-		"Return model object"
-		if (is.null(object.data)) {
-		   	return(NULL)
-		}
-		x <- object.data
-		class(x) <- class.name
-		return(x)
+		"Return model object."
+		return(info$object)
 	}
 )
 
