@@ -71,7 +71,7 @@ model.adapter.default <- setRefClass(
 	"model.adapter",
 	fields = list(
 		call = "call",
-		object = "object"
+		object = "list"
 	)
 )
 
