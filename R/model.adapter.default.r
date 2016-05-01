@@ -128,17 +128,16 @@ model.adapter.default$methods(
 )
 
 
-
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
 	family = function() {
 		"Get family. If family was not specified, return NULL."
-		if (!is.null(call)) {
-			return(call$family)
+		if (!is.null(info$call)) {
+			return(info$call$family)
 		} else {
-			return(object$family)
+			return(info$object$family)
 		}
 	}
 )
