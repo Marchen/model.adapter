@@ -12,3 +12,18 @@ model.adapter.glmmML <- setRefClass(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデルのfamilyを取得する。
+#-------------------------------------------------------------------------------
+model.adapter.glmmML$methods(
+	family = function() {
+	   	"Get family. If family was not specified, return NULL."
+	   	if (!is.null(call)) {
+	   		return(call$family)
+	   	} else {
+	   		return(object$call$family)
+	   	}
+	}
+)
+
+

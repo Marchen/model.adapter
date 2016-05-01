@@ -75,3 +75,19 @@ model.adapter.default <- setRefClass(
 	)
 )
 
+
+#-------------------------------------------------------------------------------
+#	モデルのfamilyを取得する。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	family = function() {
+		"Get family. If family was not specified, return NULL."
+		if (!is.null(call)) {
+		   	return(call$family)
+		} else {
+		   	return(object$family)
+		}
+	}
+)
+
+
