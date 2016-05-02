@@ -133,7 +133,9 @@ model.adapter.default$methods(
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
 	family = function() {
-		"Get family. If family was not specified, return NULL."
+		"
+		Get family. If family was not specified, return NULL.
+		"
 		if (!is.null(info$call)) {
 			return(info$call$family)
 		} else {

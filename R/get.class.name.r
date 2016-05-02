@@ -8,13 +8,13 @@
 #	Value:
 #		その関数を実行したときに出来るオブジェクトのクラス名を表す文字列。
 #-------------------------------------------------------------------------------
-#' Find class name of a model object from function name
+#'	(Internal) Find class name of a model object from function name
 #'
-#' @param function.name a character literal of function name
+#'	@param function.name a character literal of function name
 #'
-#' @return a character literal of class name
+#'	@return a character literal of class name
 #'
-#' @examples
+#'	@examples
 #'	get.class.name("cforest")
 #-------------------------------------------------------------------------------
 get.class.name <- function(function.name){
@@ -30,3 +30,4 @@ get.class.name <- function(function.name){
 	}
 	return(class.name)
 }
+
