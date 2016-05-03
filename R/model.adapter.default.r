@@ -173,5 +173,6 @@ model.adapter.default$methods(
 	}
 )
 
+model.adapter.default$lock("src")
 model.adapter.default$lock("family")
 
