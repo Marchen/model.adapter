@@ -29,7 +29,7 @@
 #
 #-------------------------------------------------------------------------------
 model.adapter <- function(x) {
-	if (!is.call(x)) {
+	if (is.object(x)) {
 		original.call <- substitute(x)
 	} else {
 		original.call <- x
