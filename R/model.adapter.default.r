@@ -119,7 +119,7 @@ model.adapter.default$methods(
 			src$object <<- x
 		}
 		# Initialize family field.
-		family.name <- .self$get.family()
+		family.name <- .self$get.family(x)
 		if (!is.null(family.name)) {
 		   	family <<- format.family(family.name, "character")
 		}
@@ -151,12 +151,33 @@ model.adapter.default$methods(
 
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
+#	Args:
+#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
-	get.family = function() {
+	get.family = function(x) {
 		"
-		Get family. If family was not specified, return NULL.
+		Get family from call or model object.
+		@param x call or model object.
+		@return family of the model. If family was not specified, return NULL.
 		"
+		if (is.call(x)) {
+		   	return(x$family)
+		} else {
+		   	if (isS4(x)) {
+		   		if ("family" %in% slotNames(x)) {
+		   			return(src$object@family)
+		   		} else {
+		   			return(NULL)
+		   		}
+		   	} else {
+		   		return(x$family)
+		   	}
+		}
+	}
+)
+
+
 		if (!is.null(src$call)) {
 			return(src$call$family)
 		} else {

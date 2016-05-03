@@ -16,12 +16,11 @@ model.adapter.glmerMod <- setRefClass(
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.adapter.glmerMod$methods(
-	get.family = function() {
-		"Get family. If family was not specified, return NULL."
-		if (!is.null(src$call)) {
-			return(src$call$family)
+	get.family = function(x) {
+		if (is.call(x)) {
+			return(x$family)
 		} else {
-			return(src$object@call$family)
+			return(x@call$family)
 		}
 	}
 )
