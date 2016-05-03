@@ -78,7 +78,7 @@ model.adapter <- function(x) {
 model.adapter.default <- setRefClass(
 	"model.adapter",
 	fields = list(
-		info = "list"
+		src = "list"
 	)
 )
 
