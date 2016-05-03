@@ -11,4 +11,9 @@ model.adapter.RandomForest <- setRefClass(
 	"model.adapter.RandomForest", contains = "model.adapter"
 )
 
+model.adapter.RandomForest$methods(
+	get.call = function(x) {
+		return(NULL)
+	}
+)
 

@@ -178,6 +178,30 @@ model.adapter.default$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデルのcallを取得する。
+#	Args:
+#		x: はモデルオブジェクト。
+#	Value:
+#		オブジェクトを作ったcall。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	get.call = function(x) {
+		"
+		Get call from model object.
+		@param x a model object.
+		@return call by which the object is made.
+		"
+		if (isS4(x)) {
+		   	result <- x@call
+		} else {
+		   	result <- x$call
+		}
+		return(result)
+	}
+)
+
+
 		if (!is.null(src$call)) {
 			return(src$call$family)
 		} else {
