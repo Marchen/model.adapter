@@ -59,9 +59,13 @@ model.adapter <- function(x) {
 #'	@field src
 #'		a read-only list of following information used for initialization.
 #'		\emph{call}: 
-#'		a call for modeling function used for initialization of the class.
+#'			a call for modeling function used for initialization of the class.
 #'		\emph{object}:
-#'		an object of a model used for initialization of the class.
+#'			an object of a model used for initialization of the class.
+#'		When an object of model.adapter is initialized using call, src$object 
+#'		field is NULL. When an object of model.adapter is initialized using 
+#'		object, src$call field is NULL.
+#'
 #'	@export
 #-------------------------------------------------------------------------------
 #	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
@@ -70,8 +74,10 @@ model.adapter <- function(x) {
 #
 #		Fields:
 #			src: 初期化に使った情報を格納。
-#			src$call: 初期化に使ったcall。
-#			src$object: 初期化に使ったオブジェクト。
+#				src$call: 初期化に使ったcall。
+#				src$object: 初期化に使ったオブジェクト。
+#				callで初期化された場合、src$objectはNULL。
+#				objectで初期化された場合、src$callはNULL。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
@@ -91,7 +97,9 @@ model.adapter.default <- setRefClass(
 model.adapter.default$methods(
 	initialize = function(x) {
 		"Initialize class
-			@param x model object or function call"
+		@param x model object or function call 
+		"
+		# Initialize src field.
 		if (!is.call(x)) {
 			original.call <- substitute(x)
 		} else {
