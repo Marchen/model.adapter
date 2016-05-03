@@ -56,8 +56,8 @@ model.adapter <- function(x) {
 #'	implimented and methods that cannot work well with the model should
 #'	be overriden.
 #'
-#'	@field info
-#'		a list of following information used for initialization.
+#'	@field src
+#'		a read-only list of following information used for initialization.
 #'		\emph{call}: 
 #'		a call for modeling function used for initialization of the class.
 #'		\emph{object}:
@@ -69,9 +69,9 @@ model.adapter <- function(x) {
 #	この基底クラスを継承して、様々なモデルに対応させる。
 #
 #		Fields:
-#			info: 初期化に使った情報を格納。
-#			info$call: 初期化に使ったcall。
-#			info$object: 初期化に使ったオブジェクト。
+#			src: 初期化に使った情報を格納。
+#			src$call: 初期化に使ったcall。
+#			src$object: 初期化に使ったオブジェクト。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
@@ -98,9 +98,9 @@ model.adapter.default$methods(
 			original.call <- x
 		}
 		if (is.call(original.call)) {
-			info$call <<- original.call
+			src$call <<- original.call
 		} else {
-			info$object <<- x
+			src$object <<- x
 		}
 	}
 )
@@ -112,7 +112,7 @@ model.adapter.default$methods(
 model.adapter.default$methods(
 	object = function() {
 		"Return model object."
-		return(info$object)
+		return(src$object)
 	}
 )
 
@@ -123,7 +123,7 @@ model.adapter.default$methods(
 model.adapter.default$methods(
 	call = function() {
 		"Return function call."
-		return(info$call)
+		return(src$call)
 	}
 )
 
@@ -136,17 +136,17 @@ model.adapter.default$methods(
 		"
 		Get family. If family was not specified, return NULL.
 		"
-		if (!is.null(info$call)) {
-			return(info$call$family)
+		if (!is.null(src$call)) {
+			return(src$call$family)
 		} else {
-			if (isS4(info$object)) {
-				if ("family" %in% slotNames(info$object)) {
-					return(info$object@family)
+			if (isS4(src$object)) {
+				if ("family" %in% slotNames(src$object)) {
+					return(src$object@family)
 				} else {
 					return(NULL)
 				}
 			} else {
-				return(info$object$family)
+				return(src$object$family)
 			}
 		}
 	}
