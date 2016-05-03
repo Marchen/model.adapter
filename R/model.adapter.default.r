@@ -66,6 +66,10 @@ model.adapter <- function(x) {
 #'		field is NULL. When an object of model.adapter is initialized using 
 #'		object, src$call field is NULL.
 #'
+#'	@field family
+#'		a read-only character of family name. If a model which does not use
+#'		family, this field is character(0).
+#'
 #'	@export
 #-------------------------------------------------------------------------------
 #	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
@@ -78,13 +82,17 @@ model.adapter <- function(x) {
 #				src$object: 初期化に使ったオブジェクト。
 #				callで初期化された場合、src$objectはNULL。
 #				objectで初期化された場合、src$callはNULL。
+#			family:
+#				モデルのファミリーを表す文字列。
+#				familyがないモデルの場合はcharacter(0)。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
 model.adapter.default <- setRefClass(
 	"model.adapter",
 	fields = list(
-		src = "list"
+		src = "list",
+		family = "character"
 	)
 )
 
@@ -109,6 +117,11 @@ model.adapter.default$methods(
 			src$call <<- original.call
 		} else {
 			src$object <<- x
+		}
+		# Initialize family field.
+		family.name <- .self$get.family()
+		if (!is.null(family.name)) {
+		   	family <<- format.family(family.name, "character")
 		}
 	}
 )
@@ -160,4 +173,5 @@ model.adapter.default$methods(
 	}
 )
 
+model.adapter.default$lock("family")
 
