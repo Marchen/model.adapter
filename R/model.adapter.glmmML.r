@@ -18,7 +18,7 @@ model.adapter.glmmML <- setRefClass(
 model.adapter.glmmML$methods(
 	get.family = function() {
 		"Get family. If family was not specified, return NULL."
-		if (!is.null(call)) {
+		if (!is.null(src$call)) {
 			return(src$call$family)
 		} else {
 			return(src$object$call$family)
