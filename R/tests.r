@@ -52,7 +52,7 @@ test__family <- function(
 		sprintf("Get family of model.adapter.%s by call", class.name),
 		{
 			adapter <- model.adapter(call)
-			f <- adapter$family()
+			f <- adapter$get.family()
 			if (!is.null(f)) {
 				f <- format.family(f, "character")
 				expect_equal(f, family)
@@ -66,7 +66,7 @@ test__family <- function(
 		{
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
-			f <- adapter$family()
+			f <- adapter$get.family()
 			if (!is.null(f)) {
 				f <- format.family(f, "character")
 				expect_equal(f, family)

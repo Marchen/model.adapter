@@ -16,7 +16,7 @@ model.adapter.gamm <- setRefClass(
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.adapter.gamm$methods(
-	family = function() {
+	get.family = function() {
 		"Get family. If family was not specified, return NULL."
 		if (!is.null(call)) {
 			return(src$call$family)

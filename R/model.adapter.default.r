@@ -132,7 +132,7 @@ model.adapter.default$methods(
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
-	family = function() {
+	get.family = function() {
 		"
 		Get family. If family was not specified, return NULL.
 		"
