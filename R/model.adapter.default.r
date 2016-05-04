@@ -67,8 +67,8 @@ model.adapter <- function(x) {
 #'		object, src$call field is NULL.
 #'
 #'	@field call
-#'		a call object used for initialization of model.adapter or a call object
-#'		which made for construction of the model object.
+#'		a read-only call object used for initialization of model.adapter or a 
+#'		call object which made for construction of the model object.
 #'		Note call in this field is specified by their full names by 
 #'		match.call() function. Therefore, it doesn't need to be identical to
 #'		original call used for initialization of the class.
@@ -216,6 +216,12 @@ model.adapter.default$methods(
 	}
 )
 
+for (field.name in names(model.adapter.default$fields)) {
+	model.adapter.default$lock(n)
+}
+rm(field.name)
+
+
 
 		if (!is.null(src$call)) {
 			return(src$call$family)
@@ -233,6 +239,4 @@ model.adapter.default$methods(
 	}
 )
 
-model.adapter.default$lock("src")
-model.adapter.default$lock("family")
 
