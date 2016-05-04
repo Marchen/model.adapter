@@ -66,6 +66,13 @@ model.adapter <- function(x) {
 #'		field is NULL. When an object of model.adapter is initialized using 
 #'		object, src$call field is NULL.
 #'
+#'	@field call
+#'		a call object used for initialization of model.adapter or a call object
+#'		which made for construction of the model object.
+#'		Note call in this field is specified by their full names by 
+#'		match.call() function. Therefore, it doesn't need to be identical to
+#'		original call used for initialization of the class.
+#'
 #'	@field family
 #'		a read-only character of family name. If a model which does not use
 #'		family, this field is character(0).
@@ -82,6 +89,8 @@ model.adapter <- function(x) {
 #				src$object: 初期化に使ったオブジェクト。
 #				callで初期化された場合、src$objectはNULL。
 #				objectで初期化された場合、src$callはNULL。
+#			call:
+#				モデルの呼び出し式。
 #			family:
 #				モデルのファミリーを表す文字列。
 #				familyがないモデルの場合はcharacter(0)。
@@ -92,6 +101,7 @@ model.adapter.default <- setRefClass(
 	"model.adapter",
 	fields = list(
 		src = "list",
+		call = "call",
 		family = "character"
 	)
 )
@@ -119,6 +129,14 @@ model.adapter.default$methods(
 		} else {
 			src$object <<- x
 		}
+		# Initialize call field. / callフィールドの初期化。
+		if (!is.null(src$call)) {
+			call <<- match.generic.call(src$call)
+		} else {
+			if (!is.null(.self$get.call(x))) {
+				call <<- .self$get.call(x)
+			}
+		}
 		# Initialize family field. / familyフィールドの初期化。
 		family.name <- .self$get.family(x)
 		if (!is.null(family.name)) {
@@ -135,17 +153,6 @@ model.adapter.default$methods(
 	object = function() {
 		"Return model object."
 		return(src$object)
-	}
-)
-
-
-#-------------------------------------------------------------------------------
-#	関数呼び出しを返す。
-#-------------------------------------------------------------------------------
-model.adapter.default$methods(
-	call = function() {
-		"Return function call."
-		return(src$call)
 	}
 )
 
