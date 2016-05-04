@@ -140,7 +140,7 @@ model.adapter.default$methods(
 		# Initialize family field. / familyフィールドの初期化。
 		family.name <- .self$get.family(x)
 		if (!is.null(family.name)) {
-		   	family <<- format.family(family.name, "character")
+			family <<- format.family(family.name, "character")
 		}
 	}
 )
@@ -159,17 +159,17 @@ model.adapter.default$methods(
 		@return family of the model. If family was not specified, return NULL.
 		"
 		if (is.call(x)) {
-		   	return(x$family)
+			return(x$family)
 		} else {
-		   	if (isS4(x)) {
-		   		if ("family" %in% slotNames(x)) {
-		   			return(src$object@family)
-		   		} else {
-		   			return(NULL)
-		   		}
-		   	} else {
-		   		return(x$family)
-		   	}
+			if (isS4(x)) {
+				if ("family" %in% slotNames(x)) {
+					return(src$object@family)
+				} else {
+					return(NULL)
+				}
+			} else {
+				return(x$family)
+			}
 		}
 	}
 )
@@ -194,11 +194,11 @@ model.adapter.default$methods(
 			method to explicitly return NULL if x does not have call.
 		"
 		if (isS4(x)) {
-		   	result <- x@call
+			result <- x@call
 		} else {
 			result <- x$call
 			if (is.null(result)) {
-			   	warning("get.call() implicitly returns NULL. Is it intended?")
+				warning("get.call() implicitly returns NULL. Is it intended?")
 			}
 		}
 		return(result)
