@@ -1,12 +1,11 @@
 #-------------------------------------------------------------------------------
-#'	Is a function generic?
+#'	(Internal) Is a function generic?
 #'
 #'	This function emph{roughly} test a function is generic.
 #'
 #'	@param fun.name a character string naming the function.
 #'
 #'	@return returns TRUE if fun is generic function and FALSE otherwise.
-#'	@export
 #'
 #'	@examples
 #'	is.generic(plot)
@@ -16,6 +15,7 @@
 #
 #	Args:
 #		fun.name: 関数名を表す文字列。
+#
 #	Value:
 #		総称関数ならTRUE、それ以外ならFALSE。
 #-------------------------------------------------------------------------------
