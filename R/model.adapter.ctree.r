@@ -11,6 +11,10 @@ model.adapter.BinaryTree <- setRefClass(
 	"model.adapter.BinaryTree", contains = "model.adapter"
 )
 
+
+#-------------------------------------------------------------------------------
+#	モデルオブジェクトからcallを取得する。
+#-------------------------------------------------------------------------------
 model.adapter.BinaryTree$methods(
 	get.call = function(x) {
 	   	return(NULL)

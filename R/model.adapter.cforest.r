@@ -11,6 +11,10 @@ model.adapter.RandomForest <- setRefClass(
 	"model.adapter.RandomForest", contains = "model.adapter"
 )
 
+
+#-------------------------------------------------------------------------------
+#	モデルオブジェクトからcallを取得する。
+#-------------------------------------------------------------------------------
 model.adapter.RandomForest$methods(
 	get.call = function(x) {
 		return(NULL)
