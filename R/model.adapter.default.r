@@ -35,7 +35,7 @@ model.adapter <- function(x) {
 		original.call <- x
 	}
 	if (is.call(original.call)) {
-		fun.name <- as.character(original.call[1])
+		fun.name <- get.function(original.call, "character")
 		code <- sprintf(
 			"model.adapter.%s(original.call)", get.class.name(fun.name)
 		)
