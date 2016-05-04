@@ -11,18 +11,23 @@ library(testthat)
 #'	object <- lm(Sepal.Length ~ ., data = iris)
 #'	test__initialize(object, "lm")
 #-------------------------------------------------------------------------------
+#	model.adapterクラスの初期化のテスト。
+#
+#	Args:
+#		call: モデル呼び出しのcall。
+#		function.name: 関数名。
+#		env: callを評価する環境。
+#-------------------------------------------------------------------------------
 test__initialize <- function(call, function.name, env = parent.frame()) {
 	class.name <- get.class.name(function.name)
 	test_that(
-		sprintf("Initialization of model.adapter.%s by call", class.name),
-		{
+		sprintf("Initialization of model.adapter.%s by call", class.name), {
 			adapter <- model.adapter(call)
 			expect_is(adapter, sprintf("model.adapter.%s", class.name))
 		}
 	)
 	test_that(
-		sprintf("Initialization of model.adapter.%s by object", class.name),
-		{
+		sprintf("Initialization of model.adapter.%s by object", class.name), {
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
 			expect_is(adapter, sprintf("model.adapter.%s", class.name))
@@ -32,7 +37,7 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 
 
 #-------------------------------------------------------------------------------
-#'	Test for family() function.
+#'	Test for get.family() function and initialization of family field.
 #'
 #'	@export
 #'	@inheritParams test__all
@@ -44,13 +49,20 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #'		"lm", family = "gaussian"
 #'	)
 #-------------------------------------------------------------------------------
+#	get.family()関数とfamilyフィールドの初期化のテスト。
+#
+#	Args:
+#		call: 関数呼び出しのcall。
+#		function.name: 関数名。
+#		family: family名の取得がうまくいったときに期待されるfamilyを表す文字列。
+#		env: callを評価する環境。
+#-------------------------------------------------------------------------------
 test__family <- function(
 	call, function.name, family = NULL, env = parent.frame()
 ) {
 	class.name <- get.class.name(function.name)
 	test_that(
-		sprintf("Get family of model.adapter.%s by call", class.name),
-		{
+		sprintf("'family' field of model.adapter.%s from call", class.name), {
 			adapter <- model.adapter(call)
 			f <- adapter$family
 			if (!is.null(family)) {
@@ -63,14 +75,13 @@ test__family <- function(
 		}
 	)
 	test_that(
-		sprintf("Get family of model.adapter.%s by object", class.name),
-		{
+		sprintf("'family' field of model.adapter.%s from object", class.name), {
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
 			f <- adapter$family
 			if (!is.null(family)) {
-			   	f <- format.family(f, "character")
-			   	expect_equal(f, family)
+				f <- format.family(f, "character")
+				expect_equal(f, family)
 			} else {
 				expect_is(f, "character")
 				expect_length(f, 0)
