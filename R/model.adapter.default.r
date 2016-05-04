@@ -108,8 +108,8 @@ model.adapter.default$methods(
 		Initialize class
 		@param x model object or function call 
 		"
-		if (!is.call(x)) {
 		# Initialize src field. / srcフィールドの初期化。
+		if (is.object(x)) {
 			original.call <- substitute(x)
 		} else {
 			original.call <- x
