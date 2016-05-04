@@ -4,6 +4,7 @@ test__all(
 		gamm(Sepal.Length ~ s(Petal.Length), data = iris, family = gaussian)
 	),
 	function.name = "gamm",
+	object.has.call = FALSE,
 	family = "gaussian"
 )
 
