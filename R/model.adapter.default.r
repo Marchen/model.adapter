@@ -104,11 +104,12 @@ model.adapter.default <- setRefClass(
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
 	initialize = function(x) {
-		"Initialize class
+		"
+		Initialize class
 		@param x model object or function call 
 		"
-		# Initialize src field.
 		if (!is.call(x)) {
+		# Initialize src field. / srcフィールドの初期化。
 			original.call <- substitute(x)
 		} else {
 			original.call <- x
@@ -118,7 +119,7 @@ model.adapter.default$methods(
 		} else {
 			src$object <<- x
 		}
-		# Initialize family field.
+		# Initialize family field. / familyフィールドの初期化。
 		family.name <- .self$get.family(x)
 		if (!is.null(family.name)) {
 		   	family <<- format.family(family.name, "character")
