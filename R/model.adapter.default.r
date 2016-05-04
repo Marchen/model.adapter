@@ -191,12 +191,19 @@ model.adapter.default$methods(
 		"
 		Get call from model object.
 		@param x a model object.
-		@return call by which the object is made.
+		@return 
+			call by which the object is made. If call is not available, this
+			returns NULL. To distinguish the return value of NULL is intended 
+			action or not, inherited classes are encouraged to inherit this 
+			method to explicitly return NULL if x does not have call.
 		"
 		if (isS4(x)) {
 		   	result <- x@call
 		} else {
-		   	result <- x$call
+			result <- x$call
+			if (is.null(result)) {
+			   	warning("get.call() implicitly returns NULL. Is it intended?")
+			}
 		}
 		return(result)
 	}
