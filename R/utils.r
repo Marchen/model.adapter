@@ -63,7 +63,7 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 	matched.call <- match.call(fun, call)
 	if (!is.generic(fun.name)) {
 		# Non-generic functions.
-	   	return(matched.call)
+		return(matched.call)
 	}
 	# Find class of generic function / 総称関数の分岐に使われるクラスを取得。
 	generic.class.name <- names(formals(fun))[1]
@@ -72,11 +72,11 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 		#S4 functions.
 		stop("Not implimented.")
 	} else {
-	   	#S3 functions.
-	   	fun <- getS3method(fun.name, generic.class, TRUE)
-	   	if (is.null(fun)) {
-	   		fun <- getS3method(fun.name, "default")
-	   	}
+		#S3 functions.
+		fun <- getS3method(fun.name, generic.class, TRUE)
+		if (is.null(fun)) {
+			fun <- getS3method(fun.name, "default")
+		}
 		return(match.call(fun, call))
 	}
 }
