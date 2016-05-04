@@ -142,3 +142,47 @@ format.family <- function(family, type = c("family", "character")) {
 }
 
 
+#-------------------------------------------------------------------------------
+#'	(Internal) Get function and function name from call
+#'
+#'	@param call
+#'		a call from which extract function.
+#'	@param type
+#'		a character vector denoting type of return value.
+#'		"function" or "character" can be used. "character" is default.
+#'
+#'	@return
+#'		If type is "character", function object.
+#'		If type is "character", character literal of function name.
+#'
+#'	@examples
+#'		get.function(substitute(glm(Sepal.Length ~ ., data = iris)))
+#-------------------------------------------------------------------------------
+#	関数、関数名をcallから取得する。
+#
+#	Args:
+#		call: 関数呼び出しが入ったcall。
+#		type:
+#			結果の種類。"function"なら関数を、"character"なら文字列を返す。
+#			初期値は"character"
+#
+#	Value:
+#		"function"なら関数を、"character"なら文字列を返す。
+#-------------------------------------------------------------------------------
+get.function <- function(call, type = c("function", "character")) {
+	# Check arguments
+	if (missing(type)) {
+		type <- "character"
+	}
+	type <- match.arg(type)
+	# Extract information
+	function.name <- as.character(call[[1]])
+	if (type == "character") {
+		return(function.name)
+	} else {
+		fun <- match.fun(function.name)
+		return(fun)
+	}
+}
+
+
