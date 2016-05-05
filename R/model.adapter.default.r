@@ -29,11 +29,7 @@
 #
 #-------------------------------------------------------------------------------
 model.adapter <- function(x) {
-	if (is.object(x)) {
-		original.call <- substitute(x)
-	} else {
-		original.call <- x
-	}
+	original.call <- keep.model.function.call(x)
 	if (is.call(original.call)) {
 		fun.name <- get.function(original.call, "character")
 		code <- sprintf(
@@ -119,11 +115,7 @@ model.adapter.default$methods(
 		@param x model object or function call 
 		"
 		# Initialize src field. / srcフィールドの初期化。
-		if (is.object(x)) {
-			original.call <- substitute(x)
-		} else {
-			original.call <- x
-		}
+		original.call <- keep.model.function.call(substitute(x))
 		if (is.call(original.call)) {
 			src$call <<- original.call
 		} else {
