@@ -210,6 +210,21 @@ for (field.name in names(model.adapter.default$fields)) {
 }
 rm(field.name)
 
+#-------------------------------------------------------------------------------
+#	callに有効なcallが入っているかを確認する。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	has.call = function() {
+		"
+		Check call field has valid call.
+		"
+		if (identical(call, call("<undef>"))) {
+			return(FALSE)
+		} else {
+			return(TRUE)
+		}
+	}
+)
 
 
 		if (!is.null(src$call)) {
