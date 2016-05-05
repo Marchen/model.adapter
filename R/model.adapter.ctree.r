@@ -26,3 +26,15 @@ model.adapter.BinaryTree$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	formulaを取り出し。
+#-------------------------------------------------------------------------------
+model.adapter.BinaryTree$methods(
+	get.formula = function(x) {
+		# Shared method with cforest / cforestと同じ手法。
+		adapter <- model.adapter.RandomForest(x)
+		return(adapter$get.formula(x))
+	}
+)
+
+

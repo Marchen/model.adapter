@@ -219,17 +219,26 @@ model.adapter.default$methods(
 )
 
 
-		if (!is.null(src$call)) {
-			return(src$call$family)
-		} else {
-			if (isS4(src$object)) {
-				if ("family" %in% slotNames(src$object)) {
-					return(src$object@family)
-				} else {
-					return(NULL)
-				}
+
+model.adapter.default$methods(
+	get.formula = function(x) {
+		"
+		Extract formula from model object/call.
+		@param x model object/call from which formula is extracted.
+		"
+		if (is.object(x)) {
+			if (isS4(x)) {
+				return(eval(x@call$formula))
 			} else {
-				return(src$object$family)
+				return(eval(x$call$formula))
+			}
+		} else {
+			if (!is.null(x$formula)) {
+				return(eval(x$formula))
+			} else {
+				args <- lapply(as.list(x), eval)
+				f <- args[sapply(args, is.formula)][[1]]
+				return(f)
 			}
 		}
 	}

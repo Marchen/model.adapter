@@ -25,3 +25,21 @@ model.adapter.RandomForest$methods(
 	}
 )
 
+#-------------------------------------------------------------------------------
+#	formulaを取り出し。
+#-------------------------------------------------------------------------------
+model.adapter.RandomForest$methods(
+	get.formula = function(x) {
+		if (is.object(x)) {
+			# custom 
+			y <- as.character(x@data@formula$response[2])
+			x <- as.character(x@data@formula$input[2])
+			f <- as.formula(paste(y, x, sep = "~"))
+			return(f)
+		} else {
+			x <- match.call(cforest, x)
+			return(eval(x$formula))
+		}
+	}
+)
+

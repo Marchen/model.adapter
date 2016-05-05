@@ -40,6 +40,20 @@ model.adapter.gamm$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデルのformulaを取得する。
+#-------------------------------------------------------------------------------
+model.adapter.gamm$methods(
+	get.formula = function(x) {
+		f <- callSuper(x)
+		if (is.null(f)) {
+			f <- x$gam$formula
+		}
+		return(f)
+	}
+)
+
+
 	}
 )
 
