@@ -21,7 +21,7 @@ model.adapter.gamm <- setRefClass(
 #-------------------------------------------------------------------------------
 model.adapter.gamm$methods(
 	get.call = function(x) {
-	   	return(NULL)
+		return(NULL)
 	}
 )
 
@@ -32,7 +32,7 @@ model.adapter.gamm$methods(
 model.adapter.gamm$methods(
 	get.family = function(x) {
 		if (is.call(x)) {
-		   	return(x$family)
+			return(x$family)
 		} else {
 			return(x$gam$family)
 		}

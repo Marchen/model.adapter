@@ -21,7 +21,7 @@ model.adapter.BinaryTree <- setRefClass(
 #-------------------------------------------------------------------------------
 model.adapter.BinaryTree$methods(
 	get.call = function(x) {
-	   	return(NULL)
+		return(NULL)
 	}
 )
 
