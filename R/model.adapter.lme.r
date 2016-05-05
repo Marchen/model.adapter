@@ -24,3 +24,21 @@ model.adapter.lme$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデル構築に使われる引数からモデル式をあらわすformulaを取得する。
+#-------------------------------------------------------------------------------
+model.adapter.lme$methods(
+	get.formula = function(x) {
+		# Get call and convert it to a list / callを取得しリストに変換。
+		if (is.object(x)) {
+			call <- x$call
+		} else {
+			call <- x
+		}
+		call <- match.call(lme, call)
+		args <- lapply(as.list(call), eval)
+		return(args$fixed)
+	}
+)
+
+
