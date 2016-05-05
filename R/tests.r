@@ -21,13 +21,13 @@ library(testthat)
 test__initialize <- function(call, function.name, env = parent.frame()) {
 	class.name <- get.class.name(function.name)
 	test_that(
-		sprintf("Initialization of model.adapter.%s by call", class.name), {
+		sprintf("Initialization of the class by call of %s", function.name), {
 			adapter <- model.adapter(call)
 			expect_is(adapter, sprintf("model.adapter.%s", class.name))
 		}
 	)
 	test_that(
-		sprintf("Initialization of model.adapter.%s by object", class.name), {
+		sprintf("Initialization the class by object of %s", class.name), {
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
 			expect_is(adapter, sprintf("model.adapter.%s", class.name))
@@ -58,7 +58,7 @@ test__call <- function(
 	call, function.name, object.has.call = TRUE, env = parent.frame()
 ) {
 	test_that(
-		sprintf("'call' field of model.adapter.%s by call", function.name), {
+		sprintf("Initialization of 'call' field by call of %s", function.name), {
 			adapter <- model.adapter(call)
 			expect_is(adapter$call, "call")
 			expect_identical(
@@ -67,7 +67,7 @@ test__call <- function(
 		}
 	)
 	test_that(
-		sprintf("'call' field of model.adapter.%s by object", function.name), {
+		sprintf("Initialization 'call' field by object of %s", function.name), {
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
 			if (object.has.call) {
@@ -108,9 +108,8 @@ test__call <- function(
 test__family <- function(
 	call, function.name, family = NULL, env = parent.frame()
 ) {
-	class.name <- get.class.name(function.name)
 	test_that(
-		sprintf("'family' field of model.adapter.%s from call", class.name), {
+		sprintf("Initialization of 'family' field by call of %s", function.name), {
 			adapter <- model.adapter(call)
 			f <- adapter$family
 			if (!is.null(family)) {
@@ -123,7 +122,7 @@ test__family <- function(
 		}
 	)
 	test_that(
-		sprintf("'family' field of model.adapter.%s from object", class.name), {
+		sprintf("Initialization of 'family' field by object of %s", function.name), {
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
 			f <- adapter$family
