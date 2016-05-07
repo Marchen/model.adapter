@@ -204,10 +204,6 @@ model.adapter.default$methods(
 	}
 )
 
-for (field.name in names(model.adapter.default$fields)) {
-	model.adapter.default$lock(n)
-}
-rm(field.name)
 
 #-------------------------------------------------------------------------------
 #	callに有効なcallが入っているかを確認する。
@@ -252,3 +248,7 @@ model.adapter.default$methods(
 )
 
 
+for (field.name in names(model.adapter.default$fields)) {
+	model.adapter.default$lock(n)
+}
+rm(field.name)
