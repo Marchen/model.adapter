@@ -98,7 +98,8 @@ model.adapter.default <- setRefClass(
 	fields = list(
 		src = "list",
 		call = "call",
-		family = "character"
+		family = "character",
+		formula = "formula"
 	)
 )
 
@@ -133,6 +134,12 @@ model.adapter.default$methods(
 		family.name <- .self$get.family(x)
 		if (!is.null(family.name)) {
 			family <<- format.family(family.name, "character")
+		}
+		# Initialize formula field. / formulaフィールドの初期化。
+		if (.self$has.call()) {
+			formula <<- .self$get.formula(call)
+		} else {
+			formula <<- .self$get.formula(src$object)
 		}
 	}
 )
