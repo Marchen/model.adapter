@@ -85,7 +85,7 @@ test__call <- function(
 
 
 #-------------------------------------------------------------------------------
-#'	Test for get.family() function and initialization of family field.
+#'	Test for get.family() function and initialization of 'family' field.
 #'
 #'	@export
 #'	@inheritParams test__all
