@@ -138,13 +138,49 @@ test__family <- function(
 }
 
 
+#' Title
+#'
+#' @param call
+#' @param function.name
+#' @param formula
+#' @param env
+#'
+#' @return
+#' @export
+#'
+#' @examples
+test__formula <- function(
+	call, function.name, formula = eval(call$formula), env = parent.frame()
+) {
+	test_that(
+		sprintf("Initialize 'formula' by call of %s", function.name), {
+			adapter <- model.adapter(call)
+			print(adapter$formula)
+			print(formula)
+			expect_equal(adapter$formula, formula)
+		}
+	)
+	test_that(
+		sprintf("Initialize 'formula' bu call of %s", function.name), {
+			object <- eval(call, env)
+			adapter <- model.adapter(object)
+			print(adapter$formula)
+			print(formula)
+			expect_equal(adapter$formula, formula)
+		}
+	)
+}
+
+
 #-------------------------------------------------------------------------------
 #'	Run all available test of model.adapter
 #'
 #'	@param call call for a function to test.
 #'	@param function.name character literal of function name to test.
+#'	@param an expected formula in 'formula' field.
 #'	@param object.has.call if a model object keep call, specify TRUE.
-#'	@param family a character literal of family name.
+#'	@param family
+#'		an expected character literal of family name in 'family' field.
 #'
 #'	@export
 #'
@@ -160,12 +196,13 @@ test__family <- function(
 #	Args:
 #		call: 関数呼び出しのcall。
 #		function.name: 関数名。
+#		formula: モデルのformula。
 #		package.name: 関数が含まれるパッケージ名。
 #		object.has.call: モデルオブジェクトがcallを保持しているときにはTRUE。
 #		family: family名の取得がうまくいったときに期待されるfamilyを表す文字列。
 #-------------------------------------------------------------------------------
 test__all <- function(
-	call, function.name, package.name = find.package(function.name),
+	call, function.name, formula, package.name = find.package(function.name),
 	object.has.call = TRUE, family = NULL
 ) {
 	# Load package
@@ -174,6 +211,7 @@ test__all <- function(
 	test__initialize(call, function.name, parent.frame())
 	test__call(call, function.name, object.has.call, parent.frame())
 	test__family(call, function.name, family, parent.frame())
+	test__formula(call, function.name, formula, parent.frame())
 	# Unload package
 	if (package.name != "stats") {
 		unloadNamespace(package.name)

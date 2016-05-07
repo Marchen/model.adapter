@@ -4,6 +4,7 @@ test__all(
 		gam(Sepal.Length ~ Petal.Length, data = iris, family = gaussian)
 	),
 	function.name = "gam",
+	formula = Sepal.Length ~ Petal.Length,
 	package.name = "mgcv",
 	family = "gaussian"
 )

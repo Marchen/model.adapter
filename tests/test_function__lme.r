@@ -3,5 +3,6 @@ test__all(
 	call = substitute(
 		lme(Sepal.Length ~ ., random = ~1 | Species, data = iris)
 	),
-	function.name = "lme"
+	function.name = "lme",
+	formula = Sepal.Length ~ .
 )

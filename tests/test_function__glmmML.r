@@ -7,6 +7,7 @@ test__all(
 		)
 	),
 	function.name = "glmmML",
+	formula = as.integer(Sepal.Length) ~ .,
 	family = "poisson"
 )
 
