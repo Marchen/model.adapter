@@ -85,6 +85,43 @@ test__call <- function(
 
 
 #-------------------------------------------------------------------------------
+#'	Test for 'env' field.
+#'
+#'	@export
+#'	@inheritParams test__all
+#'
+#'	@examples
+#'	test__env(glm(Sepal.Length ~ ., data = iris, family = gaussian), "glm")
+#-------------------------------------------------------------------------------
+#	envフィールドの初期化のテスト。
+#
+#	Args:
+#		call: 関数呼び出しのcall。
+#		function.name: 関数名。
+#		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+test__env <- function(call, function.name, env = parent.frame()){
+	test_that(
+		sprintf("Initialization of 'env' field by call of %s", function.name), {
+			adapter <- model.adapter(call)
+			expect_identical(adapter$env, environment(), info = "default value")
+			adapter <- model.adapter(call, environment())
+			expect_identical(adapter$env, environment(), info = "with value")
+		}
+	)
+	test_that(
+		sprintf("Initialization of 'env' field by object of %s", function.name), {
+			obj <- eval(call, env)
+			adapter <- model.adapter(obj)
+			expect_identical(adapter$env, environment(), info = "default value")
+			adapter <- model.adapter(obj, environment())
+			expect_identical(adapter$env, environment(), info = "with value")
+		}
+	)
+}
+
+
+#-------------------------------------------------------------------------------
 #'	Test for get.family() function and initialization of 'family' field.
 #'
 #'	@export
@@ -215,6 +252,7 @@ test__all <- function(
 	# Run tests
 	test__initialize(call, function.name, parent.frame())
 	test__call(call, function.name, object.has.call, parent.frame())
+	test__env(call, function.name, parent.frame())
 	test__family(call, function.name, family, parent.frame())
 	test__formula(call, function.name, formula, parent.frame())
 	# Unload package
