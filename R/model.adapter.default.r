@@ -113,15 +113,21 @@ model.adapter.default <- setRefClass(
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
 	initialize = function(
-		x, envir = parent.frame(4L)
+		x, envir = parent.frame(4L), ..., caller = "default"
 	) {
 		"
 		Initialize class
 		@param x model object or function call.
 		@param envir an environment in which call in x is evaluated.
+		@caller
+			if this method is called from an initialize method of subclass,
+			this should be set to 'subclass'.
 		"
 		# Initialize src field. / srcフィールドの初期化。
-		original.call <- keep.model.function.call(substitute(x))
+		if (caller != "subclass"){
+			x <- substitute(x)
+		}
+		original.call <- keep.model.function.call(x, envir)
 		if (is.call(original.call)) {
 			src$call <<- original.call
 		} else {
