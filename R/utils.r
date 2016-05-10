@@ -217,7 +217,7 @@ get.function <- function(call, type = c("function", "character")) {
 #	Value:
 #		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
 #-------------------------------------------------------------------------------
-keep.model.function.call <- function(call, env = parent.frame()) {
+keep.model.function.call <- function(call, env) {
 	evaluated.call <- eval(call, env)
 	if (is.call(evaluated.call)) {
 		# If original object is call, return original object.
