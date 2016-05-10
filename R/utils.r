@@ -218,10 +218,11 @@ get.function <- function(call, type = c("function", "character")) {
 #		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
 #-------------------------------------------------------------------------------
 keep.model.function.call <- function(call, env = parent.frame()) {
-	if (is.call(eval(call, env))) {
+	evaluated.call <- eval(call, env)
+	if (is.call(evaluated.call)) {
 		# If original object is call, return original object.
 		# 元のオブジェクトがcallだったら元のオブジェクトを返す。
-		return(eval(call, env))
+		return(evaluated.call)
 	}
 	if (is.call(call)) {
 		# For the case if original object is not call but having function call.
@@ -230,7 +231,7 @@ keep.model.function.call <- function(call, env = parent.frame()) {
 		if (fun %in% c("$", "@", "[[", "[")) {
 			# If the function call is above operators, return original object.
 			# 関数呼び出しが上の演算子のとき、元のオブジェクトを返す。
-			return(eval(call, env))
+			return(evaluated.call)
 		} else {
 			# If the function call is not the operators return substituted call.
 			# 関数呼び出しが演算子ではないときsubstituteした関数呼び出しを返す。
@@ -239,7 +240,7 @@ keep.model.function.call <- function(call, env = parent.frame()) {
 	} else {
 		# If original parameter is object, return original object.
 		# 元のオブジェクトがモデルオブジェクトだったら元のオブジェクトを返す。
-		return(eval(call, env))
+		return(evaluated.call)
 	}
 }
 
