@@ -29,7 +29,7 @@ model.adapter.RandomForest$methods(
 #	formulaを取り出し。
 #-------------------------------------------------------------------------------
 model.adapter.RandomForest$methods(
-	get.formula = function(x) {
+	get.formula = function(x, envir = parent.frame()) {
 		if (is.object(x)) {
 			# custom 
 			y <- as.character(x@data@formula$response[2])
@@ -38,7 +38,7 @@ model.adapter.RandomForest$methods(
 			return(f)
 		} else {
 			x <- match.call(cforest, x)
-			return(eval(x$formula))
+			return(eval(x$formula, envir))
 		}
 	}
 )

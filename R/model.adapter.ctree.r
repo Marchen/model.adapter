@@ -30,10 +30,10 @@ model.adapter.BinaryTree$methods(
 #	formulaを取り出し。
 #-------------------------------------------------------------------------------
 model.adapter.BinaryTree$methods(
-	get.formula = function(x) {
+	get.formula = function(x, envir = parent.frame()) {
 		# Shared method with cforest / cforestと同じ手法。
-		adapter <- model.adapter.RandomForest(x)
-		return(adapter$get.formula(x))
+		adapter <- model.adapter.RandomForest(x, envir)
+		return(adapter$get.formula(x, envir))
 	}
 )
 

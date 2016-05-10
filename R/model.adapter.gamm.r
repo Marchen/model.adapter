@@ -44,8 +44,8 @@ model.adapter.gamm$methods(
 #	モデルのformulaを取得する。
 #-------------------------------------------------------------------------------
 model.adapter.gamm$methods(
-	get.formula = function(x) {
-		f <- callSuper(x)
+	get.formula = function(x, envir = parent.frame()) {
+		f <- callSuper(x, envir)
 		if (is.null(f)) {
 			f <- x$gam$formula
 		}

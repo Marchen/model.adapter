@@ -137,9 +137,9 @@ model.adapter.default$methods(
 		}
 		# Initialize formula field. / formulaフィールドの初期化。
 		if (.self$has.call()) {
-			formula <<- .self$get.formula(call)
+			formula <<- .self$get.formula(call, .self$env)
 		} else {
-			formula <<- .self$get.formula(src$object)
+			formula <<- .self$get.formula(src$object, .self$env)
 		}
 	}
 )
@@ -222,24 +222,30 @@ model.adapter.default$methods(
 )
 
 
-
+#-------------------------------------------------------------------------------
+#	モデルのformulaを取得する。
+#	Args:
+#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
+#		envir: xに入ったcallを評価する環境。
+#-------------------------------------------------------------------------------
 model.adapter.default$methods(
-	get.formula = function(x) {
+	get.formula = function(x, envir = parent.frame()) {
 		"
 		Extract formula from model object/call.
 		@param x model object/call from which formula is extracted.
+		@param envir an environment in which call in x is evaluated.
 		"
 		if (is.object(x)) {
 			if (isS4(x)) {
-				return(eval(x@call$formula))
+				return(eval(x@call$formula, envir))
 			} else {
-				return(eval(x$call$formula))
+				return(eval(x$call$formula, envir))
 			}
 		} else {
 			if (!is.null(x$formula)) {
-				return(eval(x$formula))
+				return(eval(x$formula, envir))
 			} else {
-				args <- lapply(as.list(x), eval)
+				args <- lapply(as.list(x), eval, envir = envir)
 				f <- args[sapply(args, is.formula)][[1]]
 				return(f)
 			}
