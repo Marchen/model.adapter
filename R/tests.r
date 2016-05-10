@@ -94,7 +94,7 @@ test__call <- function(
 #'	@examples
 #'	test__family(
 #'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		"lm", family = "gaussian"
+#'		"glm", family = "gaussian"
 #'	)
 #-------------------------------------------------------------------------------
 #	get.family()関数とfamilyフィールドの初期化のテスト。
