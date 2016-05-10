@@ -204,7 +204,7 @@ get.function <- function(call, type = c("function", "character")) {
 #'
 #'	@examples
 #'		x <- substitute(glm(Sepal.Length ~ ., data = iris))
-#'		keep.model.function.call(x)
+#'		make.call.or.object(x)
 #-------------------------------------------------------------------------------
 #	モデル関数のcall意外を評価する。
 #
@@ -217,7 +217,7 @@ get.function <- function(call, type = c("function", "character")) {
 #	Value:
 #		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
 #-------------------------------------------------------------------------------
-keep.model.function.call <- function(call, env) {
+make.call.or.object <- function(call, env) {
 	evaluated.call <- eval(call, env)
 	if (is.call(evaluated.call)) {
 		# If original object is call, return original object.

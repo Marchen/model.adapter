@@ -29,7 +29,7 @@
 #
 #-------------------------------------------------------------------------------
 model.adapter <- function(x, env = parent.frame(1L)) {
-	original.call <- keep.model.function.call(substitute(x), env)
+	original.call <- make.call.or.object(substitute(x), env)
 	if (is.call(original.call)) {
 		fun.name <- get.function(original.call, "character")
 		code <- sprintf(
@@ -127,7 +127,7 @@ model.adapter.default$methods(
 		if (caller != "subclass"){
 			x <- substitute(x)
 		}
-		x <- keep.model.function.call(x, envir)
+		x <- make.call.or.object(x, envir)
 		if (is.call(x)) {
 			src$call <<- x
 		} else {
