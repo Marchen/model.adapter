@@ -164,8 +164,6 @@ test__formula <- function(
 	test_that(
 		sprintf("Initialize 'formula' by call of %s", function.name), {
 			adapter <- model.adapter(call)
-			print(adapter$formula)
-			print(formula)
 			expect_equal(adapter$formula, formula)
 		}
 	)
@@ -173,8 +171,6 @@ test__formula <- function(
 		sprintf("Initialize 'formula' bu call of %s", function.name), {
 			object <- eval(call, env)
 			adapter <- model.adapter(object)
-			print(adapter$formula)
-			print(formula)
 			expect_equal(adapter$formula, formula)
 		}
 	)
