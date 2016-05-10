@@ -138,19 +138,28 @@ test__family <- function(
 }
 
 
-#' Title
+#-------------------------------------------------------------------------------
+#'	Test for get.formula() function and initialization of 'formula' field.
 #'
-#' @param call
-#' @param function.name
-#' @param formula
-#' @param env
+#'	@inheritParams test__all
 #'
-#' @return
-#' @export
+#'	@export
 #'
-#' @examples
+#'	@examples
+#'	test__formula(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
+#'		"glm", Sepal.Length ~ ., parent.frame()
+#'	)
+#-------------------------------------------------------------------------------
+#	get.formula()とformulaフィールドのテスト。
+#	Args:
+#		call: 関数呼び出しのcall。
+#		function.name: 関数名。
+#		formula: family名の取得がうまくいったときに期待されるformula。
+#		env: callを評価する環境。
+#-------------------------------------------------------------------------------
 test__formula <- function(
-	call, function.name, formula = eval(call$formula), env = parent.frame()
+	call, function.name, formula, env = parent.frame()
 ) {
 	test_that(
 		sprintf("Initialize 'formula' by call of %s", function.name), {
