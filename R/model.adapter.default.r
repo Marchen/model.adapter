@@ -28,14 +28,15 @@
 #		model.adapterクラスを継承したクラスのオブジェクト。
 #
 #-------------------------------------------------------------------------------
-model.adapter <- function(x) {
-	original.call <- keep.model.function.call(x)
+model.adapter <- function(x, env = parent.frame(1L)) {
+	original.call <- keep.model.function.call(substitute(x), env)
 	if (is.call(original.call)) {
 		fun.name <- get.function(original.call, "character")
 		code <- sprintf(
-			"model.adapter.%s(original.call)", get.class.name(fun.name)
+			"model.adapter.%s(%s, env)", get.class.name(fun.name),
+			paste0(deparse(original.call), collapse = "")
 		)
-		object <- eval(parse(text = code))
+		object <- eval(parse(text = code), environment())
 		return(object)
 	}
 	UseMethod("model.adapter")
@@ -98,6 +99,7 @@ model.adapter.default <- setRefClass(
 	fields = list(
 		src = "list",
 		call = "call",
+		env = "environment",
 		family = "character",
 		formula = "formula"
 	)
@@ -110,10 +112,13 @@ model.adapter.default <- setRefClass(
 #		x: モデルオブジェクトもしくはモデルの呼び出しを表すcall。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
-	initialize = function(x) {
+	initialize = function(
+		x, envir = parent.frame(4L)
+	) {
 		"
 		Initialize class
-		@param x model object or function call 
+		@param x model object or function call.
+		@param envir an environment in which call in x is evaluated.
 		"
 		# Initialize src field. / srcフィールドの初期化。
 		original.call <- keep.model.function.call(substitute(x))
@@ -130,6 +135,8 @@ model.adapter.default$methods(
 				call <<- .self$get.call(x)
 			}
 		}
+		# Initialize env field. / envフィールドの初期化。
+		env <<- envir
 		# Initialize family field. / familyフィールドの初期化。
 		family.name <- .self$get.family(x)
 		if (!is.null(family.name)) {
