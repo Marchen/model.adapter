@@ -127,15 +127,15 @@ model.adapter.default$methods(
 		if (caller != "subclass"){
 			x <- substitute(x)
 		}
-		original.call <- keep.model.function.call(x, envir)
-		if (is.call(original.call)) {
-			src$call <<- original.call
+		x <- keep.model.function.call(x, envir)
+		if (is.call(x)) {
+			src$call <<- x
 		} else {
 			src$object <<- x
 		}
 		# Initialize call field. / callフィールドの初期化。
-		if (!is.null(src$call)) {
-			call <<- match.generic.call(src$call)
+		if (is.call(x)) {
+			call <<- match.generic.call(x)
 		} else {
 			if (!is.null(.self$get.call(x))) {
 				call <<- .self$get.call(x)
