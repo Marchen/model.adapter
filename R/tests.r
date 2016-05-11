@@ -6,7 +6,7 @@ library(testthat)
 #'	@param env environment in which call is evaluated.
 #'	@inheritParams test__all
 #'
-#'	@example
+#'	@examples
 #'	test__initialize(lm(Sepal.Length ~ ., data = iris), "lm")
 #'	object <- lm(Sepal.Length ~ ., data = iris)
 #'	test__initialize(object, "lm")
