@@ -1,4 +1,6 @@
-#'	@include model.adapter.default.r
+#-------------------------------------------------------------------------------
+#	gamm関数用のmodel.adapterオブジェクトのジェネレーター。
+#	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
 #'	model.adapter class for gamm
 #'
@@ -9,8 +11,8 @@
 #'	class is made from model object, 'call' field is always call("<undef>").
 #'
 #'	Following methods are overriden.
-#-------------------------------------------------------------------------------
-#	gamm関数用のmodel.adapterオブジェクトのジェネレーター。
+#'
+#'	@include model.adapter.default.r
 #-------------------------------------------------------------------------------
 model.adapter.gamm <- setRefClass(
 	"model.adapter.gamm", contains = "model.adapter"

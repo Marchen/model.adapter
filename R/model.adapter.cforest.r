@@ -1,4 +1,6 @@
-#'	@include model.adapter.default.r
+#-------------------------------------------------------------------------------
+#	cforest関数用のmodel.adapterオブジェクトのジェネレーター。
+#	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
 #'	model.adapter class for cforest
 #'
@@ -9,8 +11,8 @@
 #'	class is made from model object, 'call' field is always call("<undef>").
 #'
 #'	Following methods are overriden.
-#-------------------------------------------------------------------------------
-#	cforest関数用のmodel.adapterオブジェクトのジェネレーター。
+#
+#'	@include model.adapter.default.r
 #-------------------------------------------------------------------------------
 model.adapter.RandomForest <- setRefClass(
 	"model.adapter.RandomForest", contains = "model.adapter"

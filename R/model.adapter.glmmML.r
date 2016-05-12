@@ -1,12 +1,15 @@
-#'	@include model.adapter.default.r
+#-------------------------------------------------------------------------------
+#	glmmML関数用のmodel.adapterオブジェクトのジェネレーター。
+#	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
 #'	model.adapter class for glmmML
 #'
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in 
 #'	\emph{glmmML} package.
+#'
 #'	Following methods are overriden.
-#-------------------------------------------------------------------------------
-#	glmmML関数用のmodel.adapterオブジェクトのジェネレーター。
+#'
+#'	@include model.adapter.default.r
 #-------------------------------------------------------------------------------
 model.adapter.glmmML <- setRefClass(
 	"model.adapter.glmmML", contains = "model.adapter"

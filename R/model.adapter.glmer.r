@@ -1,12 +1,15 @@
-#'	@include model.adapter.default.r
+#-------------------------------------------------------------------------------
+#	glmer関数用のmodel.adapterオブジェクトのジェネレーター。
+#	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
 #'	model.adapter class for glmer
 #'
 #'	This reference class contains methods for \code{\link[lme4]{glmer}} in 
 #'	\emph{lme4} package.
+#'
 #'	Following methods are overriden.
-#-------------------------------------------------------------------------------
-#	glmer関数用のmodel.adapterオブジェクトのジェネレーター。
+#'
+#'	@include model.adapter.default.r
 #-------------------------------------------------------------------------------
 model.adapter.glmerMod <- setRefClass(
 	"model.adapter.glmerMod", contains = "model.adapter"

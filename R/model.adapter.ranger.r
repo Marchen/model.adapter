@@ -1,12 +1,15 @@
-#'	@include model.adapter.default.r
+#-------------------------------------------------------------------------------
+#	ranger関数用のmodel.adapterオブジェクトのジェネレーター。
+#	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
 #'	model.adapter class for ranger
 #'
 #'	This reference class contains methods for \code{\link[ranger]{ranger}} in 
 #'	\emph{ranger} package.
+#'
 #'	Following methods are overriden.
-#-------------------------------------------------------------------------------
-#	ranger関数用のmodel.adapterオブジェクトのジェネレーター。
+#'
+#'	@include model.adapter.default.r
 #-------------------------------------------------------------------------------
 model.adapter.ranger <- setRefClass(
 	"model.adapter.ranger", contains = "model.adapter"

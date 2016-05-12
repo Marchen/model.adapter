@@ -1,22 +1,23 @@
 #-------------------------------------------------------------------------------
-#'	Make a model.adapter object.
+#'	Initialize a model.adapter object.
 #'
 #'	This function makes an object of a derived class of \emph{model.adapter} 
-#'	class that abstract differences in specifications of supported modeling 
+#'	class that abstracts differences in specifications of supported modeling 
 #'	functions.
 #'
 #'	@param x
 #'		an object of supported models or a call for a model function.
 #'	@return
 #'		an object of derived class of \code{\link{model.adapter-class}}.
-#'	@section For developpers
-#'		If x is an object containing result of statistical models, inheritance
-#'		of model.adapter is determined by usual S3 polymorphism. On the other
-#'		hand, if x is a call for a modeling function, inheritance of the class
-#'		is determined by function name in the function call. In such case, this
-#'		function call model.adapter.CLASS_NAME() to initialize object.
+#'	@section For developpers:
+#'		If x is an object containing result of a statistical models, 
+#'		inheritance of the class is determined by usual S3 polymorphism. 
+#'		On the other hand, if x is a call for a modeling function, inheritance 
+#'		of the class is determined by function name in the function call. 
+#'		In such case, this function call model.adapter.CLASS_NAME() to 
+#'		initialize object.
 #'		
-#'	@section Adding support for new function
+#'	@section Adding support for new function:
 #'		To be continued...
 #-------------------------------------------------------------------------------
 #	モデルの違いを吸収するアダプタークラスのオブジェクトを作る関数。
@@ -65,14 +66,25 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #'
 #'	@field call
 #'		a read-only call object used for initialization of model.adapter or a 
-#'		call object which made for construction of the model object.
-#'		Note call in this field is specified by their full names by 
+#'		call object which used for construction of the model object.
+#'		Note call in this field is set in their full names by 
 #'		match.call() function. Therefore, it doesn't need to be identical to
 #'		original call used for initialization of the class.
+#'
+#'	@field env
+#'		an environment in which call of a model function is evaluated.
+#'		By default, this field is set to an environment where 
+#'		\code{\link{model.adapter}} function is called.
 #'
 #'	@field family
 #'		a read-only character of family name. If a model which does not use
 #'		family, this field is character(0).
+#'
+#'	@field formula
+#'		a formula object specifying structure of the model. '.' in this
+#'		formula object is expanded so that this field does not need to be
+#'		same as original formula specified in the call for model function or 
+#'		the model object.
 #'
 #'	@export
 #-------------------------------------------------------------------------------
@@ -88,9 +100,13 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #				objectで初期化された場合、src$callはNULL。
 #			call:
 #				モデルの呼び出し式。
+#			env:
+#				callを評価する環境。
 #			family:
 #				モデルのファミリーを表す文字列。
 #				familyがないモデルの場合はcharacter(0)。
+#			formula:
+#				モデル式。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
@@ -110,18 +126,29 @@ model.adapter.default <- setRefClass(
 #	コンストラクタ
 #	Args:
 #		x: モデルオブジェクトもしくはモデルの呼び出しを表すcall。
+#		envir: callを評価する環境。
+#		...: 他のメソッドに渡される引数。
+#		caller:
+#			サブクラスからこのメソッドを呼ぶときには"subclass"を指定する。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
 	initialize = function(
 		x, envir = parent.frame(4L), ..., caller = "default"
 	) {
 		"
-		Initialize class
-		@param x model object or function call.
-		@param envir an environment in which call in x is evaluated.
-		@caller
-			if this method is called from an initialize method of subclass,
-			this should be set to 'subclass'.
+		Initialize an object of the class using model object or call for a
+		model function.
+		\\describe{
+			\\item{\\code{x}}{model object or function call.}
+			\\item{\\code{envir = parent.frame(4L)}}{
+				envir an environment in which call in x is evaluated.
+			}
+			\\item{\\code{...}}{arguments to be passed to methods.}
+			\\item{\\code{caller = \"default\"}}{
+				if this method is called from an initialize method of subclass,
+				this should be set to \"subclass\".
+			}
+		}
 		"
 		# Initialize src field. / srcフィールドの初期化。
 		if (caller != "subclass"){
@@ -166,9 +193,11 @@ model.adapter.default$methods(
 model.adapter.default$methods(
 	get.family = function(x) {
 		"
-		Get family from call or model object.
-		@param x call or model object.
-		@return family of the model. If family was not specified, return NULL.
+		Get family from call or model object. 
+		If family was not specified, return NULL.
+		\\describe{
+			\\item{\\code{x}}{call or model object.}
+		}
 		"
 		if (is.call(x)) {
 			return(x$family)
@@ -197,13 +226,11 @@ model.adapter.default$methods(
 model.adapter.default$methods(
 	get.call = function(x) {
 		"
-		Get call from model object.
-		@param x a model object.
-		@return 
-			call by which the object is made. If call is not available, this
-			returns NULL. To distinguish the return value of NULL is intended 
-			action or not, inherited classes are encouraged to inherit this 
-			method to explicitly return NULL if x does not have call.
+		This method returns call by which the object is made. If call is not 
+		available, this returns NULL. To distinguish the return value of NULL 
+		is intended action or not, inherited classes are encouraged to 
+		inherit this method to explicitly return NULL if x does not have call.
+		\\describe{\\item{\\code{x}}{a model object.}}
 		"
 		if (isS4(x)) {
 			result <- x@call
@@ -245,8 +272,14 @@ model.adapter.default$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		"
 		Extract formula from model object/call.
-		@param x model object/call from which formula is extracted.
-		@param envir an environment in which call in x is evaluated.
+		\\describe{
+			\\item{\\code{x}}{
+				a model object/call from which formula is extracted.
+			}
+			\\item{\\code{envir = parent.frame()}}{
+				an environment in which call in x is evaluated.
+			}
+		}
 		"
 		if (is.object(x)) {
 			if (isS4(x)) {
