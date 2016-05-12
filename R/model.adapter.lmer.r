@@ -15,5 +15,17 @@ model.adapter.lmerMod <- setRefClass(
 	"model.adapter.lmerMod", contains = "model.adapter"
 )
 
+
+#-------------------------------------------------------------------------------
+#	モデル作成に使われたデータを返す。
+#-------------------------------------------------------------------------------
+model.adapter.lmerMod$methods(
+	get.data = function(x, envir = parent.frame()) {
+		adapter <- model.adapter.glmerMod(x)
+		return(adapter$data)
+	}
+)
+
+
 )
 

@@ -300,6 +300,38 @@ model.adapter.default$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデルのdataを取得する。
+#	Args:
+#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
+#		envir: xに入ったcallを評価する環境。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	get.data = function(x, envir = parent.frame()) {
+		"
+		Get data used for modeling.
+		\\describe{
+			\\item{\\code{x}}{
+				a model object/call from which data is extracted.
+			}
+			\\item{\\code{envir = parent.frame()}}{
+				an environment in which call is evaluated.
+			}
+		}
+		"
+		if (is.object(x)) {
+			if (isS4(x)) {
+				return(x@data)
+			} else {
+				return(x$data)
+			}
+		} else {
+			eval(x$data, envir)
+		}
+	}
+)
+
+
 for (field.name in names(model.adapter.default$fields)) {
 	model.adapter.default$lock(n)
 }
