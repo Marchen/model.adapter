@@ -1,22 +1,25 @@
 library(testthat)
 
 #-------------------------------------------------------------------------------
-#'	Test for initialization of model.adapter
-#'
-#'	@param env environment in which call is evaluated.
-#'	@inheritParams test__all
-#'
-#'	@examples
-#'	test__initialize(lm(Sepal.Length ~ ., data = iris), "lm")
-#'	object <- lm(Sepal.Length ~ ., data = iris)
-#'	test__initialize(object, "lm")
-#-------------------------------------------------------------------------------
 #	model.adapterクラスの初期化のテスト。
 #
 #	Args:
 #		call: モデル呼び出しのcall。
 #		function.name: 関数名。
 #		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all test for initialization of model.adapter
+#'
+#'	@param env environment in which call is evaluated.
+#'
+#'	@examples
+#'	# Run initialization test using a call of model function.
+#'	test__initialize(lm(Sepal.Length ~ ., data = iris), "lm")
+#'
+#'	# Run initialization test using a model object.
+#'	object <- lm(Sepal.Length ~ ., data = iris)
+#'	test__initialize(object, "lm")
+#'
 #-------------------------------------------------------------------------------
 test__initialize <- function(call, function.name, env = parent.frame()) {
 	class.name <- get.class.name(function.name)
@@ -37,15 +40,6 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 
 
 #-------------------------------------------------------------------------------
-#'	Test for get.call() function and initialization of 'call' field.
-#'
-#'	@export
-#'	@inheritParams test__all
-#'	@inheritParams test__initialize
-#'
-#'	@examples
-#'	test__call(glm(Sepal.Length ~ ., data = iris, family = gaussian), "lm")
-#-------------------------------------------------------------------------------
 #	get.call()関数とcallフィールドの初期化のテスト。
 #
 #	Args:
@@ -53,6 +47,19 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #		function.name: 関数名。
 #		object.has.call: オブジェクトがcallを保持しているときにはTRUE。
 #		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all
+#'		 test for get.call() method and initialization of 'call' field.
+#'	@export
+#'
+#'	@examples
+#	# Test of get.call() method and 'call' field using a call for model function.
+#'	test__call(glm(Sepal.Length ~ ., data = iris, family = gaussian), "glm")
+#'
+#'	# Test of get.call() method and 'call' field using a model object.
+#'	object <- glm(Sepal.Length ~ ., data = iris, family = gaussian)
+#'	test__call(object, "glm")
+#'
 #-------------------------------------------------------------------------------
 test__call <- function(
 	call, function.name, object.has.call = TRUE, env = parent.frame()
@@ -85,20 +92,21 @@ test__call <- function(
 
 
 #-------------------------------------------------------------------------------
-#'	Test for 'env' field.
-#'
-#'	@export
-#'	@inheritParams test__all
-#'
-#'	@examples
-#'	test__env(glm(Sepal.Length ~ ., data = iris, family = gaussian), "glm")
-#-------------------------------------------------------------------------------
 #	envフィールドの初期化のテスト。
 #
 #	Args:
 #		call: 関数呼び出しのcall。
 #		function.name: 関数名。
 #		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all test for 'env' field.
+#'
+#'	@export
+#'	@inheritParams test__all
+#'
+#'	@examples
+#'	# Test 'env' field using a call for model function.
+#'	test__env(glm(Sepal.Length ~ ., data = iris, family = gaussian), "glm")
 #-------------------------------------------------------------------------------
 test__env <- function(call, function.name, env = parent.frame()){
 	test_that(
@@ -122,18 +130,6 @@ test__env <- function(call, function.name, env = parent.frame()){
 
 
 #-------------------------------------------------------------------------------
-#'	Test for get.family() function and initialization of 'family' field.
-#'
-#'	@export
-#'	@inheritParams test__all
-#'	@inheritParams test__initialize
-#'
-#'	@examples
-#'	test__family(
-#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		"glm", family = "gaussian"
-#'	)
-#-------------------------------------------------------------------------------
 #	get.family()関数とfamilyフィールドの初期化のテスト。
 #
 #	Args:
@@ -141,6 +137,19 @@ test__env <- function(call, function.name, env = parent.frame()){
 #		function.name: 関数名。
 #		family: family名の取得がうまくいったときに期待されるfamilyを表す文字列。
 #		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all
+#'		test for get.family() method and initialization of 'family' field.
+#'
+#'	@export
+#'
+#'	@examples
+#'	# Test of get.family() method and 'family' field using a call.
+#'	test__family(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
+#'		"glm", family = "gaussian"
+#'	)
+#'
 #-------------------------------------------------------------------------------
 test__family <- function(
 	call, function.name, family = NULL, env = parent.frame()
@@ -176,24 +185,24 @@ test__family <- function(
 
 
 #-------------------------------------------------------------------------------
-#'	Test for get.formula() function and initialization of 'formula' field.
-#'
-#'	@inheritParams test__all
-#'
-#'	@export
-#'
-#'	@examples
-#'	test__formula(
-#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		"glm", Sepal.Length ~ ., parent.frame()
-#'	)
-#-------------------------------------------------------------------------------
 #	get.formula()とformulaフィールドのテスト。
 #	Args:
 #		call: 関数呼び出しのcall。
 #		function.name: 関数名。
 #		formula: family名の取得がうまくいったときに期待されるformula。
 #		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+#'	@describeIn test_all
+#'		test for get.formula() method and initialization of 'formula' field.
+#'
+#'	@export
+#'
+#'	@examples
+#'	# Test get.formula() method and 'formula' field using a call.
+#'	test__formula(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
+#'		"glm", Sepal.Length ~ ., parent.frame()
+#'	)
 #-------------------------------------------------------------------------------
 test__formula <- function(
 	call, function.name, formula, env = parent.frame()
@@ -214,6 +223,17 @@ test__formula <- function(
 }
 
 
+
+#-------------------------------------------------------------------------------
+#	全てのテストを実行
+#
+#	Args:
+#		call: 関数呼び出しのcall。
+#		function.name: 関数名。
+#		formula: モデルのformula。
+#		package.name: 関数が含まれるパッケージ名。
+#		object.has.call: モデルオブジェクトがcallを保持しているときにはTRUE。
+#		family: family名の取得がうまくいったときに期待されるfamilyを表す文字列。
 #-------------------------------------------------------------------------------
 #'	Run all available test of model.adapter
 #'
@@ -227,21 +247,12 @@ test__formula <- function(
 #'	@export
 #'
 #'	@examples
+#'	# Run all tests using a call for model.
 #'	test__all(
 #'		substitute(glm(Sepal.Length ~ ., data = iris, family = gaussian)),
 #'		function.name = "lm",
 #'		family = "gaussian"
 #'	)
-#-------------------------------------------------------------------------------
-#	全てのテストを実行
-#
-#	Args:
-#		call: 関数呼び出しのcall。
-#		function.name: 関数名。
-#		formula: モデルのformula。
-#		package.name: 関数が含まれるパッケージ名。
-#		object.has.call: モデルオブジェクトがcallを保持しているときにはTRUE。
-#		family: family名の取得がうまくいったときに期待されるfamilyを表す文字列。
 #-------------------------------------------------------------------------------
 test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),

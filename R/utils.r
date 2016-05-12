@@ -1,4 +1,12 @@
 #-------------------------------------------------------------------------------
+#	関数が総称関数かをおおざっぱに調べる。
+#
+#	Args:
+#		fun.name: 関数名を表す文字列。
+#
+#	Value:
+#		総称関数ならTRUE、それ以外ならFALSE。
+#-------------------------------------------------------------------------------
 #'	(Internal) Is a function generic?
 #'
 #'	This function emph{roughly} test a function is generic.
@@ -10,14 +18,6 @@
 #'	@examples
 #'	is.generic(plot)
 #'	is.generic(glm)
-#-------------------------------------------------------------------------------
-#	関数が総称関数かをおおざっぱに調べる。
-#
-#	Args:
-#		fun.name: 関数名を表す文字列。
-#
-#	Value:
-#		総称関数ならTRUE、それ以外ならFALSE。
 #-------------------------------------------------------------------------------
 is.generic <- function(fun.name) {
 	is.generic.s3 <- function(fun.name) {
@@ -31,6 +31,15 @@ is.generic <- function(fun.name) {
 }
 
 
+#-------------------------------------------------------------------------------
+#	総称関数もたどってmatch.call()を行う。
+#
+#	Args:
+#		call: 引数をフルネームにするcall。
+#		envir: callを評価する環境。
+#
+#	Value:
+#		引数をフルネームにしたcall。
 #-------------------------------------------------------------------------------
 #'	(Internal) match.call() with handling of generic function.
 #'
@@ -47,15 +56,6 @@ is.generic <- function(fun.name) {
 #'
 #'	@examples
 #'		match.generic.call(substitute(hist(1:10)))
-#-------------------------------------------------------------------------------
-#	総称関数もたどってmatch.call()を行う。
-#
-#	Args:
-#		call: 引数をフルネームにするcall。
-#		envir: callを評価する環境。
-#
-#	Value:
-#		引数をフルネームにしたcall。
 #-------------------------------------------------------------------------------
 match.generic.call <- function(call, envir = parent.frame(2L)) {
 	fun.name <- get.function(call)
@@ -83,11 +83,6 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 
 
 #-------------------------------------------------------------------------------
-#'	(Internal) Check an object is formula.
-#'
-#'	@param x an object.
-#'	@return returns TRUE if \emph{x} is formula otherwise returns FALSE.
-#-------------------------------------------------------------------------------
 #	変数がformulaかを調べる。
 #
 #	Args:
@@ -95,11 +90,24 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 #	Value:
 #		xがformulaならTRUE、違えばFALSE。
 #-------------------------------------------------------------------------------
+#'	(Internal) Check an object is formula.
+#'
+#'	@param x an object.
+#'	@return returns TRUE if \emph{x} is formula otherwise returns FALSE.
+#-------------------------------------------------------------------------------
 is.formula <- function(x) {
 	return(is(x, "formula"))
 }
 
 
+#-------------------------------------------------------------------------------
+#	familyのフォーマットを揃える。
+#
+#	Args:
+#		family: familyオブジェクト、関数、文字列、symbol
+#		type:
+#			familyならfamilyオブジェクトを、characterならfamily名を表す文字列
+#			を返す。
 #-------------------------------------------------------------------------------
 #'	(Internal) Format and check consistency of family.
 #'
@@ -113,14 +121,6 @@ is.formula <- function(x) {
 #'
 #'		This internal function is called by \code{link{detect.model.type}} and
 #'		\code{\link{predict.glmmML}} functions.
-#-------------------------------------------------------------------------------
-#	familyのフォーマットを揃える。
-#
-#	Args:
-#		family: familyオブジェクト、関数、文字列、symbol
-#		type:
-#			familyならfamilyオブジェクトを、characterならfamily名を表す文字列
-#			を返す。
 #-------------------------------------------------------------------------------
 format.family <- function(family, type = c("family", "character")) {
 	type <- match.arg(type)
@@ -143,6 +143,17 @@ format.family <- function(family, type = c("family", "character")) {
 
 
 #-------------------------------------------------------------------------------
+#	関数、関数名をcallから取得する。
+#
+#	Args:
+#		call: 関数呼び出しが入ったcall。
+#		type:
+#			結果の種類。"function"なら関数を、"character"なら文字列を返す。
+#			初期値は"character"
+#
+#	Value:
+#		"function"なら関数を、"character"なら文字列を返す。
+#-------------------------------------------------------------------------------
 #'	(Internal) Get function and function name from call
 #'
 #'	@param call
@@ -157,17 +168,6 @@ format.family <- function(family, type = c("family", "character")) {
 #'
 #'	@examples
 #'		get.function(substitute(glm(Sepal.Length ~ ., data = iris)))
-#-------------------------------------------------------------------------------
-#	関数、関数名をcallから取得する。
-#
-#	Args:
-#		call: 関数呼び出しが入ったcall。
-#		type:
-#			結果の種類。"function"なら関数を、"character"なら文字列を返す。
-#			初期値は"character"
-#
-#	Value:
-#		"function"なら関数を、"character"なら文字列を返す。
 #-------------------------------------------------------------------------------
 get.function <- function(call, type = c("function", "character")) {
 	# Check arguments
@@ -187,6 +187,17 @@ get.function <- function(call, type = c("function", "character")) {
 
 
 #-------------------------------------------------------------------------------
+#	モデル関数のcall以外を評価する。
+#
+#	Args:
+#		call:
+#			substituteをかけたモデル関数、モデルオブジェクト、
+#			モデル呼び出しのcall。
+#		env:
+#			callを評価する環境。
+#	Value:
+#		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
+#-------------------------------------------------------------------------------
 #'	(Internal) Keep call of model functions.
 #'
 #'	To keep call for model functions but not to keep call for subsetting of 
@@ -205,17 +216,6 @@ get.function <- function(call, type = c("function", "character")) {
 #'	@examples
 #'		x <- substitute(glm(Sepal.Length ~ ., data = iris))
 #'		make.call.or.object(x)
-#-------------------------------------------------------------------------------
-#	モデル関数のcall意外を評価する。
-#
-#	Args:
-#		call:
-#			substituteをかけたモデル関数、モデルオブジェクト、
-#			モデル呼び出しのcall。
-#		env:
-#			callを評価する環境。
-#	Value:
-#		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
 #-------------------------------------------------------------------------------
 make.call.or.object <- function(call, env) {
 	evaluated.call <- eval(call, env)
