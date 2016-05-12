@@ -1,3 +1,4 @@
+#'	@include model.adapter.default.r
 #-------------------------------------------------------------------------------
 #'	model.adapter class for lm
 #'
