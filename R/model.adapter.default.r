@@ -69,7 +69,8 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #'		call object which used for construction of the model object.
 #'		Note call in this field is set in their full names by 
 #'		match.call() function. Therefore, it doesn't need to be identical to
-#'		original call used for initialization of the class.
+#'		original call used for initialization of the class. To check an object
+#'		having valid call, use \code{has.call()} method.
 #'
 #'	@field env
 #'		an environment in which call of a model function is evaluated.
@@ -87,7 +88,14 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #'		the model object.
 #'
 #'	@field data
-#'		a data.frame used for modeling.
+#'		a data.frame used for modeling. At least, all columns used for the 
+#'		modeling are stored in this field. Because some modeling function 
+#'		doesn't keep original \emph{data.frame} used for modeling or 
+#'		\emph{call} in resultant object, this field can't have the same 
+#'		data.frame used for modeling in such case. When all the columns used
+#'		for the modeling is not available from this field is set to a 
+#'		data.frame with 0 columns x 0 rows. To test this field have valid
+#'		data.frame use \code{has.data()} method.
 #'
 #'	@export
 #-------------------------------------------------------------------------------
@@ -110,6 +118,10 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #				familyがないモデルの場合はcharacter(0)。
 #			formula:
 #				モデル式。
+#			data:
+#				モデル作成に使われたデータ。
+#				モデルオブジェクトはデータを保持していないことがあるので、
+#				元のデータフレームが取得できないことがある。
 #		Methods:
 #			以下を参照。
 #-------------------------------------------------------------------------------
