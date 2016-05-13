@@ -49,9 +49,9 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #'
 #'	This class encapsulates differences in specifications of statistical/machine
 #'	learning functions and model objects to provide standard way to access 
-#'	data and methods of models. To add support for a new modeling function,
-#'	new generator object of a reference class inheriting this class must be 
-#'	implimented and methods that cannot work well with the model should
+#'	data and common methods of models. To add support for a new modeling 
+#'	function, new generator object of a reference class inheriting this class 
+#'	must be implimented and methods that cannot work well with the model should
 #'	be overriden.
 #'
 #'	@field src
