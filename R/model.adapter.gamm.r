@@ -57,6 +57,12 @@ model.adapter.gamm$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	formulaの.を展開する。
+#-------------------------------------------------------------------------------
+model.adapter.gamm$methods(
+	expand.formula = function(f, d, specials = c("s", "te", "ti", "t2")) {
+		.self$callSuper(f, d, specials)
 	}
 )
 
