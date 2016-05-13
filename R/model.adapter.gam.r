@@ -24,10 +24,10 @@ model.adapter.gam$methods(
 		# change specials depending on package name (mgcv::gam or gam:gam)
 		# パッケージに応じてで特殊文字の種類を変える。
 		if (package.name == "mgcv") {
-			return(.self$callSuper(f, d, specials = c("s", "te", "ti", "t2")))
+			return(callSuper(f, d, specials = c("s", "te", "ti", "t2")))
 		} else {
 			require(gam)
-			return(.self$callSuper(f, d, specials = gam::gam.slist))
+			return(callSuper(f, d, specials = gam::gam.slist))
 		}
 	}
 )
