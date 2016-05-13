@@ -172,7 +172,7 @@ test__family <- function(
 	test_that(
 		sprintf("Initialization of 'family' field by call of %s", function.name), {
 			f <- adapter$family
-			if (!is.null(f)) {
+			if (!is.null(family)) {
 				f <- format.family(f, "character")
 				expect_equal(f, family)
 			} else {
@@ -187,10 +187,12 @@ test__family <- function(
 #-------------------------------------------------------------------------------
 #	get.formula()とformulaフィールドのテスト。
 #	Args:
-#		call: 関数呼び出しのcall。
+#		adapter: model.adapterオブジェクト。
 #		function.name: 関数名。
+#		call.or.object:
+#			call由来のインスタンスをテストするときには"call"、
+#			オブジェクト由来のインスタンスをテストするときには"object"。
 #		formula: formulaの取得がうまくいったときに期待されるformula。
-#		env: callを評価する環境。
 #-------------------------------------------------------------------------------
 #'	@describeIn test__all
 #'		test for get.formula() method and initialization of 'formula' field.
@@ -199,24 +201,19 @@ test__family <- function(
 #'
 #'	@examples
 #'	# Test get.formula() method and 'formula' field using a call.
+#'	adapter <- model.adapter(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian)
+#'	)
 #'	test__formula(
-#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		"glm", Sepal.Length ~ ., parent.frame()
+#'		adapter, "glm", "call", 
+#'		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species
 #'	)
 #-------------------------------------------------------------------------------
-test__formula <- function(
-	call, function.name, formula, env = parent.frame()
-) {
+test__formula <- function(adapter, function.name, call.or.object, formula) {
+	message <- "Initialize 'formula' by %s of %s"
+	message <- sprintf(message, call.or.object, function.name)
 	test_that(
-		sprintf("Initialize 'formula' by call of %s", function.name), {
-			adapter <- model.adapter(call)
-			expect_equal(adapter$formula, formula)
-		}
-	)
-	test_that(
-		sprintf("Initialize 'formula' by call of %s", function.name), {
-			object <- eval(call, env)
-			adapter <- model.adapter(object)
+		message, {
 			expect_equal(adapter$formula, formula)
 		}
 	)
@@ -318,7 +315,8 @@ test__all <- function(
 	test__env(call, function.name, parent.frame())
 	test__family(adapter.call, function.name, "call", family)
 	test__family(adapter.object, function.name, "object", family)
-	test__formula(call, function.name, formula, parent.frame())
+	test__formula(adapter.call, function.name, "call", formula)
+	test__formula(adapter.object, function.name, "object", formula)
 	# Unload package
 	if (package.name != "stats") {
 		unloadNamespace(package.name)
