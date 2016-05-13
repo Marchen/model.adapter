@@ -62,7 +62,7 @@ model.adapter.gamm$methods(
 #-------------------------------------------------------------------------------
 model.adapter.gamm$methods(
 	expand.formula = function(f, d, specials = c("s", "te", "ti", "t2")) {
-		.self$callSuper(f, d, specials)
+		callSuper(f, d, specials)
 	}
 )
 
