@@ -146,10 +146,12 @@ test__env <- function(call, function.name, env = parent.frame()){
 #	get.family()関数とfamilyフィールドの初期化のテスト。
 #
 #	Args:
-#		call: 関数呼び出しのcall。
+#		adapter: model.adapterオブジェクト。
 #		function.name: 関数名。
+#		call.or.object:
+#			call由来のインスタンスをテストするときには"call"、
+#			オブジェクト由来のインスタンスをテストするときには"object"。
 #		family: family名の取得がうまくいったときに期待されるfamilyを表す文字列。
-#		env: callを評価する環境。
 #-------------------------------------------------------------------------------
 #'	@describeIn test__all
 #'		test for get.family() method and initialization of 'family' field.
@@ -158,34 +160,19 @@ test__env <- function(call, function.name, env = parent.frame()){
 #'
 #'	@examples
 #'	# Test of get.family() method and 'family' field using a call.
-#'	test__family(
-#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		"glm", family = "gaussian"
+#'	adapter <- model.adapter(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian)
 #'	)
+#'	test__family(adapter, "glm", "call", family = "gaussian")
 #'
 #-------------------------------------------------------------------------------
 test__family <- function(
-	call, function.name, family = NULL, env = parent.frame()
+	adapter, function.name, call.or.object, family = NULL
 ) {
 	test_that(
 		sprintf("Initialization of 'family' field by call of %s", function.name), {
-			adapter <- model.adapter(call)
 			f <- adapter$family
-			if (!is.null(family)) {
-				f <- format.family(f, "character")
-				expect_equal(f, family)
-			} else {
-				expect_is(f, "character")
-				expect_length(f, 0)
-			}
-		}
-	)
-	test_that(
-		sprintf("Initialization of 'family' field by object of %s", function.name), {
-			object <- eval(call, envir = env)
-			adapter <- model.adapter(object)
-			f <- adapter$family
-			if (!is.null(family)) {
+			if (!is.null(f)) {
 				f <- format.family(f, "character")
 				expect_equal(f, family)
 			} else {
@@ -329,7 +316,8 @@ test__all <- function(
 	test__call(adapter.call, call, function.name, "call", object.has.call)
 	test__call(adapter.object, call, function.name, "object", object.has.call)
 	test__env(call, function.name, parent.frame())
-	test__family(call, function.name, family, parent.frame())
+	test__family(adapter.call, function.name, "call", family)
+	test__family(adapter.object, function.name, "object", family)
 	test__formula(call, function.name, formula, parent.frame())
 	# Unload package
 	if (package.name != "stats") {
