@@ -223,6 +223,50 @@ test__formula <- function(
 }
 
 
+#-------------------------------------------------------------------------------
+#	get.data()とdataフィールドのテスト。
+#	Args:
+#		call: 関数呼び出しのcall。
+#		function.name: 関数名。
+#		data: 取得がうまくいったときに期待されるdata。
+#		env: callを評価する環境。
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all
+#'		test for get.data() method and initialization of 'data' field.
+#'
+#'	@export
+#'
+#'	@examples
+#'	# Test get.data() method and 'data' field using a call.
+#'	test__data(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
+#'		"glm", Sepal.Length ~ ., parent.frame()
+#'	)
+#'
+#-------------------------------------------------------------------------------
+test__data <- function(call, function.name, data, env = parent.frame()){
+	test_that(
+		sprintf("Initialize 'data' field by call of %s", function.name), {
+			adapter <- model.adapter(call)
+			for (i in x.vars(adapter$formula)){
+				expect_identical(
+					 adapter$data[[i]], data[[i]], sprintf("Testing %s", i)
+				)
+			}
+		}
+	)
+	test_that(
+		sprintf("Initialize 'data' field by call of %s", function.name), {
+			object <- eval(call, env)
+			adapter <- model.adapter(object)
+			for (i in x.vars(adapter$formula)) {
+			expect_identical(
+				adapter$data[[i]], data[[i]], sprintf("Testing %s", i))
+			}
+		}
+	)
+}
+
 
 #-------------------------------------------------------------------------------
 #	全てのテストを実行
@@ -243,6 +287,7 @@ test__formula <- function(
 #'	@param object.has.call if a model object keep call, specify TRUE.
 #'	@param family
 #'		an expected character literal of family name in 'family' field.
+#'	@param data an data.frame containing data used for modeling.
 #'
 #'	@export
 #'
@@ -251,12 +296,13 @@ test__formula <- function(
 #'	test__all(
 #'		substitute(glm(Sepal.Length ~ ., data = iris, family = gaussian)),
 #'		function.name = "lm",
-#'		family = "gaussian"
+#'		family = "gaussian",
+#'		data = iris
 #'	)
 #-------------------------------------------------------------------------------
 test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),
-	object.has.call = TRUE, family = NULL
+	object.has.call = TRUE, family = NULL, data = NULL
 ) {
 	# Load package
 	library(package.name, character.only = TRUE)

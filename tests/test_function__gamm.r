@@ -6,6 +6,7 @@ test__all(
 	function.name = "gamm",
 	formula = Sepal.Length ~ s(Petal.Length),
 	object.has.call = FALSE,
-	family = "gaussian"
+	family = "gaussian",
+	data = iris
 )
 

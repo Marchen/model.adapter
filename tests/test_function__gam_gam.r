@@ -6,6 +6,7 @@ test__all(
 	function.name = "gam",
 	formula = Sepal.Length ~ Petal.Length,
 	package.name = "gam",
-	family = "gaussian"
+	family = "gaussian",
+	data = iris
 )
 

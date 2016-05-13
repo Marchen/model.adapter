@@ -5,6 +5,7 @@ test__all(
 	),
 	function.name = "glmer",
 	formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species + (1 | Species),
-	family = "Gamma"
+	family = "Gamma",
+	data = iris
 )
 
