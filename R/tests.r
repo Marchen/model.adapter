@@ -48,35 +48,43 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #		object.has.call: オブジェクトがcallを保持しているときにはTRUE。
 #		env: callを評価する環境。
 #-------------------------------------------------------------------------------
+#'	@export
 #'	@describeIn test__all
 #'		 test for get.call() method and initialization of 'call' field.
-#'	@export
+#'
+#'	@param adapter an model.adapter object.
+#'	@param call a call for model function.
+#'	@param function.name a character string of function name.
+#'	@param call.or.object
+#'		if current test is a test for call, "call". 
+#'		If current test is a test for object, "object".
+#'	@param object.has.call
+#'		if model object has call, set TRUE.
 #'
 #'	@examples
-#	# Test of get.call() method and 'call' field using a call for model function.
-#'	test__call(glm(Sepal.Length ~ ., data = iris, family = gaussian), "glm")
-#'
+#'	# Test of get.call() method and 'call' field using a call for model function.
+#'	adapter <- model.adapter(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian
+#'	)
+#'	call <- substitute((glm(Sepal.Length ~ ., data = iris, family = gaussian))
+#'	test__call(adapter, call, "glm", "call")
+#'	
 #'	# Test of get.call() method and 'call' field using a model object.
 #'	object <- glm(Sepal.Length ~ ., data = iris, family = gaussian)
-#'	test__call(object, "glm")
+#'	adapter <- model.adapter(object)
+#'	test__call(adapter, call, "glm", "object")
 #'
 #-------------------------------------------------------------------------------
 test__call <- function(
-	call, function.name, object.has.call = TRUE, env = parent.frame()
+	adapter, call, function.name, call.or.object, object.has.call = TRUE
 ) {
-	test_that(
-		sprintf("Initialization of 'call' field by call of %s", function.name), {
-			adapter <- model.adapter(call)
-			expect_is(adapter$call, "call")
-			expect_identical(
-				adapter$call, match.generic.call(call)
-			)
-		}
-	)
-	test_that(
-		sprintf("Initialization 'call' field by object of %s", function.name), {
-			object <- eval(call, envir = env)
-			adapter <- model.adapter(object)
+	message <- "Initialization of 'call' field by %s of %s"
+	message <- sprintf(message, call.or.object, function.name)
+	test_that(message, {
+		expect_is(adapter$call, "call")
+		if (call.or.object == "call"){
+			expect_identical(adapter$call, match.generic.call(call))
+		} else {
 			if (object.has.call) {
 				expect_is(adapter$call, "call")
 				expect_equal(
@@ -87,7 +95,7 @@ test__call <- function(
 				expect_identical(adapter$call, call("<undef>"))
 			}
 		}
-	)
+	})
 }
 
 
@@ -304,11 +312,17 @@ test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),
 	object.has.call = TRUE, family = NULL, data = NULL
 ) {
-	# Load package
+	# Load package.
 	library(package.name, character.only = TRUE)
-	# Run tests
+	# Test initialization.
 	test__initialize(call, function.name, parent.frame())
-	test__call(call, function.name, object.has.call, parent.frame())
+	# Prepare for tests.
+	adapter.call <- model.adapter(call)
+	object <- eval(call, parent.frame())
+	adapter.object <- model.adapter(object)
+	# Test methods and fields.
+	test__call(adapter.call, call, function.name, "call", object.has.call)
+	test__call(adapter.object, call, function.name, "object", object.has.call)
 	test__env(call, function.name, parent.frame())
 	test__family(call, function.name, family, parent.frame())
 	test__formula(call, function.name, formula, parent.frame())
