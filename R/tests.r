@@ -80,22 +80,24 @@ test__call <- function(
 ) {
 	message <- "Initialization of 'call' field by %s of %s"
 	message <- sprintf(message, call.or.object, function.name)
-	test_that(message, {
-		expect_is(adapter$call, "call")
-		if (call.or.object == "call"){
-			expect_identical(adapter$call, match.generic.call(call))
-		} else {
-			if (object.has.call) {
-				expect_is(adapter$call, "call")
-				expect_equal(
-					adapter$call,
-					match.generic.call(call)
-				)
+	test_that(
+		message, {
+			expect_is(adapter$call, "call")
+			if (call.or.object == "call"){
+				expect_identical(adapter$call, match.generic.call(call))
 			} else {
-				expect_identical(adapter$call, call("<undef>"))
+				if (object.has.call) {
+					expect_is(adapter$call, "call")
+					expect_equal(
+						adapter$call,
+						match.generic.call(call)
+					)
+				} else {
+					expect_identical(adapter$call, call("<undef>"))
+				}
 			}
 		}
-	})
+	)
 }
 
 
