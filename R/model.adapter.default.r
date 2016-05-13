@@ -86,6 +86,9 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #'		same as original formula specified in the call for model function or 
 #'		the model object.
 #'
+#'	@field data
+#'		a data.frame used for modeling.
+#'
 #'	@export
 #-------------------------------------------------------------------------------
 #	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
@@ -117,7 +120,8 @@ model.adapter.default <- setRefClass(
 		call = "call",
 		env = "environment",
 		family = "character",
-		formula = "formula"
+		formula = "formula",
+		data = "data.frame"
 	)
 )
 
@@ -180,6 +184,11 @@ model.adapter.default$methods(
 			formula <<- .self$get.formula(call, .self$env)
 		} else {
 			formula <<- .self$get.formula(src$object, .self$env)
+		}
+		# Initialize data field. / dataフィールドの初期化。
+		d <- .self$get.data(x, envir = .self$env)
+		if (!is.null(d)){
+			data <<- .self$get.data(x)
 		}
 	}
 )
