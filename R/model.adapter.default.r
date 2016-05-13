@@ -357,15 +357,18 @@ model.adapter.default$methods(
 #	formulaの.を展開する。
 #-------------------------------------------------------------------------------
 model.adapter.default$methods(
-	expand.formula = function(f, d, specials = NULL) {
+	expand.formula = function(f, d, specials = NULL, package.name = NULL) {
 		"
 		Expand . in formula.
 		\\describe{
 			\\item{\\code{f}}{a formula to expand.}
 			\\item{\\code{d}}{a data.frame used to expand . in formula.}
-			\\item{\\code{specials}}{
+			\\item{\\code{specials = NULL}}{
 				special characterss passed to 
 				\code{\link[stats]{terms.formula}}.
+			}
+			\\item{\\code{package.name = NULL}}{
+				a character literal of package name having the model function.
 			}
 		}
 		"
