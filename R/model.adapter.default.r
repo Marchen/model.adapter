@@ -202,7 +202,7 @@ model.adapter.default$methods(
 		} else {
 			formula <<- .self$get.formula(src$object, .self$env)
 		}
-		formula <<- expand.formula(formula, data = data)
+		formula <<- .self$expand.formula(formula, data)
 	}
 )
 
