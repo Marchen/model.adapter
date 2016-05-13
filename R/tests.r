@@ -43,10 +43,13 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #	get.call()関数とcallフィールドの初期化のテスト。
 #
 #	Args:
+#		adapter: model.adapterオブジェクト。
 #		call: 関数呼び出しのcall。
 #		function.name: 関数名。
+#		call.or.object:
+#			call由来のインスタンスをテストするときには"call"、
+#			オブジェクト由来のインスタンスをテストするときには"object"。
 #		object.has.call: オブジェクトがcallを保持しているときにはTRUE。
-#		env: callを評価する環境。
 #-------------------------------------------------------------------------------
 #'	@export
 #'	@describeIn test__all
