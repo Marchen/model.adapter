@@ -46,3 +46,20 @@ model.adapter.RandomForest$methods(
 	}
 )
 
+
+#-------------------------------------------------------------------------------
+#	モデル作成に使われたデータを返す。
+#-------------------------------------------------------------------------------
+model.adapter.RandomForest$methods(
+	get.data = function(x, envir = parent.frame()) {
+		if (is.call(x)){
+			return(callSuper(x, envir))
+		} else {
+			input <- x@data@get("input")
+			response <- x@data@get("response")
+			d <- cbind(input, response)
+		}
+	}
+)
+
+

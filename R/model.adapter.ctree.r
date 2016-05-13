@@ -41,3 +41,19 @@ model.adapter.BinaryTree$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデル作成に使われたデータを返す。
+#-------------------------------------------------------------------------------
+model.adapter.BinaryTree$methods(
+	get.data = function(x, envir = parent.frame()) {
+		if (is.call(x)) {
+		   	return(callSuper(x, envir))
+		} else {
+			# Shared method with cforest / cforestと同じ手法。
+			adapter <- model.adapter.RandomForest(x, environment())
+			return(adapter$get.data(x, envir))
+		}
+	}
+)
+
+
