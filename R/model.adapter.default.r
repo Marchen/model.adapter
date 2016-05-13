@@ -366,7 +366,7 @@ model.adapter.default$methods(
 			\\item{\\code{d}}{a data.frame used to expand . in formula.}
 			\\item{\\code{specials = NULL}}{
 				special characterss passed to 
-				\code{\link[stats]{terms.formula}}.
+				\\code{\\link[stats]{terms.formula}}.
 			}
 			\\item{\\code{package.name = NULL}}{
 				a character literal of package name having the model function.
