@@ -189,10 +189,10 @@ test__family <- function(
 #	Args:
 #		call: 関数呼び出しのcall。
 #		function.name: 関数名。
-#		formula: family名の取得がうまくいったときに期待されるformula。
+#		formula: formulaの取得がうまくいったときに期待されるformula。
 #		env: callを評価する環境。
 #-------------------------------------------------------------------------------
-#'	@describeIn test_all
+#'	@describeIn test__all
 #'		test for get.formula() method and initialization of 'formula' field.
 #'
 #'	@export
