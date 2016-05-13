@@ -214,7 +214,7 @@ test__formula <- function(
 		}
 	)
 	test_that(
-		sprintf("Initialize 'formula' bu call of %s", function.name), {
+		sprintf("Initialize 'formula' by call of %s", function.name), {
 			object <- eval(call, env)
 			adapter <- model.adapter(object)
 			expect_equal(adapter$formula, formula)
