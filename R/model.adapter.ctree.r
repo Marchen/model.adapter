@@ -34,9 +34,14 @@ model.adapter.BinaryTree$methods(
 #-------------------------------------------------------------------------------
 model.adapter.BinaryTree$methods(
 	get.formula = function(x, envir = parent.frame()) {
-		# Shared method with cforest / cforestと同じ手法。
-		adapter <- model.adapter.RandomForest(x, envir)
-		return(adapter$get.formula(x, envir))
+		if (is.call(x)) {
+			x <- match.call(cforest, x)
+			return(eval(x$formula, envir))
+		} else {
+			# Shared method with cforest / cforestと同じ手法。
+			adapter <- model.adapter.RandomForest(x, environment())
+			return(adapter$get.formula(x, envir))
+		}
 	}
 )
 
