@@ -4,5 +4,5 @@ test__all(
 		lme(Sepal.Length ~ ., random = ~1 | Species, data = iris)
 	),
 	function.name = "lme",
-	formula = Sepal.Length ~ .
+	formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species
 )
