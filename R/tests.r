@@ -20,6 +20,7 @@ library(testthat)
 #'	object <- lm(Sepal.Length ~ ., data = iris)
 #'	test__initialize(object, "lm")
 #'
+#'
 #-------------------------------------------------------------------------------
 test__initialize <- function(call, function.name, env = parent.frame()) {
 	class.name <- get.class.name(function.name)
@@ -165,6 +166,7 @@ test__env <- function(call, function.name, env = parent.frame()){
 #'	)
 #'	test__family(adapter, "glm", "call", family = "gaussian")
 #'
+#'
 #-------------------------------------------------------------------------------
 test__family <- function(
 	adapter, function.name, call.or.object, family = NULL
@@ -208,6 +210,8 @@ test__family <- function(
 #'		adapter, "glm", "call", 
 #'		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species
 #'	)
+#'
+#'
 #-------------------------------------------------------------------------------
 test__formula <- function(adapter, function.name, call.or.object, formula) {
 	message <- "Initialize 'formula' by %s of %s"
@@ -242,6 +246,7 @@ test__formula <- function(adapter, function.name, call.or.object, formula) {
 #'	)
 #'	test__data(adapter, "glm", "call", iris)
 #'
+#'
 #-------------------------------------------------------------------------------
 test__data <- function(adapter, function.name, call.or.object, data){
 	message <- "Initialize 'data' field by %s of %s"
@@ -273,7 +278,7 @@ test__data <- function(adapter, function.name, call.or.object, data){
 #'
 #'	@param call call for a function to test.
 #'	@param function.name character literal of function name to test.
-#'	@param an expected formula in 'formula' field.
+#'	@param formula an expected formula in 'formula' field.
 #'	@param object.has.call if a model object keep call, specify TRUE.
 #'	@param family
 #'		an expected character literal of family name in 'family' field.
@@ -289,6 +294,8 @@ test__data <- function(adapter, function.name, call.or.object, data){
 #'		family = "gaussian",
 #'		data = iris
 #'	)
+#'
+#'
 #-------------------------------------------------------------------------------
 test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),
