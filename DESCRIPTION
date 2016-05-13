@@ -1,18 +1,23 @@
 Package: model.adapter
 Version: 0.0-1
-Title: Model abstraction layer for statistical/machine learning models.
+Title: model.adapter: a model abstraction layer for statistical/machine learning models.
 Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
 Maintainer: Michio Oguro <mogu@biology.tohoku.ac.jp>
-Description: Interface for cross validation and parameter selection for several
-    models.
+Description:
+    This package provides standard way to access data and common methods for
+    several kind of models. Currently, lm, glm, lme, glmmML, lmer, glmer,
+    ctree, cforest, randomForest, gbm, svm, tree, rpart, gam, gamm,
+    and ranger are supported. 
 License: BSD
 Depends:
     R (>= 3.0.0),
     base,
-    stats
+    stats,
+    methods
 Imports:
     base,
-    stats
+    stats,
+    methods
 Suggests:
     randomForest,
     party,
