@@ -223,10 +223,12 @@ test__formula <- function(adapter, function.name, call.or.object, formula) {
 #-------------------------------------------------------------------------------
 #	get.data()とdataフィールドのテスト。
 #	Args:
-#		call: 関数呼び出しのcall。
+#		adapter: model.adapterオブジェクト。
 #		function.name: 関数名。
+#		call.or.object:
+#			call由来のインスタンスをテストするときには"call"、
+#			オブジェクト由来のインスタンスをテストするときには"object"。
 #		data: 取得がうまくいったときに期待されるdata。
-#		env: callを評価する環境。
 #-------------------------------------------------------------------------------
 #'	@describeIn test__all
 #'		test for get.data() method and initialization of 'data' field.
@@ -235,30 +237,21 @@ test__formula <- function(adapter, function.name, call.or.object, formula) {
 #'
 #'	@examples
 #'	# Test get.data() method and 'data' field using a call.
-#'	test__data(
-#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		"glm", Sepal.Length ~ ., parent.frame()
+#'	adapter <- model.adapter(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian)
 #'	)
+#'	test__data(adapter, "glm", "call", iris)
 #'
 #-------------------------------------------------------------------------------
-test__data <- function(call, function.name, data, env = parent.frame()){
+test__data <- function(adapter, function.name, call.or.object, data){
+	message <- "Initialize 'data' field by %s of %s"
+	message <- sprintf(message, call.or.object, function.name)
 	test_that(
-		sprintf("Initialize 'data' field by call of %s", function.name), {
-			adapter <- model.adapter(call)
+		message, {
 			for (i in x.vars(adapter$formula)){
 				expect_identical(
 					 adapter$data[[i]], data[[i]], sprintf("Testing %s", i)
 				)
-			}
-		}
-	)
-	test_that(
-		sprintf("Initialize 'data' field by call of %s", function.name), {
-			object <- eval(call, env)
-			adapter <- model.adapter(object)
-			for (i in x.vars(adapter$formula)) {
-			expect_identical(
-				adapter$data[[i]], data[[i]], sprintf("Testing %s", i))
 			}
 		}
 	)
@@ -317,6 +310,8 @@ test__all <- function(
 	test__family(adapter.object, function.name, "object", family)
 	test__formula(adapter.call, function.name, "call", formula)
 	test__formula(adapter.object, function.name, "object", formula)
+	test__data(adapter.call, function.name, "call", data)
+	test__data(adapter.object, function.name, "object", data)
 	# Unload package
 	if (package.name != "stats") {
 		unloadNamespace(package.name)
