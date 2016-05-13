@@ -58,6 +58,23 @@ model.adapter.gamm$methods(
 
 
 #-------------------------------------------------------------------------------
+#	モデルのdataを取得する。
+#-------------------------------------------------------------------------------
+model.adapter.gamm$methods(
+	get.data = function(x, envir = parent.frame()) {
+		if (is.call(x)){
+			return(callSuper(x, envir))
+		} else {
+			d <- x$gam$model
+			var.names <- names(attr(x$gam$terms, "dataClasses"))
+			d <- d[var.names]
+			return(d)
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
 #	formulaの.を展開する。
 #-------------------------------------------------------------------------------
 model.adapter.gamm$methods(
