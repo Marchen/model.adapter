@@ -341,6 +341,30 @@ model.adapter.default$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	formulaの.を展開する。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	expand.formula = function(f, d, specials = NULL) {
+		"
+		Expand . in formula.
+		\\describe{
+			\\item{\\code{f}}{a formula to expand.}
+			\\item{\\code{d}}{a data.frame used to expand . in formula.}
+			\\item{\\code{specials}}{
+				special characterss passed to 
+				\code{\link[stats]{terms.formula}}.
+			}
+		}
+		"
+		result <- terms(f, data = d, specials = specials)
+		attributes(result) <- NULL
+		result <- as.formula(result)
+		return(result)
+	}
+)
+
+
 for (field.name in names(model.adapter.default$fields)) {
 	model.adapter.default$lock(n)
 }
