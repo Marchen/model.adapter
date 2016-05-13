@@ -244,3 +244,35 @@ make.call.or.object <- function(call, env) {
 	}
 }
 
+
+#-------------------------------------------------------------------------------
+#	formulaから説明変数名を取得する。
+#	Args:
+#		formula: 説明変数名を取り出す式。
+#		data: .を展開するのに使うdata.frame。
+#		specials: terms.formulaに渡す特殊文字。
+#	Value:
+#		説明変数名が格納された文字列ベクトル。
+#-------------------------------------------------------------------------------
+#'	Get names of explanatory variables from formula.
+#'
+#'	@param formula a formula object from which variable names are obtained.
+#'	@param data a data.frame used to expand . in the formula.
+#'	@param specials 
+#'		special characterss passed to \code{\link[stats]{terms.formula}}.
+#'
+#' @return character vector of names of explanatory variables.
+#' @export
+#'
+#' @examples
+#'		data(iris)
+#'		f <- Sepal.Length ~ .
+#'		x.vars(f, data = iris)
+#-------------------------------------------------------------------------------
+x.vars <- function(formula, data = NULL, specials = NULL){
+	t <- terms(formula, data = data, specials = specials)
+	return(attr(t, "term.labels"))
+}
+
+
+
