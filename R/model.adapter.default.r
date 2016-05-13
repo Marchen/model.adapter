@@ -293,25 +293,32 @@ model.adapter.default$methods(
 model.adapter.default$methods(
 	get.data = function(x, envir = parent.frame()) {
 		"
-			Get data used for modeling.
-			\\describe{
-				\\item{\\code{x}}{
-					a model object/call from which data is extracted.
-				}
-				\\item{\\code{envir = parent.frame()}}{
-					an environment in which call is evaluated.
-				}
+		Get data used for modeling.
+		\\describe{
+			\\item{\\code{x}}{
+				a model object/call from which data is extracted.
 			}
-			"
-		if (is.object(x)) {
-			if (isS4(x)) {
-				return(x@data)
-			} else {
-				return(x$data)
+			\\item{\\code{envir = parent.frame()}}{
+				an environment in which call is evaluated.
 			}
-		} else {
-			eval(x$data, envir)
 		}
+		"
+		if (is.call(x)) {
+			d <- eval(x$data, envir)
+		} else {
+			if (isS4(x)) {
+				d <- x@data
+			} else {
+				d <- x$data
+			}
+			if (is.null(d)) {
+				# When couldn't retrieve data from object, get it from call.
+				# オブジェクトからdataを取得できなかったらcallから取得を試みる。
+				cl <- match.generic.call(.self$get.call(x))
+				d <- eval(cl$data, envir)
+			}
+		}
+		return(d)
 	}
 )
 
