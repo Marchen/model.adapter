@@ -191,17 +191,18 @@ model.adapter.default$methods(
 		if (!is.null(family.name)) {
 			family <<- format.family(family.name, "character")
 		}
+		# Initialize data field. / dataフィールドの初期化。
+		d <- .self$get.data(x, envir = .self$env)
+		if (!is.null(d)){
+			data <<- .self$get.data(x)
+		}
 		# Initialize formula field. / formulaフィールドの初期化。
 		if (.self$has.call()) {
 			formula <<- .self$get.formula(call, .self$env)
 		} else {
 			formula <<- .self$get.formula(src$object, .self$env)
 		}
-		# Initialize data field. / dataフィールドの初期化。
-		d <- .self$get.data(x, envir = .self$env)
-		if (!is.null(d)){
-			data <<- .self$get.data(x)
-		}
+		formula <<- expand.formula(formula, data = data)
 	}
 )
 
@@ -284,6 +285,38 @@ model.adapter.default$methods(
 
 
 #-------------------------------------------------------------------------------
+#	モデルのdataを取得する。
+#	Args:
+#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
+#		envir: xに入ったcallを評価する環境。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	get.data = function(x, envir = parent.frame()) {
+		"
+			Get data used for modeling.
+			\\describe{
+				\\item{\\code{x}}{
+					a model object/call from which data is extracted.
+				}
+				\\item{\\code{envir = parent.frame()}}{
+					an environment in which call is evaluated.
+				}
+			}
+			"
+		if (is.object(x)) {
+			if (isS4(x)) {
+				return(x@data)
+			} else {
+				return(x$data)
+			}
+		} else {
+			eval(x$data, envir)
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
 #	モデルのformulaを取得する。
 #	Args:
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
@@ -316,38 +349,6 @@ model.adapter.default$methods(
 				f <- args[sapply(args, is.formula)][[1]]
 				return(f)
 			}
-		}
-	}
-)
-
-
-#-------------------------------------------------------------------------------
-#	モデルのdataを取得する。
-#	Args:
-#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
-#		envir: xに入ったcallを評価する環境。
-#-------------------------------------------------------------------------------
-model.adapter.default$methods(
-	get.data = function(x, envir = parent.frame()) {
-		"
-		Get data used for modeling.
-		\\describe{
-			\\item{\\code{x}}{
-				a model object/call from which data is extracted.
-			}
-			\\item{\\code{envir = parent.frame()}}{
-				an environment in which call is evaluated.
-			}
-		}
-		"
-		if (is.object(x)) {
-			if (isS4(x)) {
-				return(x@data)
-			} else {
-				return(x$data)
-			}
-		} else {
-			eval(x$data, envir)
 		}
 	}
 )
