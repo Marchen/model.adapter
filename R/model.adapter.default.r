@@ -293,7 +293,9 @@ model.adapter.default$methods(
 model.adapter.default$methods(
 	get.data = function(x, envir = parent.frame()) {
 		"
-		Get data used for modeling.
+		Get a data.frame containing the data used for modeling.
+		If data is not available this method returns empty data.frame made by
+		data.frame().
 		\\describe{
 			\\item{\\code{x}}{
 				a model object/call from which data is extracted.
