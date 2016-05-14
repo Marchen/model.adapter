@@ -10,6 +10,9 @@
 #'	Following methods are overriden.
 #'
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.lmerMod
+#'	@exportClass model.adapter.lmerMod
 #-------------------------------------------------------------------------------
 model.adapter.lmerMod <- setRefClass(
 	"model.adapter.lmerMod", contains = "model.adapter"

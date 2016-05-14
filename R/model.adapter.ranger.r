@@ -10,6 +10,9 @@
 #'	Following methods are overriden.
 #'
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.ranger
+#'	@exportClass model.adapter.ranger
 #-------------------------------------------------------------------------------
 model.adapter.ranger <- setRefClass(
 	"model.adapter.ranger", contains = "model.adapter"

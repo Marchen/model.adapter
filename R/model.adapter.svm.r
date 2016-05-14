@@ -10,6 +10,9 @@
 #'	Following methods are overriden.
 #'
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.svm
+#'	@exportClass model.adapter.svm
 #-------------------------------------------------------------------------------
 model.adapter.svm <- setRefClass(
 	"model.adapter.svm", contains = "model.adapter"

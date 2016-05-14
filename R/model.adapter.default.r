@@ -28,6 +28,8 @@
 #	Value:
 #		model.adapterクラスを継承したクラスのオブジェクト。
 #
+#'	@family model.adapter
+#'	@export
 #-------------------------------------------------------------------------------
 model.adapter <- function(x, env = parent.frame(1L)) {
 	original.call <- make.call.or.object(substitute(x), env)
@@ -97,7 +99,6 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #'		data.frame with 0 columns x 0 rows. To test this field have valid
 #'		data.frame use \code{has.data()} method.
 #'
-#'	@export
 #-------------------------------------------------------------------------------
 #	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
 #	ジェネレーターオブジェクト。
@@ -124,6 +125,7 @@ model.adapter <- function(x, env = parent.frame(1L)) {
 #				元のデータフレームが取得できないことがある。
 #		Methods:
 #			以下を参照。
+#'	@export model.adapter.default
 #-------------------------------------------------------------------------------
 model.adapter.default <- setRefClass(
 	"model.adapter",

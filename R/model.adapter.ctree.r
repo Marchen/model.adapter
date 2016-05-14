@@ -13,6 +13,9 @@
 #'	Following methods are overriden.
 #
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.BinaryTree
+#'	@exportClass model.adapter.BinaryTree
 #-------------------------------------------------------------------------------
 model.adapter.BinaryTree <- setRefClass(
 	"model.adapter.BinaryTree", contains = "model.adapter"

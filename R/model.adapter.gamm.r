@@ -13,6 +13,9 @@
 #'	Following methods are overriden.
 #'
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.gamm
+#'	@exportClass model.adapter.gamm
 #-------------------------------------------------------------------------------
 model.adapter.gamm <- setRefClass(
 	"model.adapter.gamm", contains = "model.adapter"

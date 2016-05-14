@@ -13,6 +13,9 @@
 #'	Following methods are overriden.
 #
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.RandomForest
+#'	@exportClass model.adapter.RandomForest
 #-------------------------------------------------------------------------------
 model.adapter.RandomForest <- setRefClass(
 	"model.adapter.RandomForest", contains = "model.adapter"

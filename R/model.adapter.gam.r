@@ -10,6 +10,9 @@
 #'	Following methods are overriden.
 #'
 #'	@include model.adapter.default.r
+#'	@family model.adapter
+#'	@export model.adapter.gam
+#'	@exportClass model.adapter.gam
 #-------------------------------------------------------------------------------
 model.adapter.gam <- setRefClass(
 	"model.adapter.gam", contains = "model.adapter"
