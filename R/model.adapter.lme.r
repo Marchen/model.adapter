@@ -38,12 +38,12 @@ model.adapter.lme$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		# Get call and convert it to a list / callを取得しリストに変換。
 		if (is.object(x)) {
-			call <- x$call
+			cl <- x$call
 		} else {
-			call <- x
+			cl <- x
 		}
-		call <- match.call(lme, call)
-		args <- lapply(as.list(call), eval, envir = envir)
+		cl <- match.call(lme, cl)
+		args <- lapply(as.list(cl), eval, envir = envir)
 		return(args$fixed)
 	}
 )
