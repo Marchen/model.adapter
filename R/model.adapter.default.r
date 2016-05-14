@@ -1,4 +1,13 @@
 #-------------------------------------------------------------------------------
+#	モデルの違いを吸収するアダプタークラスのオブジェクトを作る関数。
+#
+#	Args:
+#		x: モデルオブジェクト、もしくはモデル関数の呼び出し。
+#
+#	Value:
+#		model.adapterクラスを継承したクラスのオブジェクト。
+#
+#-------------------------------------------------------------------------------
 #'	Initialize a model.adapter object.
 #'
 #'	This function makes an object of a derived class of \emph{model.adapter} 
@@ -7,6 +16,10 @@
 #'
 #'	@param x
 #'		an object of supported models or a call for a model function.
+#'	@param env
+#'		an environment where function call in 'x' is evaluated.
+#'	@param ...
+#'		other arguments passed to methods.
 #'	@return
 #'		an object of derived class of \code{\link{model.adapter-class}}.
 #'	@section For developpers:
@@ -19,15 +32,6 @@
 #'		
 #'	@section Adding support for new function:
 #'		To be continued...
-#-------------------------------------------------------------------------------
-#	モデルの違いを吸収するアダプタークラスのオブジェクトを作る関数。
-#
-#	Args:
-#		x: モデルオブジェクト、もしくはモデル関数の呼び出し。
-#
-#	Value:
-#		model.adapterクラスを継承したクラスのオブジェクト。
-#
 #'	@family model.adapter
 #'	@export
 #-------------------------------------------------------------------------------
@@ -46,6 +50,32 @@ model.adapter <- function(x, env = parent.frame(1L), ...) {
 }
 
 
+#-------------------------------------------------------------------------------
+#	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
+#	ジェネレーターオブジェクト。
+#	この基底クラスを継承して、様々なモデルに対応させる。
+#
+#		Fields:
+#			src: 初期化に使った情報を格納。
+#				src$call: 初期化に使ったcall。
+#				src$object: 初期化に使ったオブジェクト。
+#				callで初期化された場合、src$objectはNULL。
+#				objectで初期化された場合、src$callはNULL。
+#			call:
+#				モデルの呼び出し式。
+#			env:
+#				callを評価する環境。
+#			family:
+#				モデルのファミリーを表す文字列。
+#				familyがないモデルの場合はcharacter(0)。
+#			formula:
+#				モデル式。
+#			data:
+#				モデル作成に使われたデータ。
+#				モデルオブジェクトはデータを保持していないことがあるので、
+#				元のデータフレームが取得できないことがある。
+#		Methods:
+#			以下を参照。
 #-------------------------------------------------------------------------------
 #'	Abstraction layer for model functions/objects.
 #'
@@ -99,32 +129,6 @@ model.adapter <- function(x, env = parent.frame(1L), ...) {
 #'		data.frame with 0 columns x 0 rows. To test this field have valid
 #'		data.frame use \code{has.data()} method.
 #'
-#-------------------------------------------------------------------------------
-#	モデリング関数の違いを吸収するReference Class、model.adapterクラスの
-#	ジェネレーターオブジェクト。
-#	この基底クラスを継承して、様々なモデルに対応させる。
-#
-#		Fields:
-#			src: 初期化に使った情報を格納。
-#				src$call: 初期化に使ったcall。
-#				src$object: 初期化に使ったオブジェクト。
-#				callで初期化された場合、src$objectはNULL。
-#				objectで初期化された場合、src$callはNULL。
-#			call:
-#				モデルの呼び出し式。
-#			env:
-#				callを評価する環境。
-#			family:
-#				モデルのファミリーを表す文字列。
-#				familyがないモデルの場合はcharacter(0)。
-#			formula:
-#				モデル式。
-#			data:
-#				モデル作成に使われたデータ。
-#				モデルオブジェクトはデータを保持していないことがあるので、
-#				元のデータフレームが取得できないことがある。
-#		Methods:
-#			以下を参照。
 #'	@export model.adapter.default
 #-------------------------------------------------------------------------------
 model.adapter.default <- setRefClass(
