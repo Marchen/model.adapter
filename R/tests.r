@@ -245,15 +245,24 @@ test__formula <- function(adapter, function.name, call.or.object, formula) {
 #'
 #'
 #-------------------------------------------------------------------------------
-test__data <- function(adapter, function.name, call.or.object, data){
+test__data <- function(
+	adapter, function.name, call.or.object, object.has.call, object.has.data,
+	data
+) {
 	message <- "Initialize 'data' field by %s of %s"
 	message <- sprintf(message, call.or.object, function.name)
 	test_that(
 		message, {
-			for (i in x.vars(adapter$formula)){
-				expect_identical(
-					 adapter$data[[i]], data[[i]], sprintf("Testing %s", i)
-				)
+			if (call.or.object == "call" | object.has.call | object.has.data) {
+				for (i in x.vars(adapter$formula)) {
+					expect_identical(
+						adapter$data[[i]], data[[i]], sprintf("Testing %s", i)
+					)
+				}
+			} else {
+				expect_is(adapter$data, "data.frame")
+				expect_equal(nrow(adapter$data), 0)
+				expect_equal(ncol(adapter$data), 0)
 			}
 		}
 	)
@@ -277,6 +286,8 @@ test__data <- function(adapter, function.name, call.or.object, data){
 #'	@param function.name character literal of function name to test.
 #'	@param formula an expected formula in 'formula' field.
 #'	@param object.has.call if a model object keep call, specify TRUE.
+#'	@param object.has.data 
+#'		if the model object keep original data used for modeling, specify TRUE.
 #'	@param family
 #'		an expected character literal of family name in 'family' field.
 #'	@param data an data.frame containing data used for modeling.
@@ -296,8 +307,7 @@ test__data <- function(adapter, function.name, call.or.object, data){
 #-------------------------------------------------------------------------------
 test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),
-	object.has.call = TRUE, family = NULL, data = NULL
-) {
+	object.has.call = TRUE, object.has.data = TRUE, family = NULL, data = NULL) {
 	# Load package.
 	library(package.name, character.only = TRUE)
 	# Test initialization.
@@ -314,8 +324,14 @@ test__all <- function(
 	test__family(adapter.object, function.name, "object", family)
 	test__formula(adapter.call, function.name, "call", formula)
 	test__formula(adapter.object, function.name, "object", formula)
-	test__data(adapter.call, function.name, "call", data)
-	test__data(adapter.object, function.name, "object", data)
+	test__data(
+		adapter.call, function.name, "call", object.has.call,
+		object.has.data, data
+	)
+	test__data(
+		adapter.object, function.name, "object", object.has.call,
+		object.has.data, data
+	)
 	# Unload package
 	if (package.name != "stats") {
 		unloadNamespace(package.name)
