@@ -31,7 +31,7 @@
 #'	@family model.adapter
 #'	@export
 #-------------------------------------------------------------------------------
-model.adapter <- function(x, env = parent.frame(1L)) {
+model.adapter <- function(x, env = parent.frame(1L), ...) {
 	original.call <- make.call.or.object(substitute(x), env)
 	if (is.call(original.call)) {
 		fun.name <- get.function(original.call, "character")

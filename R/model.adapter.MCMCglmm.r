@@ -18,6 +18,20 @@ model.adapter.MCMCglmm <- setRefClass(
 	"model.adapter.MCMCglmm", contains = "model.adapter"
 )
 
+#-------------------------------------------------------------------------------
+#	Initialize call field using match.generic.call().
+#	match.generic.call()でcallを初期化。
+#-------------------------------------------------------------------------------
+model.adapter.MCMCglmm$methods(
+	initialize = function(x, envir = parent.frame(4L), data = NULL, ...) {
+		x <- substitute(x)
+		callSuper(x, envir, caller = "subclass")
+		if (!is.null(data)){
+			data <<- data
+		}
+	}
+)
+
 
 #-------------------------------------------------------------------------------
 #	モデルのdataを取得する。
