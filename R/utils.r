@@ -260,18 +260,49 @@ make.call.or.object <- function(call, env) {
 #'	@param data a data.frame used to expand . in the formula.
 #'	@param specials 
 #'		special characterss passed to \code{\link[stats]{terms.formula}}.
+#'	@param type
+#'		a character literal specifying type of explanatory variables to get.
 #'
-#' @return character vector of names of explanatory variables.
-#' @export
+#'	@return 
+#'		a character vector of names of explanatory variables.
+#'		If \emph{type} is "all", returns all explanatory variables in the
+#'		formula as is.
+#'		If \emph{type| is "base", this function returns all explanatory 
+#'		variables in their basic form.
 #'
-#' @examples
+#'	@examples
+#'		# Getting explanatory variables from formula.
+#'		# . in formula is expanded to full form.
 #'		data(iris)
 #'		f <- Sepal.Length ~ .
 #'		x.vars(f, data = iris)
+#'
+#'		# Getting explanatory variables in their basic form.
+#'		f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width^2)
+#'		x.vars(f, data = iris, type = "base")
+#'
+#' @export
 #-------------------------------------------------------------------------------
-x.vars <- function(formula, data = NULL, specials = NULL){
+x.names <- function(
+	formula, data = NULL, specials = NULL, type = c("all", "base")
+) {
+	# Get all explanatory variables from formula.
+	type = match.arg(type)
 	t <- terms(formula, data = data, specials = specials)
-	return(attr(t, "term.labels"))
+	vars <- attr(t, "term.labels")
+	if (type == "all") {
+		return(vars)
+	}
+	# Get basic form of explanatory variables.
+	# Remove functions and factorials
+	vars <- do.call(c, sapply(vars, strsplit, split = ":"))
+	factorials <- "\\^[1-9]*"
+	fun.begin <- "^.*\\("
+	fun.end <- "\\)$"
+	remove.chars <- paste(factorials, fun.begin, fun.end, sep = "|")
+	vars <- gsub(remove.chars, "", vars)
+	vars <- unique(vars)
+	return(vars)
 }
 
 
