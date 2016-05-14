@@ -165,10 +165,11 @@ test__env <- function(call, function.name, env = parent.frame()) {
 #'
 #-------------------------------------------------------------------------------
 test__family <- function(
-	adapter, function.name, call.or.object, family = NULL
-) {
+	adapter, function.name, call.or.object, family = NULL) {
+	message <- "Initialization of 'family' field by %s of %s"
+	message <- sprintf(message, call.or.object, function.name)
 	test_that(
-		sprintf("Initialization of 'family' field by call of %s", function.name), {
+		message, {
 			f <- adapter$family
 			if (!is.null(family)) {
 				f <- format.family(f, "character")
