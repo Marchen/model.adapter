@@ -332,6 +332,21 @@ model.adapter.default$methods(
 
 
 #-------------------------------------------------------------------------------
+#	dataフィールドにデータがあるかを確認。
+#-------------------------------------------------------------------------------
+model.adapter.default$methods(
+	has.data = function() {
+		"
+		Test data field has valid data.frame.
+		Returns TRUE if valid and returns FALSE if not.
+		"
+		result <- !(nrow(data) == 0 & ncol(data) == 0)
+		return(result)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
 #	モデルのformulaを取得する。
 #	Args:
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
