@@ -80,22 +80,18 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #'
 #-------------------------------------------------------------------------------
 test__call <- function(
-	adapter, call, function.name, call.or.object, object.has.call = TRUE
-) {
+	adapter, call, function.name, call.or.object, object.has.call = TRUE) {
 	message <- "Initialization of 'call' field by %s of %s"
 	message <- sprintf(message, call.or.object, function.name)
 	test_that(
 		message, {
 			expect_is(adapter$call, "call")
-			if (call.or.object == "call"){
+			if (call.or.object == "call") {
 				expect_identical(adapter$call, match.generic.call(call))
 			} else {
 				if (object.has.call) {
 					expect_is(adapter$call, "call")
-					expect_equal(
-						adapter$call,
-						match.generic.call(call)
-					)
+					expect_equal(adapter$call, match.generic.call(call))
 				} else {
 					expect_identical(adapter$call, call("<undef>"))
 				}
@@ -122,7 +118,7 @@ test__call <- function(
 #'	# Test 'env' field using a call for model function.
 #'	test__env(glm(Sepal.Length ~ ., data = iris, family = gaussian), "glm")
 #-------------------------------------------------------------------------------
-test__env <- function(call, function.name, env = parent.frame()){
+test__env <- function(call, function.name, env = parent.frame()) {
 	test_that(
 		sprintf("Initialization of 'env' field by call of %s", function.name), {
 			adapter <- model.adapter(call)
