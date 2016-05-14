@@ -24,7 +24,7 @@ model.adapter.ranger <- setRefClass(
 #	match.generic.call()でcallを初期化。
 #-------------------------------------------------------------------------------
 model.adapter.ranger$methods(
-	initialize = function(x, envir = parent.frame(4L)) {
+	initialize = function(x, envir = parent.frame(4L), ...) {
 		x <- substitute(x)
 		callSuper(x, envir, caller = "subclass")
 		call <<- match.generic.call(call)
