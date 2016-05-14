@@ -307,9 +307,11 @@ test__data <- function(
 #-------------------------------------------------------------------------------
 test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),
-	object.has.call = TRUE, object.has.data = TRUE, family = NULL, data = NULL) {
+	object.has.call = TRUE, object.has.data = TRUE, family = NULL, data = NULL
+) {
+	cat(sprintf("Testing %s...\n", function.name))
 	# Load package.
-	library(package.name, character.only = TRUE)
+	loaded <- package.unloader(package.name)
 	# Test initialization.
 	test__initialize(call, function.name, parent.frame())
 	# Prepare for tests.
@@ -333,11 +335,7 @@ test__all <- function(
 		object.has.data, data
 	)
 	# Unload package
-	if (package.name != "stats") {
-		unloadNamespace(package.name)
-	}
+#	loaded$unload()
 }
-
-
 
 
