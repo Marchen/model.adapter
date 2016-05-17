@@ -294,12 +294,12 @@ x.names <- function(
 		return(vars)
 	}
 	# Get basic form of explanatory variables.
-	# Remove functions and factorials
+	# Remove functions and powers
 	vars <- do.call(c, sapply(vars, strsplit, split = ":"))
-	factorials <- "\\^[1-9]*"
+	powers <- "\\^[1-9]*"
 	fun.begin <- "^.*\\("
 	fun.end <- "\\)$"
-	remove.chars <- paste(factorials, fun.begin, fun.end, sep = "|")
+	remove.chars <- paste(powers, fun.begin, fun.end, sep = "|")
 	vars <- gsub(remove.chars, "", vars)
 	vars <- unique(vars)
 	return(vars)
