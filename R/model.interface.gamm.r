@@ -1,8 +1,8 @@
 #-------------------------------------------------------------------------------
-#	gamm関数用のmodel.adapterオブジェクトのジェネレーター。
+#	gamm関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for gamm
+#'	model.interface class for gamm
 #'
 #'	This reference class contains methods for \code{\link[mgcv]{gamm}} in 
 #'	\emph{mgcv} package.
@@ -12,20 +12,20 @@
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.gamm
-#'	@exportClass model.adapter.gamm
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.gamm
+#'	@exportClass model.interface.gamm
 #-------------------------------------------------------------------------------
-model.adapter.gamm <- setRefClass(
-	"model.adapter.gamm", contains = "model.adapter"
+model.interface.gamm <- setRefClass(
+	"model.interface.gamm", contains = "model.interface"
 )
 
 
 #-------------------------------------------------------------------------------
 #	モデルオブジェクトからcallを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.gamm$methods(
+model.interface.gamm$methods(
 	get.call = function(x) {
 		return(NULL)
 	}
@@ -35,7 +35,7 @@ model.adapter.gamm$methods(
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.gamm$methods(
+model.interface.gamm$methods(
 	get.family = function(x) {
 		if (is.call(x)) {
 			return(x$family)
@@ -49,7 +49,7 @@ model.adapter.gamm$methods(
 #-------------------------------------------------------------------------------
 #	モデルのformulaを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.gamm$methods(
+model.interface.gamm$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		f <- callSuper(x, envir)
 		if (is.null(f)) {
@@ -63,7 +63,7 @@ model.adapter.gamm$methods(
 #-------------------------------------------------------------------------------
 #	モデルのdataを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.gamm$methods(
+model.interface.gamm$methods(
 	get.data = function(x, envir = parent.frame()) {
 		if (is.call(x)){
 			return(callSuper(x, envir))
@@ -80,7 +80,7 @@ model.adapter.gamm$methods(
 #-------------------------------------------------------------------------------
 #	formulaの.を展開する。
 #-------------------------------------------------------------------------------
-model.adapter.gamm$methods(
+model.interface.gamm$methods(
 	expand.formula = function(f, d, specials = c("s", "te", "ti", "t2")) {
 		callSuper(f, d, specials)
 	}

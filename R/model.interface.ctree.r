@@ -1,50 +1,49 @@
 #-------------------------------------------------------------------------------
-#	cforest関数用のmodel.adapterオブジェクトのジェネレーター。
+#	ctree関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for cforest
+#'	model.interface class for ctree
 #'
-#'	This reference class contains methods for \code{\link[party]{cforest}} in 
+#'	This reference class contains methods for \code{\link[party]{ctree}} in 
 #'	\emph{party} package.
-#'	Note that because an object of RandomForest does not keep original call,
+#'	Note that because an object of BinaryTree does not keep original call,
 #'	get.call() function always returns NULL. Also, when an instance of this 
 #'	class is made from model object, 'call' field is always call("<undef>").
 #'
 #'	Following methods are overriden.
 #
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.RandomForest
-#'	@exportClass model.adapter.RandomForest
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.BinaryTree
+#'	@exportClass model.interface.BinaryTree
 #-------------------------------------------------------------------------------
-model.adapter.RandomForest <- setRefClass(
-	"model.adapter.RandomForest", contains = "model.adapter"
+model.interface.BinaryTree <- setRefClass(
+	"model.interface.BinaryTree", contains = "model.interface"
 )
 
 
 #-------------------------------------------------------------------------------
 #	モデルオブジェクトからcallを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.RandomForest$methods(
+model.interface.BinaryTree$methods(
 	get.call = function(x) {
 		return(NULL)
 	}
 )
 
+
 #-------------------------------------------------------------------------------
 #	formulaを取り出し。
 #-------------------------------------------------------------------------------
-model.adapter.RandomForest$methods(
+model.interface.BinaryTree$methods(
 	get.formula = function(x, envir = parent.frame()) {
-		if (is.object(x)) {
-			# custom 
-			y <- as.character(x@data@formula$response[2])
-			x <- as.character(x@data@formula$input[2])
-			f <- as.formula(paste(y, x, sep = "~"))
-			return(f)
-		} else {
+		if (is.call(x)) {
 			x <- match.call(cforest, x)
 			return(eval(x$formula, envir))
+		} else {
+			# Shared method with cforest / cforestと同じ手法。
+			adapter <- model.interface.RandomForest(x, environment())
+			return(adapter$get.formula(x, envir))
 		}
 	}
 )
@@ -53,14 +52,14 @@ model.adapter.RandomForest$methods(
 #-------------------------------------------------------------------------------
 #	モデル作成に使われたデータを返す。
 #-------------------------------------------------------------------------------
-model.adapter.RandomForest$methods(
+model.interface.BinaryTree$methods(
 	get.data = function(x, envir = parent.frame()) {
-		if (is.call(x)){
-			return(callSuper(x, envir))
+		if (is.call(x)) {
+		   	return(callSuper(x, envir))
 		} else {
-			input <- x@data@get("input")
-			response <- x@data@get("response")
-			d <- cbind(input, response)
+			# Shared method with cforest / cforestと同じ手法。
+			adapter <- model.interface.RandomForest(x, environment())
+			return(adapter$get.data(x, envir))
 		}
 	}
 )

@@ -1,21 +1,21 @@
 #-------------------------------------------------------------------------------
-#	tree関数用のmodel.adapterオブジェクトのジェネレーター。
+#	tree関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for tree
+#'	model.interface class for tree
 #'
 #'	This reference class contains methods for \code{\link[tree]{tree}} in 
 #'	\emph{tree} package.
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.tree
-#'	@exportClass model.adapter.tree
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.tree
+#'	@exportClass model.interface.tree
 #-------------------------------------------------------------------------------
-model.adapter.tree <- setRefClass(
-	"model.adapter.tree", contains = "model.adapter"
+model.interface.tree <- setRefClass(
+	"model.interface.tree", contains = "model.interface"
 )
 
 

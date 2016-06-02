@@ -1,21 +1,21 @@
 #-------------------------------------------------------------------------------
-#	lm関数用のmodel.adapterオブジェクトのジェネレーター。
+#	lm関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for lm
+#'	model.interface class for lm
 #'
 #'	This reference class contains methods for \code{\link[stats]{lm}} in 
 #'	\emph{stats} package.
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.lm
-#'	@exportClass model.adapter.lm
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.lm
+#'	@exportClass model.interface.lm
 #-------------------------------------------------------------------------------
-model.adapter.lm <- setRefClass(
-	"model.adapter.lm", contains = "model.adapter"
+model.interface.lm <- setRefClass(
+	"model.interface.lm", contains = "model.interface"
 )
 
 

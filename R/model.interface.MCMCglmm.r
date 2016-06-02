@@ -1,28 +1,28 @@
 #-------------------------------------------------------------------------------
-#	glm関数用のmodel.adapterオブジェクトのジェネレーター。
+#	glm関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for MCMCglmm
+#'	model.interface class for MCMCglmm
 #'
 #'	This reference class contains methods for \code{\link[MCMCglmm]{MCMCglmm}} 
 #'	in \emph{MCMCglmm} package.
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.MCMCglmm
-#'	@exportClass model.adapter.MCMCglmm
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.MCMCglmm
+#'	@exportClass model.interface.MCMCglmm
 #-------------------------------------------------------------------------------
-model.adapter.MCMCglmm <- setRefClass(
-	"model.adapter.MCMCglmm", contains = "model.adapter"
+model.interface.MCMCglmm <- setRefClass(
+	"model.interface.MCMCglmm", contains = "model.interface"
 )
 
 #-------------------------------------------------------------------------------
 #	Initialize call field using match.generic.call().
 #	match.generic.call()でcallを初期化。
 #-------------------------------------------------------------------------------
-model.adapter.MCMCglmm$methods(
+model.interface.MCMCglmm$methods(
 	initialize = function(x, envir = parent.frame(4L), data = NULL, ...) {
 		x <- substitute(x)
 		callSuper(x, envir, caller = "subclass")
@@ -36,7 +36,7 @@ model.adapter.MCMCglmm$methods(
 #-------------------------------------------------------------------------------
 #	モデルのdataを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.MCMCglmm$methods(
+model.interface.MCMCglmm$methods(
 	get.data = function(x, envir = parent.frame()) {
 		if (is.call(x)) {
 			callSuper(x, envir)
@@ -50,7 +50,7 @@ model.adapter.MCMCglmm$methods(
 #-------------------------------------------------------------------------------
 #	formulaを取り出し。
 #-------------------------------------------------------------------------------
-model.adapter.MCMCglmm$methods(
+model.interface.MCMCglmm$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		if (is.call(x)) {
 			return(callSuper(x, envir))
@@ -67,7 +67,7 @@ model.adapter.MCMCglmm$methods(
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.MCMCglmm$methods(
+model.interface.MCMCglmm$methods(
 	get.family = function(x) {
 		if (is.call(x)) {
 			return(callSuper(x))
@@ -81,7 +81,7 @@ model.adapter.MCMCglmm$methods(
 #-------------------------------------------------------------------------------
 #	モデルオブジェクトからcallを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.MCMCglmm$methods(
+model.interface.MCMCglmm$methods(
 	get.call = function(x) {
 		return(NULL)
 	}

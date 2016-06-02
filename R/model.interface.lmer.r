@@ -1,30 +1,30 @@
 #-------------------------------------------------------------------------------
-#	lmer関数用のmodel.adapterオブジェクトのジェネレーター。
+#	lmer関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for lmer
+#'	model.interface class for lmer
 #'
 #'	This reference class contains methods for \code{\link[lme4]{lmer}} in 
 #'	\emph{lme4} package.
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.lmerMod
-#'	@exportClass model.adapter.lmerMod
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.lmerMod
+#'	@exportClass model.interface.lmerMod
 #-------------------------------------------------------------------------------
-model.adapter.lmerMod <- setRefClass(
-	"model.adapter.lmerMod", contains = "model.adapter"
+model.interface.lmerMod <- setRefClass(
+	"model.interface.lmerMod", contains = "model.interface"
 )
 
 
 #-------------------------------------------------------------------------------
 #	モデル作成に使われたデータを返す。
 #-------------------------------------------------------------------------------
-model.adapter.lmerMod$methods(
+model.interface.lmerMod$methods(
 	get.data = function(x, envir = parent.frame()) {
-		adapter <- model.adapter.glmerMod(x)
+		adapter <- model.interface.glmerMod(x)
 		return(adapter$data)
 	}
 )

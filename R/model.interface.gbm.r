@@ -1,28 +1,28 @@
 #-------------------------------------------------------------------------------
-#	gbm関数用のmodel.adapterオブジェクトのジェネレーター。
+#	gbm関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for gbm
+#'	model.interface class for gbm
 #'
 #'	This reference class contains methods for \code{\link[gbm]{gbm}} in 
 #'	\emph{gbm} package.
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.gbm
-#'	@exportClass model.adapter.gbm
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.gbm
+#'	@exportClass model.interface.gbm
 #-------------------------------------------------------------------------------
-model.adapter.gbm <- setRefClass(
-	"model.adapter.gbm", contains = "model.adapter"
+model.interface.gbm <- setRefClass(
+	"model.interface.gbm", contains = "model.interface"
 )
 
 
 #-------------------------------------------------------------------------------
 #	モデル作成に使われたデータを返す。
 #-------------------------------------------------------------------------------
-model.adapter.gbm$methods(
+model.interface.gbm$methods(
 	get.data = function(x, envir = parent.frame()) {
 		# Extract data from call using default method.
 		# If default method couldn't get data, try to use data in call 

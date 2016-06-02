@@ -1,28 +1,28 @@
 #-------------------------------------------------------------------------------
-#	glmer関数用のmodel.adapterオブジェクトのジェネレーター。
+#	glmer関数用のmodel.interfaceオブジェクトのジェネレーター。
 #	以下のメソッドをオーバーライドした。
 #-------------------------------------------------------------------------------
-#'	model.adapter class for glmer
+#'	model.interface class for glmer
 #'
 #'	This reference class contains methods for \code{\link[lme4]{glmer}} in 
 #'	\emph{lme4} package.
 #'
 #'	Following methods are overriden.
 #'
-#'	@include model.adapter.default.r
-#'	@family model.adapter
-#'	@export model.adapter.glmerMod
-#'	@exportClass model.adapter.glmerMod
+#'	@include model.interface.default.r
+#'	@family model.interface
+#'	@export model.interface.glmerMod
+#'	@exportClass model.interface.glmerMod
 #-------------------------------------------------------------------------------
-model.adapter.glmerMod <- setRefClass(
-	"model.adapter.glmerMod", contains = "model.adapter"
+model.interface.glmerMod <- setRefClass(
+	"model.interface.glmerMod", contains = "model.interface"
 )
 
 
 #-------------------------------------------------------------------------------
 #	モデル作成に使われたデータを返す。
 #-------------------------------------------------------------------------------
-model.adapter.glmerMod$methods(
+model.interface.glmerMod$methods(
 	get.data = function(x, envir = parent.frame()) {
 		if (is.call(x)){
 			return(callSuper(x, envir))
@@ -38,7 +38,7 @@ model.adapter.glmerMod$methods(
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
-model.adapter.glmerMod$methods(
+model.interface.glmerMod$methods(
 	get.family = function(x) {
 		if (is.call(x)) {
 			return(x$family)
@@ -49,7 +49,6 @@ model.adapter.glmerMod$methods(
 )
 
 
-	}
-)
+
 
 
