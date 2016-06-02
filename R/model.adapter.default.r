@@ -213,12 +213,22 @@ model.adapter.default$methods(
 )
 
 
+model.interface <- function(x) {
+	UseMethod("model.interface")
+}
+
+
+model.interface.default <- setRefClass(
+	"model.interface"
+)
+
+
 #-------------------------------------------------------------------------------
 #	モデルのfamilyを取得する。
 #	Args:
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.interface.default$methods(
 	get.family = function(x) {
 		"
 		Get family from call or model object. 
@@ -251,7 +261,7 @@ model.adapter.default$methods(
 #	Value:
 #		オブジェクトを作ったcall。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.interface.default$methods(
 	get.call = function(x) {
 		"
 		This method returns call by which the object is made. If call is not 
@@ -296,7 +306,7 @@ model.adapter.default$methods(
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
 #		envir: xに入ったcallを評価する環境。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.interface.default$methods(
 	get.data = function(x, envir = parent.frame()) {
 		"
 		Get a data.frame containing the data used for modeling.
@@ -352,7 +362,7 @@ model.adapter.default$methods(
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
 #		envir: xに入ったcallを評価する環境。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.interface.default$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		"
 		Extract formula from model object/call.
@@ -387,7 +397,7 @@ model.adapter.default$methods(
 #-------------------------------------------------------------------------------
 #	formulaの.を展開する。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.interface.default$methods(
 	expand.formula = function(f, d, specials = NULL, package.name = NULL) {
 		"
 		Expand . in formula.
