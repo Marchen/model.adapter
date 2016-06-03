@@ -88,6 +88,7 @@
 #'		In such case, this function call model.adapter.CLASS_NAME() to 
 #'		initialize object.
 #'	@export model.adapter
+#'	@include model.interface.r
 #-------------------------------------------------------------------------------
 model.adapter <- setRefClass(
 	"model.adapter",
