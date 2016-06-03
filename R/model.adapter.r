@@ -129,19 +129,12 @@ model.adapter$methods(
 		}
 		"
 		seed <- make.call.or.object(substitute(x), envir)
-		# Initialize interface field. / interfaceフィールドの初期化
 		.self$init.interface(seed)
-		# Initialize src field. / srcフィールドの初期化。
 		.self$init.src(seed)
-		# Initialize call field. / callフィールドの初期化。
 		.self$init.call(seed)
-		# Initialize env field. / envフィールドの初期化。
 		env <<- envir
-		# Initialize family field. / familyフィールドの初期化。
 		.self$init.family(seed)
-		# Initialize data field. / dataフィールドの初期化。
 		.self$init.data(seed, data)
-		# Initialize formula field. / formulaフィールドの初期化。
 		.self$init.formula(seed)
 	}
 )
