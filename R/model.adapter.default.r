@@ -283,7 +283,7 @@ model.interface.default$methods(
 #-------------------------------------------------------------------------------
 #	callに有効なcallが入っているかを確認する。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.adapter$methods(
 	has.call = function() {
 		"
 		Check call field has valid call.
