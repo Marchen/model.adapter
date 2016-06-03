@@ -359,7 +359,7 @@ model.adapter$methods(
 			call <<- match.generic.call(seed)
 		} else {
 			if (!is.null(interface$get.call(seed))) {
-				call <<- interface$get.call(x)
+				call <<- match.generic.call(interface$get.call(x))
 			}
 		}
 		# Initialize env field. / envフィールドの初期化。
