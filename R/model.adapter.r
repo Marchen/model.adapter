@@ -130,7 +130,7 @@ model.adapter$methods(
 		"
 		seed <- make.call.or.object(substitute(x), envir)
 		# Initialize interface field. / interfaceフィールドの初期化
-		.self$init.interface(seed, x)
+		.self$init.interface(seed)
 		# Initialize src field. / srcフィールドの初期化。
 		.self$init.src(seed)
 		# Initialize call field. / callフィールドの初期化。
@@ -163,7 +163,7 @@ model.adapter$methods(
 #	interfaceフィールドを初期化する。
 #-------------------------------------------------------------------------------
 model.adapter$methods(
-	init.interface = function(seed, x) {
+	init.interface = function(seed) {
 		"
 		Initialize interface field.
 		"
@@ -175,7 +175,7 @@ model.adapter$methods(
 			)
 			interface <<- eval(parse(text = code), environment())
 		} else {
-			interface <<- model.interface(x)
+			interface <<- model.interface(seed)
 		}
 	}
 )
