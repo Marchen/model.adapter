@@ -35,19 +35,7 @@
 #'	@family model.adapter
 #'	@export
 #-------------------------------------------------------------------------------
-model.adapter <- function(x, env = parent.frame(1L), ...) {
-	original.call <- make.call.or.object(substitute(x), env)
-	if (is.call(original.call)) {
-		fun.name <- get.function(original.call, "character")
-		code <- sprintf(
-			"model.adapter.%s(%s, env)", get.class.name(fun.name),
-			paste0(deparse(original.call), collapse = "")
-		)
-		object <- eval(parse(text = code), environment())
-		return(object)
-	}
-	UseMethod("model.adapter")
-}
+
 
 
 #-------------------------------------------------------------------------------
@@ -129,9 +117,9 @@ model.adapter <- function(x, env = parent.frame(1L), ...) {
 #'		data.frame with 0 columns x 0 rows. To test this field have valid
 #'		data.frame use \code{has.data()} method.
 #'
-#'	@export model.adapter.default
+#'	@export model.adapter
 #-------------------------------------------------------------------------------
-model.adapter.default <- setRefClass(
+model.adapter <- setRefClass(
 	"model.adapter",
 	fields = list(
 		src = "list",
@@ -153,7 +141,7 @@ model.adapter.default <- setRefClass(
 #		caller:
 #			サブクラスからこのメソッドを呼ぶときには"subclass"を指定する。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.adapter$methods(
 	initialize = function(
 		x, envir = parent.frame(4L), ..., caller = "default"
 	) {
@@ -344,7 +332,7 @@ model.interface.default$methods(
 #-------------------------------------------------------------------------------
 #	dataフィールドにデータがあるかを確認。
 #-------------------------------------------------------------------------------
-model.adapter.default$methods(
+model.adapter$methods(
 	has.data = function() {
 		"
 		Test data field has valid data.frame.
