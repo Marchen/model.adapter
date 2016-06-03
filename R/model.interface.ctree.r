@@ -42,7 +42,7 @@ model.interface.BinaryTree$methods(
 			return(eval(x$formula, envir))
 		} else {
 			# Shared method with cforest / cforestと同じ手法。
-			adapter <- model.interface.RandomForest(x, environment())
+			adapter <- model.interface.RandomForest(x)
 			return(adapter$get.formula(x, envir))
 		}
 	}
@@ -58,7 +58,7 @@ model.interface.BinaryTree$methods(
 		   	return(callSuper(x, envir))
 		} else {
 			# Shared method with cforest / cforestと同じ手法。
-			adapter <- model.interface.RandomForest(x, environment())
+			adapter <- model.interface.RandomForest(x)
 			return(adapter$get.data(x, envir))
 		}
 	}

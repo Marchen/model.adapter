@@ -24,8 +24,8 @@ model.interface.lmerMod <- setRefClass(
 #-------------------------------------------------------------------------------
 model.interface.lmerMod$methods(
 	get.data = function(x, envir = parent.frame()) {
-		adapter <- model.interface.glmerMod(x)
-		return(adapter$data)
+		interface <- model.interface.glmerMod(x)
+		return(interface$get.data(x, envir))
 	}
 )
 
