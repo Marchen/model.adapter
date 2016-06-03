@@ -128,18 +128,9 @@ model.adapter$methods(
 			\\item{\\code{...}}{arguments to be passed to methods.}
 		}
 		"
-		# Initialize interface field. / interfaceフィールドの初期化
 		seed <- make.call.or.object(substitute(x), envir)
-		if (is.call(seed)) {
-			fun.name <- get.function(seed, "character")
-			code <- sprintf(
-				"model.interface.%s(%s)", get.class.name(fun.name),
-				paste0(deparse(seed), collapse = "")
-			)
-			interface <<- eval(parse(text = code), environment())
-		} else {
-			interface <<- model.interface(x)
-		}
+		# Initialize interface field. / interfaceフィールドの初期化
+		.self$init.interface(seed, x)
 		# Initialize src field. / srcフィールドの初期化。
 		if (is.call(seed)) {
 			src$call <<- seed
@@ -177,6 +168,28 @@ model.adapter$methods(
 			formula <<- interface$get.formula(src$object, .self$env)
 		}
 		formula <<- interface$expand.formula(formula, .self$data)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	interfaceフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.interface = function(seed, x) {
+		"
+		Initialize interface field.
+		"
+		if (is.call(seed)) {
+			fun.name <- get.function(seed, "character")
+			code <- sprintf(
+				"model.interface.%s(%s)", get.class.name(fun.name),
+				paste0(deparse(seed), collapse = "")
+			)
+			interface <<- eval(parse(text = code), environment())
+		} else {
+			interface <<- model.interface(x)
+		}
 	}
 )
 
