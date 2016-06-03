@@ -140,14 +140,7 @@ model.adapter$methods(
 		# Initialize family field. / familyフィールドの初期化。
 		.self$init.family(seed)
 		# Initialize data field. / dataフィールドの初期化。
-		if (is.null(data)) {
-			d <- interface$get.data(x, envir = .self$env)
-			if (!is.null(d)) {
-				data <<- interface$get.data(x)
-			}
-		} else {
-			data <<- data
-		}
+		.self$init.data(seed, data)
 		# Initialize formula field. / formulaフィールドの初期化。
 		if (.self$has.call()) {
 			formula <<- interface$get.formula(call, .self$env)
@@ -228,6 +221,26 @@ model.adapter$methods(
 		family.name <- interface$get.family(seed)
 		if (!is.null(family.name)) {
 			family <<- format.family(family.name, "character")
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	dataフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.data = function(seed, data) {
+		"
+		Initialize data field.
+		"
+		if (is.null(data)) {
+			d <- interface$get.data(seed, envir = .self$env)
+			if (!is.null(d)) {
+				data <<- interface$get.data(seed)
+			}
+		} else {
+			data <<- data
 		}
 	}
 )
