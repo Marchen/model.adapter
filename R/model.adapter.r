@@ -283,3 +283,10 @@ model.adapter$methods(
 )
 
 
+
+for (field.name in names(model.adapter$fields)) {
+	model.adapter$lock(n)
+}
+rm(field.name)
+
+
