@@ -134,13 +134,7 @@ model.adapter$methods(
 		# Initialize src field. / srcフィールドの初期化。
 		.self$init.src(seed)
 		# Initialize call field. / callフィールドの初期化。
-		if (is.call(seed)) {
-			call <<- match.generic.call(seed)
-		} else {
-			if (!is.null(interface$get.call(seed))) {
-				call <<- match.generic.call(interface$get.call(x))
-			}
-		}
+		.self$init.call(seed, x)
 		# Initialize env field. / envフィールドの初期化。
 		env <<- envir
 		# Initialize family field. / familyフィールドの初期化。
@@ -202,6 +196,25 @@ model.adapter$methods(
 			src$call <<- seed
 		} else {
 			src$object <<- seed
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	callフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.call = function(seed, x) {
+		"
+		Initialize call field.
+		"
+		if (is.call(seed)) {
+			call <<- match.generic.call(seed)
+		} else {
+			if (!is.null(interface$get.call(seed))) {
+				call <<- match.generic.call(interface$get.call(x))
+			}
 		}
 	}
 )
