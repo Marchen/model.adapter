@@ -258,7 +258,7 @@ test__data <- function(
 	test_that(
 		message, {
 			if (call.or.object == "call" | object.has.call | object.has.data) {
-				for (i in x.vars(adapter$formula)) {
+				for (i in adapter$x.names()) {
 					expect_identical(
 						adapter$data[[i]], data[[i]], sprintf("Testing %s", i)
 					)
