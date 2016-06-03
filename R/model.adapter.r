@@ -88,7 +88,7 @@
 #'		In such case, this function call model.adapter.CLASS_NAME() to 
 #'		initialize object.
 #'	@export model.adapter
-#'	@include model.interface.r
+#'	@include model.interface.default.r
 #-------------------------------------------------------------------------------
 model.adapter <- setRefClass(
 	"model.adapter",
@@ -126,7 +126,6 @@ model.adapter$methods(
 			}
 			\\item{\\code{data}}{data.frame used for further manipulations.}
 			\\item{\\code{...}}{arguments to be passed to methods.}
-			}
 		}
 		"
 		# Initialize interface field. / interfaceフィールドの初期化
@@ -229,9 +228,9 @@ model.adapter$methods(
 		For details, see \\code{\\link[model.adapter]{x.names}}
 		\\describe{
 			\\item{\\code{specials = NULL}}{
-				special characters to be passed to \\link{terms}{terms}.
+				special characters to be passed to \\link{terms}.
 			}
-			\\item{\\code{type = c(\"all\", \"base\")}{
+			\\item{\\code{type = c(\"all\", \"base\")}}{
 				if \"all\", this function returns all explanatory variables
 				including interactions, higher order terms, splines, etc.
 				If \"base\" only basic form of the variables are returned.

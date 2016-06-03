@@ -39,6 +39,8 @@ model.interface <- function(x = NULL) {
 #'	statistical/machine learning models.
 #'	\code{\link{model.adapter-class}{model.adapter}} internally using object
 #'	of this class to get information from model calls/objects.
+#'
+#'	@export
 #-------------------------------------------------------------------------------
 model.interface.default <- setRefClass(
 	"model.interface",
