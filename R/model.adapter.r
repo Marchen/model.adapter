@@ -212,3 +212,73 @@ model.adapter$methods(
 	}
 )
 
+
+#-------------------------------------------------------------------------------
+#	説明変数の一覧を取得する。
+#	Args:
+#		specials: termsに渡される引数。
+#		type:
+#			もし"all"だったら高次の項なども返す。
+#			もし"base"だったら一次の項だけを返す。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	x.names = function(specials = NULL, c) {
+		"
+		Get name of explanatory variables.
+		For details, see \\code{\\link[model.adapter]{x.names}}
+		\\describe{
+			\\item{\\code{specials = NULL}}{
+				special characters to be passed to \\link{terms}{terms}.
+			}
+			\\item{\\code{type = c(\"all\", \"base\")}{
+				if \"all\", this function returns all explanatory variables
+				including interactions, higher order terms, splines, etc.
+				If \"base\" only basic form of the variables are returned.
+			}
+		}
+		"
+		type <- match.arg(type)
+		model.adapter::x.names(formula, data, specials, type)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	応答変数の名前を取得する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	y.names = function() {
+		"
+		Get name of response variables.
+		"
+		as.character(formula[2])
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	説明変数のデータを取得する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	x.vars = function() {
+		"
+		Get data of explanatory variables.
+		"
+		return(data[x.names(type = "base")])
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	応答変数のデータを取得する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	y.vars = function() {
+		"
+		Get data of response variable.
+		"
+		return(data[y.names()])
+	}
+)
+
+
