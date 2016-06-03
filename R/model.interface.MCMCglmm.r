@@ -18,20 +18,6 @@ model.interface.MCMCglmm <- setRefClass(
 	"model.interface.MCMCglmm", contains = "model.interface"
 )
 
-#-------------------------------------------------------------------------------
-#	Initialize call field using match.generic.call().
-#	match.generic.call()でcallを初期化。
-#-------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	initialize = function(x, envir = parent.frame(4L), data = NULL, ...) {
-		x <- substitute(x)
-		callSuper(x, envir, caller = "subclass")
-		if (!is.null(data)){
-			data <<- data
-		}
-	}
-)
-
 
 #-------------------------------------------------------------------------------
 #	モデルのdataを取得する。

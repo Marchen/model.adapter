@@ -323,9 +323,7 @@ model.adapter <- setRefClass(
 #			サブクラスからこのメソッドを呼ぶときには"subclass"を指定する。
 #-------------------------------------------------------------------------------
 model.adapter$methods(
-	initialize = function(
-		x, envir = parent.frame(4L), ..., caller = "default"
-	) {
+	initialize = function(x, envir = parent.frame(4L), data = NULL, ..., caller = "default") {
 		"
 		Initialize an object of the class using model object or call for a
 		model function.
@@ -375,9 +373,13 @@ model.adapter$methods(
 			family <<- format.family(family.name, "character")
 		}
 		# Initialize data field. / dataフィールドの初期化。
-		d <- interface$get.data(x, envir = .self$env)
-		if (!is.null(d)){
-			data <<- interface$get.data(x)
+		if (is.null(data)) {
+			d <- interface$get.data(x, envir = .self$env)
+			if (!is.null(d)) {
+				data <<- interface$get.data(x)
+			}
+		} else {
+			data <<- data
 		}
 		# Initialize formula field. / formulaフィールドの初期化。
 		if (.self$has.call()) {
@@ -385,7 +387,7 @@ model.adapter$methods(
 		} else {
 			formula <<- interface$get.formula(src$object, .self$env)
 		}
-		formula <<- interface$expand.formula(formula, data)
+		formula <<- interface$expand.formula(formula, .self$data)
 	}
 )
 
