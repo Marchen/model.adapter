@@ -132,11 +132,7 @@ model.adapter$methods(
 		# Initialize interface field. / interfaceフィールドの初期化
 		.self$init.interface(seed, x)
 		# Initialize src field. / srcフィールドの初期化。
-		if (is.call(seed)) {
-			src$call <<- seed
-		} else {
-			src$object <<- seed
-		}
+		.self$init.src(seed)
 		# Initialize call field. / callフィールドの初期化。
 		if (is.call(seed)) {
 			call <<- match.generic.call(seed)
@@ -189,6 +185,23 @@ model.adapter$methods(
 			interface <<- eval(parse(text = code), environment())
 		} else {
 			interface <<- model.interface(x)
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	srcフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.src = function(seed) {
+		"
+		Initialize src field.
+		"
+		if (is.call(seed)) {
+			src$call <<- seed
+		} else {
+			src$object <<- seed
 		}
 	}
 )
