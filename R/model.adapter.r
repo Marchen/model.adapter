@@ -142,12 +142,7 @@ model.adapter$methods(
 		# Initialize data field. / dataフィールドの初期化。
 		.self$init.data(seed, data)
 		# Initialize formula field. / formulaフィールドの初期化。
-		if (.self$has.call()) {
-			formula <<- interface$get.formula(call, .self$env)
-		} else {
-			formula <<- interface$get.formula(src$object, .self$env)
-		}
-		formula <<- interface$expand.formula(formula, .self$data)
+		.self$init.formula(seed)
 	}
 )
 
@@ -242,6 +237,24 @@ model.adapter$methods(
 		} else {
 			data <<- data
 		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	formulaフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.formula = function(seed) {
+		"
+		Initialize formula field.
+		"
+		if (.self$has.call()) {
+			formula <<- interface$get.formula(call, .self$env)
+		} else {
+			formula <<- interface$get.formula(src$object, .self$env)
+		}
+		formula <<- interface$expand.formula(formula, .self$data)
 	}
 )
 
