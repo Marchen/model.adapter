@@ -138,10 +138,7 @@ model.adapter$methods(
 		# Initialize env field. / envフィールドの初期化。
 		env <<- envir
 		# Initialize family field. / familyフィールドの初期化。
-		family.name <- interface$get.family(x)
-		if (!is.null(family.name)) {
-			family <<- format.family(family.name, "character")
-		}
+		.self$init.family(seed)
 		# Initialize data field. / dataフィールドの初期化。
 		if (is.null(data)) {
 			d <- interface$get.data(x, envir = .self$env)
@@ -215,6 +212,22 @@ model.adapter$methods(
 			if (!is.null(interface$get.call(seed))) {
 				call <<- match.generic.call(interface$get.call(seed))
 			}
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	familyフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.family = function(seed) {
+		"
+		Initialize family field.
+		"
+		family.name <- interface$get.family(seed)
+		if (!is.null(family.name)) {
+			family <<- format.family(family.name, "character")
 		}
 	}
 )
