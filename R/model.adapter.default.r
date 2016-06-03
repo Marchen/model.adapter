@@ -1,12 +1,13 @@
 
 
-model.interface <- function(x) {
+model.interface <- function(x = NULL) {
 	UseMethod("model.interface")
 }
 
 
 model.interface.default <- setRefClass(
-	"model.interface"
+	"model.interface",
+	methods = list(initialize = function(x) { })
 )
 
 
