@@ -127,7 +127,8 @@ model.adapter <- setRefClass(
 		env = "environment",
 		family = "character",
 		formula = "formula",
-		data = "data.frame"
+		data = "data.frame",
+		interface = "model.interface"
 	)
 )
 
@@ -160,43 +161,51 @@ model.adapter$methods(
 			}
 		}
 		"
-		# Initialize src field. / srcフィールドの初期化。
-		if (caller != "subclass"){
-			x <- substitute(x)
-		}
-		x <- make.call.or.object(x, envir)
-		if (is.call(x)) {
-			src$call <<- x
+		# Initialize interface field. / interfaceフィールドの初期化
+		seed <- make.call.or.object(substitute(x), envir)
+		if (is.call(seed)) {
+			fun.name <- get.function(seed, "character")
+			code <- sprintf(
+				"model.interface.%s(%s)", get.class.name(fun.name),
+				paste0(deparse(seed), collapse = "")
+			)
+			interface <<- eval(parse(text = code), environment())
 		} else {
-			src$object <<- x
+			interface <<- model.interface(x)
+		}
+		# Initialize src field. / srcフィールドの初期化。
+		if (is.call(seed)) {
+			src$call <<- seed
+		} else {
+			src$object <<- seed
 		}
 		# Initialize call field. / callフィールドの初期化。
-		if (is.call(x)) {
-			call <<- match.generic.call(x)
+		if (is.call(seed)) {
+			call <<- match.generic.call(seed)
 		} else {
-			if (!is.null(.self$get.call(x))) {
-				call <<- .self$get.call(x)
+			if (!is.null(interface$get.call(seed))) {
+				call <<- interface$get.call(x)
 			}
 		}
 		# Initialize env field. / envフィールドの初期化。
 		env <<- envir
 		# Initialize family field. / familyフィールドの初期化。
-		family.name <- .self$get.family(x)
+		family.name <- interface$get.family(x)
 		if (!is.null(family.name)) {
 			family <<- format.family(family.name, "character")
 		}
 		# Initialize data field. / dataフィールドの初期化。
-		d <- .self$get.data(x, envir = .self$env)
+		d <- interface$get.data(x, envir = .self$env)
 		if (!is.null(d)){
-			data <<- .self$get.data(x)
+			data <<- interface$get.data(x)
 		}
 		# Initialize formula field. / formulaフィールドの初期化。
 		if (.self$has.call()) {
-			formula <<- .self$get.formula(call, .self$env)
+			formula <<- interface$get.formula(call, .self$env)
 		} else {
-			formula <<- .self$get.formula(src$object, .self$env)
+			formula <<- interface$get.formula(src$object, .self$env)
 		}
-		formula <<- .self$expand.formula(formula, data)
+		formula <<- interface$expand.formula(formula, data)
 	}
 )
 
