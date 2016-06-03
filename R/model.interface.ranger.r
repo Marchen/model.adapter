@@ -19,14 +19,3 @@ model.interface.ranger <- setRefClass(
 )
 
 
-#-------------------------------------------------------------------------------
-#	Initialize call field using match.generic.call().
-#	match.generic.call()でcallを初期化。
-#-------------------------------------------------------------------------------
-#model.interface.ranger$methods(
-	#initialize = function(x, envir = parent.frame(4L), ...) {
-		#x <- substitute(x)
-		#callSuper(x, envir, caller = "subclass")
-		#call <<- match.generic.call(call)
-	#}
-#)

@@ -318,12 +318,11 @@ model.adapter <- setRefClass(
 #	Args:
 #		x: モデルオブジェクトもしくはモデルの呼び出しを表すcall。
 #		envir: callを評価する環境。
+#		data: 
 #		...: 他のメソッドに渡される引数。
-#		caller:
-#			サブクラスからこのメソッドを呼ぶときには"subclass"を指定する。
 #-------------------------------------------------------------------------------
 model.adapter$methods(
-	initialize = function(x, envir = parent.frame(4L), data = NULL, ..., caller = "default") {
+	initialize = function(x, envir = parent.frame(4L), data = NULL, ...) {
 		"
 		Initialize an object of the class using model object or call for a
 		model function.
@@ -332,10 +331,8 @@ model.adapter$methods(
 			\\item{\\code{envir = parent.frame(4L)}}{
 				envir an environment in which call in x is evaluated.
 			}
+			\\item{\\code{data}}{data.frame used for further manipulations.}
 			\\item{\\code{...}}{arguments to be passed to methods.}
-			\\item{\\code{caller = \"default\"}}{
-				if this method is called from an initialize method of subclass,
-				this should be set to \"subclass\".
 			}
 		}
 		"
