@@ -222,7 +222,7 @@ model.adapter$methods(
 #			もし"base"だったら一次の項だけを返す。
 #-------------------------------------------------------------------------------
 model.adapter$methods(
-	x.names = function(specials = NULL, c) {
+	x.names = function(specials = NULL, type = c("all", "base")) {
 		"
 		Get name of explanatory variables.
 		For details, see \\code{\\link[model.adapter]{x.names}}
