@@ -27,14 +27,18 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 	test_that(
 		sprintf("Initialization of the class by call of %s", function.name), {
 			adapter <- model.adapter(call)
-			expect_is(adapter, sprintf("model.adapter.%s", class.name))
+			expect_is(
+				adapter$interface, sprintf("model.interface.%s", class.name)
+			)
 		}
 	)
 	test_that(
 		sprintf("Initialization the class by object of %s", class.name), {
 			object <- eval(call, envir = env)
 			adapter <- model.adapter(object)
-			expect_is(adapter, sprintf("model.adapter.%s", class.name))
+			expect_is(
+				adapter$interface, sprintf("model.interface.%s", class.name)
+			)
 		}
 	)
 }
