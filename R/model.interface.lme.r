@@ -49,3 +49,17 @@ model.interface.lme$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictメソッド。
+#	random効果のmarginalizeのため、levelsを0に設定。
+#-------------------------------------------------------------------------------
+model.interface.lme$methods(
+	predict = function(object, newdata, ...) {
+		# set level = 0 to marginalize random effect.
+		fit <- stats::predict(object, newdata, level = 0, ...)
+		fit <- ma.prediction(fit, type = "regression")
+		return(fit)
+	}
+)
+
+
