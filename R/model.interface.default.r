@@ -213,3 +213,20 @@ model.interface.default$methods(
 		return(result)
 	}
 )
+
+
+#-------------------------------------------------------------------------------
+#	予測値を計算して、ma.prediction型オブジェクトを返す。
+#-------------------------------------------------------------------------------
+model.interface.default$methods(
+	predict = function(object, newdata = NULL, ...) {
+		"
+		Calculate predictions and returns \\code{\\link{ma.prediction}} object.
+		"
+		pred <- stats::predict(object, newdata = newdata, ...)
+		pred <- ma.prediction(pred, type = "regression")
+		return(pred)
+	}
+)
+
+
