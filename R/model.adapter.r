@@ -353,6 +353,28 @@ model.adapter$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	予測値を計算してma.prediction型のオブジェクトを返す。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	predict = function(newdata = NULL, ...) {
+		"
+		Calculate prediction and return a 
+		\\code{\\link{ma.prediction}} object.
+		"
+		if (is.null(.self$src$object)) {
+		   	object <- eval(.self$src$object, .self$src$envir)
+		} else {
+		   	object <- .self$src$object
+		}
+		pred <- .self$interface$predict(object, newdata = newdata, ...)
+		pred <- ma.prediction(
+			pred, fixed = newdata[.self$x.names(type = "base")]
+		)
+		return(pred)
+	}
+)
+
 
 for (field.name in names(model.adapter$fields)) {
 	model.adapter$lock(n)
