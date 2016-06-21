@@ -403,6 +403,10 @@ model.adapter$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	Lock all fields other than "object" field.
+#	objectフィールド以外のフィールドをロックする。
+#-------------------------------------------------------------------------------
 for (field.name in names(model.adapter$fields)) {
 	if (field.name != "object") {
 	   	model.adapter$lock(n)
