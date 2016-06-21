@@ -141,6 +141,7 @@ model.adapter$methods(
 		.self$init.interface(seed)
 		.self$init.src(seed)
 		.self$init.call(seed)
+		.self$init.object(seed)
 		env <<- envir
 		.self$init.family(seed)
 		.self$init.data(seed, data)
@@ -202,6 +203,23 @@ model.adapter$methods(
 			if (!is.null(interface$get.call(seed))) {
 				call <<- match.generic.call(interface$get.call(seed))
 			}
+		}
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	objectフィールドを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.object = function(seed) {
+		"
+		Initialize call field.
+		"
+		if (is.call(seed)) {
+			object <<- NULL
+		} else {
+			object <<- seed
 		}
 	}
 )
