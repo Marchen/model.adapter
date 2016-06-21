@@ -214,7 +214,7 @@ model.adapter$methods(
 model.adapter$methods(
 	init.object = function(seed) {
 		"
-		Initialize call field.
+		Initialize object field.
 		"
 		if (is.call(seed)) {
 			object <<- NULL
