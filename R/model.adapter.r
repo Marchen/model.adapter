@@ -52,6 +52,13 @@
 #'		original call used for initialization of the class. To check an object
 #'		having valid call, use \code{has.call()} method.
 #'
+#'	@field object
+#'		a read-only object of a model. If model.adapter is initialized by a 
+#'		call for a model function, this field is initialized by NULL.
+#'		Because some methods like get.intercept(), predict(), etc. require
+#'		model object, such methods evaluate 'call' field and store the 
+#'		resultant object into this field.
+#'
 #'	@field env
 #'		an environment in which call of a model function is evaluated.
 #'		By default, this field is set to an environment where 
@@ -87,6 +94,7 @@
 #'		of the class is determined by function name in the function call. 
 #'		In such case, this function call model.adapter.CLASS_NAME() to 
 #'		initialize object.
+#'
 #'	@export model.adapter
 #'	@include model.interface.default.r
 #-------------------------------------------------------------------------------
@@ -95,6 +103,7 @@ model.adapter <- setRefClass(
 	fields = list(
 		src = "list",
 		call = "call",
+		object = "ANY",
 		env = "environment",
 		family = "character",
 		formula = "formula",
@@ -377,7 +386,9 @@ model.adapter$methods(
 
 
 for (field.name in names(model.adapter$fields)) {
-	model.adapter$lock(n)
+	if (field.name != "object") {
+	   	model.adapter$lock(n)
+	}
 }
 rm(field.name)
 
