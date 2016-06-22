@@ -237,3 +237,23 @@ model.interface.default$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデルオブジェクトから切片の推定値を取得する。
+#-------------------------------------------------------------------------------
+model.interface.default$methods(
+	get.intercept = function(object) {
+		"
+		Get intercept from model object.
+		If intercept is not available for the model, this should return NULL.
+		\\describe{
+			\\item{\\code{object}}{
+				a model object from which estimated value of intercept is 
+				extracted.
+			}
+		}
+		"
+		return(object$coefficients["(Intercept)"])
+	}
+)
+
+
