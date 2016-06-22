@@ -63,3 +63,13 @@ model.interface.lme$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	モデルオブジェクトから切片の推定値を取得する。
+#-------------------------------------------------------------------------------
+model.interface.lme$methods(
+	get.intercept = function(object) {
+		return(object$coefficients$fixed["(Intercept)"])
+	}
+)
+
+
