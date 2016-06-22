@@ -222,6 +222,13 @@ model.interface.default$methods(
 	predict = function(object, newdata = NULL, ...) {
 		"
 		Calculate predictions and returns \\code{\\link{ma.prediction}} object.
+		\\describe{
+			\\item{\\code{object}}{a model object used for prediction.}
+			\\item{\\code{newdata = NULL}}{
+				a data.frame containing data used for prediction.
+			}
+			\\item{\\code{...}}{other variables passed to predict methods.}
+		}
 		"
 		pred <- stats::predict(object, newdata = newdata, ...)
 		pred <- ma.prediction(pred, type = "regression")
