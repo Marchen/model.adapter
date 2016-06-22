@@ -404,6 +404,23 @@ model.adapter$methods(
 
 
 #-------------------------------------------------------------------------------
+#	モデルの切片を返す。切片がないモデルはNULLを返す。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	intercept = function() {
+		"
+		Returns estimated intercept of the model.
+		If the model does not have intercept, this function returns NULL.
+		"
+		if (is.null(.self$object)) {
+			.self$object <- eval(.self$src$call, .self$src$envir)
+		}
+		return(.self$interface$get.intercept(.self$object))
+	}
+)
+
+
+#-------------------------------------------------------------------------------
 #	Lock all fields other than "object" field.
 #	objectフィールド以外のフィールドをロックする。
 #-------------------------------------------------------------------------------
