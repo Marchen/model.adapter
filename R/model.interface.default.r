@@ -257,3 +257,42 @@ model.interface.default$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	リンク関数を返す。
+#-------------------------------------------------------------------------------
+model.interface.default$methods(
+	get.link = function(x) {
+		"
+		Get link function. If the model does not have link function, this
+		function returns \\code{\\link[base]{identity}} function.
+		\\describe{
+			\\item{\\code{x}}{
+				an object of statistical model or a call of model function.
+			}
+		}
+		"
+		return(identity)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	リンク関数の逆関数を返す。
+#-------------------------------------------------------------------------------
+model.interface.default$methods(
+	get.linkinv = function(x) {
+		"
+		Get inverse function of link function. If the model does not have 
+		link function, this function returns \\code{\\link[base]{identity}} 
+		function.
+		\\describe{
+			\\item{\\code{x}}{
+				an object of statistical model or a call of model function.
+			}
+		}
+		"
+		return(identity)
+	}
+)
+
+
