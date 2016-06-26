@@ -68,6 +68,16 @@
 #'		a read-only character of family name. If a model which does not use
 #'		family, this field is character(0).
 #'
+#'	@field link
+#'		a function object of link function of the model. If the model does 
+#'		not have link function, this field is \code{\link[base]{identity}} 
+#'		function.
+#'
+#'	@field linkinv
+#'		a function object of inverse link function of the model. If the model 
+#'		does not have link function, this field is 
+#'		\code{\link[base]{identity}} function.
+#'
 #'	@field formula
 #'		a formula object specifying structure of the model. '.' in this
 #'		formula object is expanded so that this field does not need to be
@@ -106,6 +116,8 @@ model.adapter <- setRefClass(
 		object = "ANY",
 		env = "environment",
 		family = "character",
+		link = "function",
+		linkinv = "function",
 		formula = "formula",
 		data = "data.frame",
 		interface = "model.interface"
@@ -144,6 +156,7 @@ model.adapter$methods(
 		.self$init.object(seed)
 		env <<- envir
 		.self$init.family(seed)
+		.self$init.link(seed)
 		.self$init.data(seed, data)
 		.self$init.formula(seed)
 	}
@@ -275,6 +288,20 @@ model.adapter$methods(
 			formula <<- interface$get.formula(src$object, .self$env)
 		}
 		formula <<- interface$expand.formula(formula, .self$data)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	linkフィールドとlinkinvを初期化する。
+#-------------------------------------------------------------------------------
+model.adapter$methods(
+	init.link = function(seed) {
+		"
+		Initialize link and linkinv fields.
+		"
+		link <<- interface$get.link(seed)
+		linkinv <<- interface$get.linkinv(seed)
 	}
 )
 
