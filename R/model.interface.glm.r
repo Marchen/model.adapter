@@ -18,3 +18,27 @@ model.interface.glm <- setRefClass(
 	"model.interface.glm", contains = "model.interface"
 )
 
+#-------------------------------------------------------------------------------
+#	リンク関数を返す。
+#-------------------------------------------------------------------------------
+model.interface.glm$methods(
+	get.link = function(x) {
+		f <- .self$get.family(x)
+		f <- format.family(f, "family")
+		return(f$linkfun)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	リンク関数の逆関数を返す。
+#-------------------------------------------------------------------------------
+model.interface.glm$methods(
+	get.linkinv = function(x) {
+		f <- .self$get.family(x)
+		f <- format.family(f, "family")
+		return(f$linkinv)
+	}
+)
+
+
