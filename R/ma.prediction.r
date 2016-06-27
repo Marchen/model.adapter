@@ -42,10 +42,14 @@
 #'			}
 #'			\item{interval.type}{
 #'				a character literal representing type and level of the 
-#'				interval. If no interval is available, this field is NULL.
+#'				interval. If no interval is available, this field should 
+#'				be NULL. If the interval is confidence interval, this field 
+#'				should be "confidence". If the interval is prediction interval, 
+#'				this field should be "prediction"
 #'			}
 #'			\item{interval.level}{
-#'				a number representing level of interval.
+#'				a number representing level of interval. If no interval is 
+#'				calculated, this field should be NULL.
 #'			}
 #'		}
 #'	@export
@@ -56,6 +60,7 @@ ma.prediction <- function(
 	interval.type = NULL, interval.level = NULL, ...
 ) {
 	type <- match.arg(type)
+	interval.type <- match.arg(type, c("confidence", "prediction"))
 	UseMethod("ma.prediction")
 }
 
