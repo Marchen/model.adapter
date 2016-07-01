@@ -60,7 +60,9 @@ ma.prediction <- function(
 	interval.type = NULL, interval.level = NULL, ...
 ) {
 	type <- match.arg(type)
-	interval.type <- match.arg(type, c("confidence", "prediction"))
+	if (!is.null(interval.type)) {
+		interval.type <- match.arg(interval.type, c("confidence", "prediction"))
+	}
 	UseMethod("ma.prediction")
 }
 
