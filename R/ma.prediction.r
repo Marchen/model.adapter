@@ -33,7 +33,7 @@
 #'			}
 #'			\item{type}{
 #'				a character literal representing type of prediction.
-#'				Currently, "regression", "probability" and  "class" are 
+#'				Currently, "response", "link", "probability" and  "class" are 
 #'				supported.
 #'			}
 #'			\item{fixed}{
@@ -56,7 +56,7 @@
 #'
 #-------------------------------------------------------------------------------
 ma.prediction <- function(
-	fit, type = c("regression", "probability", "class"), fixed = NULL,
+	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
 ) {
 	type <- match.arg(type)
@@ -72,7 +72,7 @@ ma.prediction <- function(
 #'	@method ma.prediction default
 #-------------------------------------------------------------------------------
 ma.prediction.default <- function(
-	fit, type = c("regression", "probability", "class"), fixed = NULL,
+	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
 ) {
 	if (is.atomic(fit)) {
@@ -91,7 +91,7 @@ ma.prediction.default <- function(
 #'	@method ma.prediction matrix
 #-------------------------------------------------------------------------------
 ma.prediction.matrix <- function(
-	fit, type = c("regression", "probability", "class"), fixed = NULL,
+	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
 ) {
 	# If fit is not a matrix, convert to matrix / matrixに変換。
@@ -122,7 +122,7 @@ ma.prediction.matrix <- function(
 #'	@method ma.prediction ma.prediction
 #-------------------------------------------------------------------------------
 ma.prediction.ma.prediction <- function(
-	fit, type = c("regression", "probability", "class"), fixed = NULL,
+	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
 ) {
 	# Update fields / フィールドの更新。
