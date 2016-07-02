@@ -94,10 +94,6 @@ ma.prediction.matrix <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
 ) {
-	# If fit is not a matrix, convert to matrix / matrixに変換。
-	if (!is.matrix(fit)) {
-		fit <- as.matrix(fit, ncol = 1)
-	}
 	# Assign column name / 列名を付ける。
 	if (ncol(fit) == 1) {
 		colnames(fit) <- "fit"
