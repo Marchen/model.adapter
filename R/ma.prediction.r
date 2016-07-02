@@ -81,7 +81,7 @@ ma.prediction.default <- function(
 		obj <- ma.prediction(fit, type, fixed, interval.type, interval.level)
 		return(obj)
 	} else {
-	   	stop("'fit' should be matrix or ma.prediction object.")
+	   	stop("'fit' should be matrix, atomic or ma.prediction object.")
 	}
 }
 
