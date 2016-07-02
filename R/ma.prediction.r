@@ -76,6 +76,8 @@ ma.prediction.default <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
 ) {
+	# If fit is not a matrix, convert to matrix.
+	# matrixに変換。
 	if (is.atomic(fit)) {
 		fit <- as.matrix(fit, ncol = 1)
 		obj <- ma.prediction(fit, type, fixed, interval.type, interval.level)
