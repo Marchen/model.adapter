@@ -102,6 +102,19 @@ ma.prediction.matrix <- function(
 	} else {
 		stop("Number of columns of 'prediction' should be one or three.")
 	}
+	# Assign default values.
+	# デフォルト値の割り当て。
+	if (!is.null(interval.type)) {
+		if (interval.type == "none") {
+			interval.type <- NULL
+			interval.level <- NULL
+		}
+	}
+	if (is.null(interval.level)) {
+		if (!is.null(interval.type)) {
+			interval.level <- 0.95
+		}
+	}
 	# Make object / オブジェクト作成。
 	obj <- list(
 		fit = fit, type = type, fixed = fixed,
