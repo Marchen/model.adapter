@@ -42,14 +42,15 @@
 #'			}
 #'			\item{interval.type}{
 #'				a character literal representing type and level of the 
-#'				interval. If no interval is available, this field should 
-#'				be NULL. If the interval is confidence interval, this field 
-#'				should be "confidence". If the interval is prediction interval, 
-#'				this field should be "prediction"
+#'				interval. If no interval is available, this field is NULL.
+#'				If the interval is confidence interval, this field is 
+#'				"confidence". If the interval is prediction interval, 
+#'				this field is "prediction".
 #'			}
 #'			\item{interval.level}{
 #'				a number representing level of interval. If no interval is 
-#'				calculated, this field should be NULL.
+#'				calculated, this field should be NULL. If 
+#'				\code{interval.level} is NULL and 
 #'			}
 #'		}
 #'	@export
