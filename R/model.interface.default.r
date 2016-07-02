@@ -231,25 +231,13 @@ model.interface.default$methods(
 		}
 		"
 		pred <- stats::predict(object, newdata = newdata, ...)
-		# Handle interval.level and interval.type.
-		# interval.typeとinterval.levelを制御する。
-		args <- list(...)
-		if (!is.null(args$interval)) {
-			if (args$interval == "none") {
-				pred <- ma.prediction(pred, type = "regression")
-			} else {
-				if (!is.null(args$level)) {
-				   	interval.level <- args$level
-				} else {
-					interval.level <- 0.95
-				}
-				pred <- ma.prediction(
-					pred, type = "regression", interval.type = interval.type,
-					interval.level = interval.level
-				)
-			}
-		}
-		return(pred)
+		# Make ma.prediction object.
+		# ma.predicitonオブジェクトの作成。
+		args <- as.list(match.call())[-1]
+		result <- ma.prediction(
+			pred, args$type, NULL, args$interval, args$level
+		)
+		return(result)
 	}
 )
 
