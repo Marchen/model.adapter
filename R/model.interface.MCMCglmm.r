@@ -74,3 +74,98 @@ model.interface.MCMCglmm$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictメソッド。
+#-------------------------------------------------------------------------------
+model.interface.MCMCglmm$methods(
+	predict = function(object, newdata, ...) {
+		args <- as.list(match.call())[-1]
+		args <- lapply(args, eval, envir = parent.frame())
+		pred.args <- args
+		if (!is.null(pred.args$type)) {
+			if (pred.args$type == "link") {
+				pred.args$type <- "terms"
+			}
+		}
+		pred <- do.call(stats::predict, pred.args)
+		result <- ma.prediction(
+			pred, type = args$type, interval.type = args$interval,
+			interval.level = args$level
+		)
+		return(result)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	リンク関数を返す。
+#-------------------------------------------------------------------------------
+model.interface.MCMCglmm$methods(
+	get.link = function(x) {
+		f <- .self$get.family(x)
+		f <- format.family(f, "character")
+		f <- gsub("multinomial.*", "multinomial", f)
+		check.supported.family(f)
+		link <- switch(
+			f,
+			gaussian = identity,
+			poisson = log,
+			categorical = binomial()$linkfun,
+			multinomial = binomial()$linkfun,
+			geometric = binomial()$linkfun,
+			exponential = function(x) -log(x)
+		)
+		return(link)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	リンク関数の逆関数を返す。
+#-------------------------------------------------------------------------------
+model.interface.MCMCglmm$methods(
+	get.linkinv = function(x) {
+		f <- .self$get.family(x)
+		f <- format.family(f, "character")
+		f <- gsub("multinomial.*", "multinomial", f)
+		check.supported.family(f)
+		link <- switch(
+			f,
+			gaussian = identity, 
+			poisson = exp,
+			categorical = binomial()$linkinv,
+			multinomial = binomial()$linkinv,
+			geometric = binomial()$linkinv,
+			exponential = function(x) exp(-x)
+		)
+		return(link)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
+#	familyがサポートされてるかをチェックする。
+#-------------------------------------------------------------------------------
+#' (Internal) Check if the specified family of MCMCglmm is supported.
+#'
+#'	@param a character vector of length one specifing
+#-------------------------------------------------------------------------------
+check.supported.family <- function(f) {
+	supported <- c(
+		"gaussian", "poisson", "categorical", "multinomial", "geometric",
+		"exponential"
+	)
+	if (any(!f %in% supported)) {
+		msg <- paste(supported[1:(length(supported) - 1)], collapse = ", ")
+		msg <- paste(msg, "and", supported[length(supported)])
+		msg <- sprintf(
+			"Currently, only MCMCglmm with %s families are supported.\nIf you have any information about link function of other families, please teach me.", 
+			msg
+		)
+		stop(msg)
+	}
+}
+
+
+
+
