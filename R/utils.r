@@ -127,7 +127,7 @@ format.family <- function(family, type = c("family", "character")) {
 	if (is.character(family)) {
 		family <- get(family)
 	}
-	if (is.symbol(family)) {
+	if (is.symbol(family) | is.language(family)) {
 		family <- eval(family)
 	}
 	if (is.function(family)) {
