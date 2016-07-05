@@ -226,6 +226,93 @@ test__formula <- function(adapter, function.name, call.or.object, formula) {
 
 
 #-------------------------------------------------------------------------------
+#	リンク関数テスト用のオブジェクトを作成する。
+#	Args:
+#		calls: モデルの初期化に使うcallを格納したリスト。
+#		links: 期待されるリンク関数を格納したリスト。
+#		linkinvs: 期待されるリンク関数の逆関数を格納したリスト。
+#-------------------------------------------------------------------------------
+#'	(Internal) Make test data for link and linkinv field
+#'
+#'	@param calls list of calls used for initialization of model.adapter.
+#'	@param links list of link functions expected for the calls.
+#'	@param linkinvs list of inverse link functions expected for the calls.
+#'
+#'	@return
+#'		A \code{ma.link.test object}.
+#'		ma.link.test object is a list containing lists as following structure.
+#'		list(
+#'			list(
+#'				call = calls[1], object = eval(calls[1], parent.frame()),
+#'				link = links[1], linkinv = linkinvs[1]
+#'			),
+#'			list(
+#'				call = calls[2], object = eval(calls[2], parent.frame()),
+#'				link = links[2], linkinv = linkinvs[2]
+#'			),
+#'			...
+#'		)
+#'			
+#'	@export
+#-------------------------------------------------------------------------------
+ma.link.test <- function(calls, links, linkinvs) {
+	if (length(calls) != length(links) | length(calls) != length(linkinvs)) {
+		stop("Length of 'call', 'links' and 'linkinvs' should be equal.")
+	}
+	result <- list()
+	for (i in 1:length(calls)) {
+		result[[i]] <- list(
+			call = calls[[i]], object = eval(calls[[i]], parent.frame()),
+			link = links[[i]], linkinv = linkinvs[[i]]
+		)
+	}
+	class(result) <- "ma.link.test"
+	return(result)
+}
+
+
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all
+#'		test for get.link() and get.linkinv() methods and initialization
+#'		of 'link' and "linkinv" fields.
+#'
+#'	@export
+#'
+#'	@examples
+#-------------------------------------------------------------------------------
+test__link <- function(function.name, link.test) {
+	for (i in link.test) {
+		adapter.call <- model.adapter(i$call)
+		test_that(
+			sprintf("Initialize 'link' by call of %s", function.name),
+			{
+				expect_equal(adapter.call$link, i$link)
+			}
+		)
+		test_that(
+			sprintf("Initialize 'linkinv' by call of %s", function.name),
+			{
+				expect_equal(adapter.call$linkinv, i$linkinv)
+			}
+		)
+		adapter.object <-model.adapter(i$object)
+		test_that(
+			sprintf("Initialize 'link' by object of %s", function.name),
+			{
+				expect_equal(adapter.object$link, i$link)
+			}
+		)
+		test_that(
+			sprintf("Initialize 'linkinv' by object of %s", function.name),
+			{
+				expect_equal(adapter.object$linkinv, i$linkinv)
+			}
+		)
+	}
+}
+
+
+#-------------------------------------------------------------------------------
 #	get.data()とdataフィールドのテスト。
 #	Args:
 #		adapter: model.adapterオブジェクト。
@@ -295,23 +382,33 @@ test__data <- function(
 #'	@param family
 #'		an expected character literal of family name in 'family' field.
 #'	@param data an data.frame containing data used for modeling.
+#'	@param link.test an instance of \code{\link{ma.link.test}}.
 #'
 #'	@export
 #'
 #'	@examples
 #'	# Run all tests using a call for model.
+#'	link.test = ma.link.test(
+#'		list(substitute(glm(Sepal.Length ~ ., data = iris, family = gaussian(log)))),
+#'		list(gaussian(log)$linkfun), list(gaussian(log)$linkinv)
+#'	)
 #'	test__all(
 #'		substitute(glm(Sepal.Length ~ ., data = iris, family = gaussian)),
-#'		function.name = "lm",
+#'		formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+#'		function.name = "glm",
 #'		family = "gaussian",
-#'		data = iris
+#'		data = iris,
+#'		link.test = link.test
 #'	)
 #'
 #'
 #-------------------------------------------------------------------------------
 test__all <- function(
 	call, function.name, formula, package.name = find.package(function.name),
-	object.has.call = TRUE, object.has.data = TRUE, family = NULL, data = NULL
+	object.has.call = TRUE, object.has.data = TRUE, family = NULL, data = NULL,
+	link.test = ma.link.test(
+		list(call), list(gaussian()$linkfun), list(gaussian()$linkinv)
+	)
 ) {
 	cat(sprintf("Testing %s...\n", function.name))
 	# Load package.
@@ -338,6 +435,7 @@ test__all <- function(
 		adapter.object, function.name, "object", object.has.call,
 		object.has.data, data
 	)
+	test__link(function.name, link.test)
 	# Unload package
 #	loaded$unload()
 }
