@@ -19,6 +19,7 @@ setwd(get.this.file.dir())
 
 roxygenize(clean = TRUE)
 build()
+build(binary = TRUE, args = "--preclean")
 install()
 
 
