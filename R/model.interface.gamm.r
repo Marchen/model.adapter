@@ -36,12 +36,14 @@ model.interface.gamm$methods(
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	get.family = function(x) {
+	get.family = function(x, type = c("character", "family")) {
+		type <- match.arg(type)
 		if (is.call(x)) {
-			return(x$family)
+			family <- x$family
 		} else {
-			return(x$gam$family)
+			family <- x$gam$family
 		}
+		return(format.family(family, type))
 	}
 )
 

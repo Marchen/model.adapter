@@ -54,12 +54,34 @@ model.interface.MCMCglmm$methods(
 #	モデルのfamilyを取得する。
 #-------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.family = function(x) {
+	get.family = function(x, type = c("character", "family")) {
+		type <- match.arg(type)
+		# Get family
 		if (is.call(x)) {
-			return(callSuper(x))
+			family <- x$family
 		} else {
-			return(x$family[[1]])
+			family <- x$family[[1]]
 		}
+		family <- gsub("multinomial.*", "multinomial", family)
+		# Convert family object to character.
+		if (type == "character") {
+			if (class(family) != "character") {
+				family <- format.family(family, type)
+			}
+			return(family)
+		}
+		if (type == "family") {
+			result <- try(format.family(family, type))
+			if (class(result) == "try-error") {
+				msg <- sprintf(
+					"'%s' family object is not supported by MCMCglmm.", family
+				)
+				stop(msg)
+			} else {
+				family <- result
+			}
+		}
+		return(family)
 	}
 )
 
@@ -102,9 +124,7 @@ model.interface.MCMCglmm$methods(
 #-------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.link = function(x) {
-		f <- .self$get.family(x)
-		f <- format.family(f, "character")
-		f <- gsub("multinomial.*", "multinomial", f)
+		f <- .self$get.family(x, "character")
 		check.supported.family(f)
 		link <- switch(
 			f,
@@ -125,9 +145,7 @@ model.interface.MCMCglmm$methods(
 #-------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.linkinv = function(x) {
-		f <- .self$get.family(x)
-		f <- format.family(f, "character")
-		f <- gsub("multinomial.*", "multinomial", f)
+		f <- .self$get.family(x, "character")
 		check.supported.family(f)
 		link <- switch(
 			f,

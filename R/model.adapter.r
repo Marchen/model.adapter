@@ -246,9 +246,9 @@ model.adapter$methods(
 		"
 		Initialize family field.
 		"
-		family.name <- interface$get.family(seed)
+		family.name <- interface$get.family(seed, "character")
 		if (!is.null(family.name)) {
-			family <<- format.family(family.name, "character")
+			family <<- family.name
 		}
 	}
 )

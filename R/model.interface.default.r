@@ -52,29 +52,40 @@ model.interface.default <- setRefClass(
 #	モデルのfamilyを取得する。
 #	Args:
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
+
 #-------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.family = function(x) {
+	get.family = function(x, type = c("character", "family")) {
 		"
 		Get family from call or model object. 
 		If family was not specified, return NULL.
 		\\describe{
 			\\item{\\code{x}}{call or model object.}
+			\\item{\\code{type = c(\"character\", \"family\")}}{
+				a character literal specifying type of family returned.
+				If \"character\", this returns character vector of family name.
+				If \"family\", this returns \\code{\\link{family}} object.
+				For some family specific for certain model (e.g., categorical 
+				family of MCMCglmm), their family object is not implimented.
+				For such family, this method raise stop error.
+			}
 		}
 		"
+		type <- match.arg(type,)
 		if (is.call(x)) {
-			return(x$family)
+			family <- x$family
 		} else {
 			if (isS4(x)) {
 				if ("family" %in% slotNames(x)) {
-					return(src$object@family)
+					family <- src$object@family
 				} else {
 					return(NULL)
 				}
 			} else {
-				return(x$family)
+				family<- x$family
 			}
 		}
+		return(format.family(family, type))
 	}
 )
 
