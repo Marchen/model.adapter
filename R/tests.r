@@ -280,9 +280,9 @@ ma.link.test <- function(calls, links, linkinvs) {
 #'
 #'	@examples
 #-------------------------------------------------------------------------------
-test__link <- function(function.name, link.test) {
+test__link <- function(function.name, data, link.test) {
 	for (i in link.test) {
-		adapter.call <- model.adapter(i$call)
+		adapter.call <- model.adapter(i$call, data = data)
 		test_that(
 			sprintf("Initialize 'link' by call of %s", function.name),
 			{
@@ -295,7 +295,7 @@ test__link <- function(function.name, link.test) {
 				expect_equal(adapter.call$linkinv, i$linkinv)
 			}
 		)
-		adapter.object <-model.adapter(i$object)
+		adapter.object <-model.adapter(i$object, data = data)
 		test_that(
 			sprintf("Initialize 'link' by object of %s", function.name),
 			{
@@ -435,7 +435,7 @@ test__all <- function(
 		adapter.object, function.name, "object", object.has.call,
 		object.has.data, data
 	)
-	test__link(function.name, link.test)
+	test__link(function.name, data, link.test)
 	# Unload package
 #	loaded$unload()
 }
