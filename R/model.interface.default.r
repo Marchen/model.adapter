@@ -85,7 +85,11 @@ model.interface.default$methods(
 				family<- x$family
 			}
 		}
-		return(format.family(family, type))
+		if (!is.null(family)) {
+			return(format.family(family, type))
+		} else {
+			return(NULL)
+		}
 	}
 )
 
