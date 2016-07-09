@@ -1,4 +1,4 @@
-﻿2016-07-XX: 0.0-1 -> 0.0-2
+﻿2016-07-08: 0.0.1 -> 0.0.2
 - Changed the possible value of 'type' field of ma.prediction class.
 - Added predict(), get.link(), get.linkinv() method to model.interface.MCMCglmm.
 - Fixed a bug that get.family function does not work correctly when link function
