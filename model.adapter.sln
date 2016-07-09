@@ -5,7 +5,23 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{DA7A21FA-8162-4350-AD77-A8D1B671F3ED}") = "model.adapter", "model.adapter.rxproj", "{276A7C1B-C1C3-4EAD-9E43-4331AEBECB6B}"
 EndProject
+Project("{DA7A21FA-8162-4350-AD77-A8D1B671F3ED}") = "partial.plot", "..\partial.plot\partial.plot.rxproj", "{913C9E69-51B2-4D91-A867-D898262A88E7}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{276A7C1B-C1C3-4EAD-9E43-4331AEBECB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{276A7C1B-C1C3-4EAD-9E43-4331AEBECB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{276A7C1B-C1C3-4EAD-9E43-4331AEBECB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{276A7C1B-C1C3-4EAD-9E43-4331AEBECB6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913C9E69-51B2-4D91-A867-D898262A88E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913C9E69-51B2-4D91-A867-D898262A88E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913C9E69-51B2-4D91-A867-D898262A88E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913C9E69-51B2-4D91-A867-D898262A88E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
