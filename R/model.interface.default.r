@@ -291,7 +291,10 @@ model.interface.default$methods(
 			}
 		}
 		"
-		return(identity)
+		# because gaussian()$linkfun returns function(mu) mu and it's not
+		# identical to identity() function(x) x
+		# use gaussian()$linkfun instead of identity
+		return(gaussian()$linkfun)
 	}
 )
 
@@ -311,7 +314,10 @@ model.interface.default$methods(
 			}
 		}
 		"
-		return(identity)
+		return(gaussian()$linkinv)
+	}
+)
+
 	}
 )
 
