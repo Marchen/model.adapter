@@ -1,13 +1,13 @@
 Package: model.adapter
-Version: 0.0-1
-Title: model.adapter: a model abstraction layer for statistical/machine learning models.
+Version: 0.0.2
+Title: model.adapter: a model abstraction layer for statistical/machine learning
+    models.
 Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
 Maintainer: Michio Oguro <mogu@biology.tohoku.ac.jp>
-Description:
-    This package provides standard way to access data and common methods for
-    several kind of models. Currently, lm, glm, lme, glmmML, lmer, glmer,
-    ctree, cforest, randomForest, gbm, svm, tree, rpart, gam, gamm,
-    and ranger are supported. 
+Description: This package provides standard way to access data and common
+    methods for several kind of models. Currently, lm, glm, lme, glmmML, lmer,
+    glmer, ctree, cforest, randomForest, gbm, svm, tree, rpart, gam, gamm, and
+    ranger are supported.
 License: BSD
 Depends:
     R (>= 3.0.0),
@@ -35,23 +35,26 @@ Collate:
     'const.r'
     'find.package.r'
     'get.class.name.r'
-    'model.adapter.default.r'
-    'model.adapter.cforest.r'
-    'model.adapter.ctree.r'
-    'model.adapter.gam.r'
-    'model.adapter.gamm.r'
-    'model.adapter.gbm.r'
-    'model.adapter.glm.r'
-    'model.adapter.glmer.r'
-    'model.adapter.glmmML.r'
-    'model.adapter.lm.r'
-    'model.adapter.lme.r'
-    'model.adapter.lmer.r'
-    'model.adapter.randomForest.r'
-    'model.adapter.ranger.r'
-    'model.adapter.rpart.r'
-    'model.adapter.svm.r'
-    'model.adapter.tree.r'
+    'ma.prediction.r'
+    'model.interface.default.r'
+    'model.adapter.r'
+    'model.interface.MCMCglmm.r'
+    'model.interface.cforest.r'
+    'model.interface.ctree.r'
+    'model.interface.gam.r'
+    'model.interface.gamm.r'
+    'model.interface.gbm.r'
+    'model.interface.glm.r'
+    'model.interface.glmer.r'
+    'model.interface.glmmML.r'
+    'model.interface.lm.r'
+    'model.interface.lme.r'
+    'model.interface.lmer.r'
+    'model.interface.randomForest.r'
+    'model.interface.ranger.r'
+    'model.interface.rpart.r'
+    'model.interface.svm.r'
+    'model.interface.tree.r'
     'model.type.r'
     'tests.r'
     'utils.r'
