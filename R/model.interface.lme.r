@@ -57,7 +57,7 @@ model.interface.lme$methods(
 	predict = function(object, newdata, ...) {
 		# set level = 0 to marginalize random effect.
 		fit <- stats::predict(object, newdata, level = 0, ...)
-		fit <- ma.prediction(fit, type = "regression")
+		fit <- ma.prediction(fit, type = "response")
 		return(fit)
 	}
 )
