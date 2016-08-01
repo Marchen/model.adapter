@@ -52,7 +52,6 @@ model.interface.default <- setRefClass(
 #	モデルのfamilyを取得する。
 #	Args:
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
-
 #-------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.family = function(x, type = c("character", "family")) {

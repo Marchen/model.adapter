@@ -23,8 +23,7 @@ model.interface.glm <- setRefClass(
 #-------------------------------------------------------------------------------
 model.interface.glm$methods(
 	get.link = function(x) {
-		f <- .self$get.family(x)
-		f <- format.family(f, "family")
+		f <- .self$get.family(x, "family")
 		return(f$linkfun)
 	}
 )
@@ -35,8 +34,7 @@ model.interface.glm$methods(
 #-------------------------------------------------------------------------------
 model.interface.glm$methods(
 	get.linkinv = function(x) {
-		f <- .self$get.family(x)
-		f <- format.family(f, "family")
+		f <- .self$get.family(x, "family")
 		return(f$linkinv)
 	}
 )

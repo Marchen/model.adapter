@@ -261,6 +261,13 @@ ma.link.test <- function(calls, links, linkinvs) {
 	}
 	result <- list()
 	for (i in 1:length(calls)) {
+		# Load the package containing the modeling function.
+		# 必要なモデリング関数が入っているパッケージを読み込む。
+		function.name <- get.function(calls[[i]])
+		package.name <- find.package(function.name)
+		suppressPackageStartupMessages(
+			require(package.name, character.only = TRUE)
+		)
 		result[[i]] <- list(
 			call = calls[[i]], object = eval(calls[[i]], parent.frame()),
 			link = links[[i]], linkinv = linkinvs[[i]]
@@ -412,7 +419,7 @@ test__all <- function(
 ) {
 	cat(sprintf("Testing %s...\n", function.name))
 	# Load package.
-	loaded <- package.unloader(package.name)
+	suppressPackageStartupMessages(require(package.name, character.only = TRUE))
 	# Test initialization.
 	test__initialize(call, function.name, parent.frame())
 	# Prepare for tests.
@@ -436,8 +443,6 @@ test__all <- function(
 		object.has.data, data
 	)
 	test__link(function.name, data, link.test)
-	# Unload package
-#	loaded$unload()
 }
 
 
