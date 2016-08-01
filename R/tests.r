@@ -261,6 +261,13 @@ ma.link.test <- function(calls, links, linkinvs) {
 	}
 	result <- list()
 	for (i in 1:length(calls)) {
+		# Load the package containing the modeling function.
+		# 必要なモデリング関数が入っているパッケージを読み込む。
+		function.name <- get.function(calls[[i]])
+		package.name <- find.package(function.name)
+		suppressPackageStartupMessages(
+			require(package.name, character.only = TRUE)
+		)
 		result[[i]] <- list(
 			call = calls[[i]], object = eval(calls[[i]], parent.frame()),
 			link = links[[i]], linkinv = linkinvs[[i]]
