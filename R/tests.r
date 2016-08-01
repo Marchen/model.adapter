@@ -412,7 +412,7 @@ test__all <- function(
 ) {
 	cat(sprintf("Testing %s...\n", function.name))
 	# Load package.
-	loaded <- package.unloader(package.name)
+	suppressPackageStartupMessages(require(package.name, character.only = TRUE))
 	# Test initialization.
 	test__initialize(call, function.name, parent.frame())
 	# Prepare for tests.
@@ -436,8 +436,6 @@ test__all <- function(
 		object.has.data, data
 	)
 	test__link(function.name, data, link.test)
-	# Unload package
-#	loaded$unload()
 }
 
 
