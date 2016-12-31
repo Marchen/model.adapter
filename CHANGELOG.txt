@@ -1,4 +1,4 @@
-﻿2016-08-xx: 0.0.3
+﻿2016-12-31: 0.0.3
 	- Fixed a bug: get.link() and get.linkinv() methods of model.interface.glm 
 	  class did not work correctly.
 2016-07-11: 0.0.2
