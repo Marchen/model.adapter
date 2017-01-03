@@ -38,40 +38,40 @@
 #'	Abstraction layer for model functions/objects.
 #'
 #'	This class encapsulates differences in specifications of statistical/machine
-#'	learning functions and model objects to provide standard way to access 
-#'	data and common methods of models. To add support for a new modeling 
-#'	function, new generator object of a reference class inheriting this class 
+#'	learning functions and model objects to provide standard way to access
+#'	data and common methods of models. To add support for a new modeling
+#'	function, new generator object of a reference class inheriting this class
 #'	must be implimented and methods that cannot work well with the model should
 #'	be overriden.
 #'
 #'	@field src
 #'		a read-only list of following information used for initialization.
-#'		\emph{call}: 
+#'		\emph{call}:
 #'			a call for modeling function used for initialization of the class.
 #'		\emph{object}:
 #'			an object of a model used for initialization of the class.
-#'		When an object of model.adapter is initialized using call, src$object 
-#'		field is NULL. When an object of model.adapter is initialized using 
+#'		When an object of model.adapter is initialized using call, src$object
+#'		field is NULL. When an object of model.adapter is initialized using
 #'		object, src$call field is NULL.
 #'
 #'	@field call
-#'		a read-only call object used for initialization of model.adapter or a 
+#'		a read-only call object used for initialization of model.adapter or a
 #'		call object which used for construction of the model object.
-#'		Note call in this field is set in their full names by 
+#'		Note call in this field is set in their full names by
 #'		match.call() function. Therefore, it doesn't need to be identical to
 #'		original call used for initialization of the class. To check an object
 #'		having valid call, use \code{has.call()} method.
 #'
 #'	@field object
-#'		a read-only object of a model. If model.adapter is initialized by a 
+#'		a read-only object of a model. If model.adapter is initialized by a
 #'		call for a model function, this field is initialized by NULL.
 #'		Because some methods like get.intercept(), predict(), etc. require
-#'		model object, such methods evaluate 'call' field and store the 
+#'		model object, such methods evaluate 'call' field and store the
 #'		resultant object into this field.
 #'
 #'	@field env
 #'		an environment in which call of a model function is evaluated.
-#'		By default, this field is set to an environment where 
+#'		By default, this field is set to an environment where
 #'		\code{\link{model.adapter}} function is called.
 #'
 #'	@field family
@@ -79,28 +79,28 @@
 #'		family, this field is character(0).
 #'
 #'	@field link
-#'		a function object of link function of the model. If the model does 
-#'		not have link function, this field is \code{\link[base]{identity}} 
+#'		a function object of link function of the model. If the model does
+#'		not have link function, this field is \code{\link[base]{identity}}
 #'		function.
 #'
 #'	@field linkinv
-#'		a function object of inverse link function of the model. If the model 
-#'		does not have link function, this field is 
+#'		a function object of inverse link function of the model. If the model
+#'		does not have link function, this field is
 #'		\code{\link[base]{identity}} function.
 #'
 #'	@field formula
 #'		a formula object specifying structure of the model. '.' in this
 #'		formula object is expanded so that this field does not need to be
-#'		same as original formula specified in the call for model function or 
+#'		same as original formula specified in the call for model function or
 #'		the model object.
 #'
 #'	@field data
-#'		a data.frame used for modeling. At least, all columns used for the 
-#'		modeling are stored in this field. Because some modeling function 
-#'		doesn't keep original \emph{data.frame} used for modeling or 
-#'		\emph{call} in resultant object, this field can't have the same 
+#'		a data.frame used for modeling. At least, all columns used for the
+#'		modeling are stored in this field. Because some modeling function
+#'		doesn't keep original \emph{data.frame} used for modeling or
+#'		\emph{call} in resultant object, this field can't have the same
 #'		data.frame used for modeling in such case. When all the columns used
-#'		for the modeling is not available from this field is set to a 
+#'		for the modeling is not available from this field is set to a
 #'		data.frame with 0 columns x 0 rows. To test this field have valid
 #'		data.frame use \code{has.data()} method.
 #'
@@ -108,11 +108,11 @@
 #'		an object of model.interface class or subclass of model.interface.
 #'
 #'	@section For developpers:
-#'		If x is an object containing result of a statistical models, 
-#'		inheritance of the class is determined by usual S3 polymorphism. 
-#'		On the other hand, if x is a call for a modeling function, inheritance 
-#'		of the class is determined by function name in the function call. 
-#'		In such case, this function call model.adapter.CLASS_NAME() to 
+#'		If x is an object containing result of a statistical models,
+#'		inheritance of the class is determined by usual S3 polymorphism.
+#'		On the other hand, if x is a call for a modeling function, inheritance
+#'		of the class is determined by function name in the function call.
+#'		In such case, this function call model.adapter.CLASS_NAME() to
 #'		initialize object.
 #'
 #'	@export model.adapter
@@ -140,7 +140,7 @@ model.adapter <- setRefClass(
 #	Args:
 #		x: モデルオブジェクトもしくはモデルの呼び出しを表すcall。
 #		envir: callを評価する環境。
-#		data: 
+#		data:
 #		...: 他のメソッドに渡される引数。
 #-------------------------------------------------------------------------------
 model.adapter$methods(
@@ -429,7 +429,7 @@ model.adapter$methods(
 model.adapter$methods(
 	predict = function(newdata = NULL, ...) {
 		"
-		Calculate prediction and return a 
+		Calculate prediction and return a
 		\\code{\\link{ma.prediction}} object.
 		"
 		# If object field is NULL, make it from call.

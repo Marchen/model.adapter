@@ -8,17 +8,17 @@
 #-------------------------------------------------------------------------------
 #'	Initialize model.interface class.
 #'
-#'	This function makes an object of a derived class of \emph{model.interface} 
-#'	class that abstracts differences in specifications of supported modeling 
+#'	This function makes an object of a derived class of \emph{model.interface}
+#'	class that abstracts differences in specifications of supported modeling
 #'	functions.
 #'
 #'	@param x = NULL
-#'		an object of supported models. 
+#'		an object of supported models.
 #'		This is only used for dispatching S3 methods.
 #'
 #'	@return
 #'		an object of derived class of \code{\link{model.interface-class}}.
-#'		
+#'
 #'	@section Adding support for new function:
 #'		To be continued...
 #'
@@ -35,7 +35,7 @@ model.interface <- function(x = NULL) {
 #-------------------------------------------------------------------------------
 #'	An interface for model.adapter and statistical/machine learning models.
 #'
-#'	This class provides unified interface for calls/objects of 
+#'	This class provides unified interface for calls/objects of
 #'	statistical/machine learning models.
 #'	\code{\link{model.adapter-class}{model.adapter}} internally using object
 #'	of this class to get information from model calls/objects.
@@ -56,15 +56,15 @@ model.interface.default <- setRefClass(
 model.interface.default$methods(
 	get.family = function(x, type = c("character", "family")) {
 		"
-		Get family from call or model object. 
+		Get family from call or model object.
 		If family was not specified, return NULL.
 		\\describe{
 			\\item{\\code{x}}{call or model object.}
 			\\item{\\code{type = c(\"character\", \"family\")}}{
-				a character literal specifying type of family returned.
+				a character literal specifying the type of data returned.
 				If \"character\", this returns character vector of family name.
 				If \"family\", this returns \\code{\\link{family}} object.
-				For some family specific for certain model (e.g., categorical 
+				For some family specific for certain model (e.g., categorical
 				family of MCMCglmm), their family object is not implimented.
 				For such family, this method raise stop error.
 			}
@@ -103,9 +103,9 @@ model.interface.default$methods(
 model.interface.default$methods(
 	get.call = function(x) {
 		"
-		This method returns call by which the object is made. If call is not 
-		available, this returns NULL. To distinguish the return value of NULL 
-		is intended action or not, inherited classes are encouraged to 
+		This method returns call by which the object is made. If call is not
+		available, this returns NULL. To distinguish the return value of NULL
+		is intended action or not, inherited classes are encouraged to
 		inherit this method to explicitly return NULL if x does not have call.
 		\\describe{\\item{\\code{x}}{a model object.}}
 		"
@@ -213,7 +213,7 @@ model.interface.default$methods(
 			\\item{\\code{f}}{a formula to expand.}
 			\\item{\\code{d}}{a data.frame used to expand . in formula.}
 			\\item{\\code{specials = NULL}}{
-				special characterss passed to 
+				special characterss passed to
 				\\code{\\link[stats]{terms.formula}}.
 			}
 			\\item{\\code{package.name = NULL}}{
@@ -266,7 +266,7 @@ model.interface.default$methods(
 		If intercept is not available for the model, this should return NULL.
 		\\describe{
 			\\item{\\code{object}}{
-				a model object from which estimated value of intercept is 
+				a model object from which estimated value of intercept is
 				extracted.
 			}
 		}
@@ -304,8 +304,8 @@ model.interface.default$methods(
 model.interface.default$methods(
 	get.linkinv = function(x) {
 		"
-		Get inverse function of link function. If the model does not have 
-		link function, this function returns \\code{\\link[base]{identity}} 
+		Get inverse function of link function. If the model does not have
+		link function, this function returns \\code{\\link[base]{identity}}
 		function.
 		\\describe{
 			\\item{\\code{x}}{

@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for svm
 #'
-#'	This reference class contains methods for \code{\link[e1071]{svm}} in 
+#'	This reference class contains methods for \code{\link[e1071]{svm}} in
 #'	\emph{e1071} package.
 #'
 #'	Following methods are overriden.

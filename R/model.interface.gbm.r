@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for gbm
 #'
-#'	This reference class contains methods for \code{\link[gbm]{gbm}} in 
+#'	This reference class contains methods for \code{\link[gbm]{gbm}} in
 #'	\emph{gbm} package.
 #'
 #'	Following methods are overriden.
@@ -25,7 +25,7 @@ model.interface.gbm <- setRefClass(
 model.interface.gbm$methods(
 	get.data = function(x, envir = parent.frame()) {
 		# Extract data from call using default method.
-		# If default method couldn't get data, try to use data in call 
+		# If default method couldn't get data, try to use data in call
 		# in the object.
 		# デフォルトメソッドでcallからdataを取得。
 		# デフォルトのメソッドでdataを取得できなかったら、

@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for glm
 #'
-#'	This reference class contains methods for \code{\link[stats]{glm}} in 
+#'	This reference class contains methods for \code{\link[stats]{glm}} in
 #'	\emph{stats} package.
 #'
 #'	Following methods are overriden.

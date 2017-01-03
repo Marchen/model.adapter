@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for rpart
 #'
-#'	This reference class contains methods for \code{\link[rpart]{rpart}} in 
+#'	This reference class contains methods for \code{\link[rpart]{rpart}} in
 #'	\emph{rpart} package.
 #'
 #'	Following methods are overriden.

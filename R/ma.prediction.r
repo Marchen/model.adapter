@@ -13,7 +13,7 @@
 #'		interval, etc) upper and lower values of it should be placed in 
 #'		the second and third columns, respectively.
 #'	@param type
-#'		a character literal representing type of prediction. Currently, 
+#'		a character literal representing type of prediction. Currently,
 #'		"regression", "probability" and  "class" are supported.
 #'	@param fixed
 #'		a data.frame containing data used for prediction.
@@ -25,15 +25,15 @@
 #'		a object of ma.prediction class with following fields.
 #'		\describe{
 #'			\item{fit}{
-#'				a matrix containing predicted result. For continuous variable, 
-#'				predicted values are placed in "fit" column. If an interval 
+#'				a matrix containing predicted result. For continuous variable,
+#'				predicted values are placed in "fit" column. If an interval
 #'				(e.g., confidence, prediction, etc.) is available, its
 #'				upper and lower values are placed in "upper" and "lower"
 #'				columns.
 #'			}
 #'			\item{type}{
 #'				a character literal representing type of prediction.
-#'				Currently, "response", "link", "probability" and  "class" are 
+#'				Currently, "response", "link", "probability" and  "class" are
 #'				supported.
 #'			}
 #'			\item{fixed}{
@@ -41,16 +41,16 @@
 #'				If not available, this field is NULL.
 #'			}
 #'			\item{interval.type}{
-#'				a character literal representing type and level of the 
+#'				a character literal representing type and level of the
 #'				interval. If no interval is available, this field is NULL.
-#'				If the interval is confidence interval, this field is 
-#'				"confidence". If the interval is prediction interval, 
+#'				If the interval is confidence interval, this field is
+#'				"confidence". If the interval is prediction interval,
 #'				this field is "prediction".
 #'			}
 #'			\item{interval.level}{
-#'				a number representing level of interval. If no interval is 
-#'				calculated, this field should be NULL. If 
-#'				\code{interval.level} is NULL and 
+#'				a number representing level of interval. If no interval is
+#'				calculated, this field should be NULL. If
+#'				\code{interval.level} is NULL and
 #'			}
 #'		}
 #'	@export

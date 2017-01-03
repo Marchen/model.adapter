@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for glmmML
 #'
-#'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in 
+#'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in
 #'	\emph{glmmML} package.
 #'
 #'	Following methods are overriden.

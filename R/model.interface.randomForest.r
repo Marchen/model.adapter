@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for randomForest
 #'
-#'	This reference class contains methods for 
+#'	This reference class contains methods for
 #'	\code{\link[randomForest]{randomForest}} in \emph{randomForest} package.
 #'
 #'	Following methods are overriden.

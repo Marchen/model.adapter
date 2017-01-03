@@ -4,10 +4,10 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for cforest
 #'
-#'	This reference class contains methods for \code{\link[party]{cforest}} in 
+#'	This reference class contains methods for \code{\link[party]{cforest}} in
 #'	\emph{party} package.
 #'	Note that because an object of RandomForest does not keep original call,
-#'	get.call() function always returns NULL. Also, when an instance of this 
+#'	get.call() function always returns NULL. Also, when an instance of this
 #'	class is made from model object, 'call' field is always call("<undef>").
 #'
 #'	Following methods are overriden.

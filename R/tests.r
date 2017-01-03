@@ -64,7 +64,7 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #'	@param call a call for model function.
 #'	@param function.name a character string of function name.
 #'	@param call.or.object
-#'		if current test is a test for call, "call". 
+#'		if current test is a test for call, "call".
 #'		If current test is a test for object, "object".
 #'	@param object.has.call
 #'		if model object has call, set TRUE.
@@ -76,7 +76,7 @@ test__initialize <- function(call, function.name, env = parent.frame()) {
 #'	)
 #'	call <- substitute((glm(Sepal.Length ~ ., data = iris, family = gaussian))
 #'	test__call(adapter, call, "glm", "call")
-#'	
+#'
 #'	# Test of get.call() method and 'call' field using a model object.
 #'	object <- glm(Sepal.Length ~ ., data = iris, family = gaussian)
 #'	adapter <- model.adapter(object)
@@ -208,7 +208,7 @@ test__family <- function(
 #'		glm(Sepal.Length ~ ., data = iris, family = gaussian)
 #'	)
 #'	test__formula(
-#'		adapter, "glm", "call", 
+#'		adapter, "glm", "call",
 #'		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species
 #'	)
 #'
@@ -252,7 +252,7 @@ test__formula <- function(adapter, function.name, call.or.object, formula) {
 #'			),
 #'			...
 #'		)
-#'			
+#'
 #'	@export
 #-------------------------------------------------------------------------------
 ma.link.test <- function(calls, links, linkinvs) {
@@ -384,7 +384,7 @@ test__data <- function(
 #'	@param function.name character literal of function name to test.
 #'	@param formula an expected formula in 'formula' field.
 #'	@param object.has.call if a model object keep call, specify TRUE.
-#'	@param object.has.data 
+#'	@param object.has.data
 #'		if the model object keep original data used for modeling, specify TRUE.
 #'	@param family
 #'		an expected character literal of family name in 'family' field.

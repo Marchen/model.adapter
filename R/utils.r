@@ -43,8 +43,8 @@ is.generic <- function(fun.name) {
 #-------------------------------------------------------------------------------
 #'	(Internal) match.call() with handling of generic function.
 #'
-#'	Some generic functions have different arguments for different classes. In 
-#'	such cases, match.call() function returns wrong results. This function 
+#'	Some generic functions have different arguments for different classes. In
+#'	such cases, match.call() function returns wrong results. This function
 #'	finds actual generic function called for focal class and matches call with
 #'	the function. If call is not a call for non-generic function, matching is
 #'	done by match.call() function.
@@ -111,7 +111,7 @@ is.formula <- function(x) {
 #-------------------------------------------------------------------------------
 #'	(Internal) Format and check consistency of family.
 #'
-#'	@param family 
+#'	@param family
 #'		a family function, character of family name, symbol, or family object.
 #'	@param type
 #'		a character to specify the type of the value this function returns.
@@ -200,7 +200,7 @@ get.function <- function(call, type = c("function", "character")) {
 #-------------------------------------------------------------------------------
 #'	(Internal) Keep call of model functions.
 #'
-#'	To keep call for model functions but not to keep call for subsetting of 
+#'	To keep call for model functions but not to keep call for subsetting of
 #'	list, array, etc., this function evaluate original 'x' parameter if it
 #'	doesn't have function call for models.
 #'
@@ -258,16 +258,16 @@ make.call.or.object <- function(call, env) {
 #'
 #'	@param formula a formula object from which variable names are obtained.
 #'	@param data a data.frame used to expand . in the formula.
-#'	@param specials 
+#'	@param specials
 #'		special characterss passed to \code{\link[stats]{terms.formula}}.
 #'	@param type
 #'		a character literal specifying type of explanatory variables to get.
 #'
-#'	@return 
+#'	@return
 #'		a character vector of names of explanatory variables.
 #'		If \emph{type} is "all", returns all explanatory variables in the
 #'		formula as is.
-#'		If \emph{type| is "base", this function returns all explanatory 
+#'		If \emph{type| is "base", this function returns all explanatory
 #'		variables in their basic form.
 #'
 #'	@examples

@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for lmer
 #'
-#'	This reference class contains methods for \code{\link[lme4]{lmer}} in 
+#'	This reference class contains methods for \code{\link[lme4]{lmer}} in
 #'	\emph{lme4} package.
 #'
 #'	Following methods are overriden.

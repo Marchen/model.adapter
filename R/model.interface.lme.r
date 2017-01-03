@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for lme
 #'
-#'	This reference class contains methods for \code{\link[nlme]{lme}} in 
+#'	This reference class contains methods for \code{\link[nlme]{lme}} in
 #'	\emph{nlme} package.
 #'
 #'	Following methods are overriden.

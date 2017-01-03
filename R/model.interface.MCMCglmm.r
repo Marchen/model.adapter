@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for MCMCglmm
 #'
-#'	This reference class contains methods for \code{\link[MCMCglmm]{MCMCglmm}} 
+#'	This reference class contains methods for \code{\link[MCMCglmm]{MCMCglmm}}
 #'	in \emph{MCMCglmm} package.
 #'
 #'	Following methods are overriden.
@@ -149,7 +149,7 @@ model.interface.MCMCglmm$methods(
 		check.supported.family(f)
 		link <- switch(
 			f,
-			gaussian = identity, 
+			gaussian = identity,
 			poisson = exp,
 			categorical = binomial()$linkinv,
 			multinomial = binomial()$linkinv,

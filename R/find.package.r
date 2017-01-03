@@ -45,7 +45,7 @@ find.package.default <- function(x){
 	if (is(x, "tree")) return("tree")
 	if (is(x, "rpart")) return("rpart")
 	if (is(x, "gamm")) return("mgcv")
-	return(class(x)[1])	
+	return(class(x)[1])
 }
 
 find.package.character <- function(x){

@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------
 #'	model.interface class for lm
 #'
-#'	This reference class contains methods for \code{\link[stats]{lm}} in 
+#'	This reference class contains methods for \code{\link[stats]{lm}} in
 #'	\emph{stats} package.
 #'
 #'	Following methods are overriden.
