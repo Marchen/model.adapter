@@ -49,6 +49,9 @@ is.generic <- function(fun.name) {
 #'	the function. If call is not a call for non-generic function, matching is
 #'	done by match.call() function.
 #'
+#'	If an object has more than two classes, the first class in the result of
+#'	class() with generic function is used.
+#'
 #'	@param call a call to be matched.
 #'	@param envir an environment to evaluate call.
 #'
@@ -58,27 +61,38 @@ is.generic <- function(fun.name) {
 #'		match.generic.call(substitute(hist(1:10)))
 #-------------------------------------------------------------------------------
 match.generic.call <- function(call, envir = parent.frame(2L)) {
+	# Match function without considering generic function.
+	# 総省関数を無視して関数をマッチングする。
 	fun.name <- get.function(call)
 	fun <- match.fun(fun.name)
 	matched.call <- match.call(fun, call)
+	# Non-generic functions.
+	# 総省関数でなければ、そのまま値を返す。
 	if (!is.generic(fun.name)) {
-		# Non-generic functions.
 		return(matched.call)
 	}
-	# Find class of generic function / 総称関数の分岐に使われるクラスを取得。
-	generic.class.name <- names(formals(fun))[1]
-	generic.class <- class(eval(matched.call[[generic.class.name]], envir))
 	if (isGeneric(fun.name)) {
-		#S4 functions.
-		stop("Not implimented.")
-	} else {
-		#S3 functions.
-		fun <- getS3method(fun.name, generic.class, TRUE)
-		if (is.null(fun)) {
-			fun <- getS3method(fun.name, "default")
+		stop("Algorithm for S4 generic method is notimplimented.")
+	}
+	# Find class of generic S3 function.
+	# S3総称関数の分岐に使われるクラスを取得。
+	generic.class.arg <- names(formals(fun))[1]
+	generic.classes <- class(eval(matched.call[[generic.class.arg]], envir))
+	# Find generic function for each class.
+	# 各クラスに対応した総省関数を探す。
+	for (i in generic.classes) {
+		fun <- getS3method(fun.name, i, TRUE)
+		if (!is.null(fun)) {
+			return(match.call(fun, call))
 		}
+	}
+	# If generic function was not found, try default method.
+	# 総省関数が見つからなかったらdefault関数を試す。
+	fun <- getS3method(fun.name, "default")
+	if (exists(fun, envir = envir)) {
 		return(match.call(fun, call))
 	}
+	stop(sprintf("Couldn't find matched generic function of %s.", fun.name))
 }
 
 
