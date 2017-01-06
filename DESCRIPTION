@@ -1,5 +1,5 @@
 Package: model.adapter
-Version: 0.0.3
+Version: 0.0.4
 Title: model.adapter: a model abstraction layer for statistical/machine learning
     models.
 Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
