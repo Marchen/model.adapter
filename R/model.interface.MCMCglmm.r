@@ -168,12 +168,12 @@ model.interface.MCMCglmm$methods(
 #'
 #'	@param a character vector of length one specifing
 #-------------------------------------------------------------------------------
-check.supported.family <- function(f) {
+check.supported.family <- function(family) {
 	supported <- c(
 		"gaussian", "poisson", "categorical", "multinomial", "geometric",
 		"exponential"
 	)
-	if (any(!f %in% supported)) {
+	if (any(!family %in% supported)) {
 		msg <- paste(supported[1:(length(supported) - 1)], collapse = ", ")
 		msg <- paste(msg, "and", supported[length(supported)])
 		msg <- sprintf(
