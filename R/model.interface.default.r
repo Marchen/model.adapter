@@ -320,7 +320,4 @@ model.interface.default$methods(
 	}
 )
 
-	}
-)
-
 
