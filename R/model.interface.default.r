@@ -185,19 +185,22 @@ model.interface.default$methods(
 		"
 		if (is.object(x)) {
 			if (isS4(x)) {
-				return(eval(x@call$formula, envir))
+				f <- eval(x@call$formula, envir)
 			} else {
-				return(eval(x$call$formula, envir))
+				f <- eval(x$call$formula, envir)
 			}
 		} else {
 			if (!is.null(x$formula)) {
-				return(eval(x$formula, envir))
+				f <- eval(x$formula, envir)
 			} else {
 				args <- lapply(as.list(x), eval, envir = envir)
 				f <- args[sapply(args, is.formula)][[1]]
-				return(f)
 			}
 		}
+		# Because MASS::stepAIC converts formula field of lm, glm, lme
+		# object to terms object, use formula() to convert terms to
+		# formula.
+		return(formula(f))
 	}
 )
 

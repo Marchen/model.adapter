@@ -44,7 +44,10 @@ model.interface.lme$methods(
 		}
 		cl <- match.call(lme, cl)
 		args <- lapply(as.list(cl), eval, envir = envir)
-		return(args$fixed)
+		# Because MASS::stepAIC converts formula field of lm, glm, lme
+		# object to terms object, use formula() to convert terms to
+		# formula.
+		return(formula(args$fixed))
 	}
 )
 
