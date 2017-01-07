@@ -36,3 +36,13 @@ model.interface.gam$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.gam$methods(
+	predict.types = function() {
+		return(make.predict.types(prob = "response", class = "response"))
+	}
+)
+
+

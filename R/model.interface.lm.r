@@ -19,4 +19,17 @@ model.interface.lm <- setRefClass(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.lm$methods(
+	predict.types = function() {
+		types <- make.predict.types(
+			link = "response", prob = "response", class = "response"
+		)
+		return(types)
+	}
+)
+
+
 

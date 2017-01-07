@@ -97,6 +97,19 @@ model.interface.MCMCglmm$methods(
 
 
 #-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.MCMCglmm$methods(
+	predict.types = function() {
+		type <- make.predict.types(
+			link = "terms", prob = "response", class = "response"
+		)
+		return(type)
+	}
+)
+
+
+#-------------------------------------------------------------------------------
 #	predictメソッド。
 #-------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(

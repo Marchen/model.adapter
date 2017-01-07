@@ -427,6 +427,17 @@ model.adapter$methods(
 #	予測値を計算してma.prediction型のオブジェクトを返す。
 #-------------------------------------------------------------------------------
 model.adapter$methods(
+	predict.types = function() {
+		"
+		Return a character vector representing conversion table of 'type'
+		argument of predict() method.
+		"
+		return(.self$interface$predict.types())
+	}
+)
+
+
+model.adapter$methods(
 	predict = function(newdata = NULL, ...) {
 		"
 		Calculate prediction and return a

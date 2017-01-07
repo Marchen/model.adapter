@@ -66,3 +66,11 @@ model.interface.RandomForest$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.RandomForest$methods(
+	predict.types = function() {
+		return(make.predict.types(link = "response", class = "response"))
+	}
+)

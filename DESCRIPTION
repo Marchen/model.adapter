@@ -56,5 +56,6 @@ Collate:
     'model.interface.svm.r'
     'model.interface.tree.r'
     'model.type.r'
+    'predict.types.r'
     'tests.r'
     'utils.r'

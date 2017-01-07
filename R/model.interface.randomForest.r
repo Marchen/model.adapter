@@ -19,3 +19,13 @@ model.interface.randomForest <- setRefClass(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.randomForest$methods(
+	predict.types = function() {
+		return(make.predict.types(link = "response"))
+	}
+)
+
+

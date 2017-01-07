@@ -40,3 +40,13 @@ model.interface.glm$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.glm$methods(
+	predict.types = function() {
+		return(make.predict.types(prob = "response", class = "response"))
+	}
+)
+
+

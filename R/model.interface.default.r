@@ -321,3 +321,17 @@ model.interface.default$methods(
 )
 
 
+#-------------------------------------------------------------------------------
+#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#-------------------------------------------------------------------------------
+model.interface.default$methods(
+	predict.types = function() {
+		"
+		Return a character vector representing conversion table of 'type'
+		argument of predict() method.
+		"
+		return(make.predict.types())
+	}
+)
+
+

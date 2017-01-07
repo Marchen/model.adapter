@@ -368,6 +368,44 @@ test__data <- function(
 
 
 #-------------------------------------------------------------------------------
+#	predict.types()メソッドのテスト。
+#	Args:
+#		adapter: model.adapterオブジェクト。
+#		function.name: 関数名。
+#		call.or.object:
+#			call由来のインスタンスをテストするときには"call"、
+#			オブジェクト由来のインスタンスをテストするときには"object"。
+#-------------------------------------------------------------------------------
+#'	@describeIn test__all
+#'		test for predict.types() method.
+#'
+#'	@export
+#'
+#'	@examples
+#'	# Test predict.types() method and 'data' field using a call.
+#'	adapter <- model.adapter(
+#'		glm(Sepal.Length ~ ., data = iris, family = gaussian)
+#'	)
+#'	test__predict_types(adapter, "glm", "call")
+#-------------------------------------------------------------------------------
+test__predict_types <- function(adapter, function.name, call.or.object) {
+	message <- "Test of predict.types() method from adapter by %s of %s"
+	message <- sprintf(message, call.or.object, function.name)
+	test_that(
+		message, {
+			types <- adapter$predict.types()
+			expect_type(types, "character")
+			expect_length(types, 4)
+			expect_identical(
+				names(types), c("response", "link", "prob", "class")
+			)
+		}
+	)
+
+}
+
+
+#-------------------------------------------------------------------------------
 #	全てのテストを実行
 #
 #	Args:
@@ -443,6 +481,8 @@ test__all <- function(
 		object.has.data, data
 	)
 	test__link(function.name, data, link.test)
+	test__predict_types(adapter.call, function.name, "call")
+	test__predict_types(adapter.object, function.name, "object")
 }
 
 
