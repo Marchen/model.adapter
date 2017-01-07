@@ -33,7 +33,9 @@ if (version$os == "mingw32") {
 } else {
 	bin.path = "../repos/bin/macosx/mavericks/contrib/%s/"
 }
-r.ver <- paste(version$major, strsplit(version$minor, "\\.")[[1]][1], sep = ".")
+r.ver <- paste(
+	version$major, strsplit(version$minor, "\\.")[[1]][1], sep = "."
+)
 bin.path <- sprintf(bin.path, r.ver)
 if (!dir.exists(bin.path)) {
 	dir.create(bin.path)

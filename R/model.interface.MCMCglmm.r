@@ -41,9 +41,6 @@ model.interface.MCMCglmm$methods(
 		if (is.call(x)) {
 			return(callSuper(x, envir))
 		} else {
-		
-		}
-		if (is.object(x)) {
 			return(x$Fixed$formula)
 		}
 	}

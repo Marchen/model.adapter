@@ -8,13 +8,13 @@ link.test = ma.link.test(
 	list(
 		substitute(
 			MCMCglmm(
-				Sepal.Length ~ Petal.Length, data = iris2, 
+				Sepal.Length ~ Petal.Length, data = iris2,
 				family = "gaussian", verbose = FALSE
 			)
 		),
 		substitute(
 			MCMCglmm(
-				bin ~ Petal.Length, data = iris2, family = "poisson", 
+				bin ~ Petal.Length, data = iris2, family = "poisson",
 				verbose = FALSE
 			)
 		),

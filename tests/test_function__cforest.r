@@ -2,7 +2,7 @@
 test__all(
 	call = substitute(
 		cforest(
-			Sepal.Length ~ ., data = iris, 
+			Sepal.Length ~ ., data = iris,
 			controls = cforest_control(ntree = 10)
 		)
 	),
