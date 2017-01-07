@@ -88,10 +88,7 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 	}
 	# If generic function was not found, try default method.
 	# 総省関数が見つからなかったらdefault関数を試す。
-	fun <- getS3method(fun.name, "default")
-	if (exists(fun, envir = envir)) {
-		return(match.call(fun, call))
-	}
+	try(return(match.call(getS3method(fun.name, "default"), call)))
 	stop(sprintf("Couldn't find matched generic function of %s.", fun.name))
 }
 
