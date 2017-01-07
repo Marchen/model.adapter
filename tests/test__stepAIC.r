@@ -1,6 +1,7 @@
 library(nlme)
 library(testthat)
 
+cat("Testing stepAIC...\n")
 # Prepare objects and calls for testing.
 calls <- list(
 	glm = substitute(
@@ -21,7 +22,7 @@ calls <- list(
 objects <- lapply(calls, eval)
 
 # do MASS::stepAIC.
-result.stepAIC <- lapply(objects, MASS::stepAIC)
+result.stepAIC <- lapply(objects, MASS::stepAIC, trace = FALSE)
 
 # Test result of stepAIC does not produce errors.
 expect_silent(
@@ -30,3 +31,4 @@ expect_silent(
 
 # Remove objects.
 rm(calls, objects, result.stepAIC, null)
+

@@ -36,6 +36,7 @@ source(file.path(base.path, "test_function__rpart.r"), encoding = "UTF-8")
 source(file.path(base.path, "test_function__svm.r"), encoding = "UTF-8")
 source(file.path(base.path, "test_function__tree.r"), encoding = "UTF-8")
 
+source(file.path(base.path, "test__stepAIC.r"), encoding = "UTF-8")
 
 
 

@@ -1,8 +1,9 @@
-# Test for gam in gam package.
-test__all(
-	call = substitute(
-		gam(Sepal.Length ~ Petal.Length, data = iris, family = gaussian)
-	),
+#==============================================================================
+#	Test for gam in gam package.
+#==============================================================================
+
+test.gam <- ma.test(
+	call = gam(Sepal.Length ~ Petal.Length, data = iris, family = gaussian),
 	function.name = "gam",
 	formula = Sepal.Length ~ Petal.Length,
 	package.name = "gam",
@@ -10,3 +11,5 @@ test__all(
 	data = iris
 )
 
+test.gam$run.all()
+rm(test.gam)

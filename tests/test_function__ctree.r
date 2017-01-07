@@ -1,8 +1,14 @@
-# Test for ctree
-test__all(
-	call = substitute(ctree(Sepal.Length ~ ., data = iris)),
+#==============================================================================
+#	Test for ctree
+#==============================================================================
+
+test.ctree <- ma.test(
+	call = ctree(Sepal.Length ~ ., data = iris),
 	function.name = "ctree",
-	formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+	formula = Sepal.Length
+		~ Sepal.Width + Petal.Length + Petal.Width + Species,
 	object.has.call = FALSE,
 	data = iris
 )
+test.ctree$run.all()
+rm(test.ctree)
