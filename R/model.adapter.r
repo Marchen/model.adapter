@@ -159,6 +159,13 @@ model.adapter$methods(
 			\\item{\\code{...}}{arguments to be passed to methods.}
 		}
 		"
+		# xが指定されていないときreference classの機能で呼び出されたと仮定し、
+		# 関数を終了する。
+		# If 'x' is missing, assume called by some internal process of
+		# reference class object and exit.
+		if (missing(x)) {
+			return()
+		}
 		seed <- make.call.or.object(substitute(x), envir)
 		.self$init.interface(seed)
 		.self$init.src(seed)
