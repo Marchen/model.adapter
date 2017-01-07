@@ -200,7 +200,10 @@ model.interface.default$methods(
 		# Because MASS::stepAIC converts formula field of lm, glm, lme
 		# object to terms object, use formula() to convert terms to
 		# formula.
-		return(formula(f))
+		if (!is.null(f)) {
+			f <- formula(f)
+		}
+		return(f)
 	}
 )
 
