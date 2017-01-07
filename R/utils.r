@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	関数が総称関数かをおおざっぱに調べる。
 #
 #	Args:
@@ -6,7 +6,7 @@
 #
 #	Value:
 #		総称関数ならTRUE、それ以外ならFALSE。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	(Internal) Is a function generic?
 #'
 #'	This function emph{roughly} test a function is generic.
@@ -18,7 +18,7 @@
 #'	@examples
 #'	is.generic(plot)
 #'	is.generic(glm)
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 is.generic <- function(fun.name) {
 	is.generic.s3 <- function(fun.name) {
 		fun <- match.fun(fun.name)
@@ -31,7 +31,7 @@ is.generic <- function(fun.name) {
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	総称関数もたどってmatch.call()を行う。
 #
 #	Args:
@@ -40,7 +40,7 @@ is.generic <- function(fun.name) {
 #
 #	Value:
 #		引数をフルネームにしたcall。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	(Internal) match.call() with handling of generic function.
 #'
 #'	Some generic functions have different arguments for different classes. In
@@ -59,7 +59,7 @@ is.generic <- function(fun.name) {
 #'
 #'	@examples
 #'		match.generic.call(substitute(hist(1:10)))
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 match.generic.call <- function(call, envir = parent.frame(2L)) {
 	# Match function without considering generic function.
 	# 総省関数を無視して関数をマッチングする。
@@ -93,25 +93,25 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	変数がformulaかを調べる。
 #
 #	Args:
 #		x: 変数。
 #	Value:
 #		xがformulaならTRUE、違えばFALSE。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	(Internal) Check an object is formula.
 #'
 #'	@param x an object.
 #'	@return returns TRUE if \emph{x} is formula otherwise returns FALSE.
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 is.formula <- function(x) {
 	return(is(x, "formula"))
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	familyのフォーマットを揃える。
 #
 #	Args:
@@ -119,7 +119,7 @@ is.formula <- function(x) {
 #		type:
 #			familyならfamilyオブジェクトを、characterならfamily名を表す文字列
 #			を返す。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	(Internal) Format and check consistency of family.
 #'
 #'	@param family
@@ -132,7 +132,7 @@ is.formula <- function(x) {
 #'
 #'		This internal function is called by \code{link{detect.model.type}} and
 #'		\code{\link{predict.glmmML}} functions.
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 format.family <- function(family, type = c("family", "character")) {
 	type <- match.arg(type)
 	if (is.character(family)) {
@@ -153,7 +153,7 @@ format.family <- function(family, type = c("family", "character")) {
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	関数、関数名をcallから取得する。
 #
 #	Args:
@@ -164,7 +164,7 @@ format.family <- function(family, type = c("family", "character")) {
 #
 #	Value:
 #		"function"なら関数を、"character"なら文字列を返す。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	(Internal) Get function and function name from call
 #'
 #'	@param call
@@ -179,7 +179,7 @@ format.family <- function(family, type = c("family", "character")) {
 #'
 #'	@examples
 #'		get.function(substitute(glm(Sepal.Length ~ ., data = iris)))
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 get.function <- function(call, type = c("function", "character")) {
 	# Check arguments
 	if (missing(type)) {
@@ -197,7 +197,7 @@ get.function <- function(call, type = c("function", "character")) {
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	モデル関数のcall以外を評価する。
 #
 #	Args:
@@ -208,7 +208,7 @@ get.function <- function(call, type = c("function", "character")) {
 #			callを評価する環境。
 #	Value:
 #		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	(Internal) Keep call of model functions.
 #'
 #'	To keep call for model functions but not to keep call for subsetting of
@@ -227,7 +227,7 @@ get.function <- function(call, type = c("function", "character")) {
 #'	@examples
 #'		x <- substitute(glm(Sepal.Length ~ ., data = iris))
 #'		make.call.or.object(x)
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 make.call.or.object <- function(call, env) {
 	evaluated.call <- eval(call, env)
 	if (is.call(evaluated.call)) {
@@ -256,7 +256,7 @@ make.call.or.object <- function(call, env) {
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	formulaから説明変数名を取得する。
 #	Args:
 #		formula: 説明変数名を取り出す式。
@@ -264,7 +264,7 @@ make.call.or.object <- function(call, env) {
 #		specials: terms.formulaに渡す特殊文字。
 #	Value:
 #		説明変数名が格納された文字列ベクトル。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	Get names of explanatory variables from formula.
 #'
 #'	@param formula a formula object from which variable names are obtained.
@@ -293,7 +293,7 @@ make.call.or.object <- function(call, env) {
 #'		x.vars(f, data = iris, type = "base")
 #'
 #' @export
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 x.names <- function(
 	formula, data = NULL, specials = NULL, type = c("all", "base")
 ) {

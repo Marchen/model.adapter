@@ -1,36 +1,40 @@
-#-------------------------------------------------------------------------------
-#	�e�X�g�p�ɑS�ẴX�N���v�g��ǂݍ��ށB
+#------------------------------------------------------------------------------
+#	テスト用に全てのスクリプトを読み込む。
 #	Read all scripts for developmental purpose.
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#	List of function, class and package names.
+#------------------------------------------------------------------------------
 #	function		class			package
 #	-----------------------------------------------
-#	lm				lm				stats
-#	glm				glm, lm			stats
-#	lme				lme				nlme
-#	glmmML			glmmML			glmmML
-#	lmer			lmerMod			lme4
-#	glmer			glmerMod		lme4
-#	ctree			BinaryTree		party
 #	cforest			RandomForest	party
-#	randomForest	randomForest	randomForest
-#	gbm				gbm				gbm
-#	svm				svm.formula		e1071
-#	tree			tree			tree
-#	rpart			rpart			rpart
+#	ctree			BinaryTree		party
 #	gam				gam				mgcv, gam
 #	gamm			gamm			mgcv
-#	ranger			ranger			ranger
+#	gbm				gbm				gbm
+#	glm				glm, lm			stats
+#	glmer			glmerMod		lme4
+#	glmmML			glmmML			glmmML
+#	lm				lm				stats
+#	lme				lme				nlme
+#	lmer			lmerMod			lme4
 #	MCMCglmm		MCMCglmm		MCMCglmm
-#-------------------------------------------------------------------------------
+#	randomForest	randomForest	randomForest
+#	ranger			ranger			ranger
+#	rpart			rpart			rpart
+#	svm				svm.formula		e1071
+#	tree			tree			tree
+#------------------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	List of type of predict methods.
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	function		response	link		prob	class		remarks
-#	----------------------------------------------------------------------------
-#	cforest			response	----		prob	response	�����ϐ��^�Ŕ���
-#	ctree			response	----		prob	response	�����ϐ��^�Ŕ���
+#	---------------------------------------------------------------------------
+#	cforest			response	----		prob	response	応答変数型で判定
+#	ctree			response	----		prob	response	応答変数型で判定
 #	gam				response	link		----	----
 #	gamm			response	link		----	----
 #	gbm				response	link		----	----
@@ -42,18 +46,18 @@
 #	lme				----		----		----	----
 #	lmer			response	link		----	----
 #	MCMCglmm		response	term		----	----
-#	randomForest	response	----		prob	response	�����ϐ��^�Ŕ���
-#	ranger			----		----		----	----		���ʂɂ����ȏ�񂪓����Ă�B
-#	rpart			vector		matrix?		prob	class		matrix��link������ł���̂��H
-#	svm				----		----		----	----		probability�����ŃR���g���[��
+#	randomForest	response	----		prob	response	応答変数型で判定
+#	ranger			----		----		----	----		結果にいろんな情報が入ってる。
+#	rpart			vector		matrix?		prob	class		matrixでlinkを実現できるのか？
+#	svm				----		----		----	----		probability引数でコントロール
 #	tree			vector		----		vector	class
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------------------
-#	�X�N���v�g������f�B���N�g������Ԃ��֐��B
+#------------------------------------------------------------------------------
+#	スクリプトがあるディレクトリ名を返す関数。
 #	http://stackoverflow.com/questions/1815606/rscript-determine-path-of-the-executing-script
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 get.this.file.dir <- function() {
 	cmdArgs <- commandArgs(trailingOnly = FALSE)
 	needle <- "--file="
@@ -67,9 +71,10 @@ get.this.file.dir <- function() {
 	}
 }
 
-#-------------------------------------------------------------------------------
-#	�\�[�X�ǂݍ���
-#-------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------
+#	ソース読み込み
+#------------------------------------------------------------------------------
 base.path <- file.path(get.this.file.dir(), "R")
 source(file.path(base.path, "model.interface.default.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.cforest.r"), encoding = "UTF-8")

@@ -1,7 +1,7 @@
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	モデルの予測値を格納したma.predictionオブジェクトを生成する。
 #	fitはランダム効果のあるモデルだったらpopulation mean。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	ma.prediction-class.
 #'
 #'	ma.prediction function initialize ma.prediction object.
@@ -55,7 +55,7 @@
 #'		}
 #'	@export
 #'
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ma.prediction <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
@@ -67,11 +67,11 @@ ma.prediction <- function(
 	UseMethod("ma.prediction")
 }
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	@describeIn ma.prediction
 #'	Default method handling vectors.
 #'	@method ma.prediction default
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ma.prediction.default <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
@@ -88,11 +88,11 @@ ma.prediction.default <- function(
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	@describeIn ma.prediction
 #'	Method for matrix.
 #'	@method ma.prediction matrix
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ma.prediction.matrix <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...
@@ -128,11 +128,11 @@ ma.prediction.matrix <- function(
 }
 
 
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #'	@describeIn ma.prediction
 #'	Method for ma.prediction.
 #'	@method ma.prediction ma.prediction
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ma.prediction.ma.prediction <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
 	interval.type = NULL, interval.level = NULL, ...

@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #' (Internal) Prepare predict.types.
 #'
 #' Prepare a named character vector for predict.types.
@@ -10,7 +10,7 @@
 #' @param class a character representing predict type of class labels.
 #'
 #' @return a character representing predict.types.
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #	predict.typesに使う文字列ベクトルを作成する。
 #
 #	Args:
@@ -22,7 +22,7 @@
 #
 #	Value:
 #		predict.typesに使う文字列。
-#-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 make.predict.types <- function(
 	predict.types,
 	response = "response", link = "link", prob = "prob", class = "class"
