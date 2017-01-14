@@ -37,6 +37,7 @@ find.package.default <- function(x){
 	if (is(x, "lme")) return("nlme")
 	if (is(x, "lmerMod")) return("lme4")
 	if (is(x, "glmerMod")) return("lme4")
+	if (is(x, "glmmadmb")) return("glmmADMB")
 	if (is(x, "BinaryTree")) return("party")
 	if (is(x, "RandomForest")) return("party")
 	if (is(x, "randomForest")) return("randomForest")
@@ -51,16 +52,17 @@ find.package.default <- function(x){
 find.package.character <- function(x){
 	package.name <- switch(
 		x,
-		cforest	= "party",
-		ctree	= "party",
-		lm		= "stats",
-		glm		= "stats",
-		lme		= "nlme",
-		lmer	= "lme4",
-		glmer	= "lme4",
-		svm		= "e1071",
-		gam		= "mgcv",
-		gamm	= "mgcv",
+		cforest		= "party",
+		ctree		= "party",
+		lm			= "stats",
+		glm			= "stats",
+		glmmadmb	= "glmmADMB",
+		lme			= "nlme",
+		lmer		= "lme4",
+		glmer		= "lme4",
+		svm			= "e1071",
+		gam			= "mgcv",
+		gamm		= "mgcv",
 		x
 	)
 	return(package.name)
