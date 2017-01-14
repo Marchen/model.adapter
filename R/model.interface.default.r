@@ -40,6 +40,12 @@ model.interface <- function(x = NULL) {
 #'	\code{\link{model.adapter-class}{model.adapter}} internally using object
 #'	of this class to get information from model calls/objects.
 #'
+#'	@field predict.types
+#'		a named character vector representing the conversion table of shared
+#'		type of prediction used for predict() method. Currently, this vector has
+#'		four elements named "response", "link", "prob" and "class" and
+#'		each element represents compatible type of character for the model.
+#'
 #'	@export
 #------------------------------------------------------------------------------
 model.interface.default <- setRefClass(
