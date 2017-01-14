@@ -98,7 +98,7 @@ source(file.path(base.path, "model.adapter.r"), encoding = "UTF-8")
 
 source(file.path(base.path, "utils.r"), encoding = "UTF-8")
 source(file.path(base.path, "const.r"), encoding = "UTF-8")
-source(file.path(base.path, "find.package.r"), encoding = "UTF-8")
+source(file.path(base.path, "package.name.r"), encoding = "UTF-8")
 source(file.path(base.path, "get.class.name.r"), encoding = "UTF-8")
 source(file.path(base.path, "ma.prediction.r"), encoding = "UTF-8")
 source(file.path(base.path, "predict.types.r"), encoding = "UTF-8")
