@@ -7,11 +7,11 @@
 #'
 #' @examples
 #'	# Get package name from function name.
-#'	find.package("ctree")
+#'	package.name("ctree")
 #'	# Get package name from object.
 #'	data(iris)
 #'	object <- lm(Petal.Length ~ ., data = iris)
-#'	find.package(object)
+#'	package.name(object)
 #------------------------------------------------------------------------------
 #	関数名やクラスのオブジェクト名からその関数/そのオブジェクトを生成した関数が
 #	含まれるパッケージ名を取得する関数。対応してない関数は関数名やクラス名の
@@ -24,11 +24,15 @@
 #		その関数が含まれる/そのオブジェクトを作成した関数が含まれるパッケージ名
 #		を表す文字列。
 #------------------------------------------------------------------------------
-find.package <- function(x){
-	UseMethod("find.package", x)
+package.name <- function(x){
+	UseMethod("package.name", x)
 }
 
-find.package.default <- function(x){
+#-------------------------------------------------------------------------------
+#'	@describeIn package.name
+#'	@method package.name default Default S3 method.
+#-------------------------------------------------------------------------------
+package.name.default <- function(x){
 	# gamはglmやlmを引き継いでるので、先に評価
 	if (is(x, "gam")){
 		return(ifelse(is.null(x$mgcv.conv), "gam", "mgcv"))
@@ -49,7 +53,11 @@ find.package.default <- function(x){
 	return(class(x)[1])
 }
 
-find.package.character <- function(x){
+#-------------------------------------------------------------------------------
+#'	@describeIn package.name
+#'	@method package.name character Method for character.
+#-------------------------------------------------------------------------------
+package.name.character <- function(x){
 	package.name <- switch(
 		x,
 		cforest		= "party",
@@ -68,4 +76,12 @@ find.package.character <- function(x){
 	return(package.name)
 }
 
+#-------------------------------------------------------------------------------
+#'	@describeIn package.name
+#'	@method package.name call Method for call.
+#-------------------------------------------------------------------------------
+package.name.call <- function(x) {
+	x <- as.characte(x[1])
+	return(package.name(x))
+}
 

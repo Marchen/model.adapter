@@ -138,7 +138,7 @@ ma.test <- setRefClass(
 ma.test$methods(
 	initialize = function(
 		call, function.name, formula,
-		package.name = find.package(function.name),
+		package.name = package.name(function.name),
 		object.has.call = TRUE, object.has.data = TRUE, family = NULL,
 		data = NULL
 	) {

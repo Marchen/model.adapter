@@ -33,7 +33,6 @@ Suggests:
 RoxygenNote: 5.0.1
 Collate:
     'const.r'
-    'find.package.r'
     'get.class.name.r'
     'ma.prediction.r'
     'model.interface.default.r'
@@ -56,6 +55,7 @@ Collate:
     'model.interface.svm.r'
     'model.interface.tree.r'
     'model.type.r'
+    'package.name.r'
     'predict.types.r'
     'tests.r'
     'utils.r'
