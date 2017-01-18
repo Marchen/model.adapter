@@ -29,6 +29,9 @@
 #				モデル作成に使われたデータ。
 #				モデルオブジェクトはデータを保持していないことがあるので、
 #				元のデータフレームが取得できないことがある。
+#			predict.types:
+#				predictに使われる共通のtypeから関数特異的なtypeへの
+#				typeの変換表。
 #			interface:
 #				model.interfaceクラスのオブジェクト。
 #				様々なモデルへの対応はこのオブジェクトに頼る。
@@ -104,6 +107,11 @@
 #'		data.frame with 0 columns x 0 rows. To test this field have valid
 #'		data.frame use \code{has.data()} method.
 #'
+#'	@field predict.types
+#'		a character representing conversion table from the shared predict
+#'		types to function specific type for each predict method of the
+#'		given function.
+#'
 #'	@field interface
 #'		an object of model.interface class or subclass of model.interface.
 #'
@@ -125,11 +133,13 @@ model.adapter <- setRefClass(
 		call = "call",
 		object = "ANY",
 		env = "environment",
+		package.name = "character",
 		family = "character",
 		link = "function",
 		linkinv = "function",
 		formula = "formula",
 		data = "data.frame",
+		predict.types = "character",
 		interface = "model.interface"
 	)
 )
@@ -144,7 +154,9 @@ model.adapter <- setRefClass(
 #		...: 他のメソッドに渡される引数。
 #------------------------------------------------------------------------------
 model.adapter$methods(
-	initialize = function(x, envir = parent.frame(4L), data = NULL, ...) {
+	initialize = function(
+		x, envir = parent.frame(4L), data = NULL, package.name = NULL, ...
+	) {
 		"
 		Initialize an object of the class using model object or call for a
 		model function.
@@ -156,6 +168,13 @@ model.adapter$methods(
 				envir an environment in which call in x is evaluated.
 			}
 			\\item{\\code{data}}{data.frame used for further manipulations.}
+			\\item{\\code{package.name}}{
+				a character specifying package name of the function/object.
+				If not specified, package.name is automatically determined
+				from \\code{x}. This is mainly used to control functions
+				with same name in different packages (e.g. \\code{gam} in
+				\\code{gam} and \\code{mgcv} packages).
+			}
 			\\item{\\code{...}}{arguments to be passed to methods.}
 		}
 		"
@@ -176,6 +195,8 @@ model.adapter$methods(
 		.self$init.link(seed)
 		.self$init.data(seed, data)
 		.self$init.formula(seed)
+		.self$predict.types <- .self$interface$predict.types()
+		.self$init.package.name(seed, package.name)
 	}
 )
 
@@ -330,6 +351,27 @@ model.adapter$methods(
 
 
 #------------------------------------------------------------------------------
+#	package.nameフィールドを初期化する。
+#------------------------------------------------------------------------------
+model.adapter$methods(
+	init.package.name = function(seed, name) {
+		"
+		Initialize package.name field.
+		"
+		if (!is.null(name)) {
+			.self$package.name <- name
+			return()
+		}
+		if (is.call(seed)) {
+			.self$package.name <- package.name(as.character(seed[1]))
+		} else {
+			.self$package.name <- package.name(seed)
+		}
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	callに有効なcallが入っているかを確認する。
 #------------------------------------------------------------------------------
 model.adapter$methods(
@@ -463,6 +505,29 @@ model.adapter$methods(
 			pred, fixed = newdata[.self$x.names(type = "base")]
 		)
 		return(pred)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	モデルの説明変数の係数を返す。係数がないモデルはNULLを返す。
+#------------------------------------------------------------------------------
+model.adapter$methods(
+	fixed = function(intercept = TRUE) {
+		"
+		Returns estimated coefficients of fixed effects of the model.
+		If the model does not have fixed effects, this function returns NULL.
+		\\describe{
+			\\item{\\code{intercept = TRUE}}{
+				if TRUE, this function also returns estimated intercept of the
+				model.
+			}
+		}
+		"
+		if (is.null(.self$object)) {
+			.self$object <- eval(.self$src$call, .self$src$envir)
+		}
+		return(.self$interface$get.fixed(.self$object, intercept))
 	}
 )
 
