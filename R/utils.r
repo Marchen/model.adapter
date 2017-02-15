@@ -304,15 +304,21 @@ x.names <- function(
 	if (type == "all") {
 		return(vars)
 	}
-	# Get basic form of explanatory variables.
-	# Remove functions and powers
-	vars <- do.call(c, sapply(vars, strsplit, split = ":"))
+	# To et basic form of explanatory variables, split interaction
+	# and random factors.
+	vars <- do.call(c, sapply(vars, strsplit, split = ":|\\|"))
+	# Remove functions, powers, spaces, and intercept
 	powers <- "\\^[1-9]*"
 	fun.begin <- "^.*\\("
 	fun.end <- "\\)$"
-	remove.chars <- paste(powers, fun.begin, fun.end, sep = "|")
+	space <- " "
+	intercept = "1"
+	remove.chars <- paste(
+		powers, fun.begin, fun.end, space, intercept, sep = "|"
+	)
 	vars <- gsub(remove.chars, "", vars)
-	vars <- unique(vars)
+	# Remove duplicated and empty names.
+	vars <- unique(subset(vars, vars != ""))
 	return(vars)
 }
 
