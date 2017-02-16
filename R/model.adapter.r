@@ -428,7 +428,7 @@ model.adapter$methods(
 		}
 		"
 		type <- match.arg(type)
-		model.adapter::x.names(formula, data, specials, type)
+		x.names.from.formula(formula, data, specials, type)
 	}
 )
 

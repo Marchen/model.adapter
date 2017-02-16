@@ -294,7 +294,7 @@ make.call.or.object <- function(call, env) {
 #'
 #' @export
 #------------------------------------------------------------------------------
-x.names <- function(
+x.names.from.formula <- function(
 	formula, data = NULL, specials = NULL, type = c("all", "base")
 ) {
 	# Get all explanatory variables from formula.
@@ -307,18 +307,15 @@ x.names <- function(
 	# To et basic form of explanatory variables, split interaction
 	# and random factors.
 	vars <- do.call(c, sapply(vars, strsplit, split = ":|\\|"))
-	# Remove functions, powers, spaces, and intercept
+	# Remove functions, powers, and space.
 	powers <- "\\^[1-9]*"
 	fun.begin <- "^.*\\("
 	fun.end <- "\\)$"
 	space <- " "
-	intercept = "1"
-	remove.chars <- paste(
-		powers, fun.begin, fun.end, space, intercept, sep = "|"
-	)
+	remove.chars <- paste(powers, fun.begin, fun.end, space, sep = "|")
 	vars <- gsub(remove.chars, "", vars)
 	# Remove duplicated and empty names.
-	vars <- unique(subset(vars, vars != ""))
+	vars <- unique(subset(vars, !vars %in% c("", "1")))
 	return(vars)
 }
 
