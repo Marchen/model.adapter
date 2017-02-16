@@ -107,29 +107,6 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictメソッド。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	predict = function(object, newdata, ...) {
-		args <- as.list(match.call())[-1]
-		args <- lapply(args, eval, envir = parent.frame())
-		pred.args <- args
-		if (!is.null(pred.args$type)) {
-			if (pred.args$type == "link") {
-				pred.args$type <- "terms"
-			}
-		}
-		pred <- do.call(stats::predict, pred.args)
-		result <- ma.prediction(
-			pred, type = args$type, interval.type = args$interval,
-			interval.level = args$level
-		)
-		return(result)
-	}
-)
-
-
-#------------------------------------------------------------------------------
 #	リンク関数を返す。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(

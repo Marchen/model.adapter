@@ -259,24 +259,31 @@ model.interface.default$methods(
 #	予測値を計算して、ma.prediction型オブジェクトを返す。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	predict = function(object, newdata = NULL, ...) {
+	predict = function(object, newdata, type, random, ...) {
 		"
 		Calculate predictions and returns \\code{\\link{ma.prediction}} object.
 		\\describe{
 			\\item{\\code{object}}{a model object used for prediction.}
-			\\item{\\code{newdata = NULL}}{
+			\\item{\\code{newdata}}{
 				a data.frame containing data used for prediction.
+			}
+			\\item{\\code{type}}{
+				the type of prediciton. This should be a type specific for
+				each modeling functions.
+			}
+			\\item{\\code{random = ~0}}{
+				the random effect to use.
+				Tentatively, ~0 means don't use random effects.
 			}
 			\\item{\\code{...}}{other variables passed to predict methods.}
 		}
 		"
-		pred <- stats::predict(object, newdata = newdata, ...)
-		# Make ma.prediction object.
-		# ma.predicitonオブジェクトの作成。
-		args <- as.list(match.call())[-1]
-		result <- ma.prediction(
-			pred, args$type, NULL, args$interval, args$level
-		)
+		pred <- stats::predict(object, newdata = newdata, type = type, ...)
+		return(pred)
+	}
+)
+
+
 		return(result)
 	}
 )

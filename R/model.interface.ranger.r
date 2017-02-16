@@ -18,4 +18,11 @@ model.interface.ranger <- setRefClass(
 	"model.interface.ranger", contains = "model.interface"
 )
 
-
+model.interface.ranger$methods(
+	predict = function(object, newdata = NULL, type, ...) {
+		# Convert type of prediction.
+		# predictに用いるtypeを調整する。
+		pred <- stats::predict(object, data = newdata, type = type, ...)
+		return(pred$predictions)
+	}
+)

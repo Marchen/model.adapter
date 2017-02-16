@@ -473,7 +473,7 @@ model.adapter$methods(
 
 
 #------------------------------------------------------------------------------
-#	予測値を計算してma.prediction型のオブジェクトを返す。
+#	predictメソッドのtypeの対応表を用意する。
 #------------------------------------------------------------------------------
 model.adapter$methods(
 	predict.types = function() {
@@ -490,19 +490,52 @@ model.adapter$methods(
 #	予測値を計算してma.prediction型のオブジェクトを返す。
 #------------------------------------------------------------------------------
 model.adapter$methods(
-	predict = function(newdata = NULL, ...) {
+	predict = function(
+		newdata = NULL, type = c("response", "link", "prob", "class"),
+		random = ~0, ...
+	) {
 		"
 		Calculate prediction and return a
 		\\code{\\link{ma.prediction}} object.
+		\\describe{
+			\\item{\\code{newdata = NULL}}{
+				a data.frame containing data used for prediction.
+			}
+			\\item{
+				\\code{type = c(\"response\", \"link\", \"prob\", \"class\")}
+			}{
+				the type of prediciton. \"response\" and \"link\" can be used
+				for generalized linear (mixed) model and spcify scale of
+				prediction.
+				\"response\" is on the scale of the response variable.
+				\"link\" is on the scale of the link function.
+				\"prob\" and \"class\" are used for classification models.
+				\"prob\" calculate probability of being each class of
+				response variable.
+				\"class\" makes predicted class for each observation.
+			}
+			\\item{\\code{random = ~0}}{
+				the random effect to use.
+				Tentatively, ~0 means don't use random effects.
+			}
+			\\item{\\code{...}}{other variables passed to predict methods.}
+		}
 		"
 		# If object field is NULL, make it from call.
 		# objectフィールドがNULLだったらcallを評価して作成する。
 		if (is.null(.self$object)) {
 		   	.self$object <- eval(.self$src$call, .self$src$envir)
 		}
-		pred <- .self$interface$predict(.self$object, newdata = newdata, ...)
+		type <- match.arg(type)
+		pred <- .self$interface$predict(
+			.self$object, newdata = newdata, type = .self$predict.types[type],
+			random = random, ...
+		)
+		# Make ma.prediction object.
+		args <- as.list(match.call())[-1]
 		pred <- ma.prediction(
-			pred, fixed = newdata[.self$x.names(type = "base")]
+			pred, type = type, fixed = newdata[.self$x.names(type = "base")],
+			interval.type = args$interval, interval.level = args$level
 		)
 		return(pred)
 	}

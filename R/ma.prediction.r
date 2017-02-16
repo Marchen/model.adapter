@@ -7,11 +7,14 @@
 #'	ma.prediction function initialize ma.prediction object.
 #'
 #'	@param fit
-#'		a matrix containing predicted result. For a continuous variable,
-#'		predicted values are placed in the first column. Also, if the 
-#'		prediction has interval  (e.g., confidence interval, prediction 
-#'		interval, etc) upper and lower values of it should be placed in 
-#'		the second and third columns, respectively.
+#'		a matrix containing predicted result.
+#'		For continuous response variables, predicted values are placed in the
+#'		first column. Also, if the prediction has interval (e.g., confidence
+#'		interval, prediction interval, etc.) upper and lower values of them
+#'		should be placed in the second and third columns, respectively.
+#'
+#'		For discrete variables, each column represents
+#'
 #'	@param type
 #'		a character literal representing type of prediction. Currently,
 #'		"regression", "probability" and  "class" are supported.
@@ -71,6 +74,7 @@ ma.prediction <- function(
 #'	@describeIn ma.prediction
 #'	Default method handling vectors.
 #'	@method ma.prediction default
+#'	@export
 #------------------------------------------------------------------------------
 ma.prediction.default <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
@@ -92,6 +96,7 @@ ma.prediction.default <- function(
 #'	@describeIn ma.prediction
 #'	Method for matrix.
 #'	@method ma.prediction matrix
+#'	@export
 #------------------------------------------------------------------------------
 ma.prediction.matrix <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
@@ -132,6 +137,7 @@ ma.prediction.matrix <- function(
 #'	@describeIn ma.prediction
 #'	Method for ma.prediction.
 #'	@method ma.prediction ma.prediction
+#'	@export
 #------------------------------------------------------------------------------
 ma.prediction.ma.prediction <- function(
 	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
