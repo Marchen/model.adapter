@@ -59,7 +59,11 @@ model.interface.lme$methods(
 model.interface.lme$methods(
 	predict = function(object, newdata, ...) {
 		# set level = 0 to marginalize random effect.
-		fit <- stats::predict(object, newdata, level = 0, ...)
+		if (is.null(newdata)) {
+			fit <- stats::predict(object, level = 0, ...)
+		} else {
+			fit <- stats::predict(object, newdata, level = 0, ...)
+		}
 		return(fit)
 	}
 )

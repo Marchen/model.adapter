@@ -18,11 +18,19 @@ model.interface.ranger <- setRefClass(
 	"model.interface.ranger", contains = "model.interface"
 )
 
+
+#------------------------------------------------------------------------------
+#	ranger用predict()メソッド。
+#------------------------------------------------------------------------------
 model.interface.ranger$methods(
 	predict = function(object, newdata = NULL, type, ...) {
-		# Convert type of prediction.
-		# predictに用いるtypeを調整する。
-		pred <- stats::predict(object, data = newdata, type = type, ...)
+		# If no newdata specified, use predictions() to
+		# extract predicted values.
+		if (is.null(newdata)) {
+			return(predictions(object))
+		}
+		# name of 'newdata' argument is 'data' for ranger.
+		pred <- stats::predict(object, data = newdata, ...)
 		return(pred$predictions)
 	}
 )
