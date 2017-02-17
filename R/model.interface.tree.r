@@ -22,7 +22,7 @@ model.interface.tree <- setRefClass(
 #------------------------------------------------------------------------------
 #	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
-model.interface.rpart$methods(
+model.interface.tree$methods(
 	predict.types = function() {
 		type <- make.predict.types(
 			response = "vector", link = "vector", prob = "vector"
