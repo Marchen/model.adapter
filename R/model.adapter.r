@@ -524,7 +524,7 @@ model.adapter$methods(
 		# If object field is NULL, make it from call.
 		# objectフィールドがNULLだったらcallを評価して作成する。
 		if (is.null(.self$object)) {
-		   	.self$object <- eval(.self$src$call, .self$src$envir)
+			.self$object <- eval(.self$src$call, .self$src$envir)
 		}
 		type <- match.arg(type)
 		pred <- .self$interface$predict(
