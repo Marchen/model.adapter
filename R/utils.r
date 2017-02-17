@@ -187,7 +187,8 @@ get.function <- function(call, type = c("function", "character")) {
 	}
 	type <- match.arg(type)
 	# Extract information
-	function.name <- as.character(call[[1]])
+	function.name <- as.character(deparse(call[[1]]))
+	function.name <- gsub(".*::", "", function.name)
 	if (type == "character") {
 		return(function.name)
 	} else {
