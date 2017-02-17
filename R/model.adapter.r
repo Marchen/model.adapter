@@ -583,6 +583,35 @@ model.adapter$methods(
 
 
 #------------------------------------------------------------------------------
+#	モデルの残差を返す。
+#------------------------------------------------------------------------------
+model.adapter$methods(
+	residuals = function(type = c("response", "link")) {
+		"
+		Return residuals of the model.
+		"
+		type <- match.arg(type)
+		# Prepare object
+		if (is.null(.self$object)) {
+			.self$object <- eval(.self$src$call, .self$src$envir)
+		}
+		# Calculate residual as (response variable) - (predicted value)
+		if (type == "link") {
+			resid <- (
+				.self$link(.self$y.vars()[[1]])
+				- .self$predict(type = type)$fit[, "fit"]
+			)
+		} else {
+			resid <- (
+				.self$y.vars()[[1]] - .self$predict(type = type)$fit[, "fit"]
+			)
+		}
+		return(resid)
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	Lock all fields other than "object" field.
 #	objectフィールド以外のフィールドをロックする。
 #------------------------------------------------------------------------------
