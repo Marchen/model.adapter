@@ -278,7 +278,7 @@ make.call.or.object <- function(call, env) {
 #'		a character vector of names of explanatory variables.
 #'		If \emph{type} is "all", returns all explanatory variables in the
 #'		formula as is.
-#'		If \emph{type| is "base", this function returns all explanatory
+#'		If \emph{type} is "base", this function returns all explanatory
 #'		variables in their basic form.
 #'
 #'	@examples
