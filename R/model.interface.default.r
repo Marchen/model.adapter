@@ -278,7 +278,11 @@ model.interface.default$methods(
 			\\item{\\code{...}}{other variables passed to predict methods.}
 		}
 		"
-		pred <- stats::predict(object, newdata = newdata, type = type, ...)
+		if (is.null(newdata)) {
+			pred <- stats::predict(object, type = type, ...)
+		} else {
+			pred <- stats::predict(object, newdata = newdata, type = type, ...)
+		}
 		return(pred)
 	}
 )
