@@ -606,16 +606,10 @@ model.adapter$methods(
 			.self$object <- eval(.self$src$call, .self$src$envir)
 		}
 		# Calculate residual as (response variable) - (predicted value)
-		if (type == "link") {
-			resid <- (
-				.self$link(.self$y.vars()[[1]])
-				- .self$predict(type = type)$fit[, "fit"]
-			)
-		} else {
-			resid <- (
-				.self$y.vars()[[1]] - .self$predict(type = type)$fit[, "fit"]
-			)
-		}
+		pred <- .self$predict(type = type)$fit[, "fit"]
+		y <- .self$y.vars()[[1]]
+		fun <- ifelse(type == "link", .self$link, identity)
+		resid <- fun(y) - pred
 		return(resid)
 	}
 )
