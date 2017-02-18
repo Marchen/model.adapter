@@ -10,7 +10,7 @@ library(testthat)
 #			関数名を表す文字列。
 #		formula:
 #			モデルのformula。
-#		package.name:
+#		package:
 #			関数が含まれるパッケージ名。
 #		object.has.call:
 #			モデルオブジェクトがcallを保持しているときにはTRUE。
@@ -43,7 +43,7 @@ library(testthat)
 #'	@field formula
 #'		an expected formula in 'formula' field.
 #'
-#'	@field package.name
+#'	@field package
 #'		a character literal of a package name which contains the function
 #'		specified by \code{function.name} field.
 #'
@@ -118,7 +118,7 @@ ma.test <- setRefClass(
 		call = "call",
 		function.name = "character",
 		formula = "formula",
-		package.name = "character",
+		package = "character",
 		object.has.call = "logical",
 		object.has.data = "logical",
 		family = "ANY",
@@ -138,7 +138,7 @@ ma.test <- setRefClass(
 ma.test$methods(
 	initialize = function(
 		call, function.name, formula,
-		package.name = package.name(function.name),
+		package = package.name(function.name),
 		object.has.call = TRUE, object.has.data = TRUE, family = NULL,
 		data = NULL
 	) {
@@ -146,19 +146,19 @@ ma.test$methods(
 		Initialize test object.
 		"
 		message <- "Initializing test for %s in %s...\n"
-		cat(sprintf(message, function.name, package.name))
+		cat(sprintf(message, function.name, package))
 		# Set fields
 		.self$call <- substitute(call)
 		.self$function.name <- function.name
 		.self$formula <- formula
-		.self$package.name <- package.name
+		.self$package <- package
 		.self$object.has.call <- object.has.call
 		.self$object.has.data <- object.has.data
 		.self$family <- family
 		.self$data <- data
 		# Load package.
 		suppressPackageStartupMessages(
-			require(.self$package.name, character.only = TRUE)
+			require(.self$package, character.only = TRUE)
 		)
 		# Initialize other fields.
 		.self$env <- parent.frame()
