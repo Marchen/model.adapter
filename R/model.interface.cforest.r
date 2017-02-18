@@ -37,7 +37,7 @@ model.interface.RandomForest$methods(
 model.interface.RandomForest$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		if (is.object(x)) {
-			# custom 
+			# Manually construct formula.
 			y <- as.character(x@data@formula$response[2])
 			x <- as.character(x@data@formula$input[2])
 			f <- as.formula(paste(y, x, sep = "~"))

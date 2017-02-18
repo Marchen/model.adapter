@@ -46,9 +46,9 @@
 #	lm				response	----		----	----
 #	lme				----		----		----	----
 #	lmer			response	link		----	----
-#	MCMCglmm		response	term		----	----
+#	MCMCglmm		response	terms		----	----
 #	randomForest	response	----		prob	response	応答変数型で判定
-#	ranger			----		----		----	----		結果にいろんな情報が入ってる。
+#	ranger			response	----		----	----		結果にいろんな情報が入ってる。
 #	rpart			vector		matrix?		prob	class		matrixでlinkを実現できるのか？
 #	svm				----		----		----	----		probability引数でコントロール
 #	tree			vector		----		vector	class
