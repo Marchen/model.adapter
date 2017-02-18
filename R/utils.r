@@ -1,4 +1,54 @@
 #------------------------------------------------------------------------------
+#'	(Internal) Is a function S3 generic?
+#'
+#'	This function \emph{roughly} test a function is S3 generic.
+#'
+#'	@param fun.name a character string naming the function.
+#'
+#'	@return
+#'		returns TRUE if fun.name is S3 generic function and FALSE otherwise.
+#'
+#'	@examples
+#'	is.s3.generic("plot")
+#'	is.s3.generic("glm")
+#'	@describeIn is.generic
+#------------------------------------------------------------------------------
+is.s3.generic <- function(fun.name) {
+	fun <- match.fun(fun.name)
+	fun.text <- as.character(deparse(body(fun)))
+	result <- sapply(fun.text, grepl, pattern = "UseMethod\\(\"")
+	result <- any(result)
+	return(result)
+}
+
+
+#------------------------------------------------------------------------------
+#'	(Internal) Is a function S4 generic?
+#'
+#'	This function \emph{roughly} test a function is S4 generic.
+#'
+#'	@param fun.name a character string of function name.
+#'	@param packae a character string of package name.
+#'
+#'	@return
+#'		returns TRUE if fun.name is S4 generic function and FALSE otherwise.
+#'
+#'	@examples
+#'	is.s4.generic("plot")
+#'	is.s4.generic("lmer")
+#'	@describeIn is.generic
+#------------------------------------------------------------------------------
+is.s4.generic <- function(fun.name, package = "") {
+	search.path <- sprintf("package:%s", package)
+	if (search.path %in% search()) {
+		return(isGeneric(fun.name, sprintf("package:%s", package)))
+	} else {
+		return(isGeneric(fun.name))
+	}
+}
+
+
+#------------------------------------------------------------------------------
 #	関数が総称関数かをおおざっぱに調べる。
 #
 #	Args:
@@ -9,25 +59,19 @@
 #------------------------------------------------------------------------------
 #'	(Internal) Is a function generic?
 #'
-#'	This function emph{roughly} test a function is generic.
+#'	This function \emph{roughly} test a function is generic.
 #'
 #'	@param fun.name a character string naming the function.
+#'	@param packae a character string of package name.
 #'
-#'	@return returns TRUE if fun is generic function and FALSE otherwise.
+#'	@return returns TRUE if fun.name is generic function and FALSE otherwise.
 #'
 #'	@examples
-#'	is.generic(plot)
-#'	is.generic(glm)
+#'	is.generic("plot")
+#'	is.generic("glm")
 #------------------------------------------------------------------------------
-is.generic <- function(fun.name) {
-	is.generic.s3 <- function(fun.name) {
-		fun <- match.fun(fun.name)
-		fun.text <- as.character(deparse(body(fun)))
-		result <- sapply(fun.text, grepl, pattern = "UseMethod\\(\"")
-		result <- any(result)
-		return(result)
-	}
-	return(isGeneric(as.character(fun.name)) | is.generic.s3(fun.name))
+is.generic <- function(fun.name, package = "") {
+	return(is.s3.generic(fun.name) | is.s4.generic(fun.name, package))
 }
 
 
