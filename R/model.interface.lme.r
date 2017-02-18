@@ -70,6 +70,20 @@ model.interface.lme$methods(
 
 
 #------------------------------------------------------------------------------
+#	モデルオブジェクトから説明変数の係数を取得する。
+#------------------------------------------------------------------------------
+model.interface.lme$methods(
+	get.fixed = function(object, intercept = TRUE) {
+		result <- object$coefficients$fixed
+		if (!intercept) {
+			result <- result[names(result) != "(Intercept)"]
+		}
+		return(result)
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	モデルオブジェクトから切片の推定値を取得する。
 #------------------------------------------------------------------------------
 model.interface.lme$methods(

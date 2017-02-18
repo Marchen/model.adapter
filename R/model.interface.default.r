@@ -292,6 +292,29 @@ model.interface.default$methods(
 )
 
 
+#------------------------------------------------------------------------------
+#	モデルオブジェクトから説明変数の係数を取得する。
+#------------------------------------------------------------------------------
+model.interface.default$methods(
+	get.fixed = function(object, intercept = TRUE) {
+		"
+		Get coefficients of fixed effect from model object.
+		If the model does not have fixed effects, this functions returns NULL.
+		\\describe{
+			\\item{\\code{object}}{
+				a model object from which estimated value of intercept is
+				extracted.
+			}
+			\\item{\\code{intercept = TRUE}}{
+				if TRUE, this function returns coefficient of intercept.
+				If FALSE, this function returns coefficients without intercept.
+			}
+		}
+		"
+		result <- object$coefficients
+		if (!intercept) {
+			result <- result[names(result) != "(Intercept)"]
+		}
 		return(result)
 	}
 )
