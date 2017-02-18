@@ -71,6 +71,9 @@ model.interface.glmmadmb$methods(
 )
 
 
+#------------------------------------------------------------------------------
+#	予測値を計算する。
+#------------------------------------------------------------------------------
 model.interface.glmmadmb$methods(
 	predict = function(object, newdata, type, ...) {
 		# Change 'fixed' field of object to handle '.' in the formula.

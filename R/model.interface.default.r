@@ -260,7 +260,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	予測値を計算して、ma.prediction型オブジェクトを返す。
+#	予測値を計算する。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	predict = function(object, newdata, type, random, ...) {
