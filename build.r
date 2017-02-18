@@ -2,6 +2,9 @@ require(roxygen2)
 require(devtools)
 
 
+#------------------------------------------------------------------------------
+#	Change working directory to package directory
+#------------------------------------------------------------------------------
 get.this.file.dir <- function() {
 	cmdArgs <- commandArgs(trailingOnly = FALSE)
 	needle <- "--file="
@@ -15,33 +18,52 @@ get.this.file.dir <- function() {
 	}
 }
 
-setwd(get.this.file.dir())
+old.wd <- setwd(get.this.file.dir())
+
+
+#------------------------------------------------------------------------------
+#	Get R version.
+#------------------------------------------------------------------------------
+r.ver <- paste(
+	version$major, strsplit(version$minor, "\\.")[[1]][1], sep = "."
+)
+
+
+#------------------------------------------------------------------------------
+#	Set path for Rtools.
+#------------------------------------------------------------------------------
+rtools <- c(
+	"3.0" = ";C:/Rtools31/bin;C:/Rtools31/gcc-4.6.3/bin",
+	"3.1" = ";C:/Rtools32/bin;C:/Rtools32/gcc-4.6.3/bin",
+	"3.2" = ";C:/Rtools33/bin;C:/Rtools33/gcc-4.6.3/bin",
+	"3.3" = ";C:/Rtools34/bin;C:/Rtools34/mingw_32/bin"
+)
+Sys.setenv(PATH = paste0(Sys.getenv("PATH"), rtools[r.ver]))
+
+
+#------------------------------------------------------------------------------
+#	Convert documents.
+#------------------------------------------------------------------------------
+roxygenize(clean = TRUE)
 
 
 #------------------------------------------------------------------------------
 #	Build package
 #------------------------------------------------------------------------------
-# Convert documents.
-roxygenize(clean = TRUE)
-
 # Build source package
 build(path = "../repos/src/contrib")
 
 # Build binary package
 if (version$os == "mingw32") {
-	bin.path <- "../repos/bin/windows/contrib/%s/"
+	bin.path <- "../repos/bin/windows/contrib/%s"
 } else {
-	bin.path <- "../repos/bin/macosx/mavericks/contrib/%s/"
+	bin.path <- "../repos/bin/macosx/mavericks/contrib/%s"
 }
-r.ver <- paste(
-	version$major, strsplit(version$minor, "\\.")[[1]][1], sep = "."
-)
-bin.path <- sprintf(bin.path, r.ver)
-if (!dir.exists(bin.path)) {
+bin.path <- normalizePath(sprintf(bin.path, r.ver))
+if (!file.exists(bin.path)) {
 	dir.create(bin.path)
 }
 build(binary = TRUE, args = "--preclean", path = bin.path)
-
 
 
 #------------------------------------------------------------------------------
@@ -57,7 +79,21 @@ tools::write_PACKAGES(
 	type = "win.binary"
 )
 tools::write_PACKAGES(
-	file.path(path.repos, sprintf("bin/windows/contrib/%s/", r.ver)),
+	file.path(path.repos, sprintf("bin/macosx/mavericks/contrib/%s/", r.ver)),
 	type = "mac.binary"
 )
+
+
+#------------------------------------------------------------------------------
+#	Install.
+#------------------------------------------------------------------------------
+system("Rscript -e library(devtools);install()")
+
+
+#------------------------------------------------------------------------------
+#	Cleanup.
+#------------------------------------------------------------------------------
+setwd(old.wd)
+rm(old.wd)
+
 
