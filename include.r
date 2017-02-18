@@ -15,6 +15,7 @@
 #	gbm				gbm				gbm
 #	glm				glm, lm			stats
 #	glmer			glmerMod		lme4
+#	glmmadmb		glmmadmb		glmmADMB
 #	glmmML			glmmML			glmmML
 #	lm				lm				stats
 #	lme				lme				nlme
@@ -84,6 +85,7 @@ source(file.path(base.path, "model.interface.gamm.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.gbm.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.glm.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.glmer.r"), encoding = "UTF-8")
+source(file.path(base.path, "model.interface.glmmadmb.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.glmmML.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.lm.r"), encoding = "UTF-8")
 source(file.path(base.path, "model.interface.lme.r"), encoding = "UTF-8")

@@ -208,6 +208,8 @@ model.interface.default$methods(
 		# formula.
 		if (!is.null(f)) {
 			f <- formula(f)
+			# Remove environment with formula.
+			f <- as.formula(as.character(deparse(f)))
 		}
 		return(f)
 	}

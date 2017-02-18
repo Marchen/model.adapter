@@ -46,6 +46,7 @@ Collate:
     'model.interface.glm.r'
     'model.interface.glmer.r'
     'model.interface.glmmML.r'
+    'model.interface.glmmadmb.r'
     'model.interface.lm.r'
     'model.interface.lme.r'
     'model.interface.lmer.r'
