@@ -220,7 +220,7 @@ model.interface.default$methods(
 #	formulaの.を展開する。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	expand.formula = function(f, d, specials = NULL, package.name = NULL) {
+	expand.formula = function(f, d, specials = NULL, package = NULL) {
 		"
 		Expand . in formula.
 		\\describe{
@@ -230,7 +230,7 @@ model.interface.default$methods(
 				special characterss passed to
 				\\code{\\link[stats]{terms.formula}}.
 			}
-			\\item{\\code{package.name = NULL}}{
+			\\item{\\code{package = NULL}}{
 				a character literal of package name having the model function.
 			}
 		}

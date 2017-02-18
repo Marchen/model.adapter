@@ -83,7 +83,9 @@ model.interface.gamm$methods(
 #	formulaの.を展開する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	expand.formula = function(f, d, specials = c("s", "te", "ti", "t2")) {
+	expand.formula = function(
+		f, d, specials = c("s", "te", "ti", "t2"), package = "mgcv"
+	) {
 		callSuper(f, d, specials)
 	}
 )
