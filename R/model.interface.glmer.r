@@ -23,9 +23,9 @@ model.interface.glmerMod <- setRefClass(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.glmerMod$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package = "", ...) {
 		if (is.call(x)){
-			return(callSuper(x, envir))
+			return(callSuper(x, envir, package, ...))
 		} else {
 			d <- x@frame
 			attr(d, "terms") <- NULL

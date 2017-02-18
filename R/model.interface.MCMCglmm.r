@@ -23,9 +23,9 @@ model.interface.MCMCglmm <- setRefClass(
 #	モデルのdataを取得する。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package = "", ...) {
 		if (is.call(x)) {
-			callSuper(x, envir)
+			callSuper(x, envir, package, ...)
 		} else {
 			return(data.frame())
 		}

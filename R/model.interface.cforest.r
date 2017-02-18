@@ -54,9 +54,9 @@ model.interface.RandomForest$methods(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package = "", ...) {
 		if (is.call(x)){
-			return(callSuper(x, envir))
+			return(callSuper(x, envir, package, ...))
 		} else {
 			input <- x@data@get("input")
 			response <- x@data@get("response")

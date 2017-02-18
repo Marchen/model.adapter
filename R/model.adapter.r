@@ -188,6 +188,7 @@ model.adapter$methods(
 		seed <- make.call.or.object(substitute(x), envir)
 		.self$init.interface(seed)
 		.self$init.src(seed)
+		.self$init.package.name(seed, package.name)
 		.self$init.call(seed)
 		.self$init.object(seed)
 		env <<- envir
@@ -196,7 +197,6 @@ model.adapter$methods(
 		.self$init.data(seed, data)
 		.self$init.formula(seed)
 		.self$predict.types <- .self$interface$predict.types()
-		.self$init.package.name(seed, package.name)
 	}
 )
 
@@ -242,6 +242,7 @@ model.adapter$methods(
 
 #------------------------------------------------------------------------------
 #	callフィールドを初期化する。
+#	init.interface()とinit.package()の後に呼び出す必要がある。
 #------------------------------------------------------------------------------
 model.adapter$methods(
 	init.call = function(seed) {
@@ -249,10 +250,13 @@ model.adapter$methods(
 		Initialize call field.
 		"
 		if (is.call(seed)) {
-			call <<- match.generic.call(seed)
+			.self$call <- match.generic.call(seed, .self$package.name)
 		} else {
-			if (!is.null(interface$get.call(seed))) {
-				call <<- match.generic.call(interface$get.call(seed))
+			if (!is.null(.self$interface$get.call(seed))) {
+				.self$call <- match.generic.call(
+					.self$interface$get.call(seed),
+					.self$package.name
+				)
 			}
 		}
 	}
@@ -301,9 +305,13 @@ model.adapter$methods(
 		Initialize data field.
 		"
 		if (is.null(data)) {
-			d <- interface$get.data(seed, envir = .self$env)
+			d <- .self$interface$get.data(
+				seed, envir = .self$env, .self$package.name
+			)
 			if (!is.null(d)) {
-				data <<- interface$get.data(seed)
+				data <<- .self$interface$get.data(
+					seed, package = .self$package.name
+				)
 			}
 		} else {
 			data <<- data

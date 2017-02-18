@@ -66,9 +66,9 @@ model.interface.gamm$methods(
 #	モデルのdataを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package = "", ...) {
 		if (is.call(x)){
-			return(callSuper(x, envir))
+			return(callSuper(x, envir, package, ...))
 		} else {
 			d <- x$gam$model
 			var.names <- names(attr(x$gam$terms, "dataClasses"))

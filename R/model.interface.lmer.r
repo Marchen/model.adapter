@@ -23,9 +23,9 @@ model.interface.lmerMod <- setRefClass(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.lmerMod$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package ="", ...) {
 		interface <- model.interface.glmerMod(x)
-		return(interface$get.data(x, envir))
+		return(interface$get.data(x, envir, package, ...))
 	}
 )
 

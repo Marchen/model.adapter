@@ -136,7 +136,7 @@ model.interface.default$methods(
 #		envir: xに入ったcallを評価する環境。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package = "", ...) {
 		"
 		Get a data.frame containing the data used for modeling.
 		If data is not available this method returns empty data.frame made by
@@ -161,7 +161,7 @@ model.interface.default$methods(
 			if (is.null(d)) {
 				# When couldn't retrieve data from object, get it from call.
 				# オブジェクトからdataを取得できなかったらcallから取得を試みる。
-				cl <- match.generic.call(.self$get.call(x))
+				cl <- match.generic.call(.self$get.call(x), package)
 				d <- eval(cl$data, envir)
 			}
 		}

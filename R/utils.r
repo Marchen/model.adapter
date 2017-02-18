@@ -104,7 +104,7 @@ is.generic <- function(fun.name, package = "") {
 #'	@examples
 #'		match.generic.call(substitute(hist(1:10)))
 #------------------------------------------------------------------------------
-match.generic.call <- function(call, envir = parent.frame(2L)) {
+match.generic.call <- function(call, package = "", envir = parent.frame(2L)) {
 	# Match function without considering generic function.
 	# 総省関数を無視して関数をマッチングする。
 	fun.name <- get.function(call)
@@ -112,10 +112,10 @@ match.generic.call <- function(call, envir = parent.frame(2L)) {
 	matched.call <- match.call(fun, call)
 	# Non-generic functions.
 	# 総省関数でなければ、そのまま値を返す。
-	if (!is.generic(fun.name)) {
+	if (!is.generic(fun.name, package)) {
 		return(matched.call)
 	}
-	if (isGeneric(fun.name)) {
+	if (is.s4.generic(fun.name, package)) {
 		stop("Algorithm for S4 generic method is notimplimented.")
 	}
 	# Find class of generic S3 function.

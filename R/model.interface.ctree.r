@@ -53,13 +53,13 @@ model.interface.BinaryTree$methods(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
-	get.data = function(x, envir = parent.frame()) {
+	get.data = function(x, envir = parent.frame(), package = "", ...) {
 		if (is.call(x)) {
-		   	return(callSuper(x, envir))
+		   	return(callSuper(x, envir, package, ...))
 		} else {
 			# Shared method with cforest / cforestと同じ手法。
 			adapter <- model.interface.RandomForest(x)
-			return(adapter$get.data(x, envir))
+			return(adapter$get.data(x, envir, package, ...))
 		}
 	}
 )
