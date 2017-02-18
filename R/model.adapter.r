@@ -318,8 +318,10 @@ model.adapter$methods(
 		}
 		if (!.self$has.data()) {
 			warning(
-				"Couldn't retrieve data from the call/object. This may cause errors.
-				 To use full functionality of the class, please specify 'data' argument to supply data."
+				"Couldn't retrieve data from the call/object.
+				This may cause errors.
+				To use full functionality of the class, please specify 'data'
+				argument to supply data."
 			)
 		}
 	}

@@ -180,6 +180,8 @@ model.interface.default$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		"
 		Extract formula from model object/call.
+		If couldn't retrieve formula from \\code{x}, this method returns NULL.
+
 		\\describe{
 			\\item{\\code{x}}{
 				a model object/call from which formula is extracted.

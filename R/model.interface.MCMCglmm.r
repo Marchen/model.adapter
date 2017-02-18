@@ -164,7 +164,9 @@ check.supported.family <- function(family) {
 		msg <- paste(supported[1:(length(supported) - 1)], collapse = ", ")
 		msg <- paste(msg, "and", supported[length(supported)])
 		msg <- sprintf(
-			"Currently, only MCMCglmm with %s families are supported.\nIf you have any information about link function of other families, please teach me.", 
+			"Currently, only MCMCglmm with %s families are supported.
+			\nIf you have any information about link function of other families,
+			 please teach me.",
 			msg
 		)
 		stop(msg)
