@@ -393,7 +393,7 @@ ma.test$methods(
 			message <- sprintf(template, type, function.name)
 			test_that(
 				message, {
-					types <- adapter$predict.types()
+					types <- adapter$predict.types
 					expect_type(types, "character")
 					expect_length(types, 4)
 					expect_identical(

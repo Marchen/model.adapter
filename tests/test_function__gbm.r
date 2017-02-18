@@ -3,7 +3,9 @@
 #==============================================================================
 
 test.gbm <- ma.test(
-	call = gbm(Sepal.Length ~ Petal.Length, data = iris),
+	call = gbm(
+		Sepal.Length ~ Petal.Length, data = iris, distribution = "gaussian"
+	),
 	function.name = "gbm",
 	formula = Sepal.Length ~ Petal.Length,
 	data = iris
