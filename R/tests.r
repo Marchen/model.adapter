@@ -225,15 +225,16 @@ ma.test$methods(
 				message,
 				{
 					expect_is(adapter$call, "call")
-					expected.call <- match.generic.call(call, .self$package)
+					expected.call <- match.generic.call(
+						.self$call, .self$package
+					)
 					if (type == "call") {
-						expect_identical(adapter$call, expected.call)
+						expect_equal(adapter$call, expected.call)
 					} else {
-						if (object.has.call) {
-							expect_is(adapter$call, "call")
-							expect_identical(adapter$call, expected.call)
+						if (.self$object.has.call) {
+							expect_equal(adapter$call, expected.call)
 						} else {
-							expect_identical(adapter$call, call("<undef>"))
+							expect_equal(adapter$call, call("<undef>"))
 						}
 					}
 				}
