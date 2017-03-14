@@ -76,7 +76,7 @@ model.interface.default$methods(
 			}
 		}
 		"
-		type <- match.arg(type,)
+		type <- match.arg(type)
 		if (is.call(x)) {
 			family <- x$family
 		} else {
