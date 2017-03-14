@@ -79,6 +79,10 @@ model.interface.default$methods(
 		type <- match.arg(type)
 		if (is.call(x)) {
 			family <- x$family
+			if (is.null(family)) {
+				# If family was not specified, try to get default family.
+				family <- formals(match.fun(as.character(x[1])))$family
+			}
 		} else {
 			if (isS4(x)) {
 				if ("family" %in% slotNames(x)) {
