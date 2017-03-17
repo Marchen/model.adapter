@@ -36,22 +36,6 @@ model.interface.glmerMod$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#------------------------------------------------------------------------------
-model.interface.glmerMod$methods(
-	get.family = function(x, type = c("character", "family")) {
-		type <- match.arg(type)
-		if (is.call(x)) {
-			family <- x$family
-		} else {
-			family <- x@call$family
-		}
-		return(format.family(family, type))
-	}
-)
-
-
-#------------------------------------------------------------------------------
 #	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
 model.interface.glmerMod$methods(

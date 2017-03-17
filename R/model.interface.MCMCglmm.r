@@ -52,10 +52,9 @@ model.interface.MCMCglmm$methods(
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.family = function(x, type = c("character", "family")) {
-		type <- match.arg(type)
 		# Get family
 		if (is.call(x)) {
-			family <- x$family
+			family <- family.from.call(x)
 		} else {
 			family <- x$family[[1]]
 		}

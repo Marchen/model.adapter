@@ -76,22 +76,21 @@ model.interface.default$methods(
 			}
 		}
 		"
-		type <- match.arg(type)
 		if (is.call(x)) {
-			family <- x$family
-			if (is.null(family)) {
-				# If family was not specified, try to get default family.
-				family <- formals(match.fun(as.character(x[1])))$family
-			}
+			family <- family.from.call(x)
 		} else {
-			if (isS4(x)) {
-				if ("family" %in% slotNames(x)) {
-					family <- src$object@family
+			family <- try(stats::family(x), TRUE)
+			if (class(family) == "try-error") {
+				# if x$family is NULL, family should be NULL.
+				if (isS4(x)) {
+					if ("family" %in% slotNames(x)) {
+						family <- x@family
+					} else {
+						return(NULL)
+					}
 				} else {
-					return(NULL)
+					family <- x$family
 				}
-			} else {
-				family<- x$family
 			}
 		}
 		if (!is.null(family)) {

@@ -296,9 +296,9 @@ ma.test$methods(
 			test_that(
 				message, {
 					f <- adapter$family
-					if (!is.null(family)) {
+					if (!is.null(.self$family)) {
 						f <- format.family(f, "character")
-						expect_equal(f, family)
+						expect_equal(f, .self$family)
 					} else {
 						expect_is(f, "character")
 						expect_length(f, 0)
@@ -309,6 +309,38 @@ ma.test$methods(
 		# Run tests.
 		run.test(.self$adapter.call)
 		run.test(.self$adapter.object)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	get.family()関数のデフォルトファミリーへの対応のテスト。
+#------------------------------------------------------------------------------
+ma.test$methods(
+	test__default_family = function() {
+
+		"
+		Test get.family() for default value,
+		i.e., test when family was not specified.
+		This function tests model.interface correctly retrieve default family
+		from function definition.
+		"
+		# Make call without family.
+		copy.call <- .self$call
+		copy.call$family <- NULL
+		# Get default value of family.
+		f <- formals(match.fun(as.character(.self$call[1])))$family
+		if (is.null(f)) {
+			return()
+		}
+		f <- format.family(f, "character")
+		adapter <- model.adapter(copy.call)
+		test_that(
+			sprintf("Test default family from call of %s", function.name),
+			{
+				expect_equal(f, format.family(adapter$family, "character"))
+			}
+		)
 	}
 )
 

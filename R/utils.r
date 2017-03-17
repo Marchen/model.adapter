@@ -156,6 +156,29 @@ is.formula <- function(x) {
 
 
 #------------------------------------------------------------------------------
+#	関数呼び出しのcallからfamilyを取得する。
+#
+#	Args:
+#		x: 関数呼び出しのcall。
+#	Value:
+#		familyが取得できればfamily、取得できなかったらNULL。
+#------------------------------------------------------------------------------
+#'	(Internal) Get family from function call.
+#'
+#'	@param x a call of a function.
+#'	@return returns family in the call if available else NULL.
+#------------------------------------------------------------------------------
+family.from.call <- function(x) {
+	f <- x$family
+	if (is.null(f)) {
+		# If family was not specified, try to get default family.
+		f <- formals(match.fun(as.character(x[1])))$family
+	}
+	return(f)
+}
+
+
+#------------------------------------------------------------------------------
 #	familyのフォーマットを揃える。
 #
 #	Args:

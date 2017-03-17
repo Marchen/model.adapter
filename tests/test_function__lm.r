@@ -7,7 +7,7 @@ test.lm <- ma.test(
 	function.name = "lm",
 	formula = Sepal.Length
 		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	data = iris
+	data = iris, family = "gaussian"
 )
 test.lm$run.all()
 rm(test.lm)

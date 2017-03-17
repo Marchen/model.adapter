@@ -7,7 +7,7 @@ test.lmer <- ma.test(
 	function.name = "lmer",
 	formula = Sepal.Length
 		~ Sepal.Width + Petal.Length + Petal.Width + Species + (1 | Species),
-	data = iris
+	data = iris, family = "gaussian"
 )
 test.lmer$run.all()
 rm(test.lmer)

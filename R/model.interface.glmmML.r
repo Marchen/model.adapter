@@ -24,9 +24,8 @@ model.interface.glmmML <- setRefClass(
 #------------------------------------------------------------------------------
 model.interface.glmmML$methods(
 	get.family = function(x, type = c("character", "family")) {
-		type <- match.arg(type)
 		if (is.call(x)) {
-			family <- x$family
+			family <- family.from.call(x)
 		} else {
 			family <- x$call$family
 		}

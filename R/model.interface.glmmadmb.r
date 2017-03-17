@@ -26,8 +26,11 @@ model.interface.glmmadmb <- setRefClass(
 model.interface.glmmadmb$methods(
 	get.family = function(x, type = c("character", "family")) {
 		# Get family character.
-		type <- match.arg(type)
-		family <- x$family
+		if (is.call(x)) {
+			family <- family.from.call(x)
+		} else {
+			family <- x$family
+		}
 		if (type == "character") {
 			return(family)
 		}
@@ -36,7 +39,7 @@ model.interface.glmmadmb$methods(
 		result <- try(format.family(family, type))
 		if (class(result) == "try-error") {
 			msg <- sprintf(
-				"'%s' family object is not supported by MCMCglmm.", family
+				"'%s' family object is not supported by glmmadmb.", family
 			)
 			stop(msg)
 		}

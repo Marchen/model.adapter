@@ -37,13 +37,11 @@ model.interface.gamm$methods(
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	get.family = function(x, type = c("character", "family")) {
-		type <- match.arg(type)
 		if (is.call(x)) {
-			family <- x$family
+			return(callSuper(x, type))
 		} else {
-			family <- x$gam$family
+			return(callSuper(x$gam, type))
 		}
-		return(format.family(family, type))
 	}
 )
 
