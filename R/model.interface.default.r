@@ -357,10 +357,12 @@ model.interface.default$methods(
 			}
 		}
 		"
-		# because gaussian()$linkfun returns function(mu) mu and it's not
-		# identical to identity() function(x) x
-		# use gaussian()$linkfun instead of identity
-		return(gaussian()$linkfun)
+		f <- .self$get.family(x, "family")
+		if (!is.null(f)) {
+			return(f$linkfun)
+		} else {
+			return(identity)
+		}
 	}
 )
 
@@ -380,7 +382,12 @@ model.interface.default$methods(
 			}
 		}
 		"
-		return(gaussian()$linkinv)
+		f <- .self$get.family(x, "family")
+		if (!is.null(f)) {
+			return(f$linkinv)
+		} else {
+			return(identity)
+		}
 	}
 )
 
