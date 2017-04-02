@@ -59,6 +59,7 @@ model.interface.MCMCglmm$methods(
 			family <- x$family[[1]]
 		}
 		family <- gsub("multinomial.*", "multinomial", family)
+		family <- gsub("^categorical$", "multinomial", family)
 		# Convert family object to character.
 		if (type == "character") {
 			if (class(family) != "character") {
