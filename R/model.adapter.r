@@ -185,13 +185,13 @@ model.adapter$methods(
 		if (missing(x)) {
 			return()
 		}
-		seed <- make.call.or.object(substitute(x), envir)
+		seed <- make.call.or.object(substitute(x), parent.frame(4L))
 		.self$init.interface(seed)
 		.self$init.src(seed)
 		.self$init.package.name(seed, package.name)
 		.self$init.call(seed)
 		.self$init.object(seed)
-		env <<- envir
+		.self$env <<- envir
 		.self$init.family(seed)
 		.self$init.link(seed)
 		.self$init.data(seed, data)
