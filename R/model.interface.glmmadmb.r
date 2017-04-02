@@ -31,11 +31,11 @@ model.interface.glmmadmb$methods(
 		} else {
 			family <- x$family
 		}
+		family <- gsub("^binom$", "binomial", family)
 		if (type == "character") {
 			return(family)
 		}
 		# Convert family character to family object.
-		family <- gsub("$binom^", "binomial", family)
 		result <- try(format.family(family, type))
 		if (class(result) == "try-error") {
 			msg <- sprintf(
