@@ -115,6 +115,10 @@
 #'	@field interface
 #'		an object of model.interface class or subclass of model.interface.
 #'
+#'	@field model.type
+#'		a charactere representing model type. The possible values are
+#'		"regression" and "classification".
+#'
 #'	@section For developpers:
 #'		If x is an object containing result of a statistical models,
 #'		inheritance of the class is determined by usual S3 polymorphism.
@@ -140,6 +144,7 @@ model.adapter <- setRefClass(
 		formula = "formula",
 		data = "data.frame",
 		predict.types = "character",
+		model.type = "character",
 		interface = "model.interface"
 	)
 )
@@ -197,6 +202,7 @@ model.adapter$methods(
 		.self$init.data(seed, data)
 		.self$init.formula(seed)
 		.self$predict.types <- .self$interface$predict.types()
+		.self$init.model.type(seed)
 	}
 )
 
@@ -375,6 +381,21 @@ model.adapter$methods(
 		} else {
 			.self$package.name <- package.name(seed)
 		}
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	package.nameフィールドを初期化する。
+#------------------------------------------------------------------------------
+model.adapter$methods(
+	init.model.type = function(seed) {
+		"
+		Initialize model.type field.
+		"
+		.self$model.type <- .self$interface$get.model.type(
+			seed, .self$env, .self$package.name
+		)
 	}
 )
 

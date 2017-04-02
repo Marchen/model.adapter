@@ -149,6 +149,22 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
+#	モデルの種類を返す。
+#------------------------------------------------------------------------------
+model.interface.MCMCglmm$methods(
+	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
+		classification <- c("categorical", "ordinal", "threshold")
+		family <- .self$get.family(x, "character")
+		if (family %in% classification | grepl("^multinomial.*", family)) {
+			return("classification")
+		} else {
+			return("regression")
+		}
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	familyがサポートされてるかをチェックする。
 #------------------------------------------------------------------------------
 #' (Internal) Check if the specified family of MCMCglmm is supported.

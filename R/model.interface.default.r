@@ -392,5 +392,39 @@ model.interface.default$methods(
 )
 
 
-
-
+#------------------------------------------------------------------------------
+#	モデルが識別なのか回帰なのかを判定する。
+#	Values:
+#		回帰なら"regression"、識別なら"classification"。
+#------------------------------------------------------------------------------
+model.interface.default$methods(
+	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
+		"
+		Return a character vector specifying model type
+		(regression or classification).
+		If the model is regression model, it returns 'regression'.
+		If the model is classification model, it returns 'classification'.
+		"
+		f <- .self$get.family(x, type = "character")
+		if (is.null(f)) {
+			d <- .self$get.data(x, envir, package, ...)
+			response <- model.response(
+				model.frame(.self$get.formula(x, envir), data = d)
+			)
+			if (is(response, "factor")) {
+				return("classification")
+			} else {
+				return("regression")
+			}
+		}
+		# glmとgamの以下のfamilyが識別。それ以外は回帰
+		classification.families <- c(
+			"binomial", "quasibinomial", "negbin", "ocat", "nb",
+			"betar", "cox.ph"
+		)
+		if (f %in% classification.families) {
+			return("classification")
+		}
+		return("regression")
+	}
+)

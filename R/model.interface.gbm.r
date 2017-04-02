@@ -63,3 +63,33 @@ model.interface.gbm$methods(
 )
 
 
+#------------------------------------------------------------------------------
+#	モデルの種類を返す。
+#------------------------------------------------------------------------------
+model.interface.gbm$methods(
+	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
+		"
+		return a character vector specifying model type
+		(regression or classification).
+		"
+		if (is.call(x)) {
+			distribution <- x$distribution
+			if (is.null(distribution)) {
+				y.name <- as.character(.self$get.formula(x, envir)[2])
+				data <- .self$get.data(x, envir, package)
+				distribution <- gbm::guessDist(data[[y.name]])$name
+			}
+		} else {
+			distribution <- x$distribution$name
+		}
+		classification.families <- c(
+			"bernoulli", "huberized", "multinomial", "adaboost"
+		)
+		if (distribution %in% classification.families){
+			return("classification")
+		} else {
+			return("regression")
+		}
+	}
+)
+
