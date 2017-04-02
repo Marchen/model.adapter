@@ -42,5 +42,3 @@ model.interface.glmmML$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
-
-

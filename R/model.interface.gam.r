@@ -44,5 +44,3 @@ model.interface.gam$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
-
-

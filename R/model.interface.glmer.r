@@ -43,8 +43,3 @@ model.interface.glmerMod$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
-
-
-
-
-

@@ -97,5 +97,3 @@ model.interface.gamm$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
-
-
