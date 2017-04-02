@@ -34,3 +34,19 @@ model.interface.ranger$methods(
 		return(pred$predictions)
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	formulaを取得する。
+#------------------------------------------------------------------------------
+model.interface.ranger$methods(
+	get.formula = function(x, envir = parent.frame()) {
+		f <- callSuper(x, envir)
+		if (is.null(f)) {
+			call <- match.generic.call(x$call)
+			f <- call$formula
+		}
+		return(f)
+	}
+)
+
