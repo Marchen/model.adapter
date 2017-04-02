@@ -380,6 +380,21 @@ model.adapter$methods(
 
 
 #------------------------------------------------------------------------------
+#	model.adapterオブジェクトがモデルオブジェクトを持つことを保障する。
+#------------------------------------------------------------------------------
+model.adapter$methods(
+	ensure.object = function() {
+		"
+		Ensure the model.adapter object has model object.
+		"
+		if (is.null(.self$object)) {
+			.self$object <- eval(.self$src$call, .self$src$envir)
+		}
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	callに有効なcallが入っているかを確認する。
 #------------------------------------------------------------------------------
 model.adapter$methods(
@@ -529,11 +544,7 @@ model.adapter$methods(
 			\\item{\\code{...}}{other variables passed to predict methods.}
 		}
 		"
-		# If object field is NULL, make it from call.
-		# objectフィールドがNULLだったらcallを評価して作成する。
-		if (is.null(.self$object)) {
-			.self$object <- eval(.self$src$call, .self$src$envir)
-		}
+		.self$ensure.object()
 		type <- match.arg(type)
 		pred <- .self$interface$predict(
 			.self$object, newdata = newdata, type = .self$predict.types[type],
@@ -565,9 +576,7 @@ model.adapter$methods(
 			}
 		}
 		"
-		if (is.null(.self$object)) {
-			.self$object <- eval(.self$src$call, .self$src$envir)
-		}
+		.self$ensure.object()
 		return(.self$interface$get.fixed(.self$object, intercept))
 	}
 )
@@ -582,9 +591,7 @@ model.adapter$methods(
 		Returns estimated intercept of the model.
 		If the model does not have intercept, this function returns NULL.
 		"
-		if (is.null(.self$object)) {
-			.self$object <- eval(.self$src$call, .self$src$envir)
-		}
+		.self$ensure.object()
 		return(.self$interface$get.intercept(.self$object))
 	}
 )
@@ -599,10 +606,7 @@ model.adapter$methods(
 		Return residuals of the model.
 		"
 		type <- match.arg(type)
-		# Prepare object
-		if (is.null(.self$object)) {
-			.self$object <- eval(.self$src$call, .self$src$envir)
-		}
+		.self$ensure.object()
 		# Calculate residual as (response variable) - (predicted value)
 		pred <- .self$predict(type = type)$fit[, "fit"]
 		y <- .self$y.vars()[[1]]
