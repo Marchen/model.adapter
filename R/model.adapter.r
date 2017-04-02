@@ -309,12 +309,10 @@ model.adapter$methods(
 				seed, envir = .self$env, .self$package.name
 			)
 			if (!is.null(d)) {
-				data <<- .self$interface$get.data(
-					seed, package = .self$package.name
-				)
+				.self$data <- d
 			}
 		} else {
-			data <<- data
+			.self$data <- data
 		}
 		if (!.self$has.data()) {
 			warning(
