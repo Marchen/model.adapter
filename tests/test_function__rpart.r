@@ -2,12 +2,18 @@
 #	Test for rpart
 #==============================================================================
 
-test.rpart <- ma.test(
-	call = rpart(Sepal.Length ~ ., data = iris),
-	function.name = "rpart",
-	formula = Sepal.Length
-		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	data = iris
+test.data <- list(
+	call = list(
+		substitute(rpart(Sepal.Length ~ ., data = iris)),
+		substitute(rpart(Species ~ ., data = iris))
+	),
+	formula = list(
+		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+		Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+	),
+	model.type = list("regression", "classification")
 )
-test.rpart$run.all()
-rm(test.rpart)
+
+test.model.adapter("rpart", iris, test.data)
+
+rm(test.data)

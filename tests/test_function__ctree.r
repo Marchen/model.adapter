@@ -1,14 +1,18 @@
 #==============================================================================
 #	Test for ctree
 #==============================================================================
-
-test.ctree <- ma.test(
-	call = ctree(Sepal.Length ~ ., data = iris),
-	function.name = "ctree",
-	formula = Sepal.Length
-		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	object.has.call = FALSE,
-	data = iris
+test.data <- list(
+	call = list(
+		substitute(ctree(Sepal.Length ~ ., data = iris)),
+		substitute(ctree(Species ~ ., data = iris))
+	),
+	formula = list(
+		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+		Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+	),
+	model.type = list("regression", "classification")
 )
-test.ctree$run.all()
-rm(test.ctree)
+
+test.model.adapter("ctree", iris, test.data, FALSE)
+
+rm(test.data)

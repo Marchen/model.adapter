@@ -2,12 +2,28 @@
 #	Test for randomForest
 #==============================================================================
 
-test.glmmadmb <- ma.test(
-	call = glmmadmb(Petal.Length ~ ., data = iris, family = "gaussian"),
-	function.name = "glmmadmb", family = "gaussian",
-	formula = Petal.Length
-		 ~ Sepal.Length + Sepal.Width + Petal.Width + Species,
-	data = iris
+iris2 <- glm.type.test.runnner("glmmadmb")$make.test.data.frame()
+
+test.data <- list(
+	call = list(
+		substitute(
+			glmmadmb(Sepal.Length ~ Petal.Length, family = "gaussian", data = iris2)
+		),
+		substitute(
+			glmmadmb(bin ~ Petal.Length, family = "binomial", data = iris2)
+		)
+	),
+	formula = list(
+		Sepal.Length ~ Petal.Length,
+		bin ~ Petal.Length
+	),
+	model.type = list("regression", "classification"),
+	family = c("gaussian", "binomial"),
+	link = list(gaussian()$linkfun, binomial()$linkfun),
+	linkinv = list(gaussian()$linkinv, binomial()$linkinv)
 )
-test.glmmadmb$run.all()
-rm(test.glmmadmb)
+
+test.model.adapter("glmmadmb", iris2, test.data)
+
+rm(test.data, iris2)
+

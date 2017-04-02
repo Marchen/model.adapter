@@ -1,14 +1,11 @@
 #==============================================================================
 #	Test for gam in mgcv package.
 #==============================================================================
-
-test.gam <- ma.test(
-	call = gam(Sepal.Length ~ Petal.Length, data = iris, family = gaussian),
-	function.name = "gam",
-	formula = Sepal.Length ~ Petal.Length,
-	package = "mgcv",
-	family = "gaussian",
-	data = iris
+test <- glm.type.test.runnner(
+	"gam", package = "mgcv",
+	families = c(
+		"gaussian", "Gamma", "inverse.gaussian", "poisson", "binomial"
+	)
 )
-test.gam$run.all()
-rm(test.gam)
+test$run()
+rm(test)

@@ -1,13 +1,18 @@
 #==============================================================================
 #	Test for randomForest
 #==============================================================================
-
-test.randomForest <- ma.test(
-	call = randomForest(Sepal.Length ~ ., data = iris),
-	function.name = "randomForest",
-	formula = Sepal.Length
-		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	data = iris
+test.data <- list(
+	call = list(
+		substitute(randomForest(Sepal.Length ~ ., data = iris)),
+		substitute(randomForest(Species ~ ., data = iris))
+	),
+	formula = list(
+		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+		Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+	),
+	model.type = list("regression", "classification")
 )
-test.randomForest$run.all()
-rm(test.randomForest)
+
+test.model.adapter("randomForest", iris, test.data)
+
+rm(test.data)

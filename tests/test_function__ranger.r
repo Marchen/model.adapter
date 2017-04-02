@@ -2,12 +2,18 @@
 #	Test for ranger
 #==============================================================================
 
-test.ranger <- ma.test(
-	call = ranger(Sepal.Length ~ ., data = iris),
-	function.name = "ranger",
-	formula = Sepal.Length
-		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	data = iris
+test.data <- list(
+	call = list(
+		substitute(ranger(Sepal.Length ~ ., data = iris)),
+		substitute(ranger(Species ~ ., data = iris))
+	),
+	formula = list(
+		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+		Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+	),
+	model.type = list("regression", "classification")
 )
-test.ranger$run.all()
-rm(test.ranger)
+
+test.model.adapter("ranger", iris, test.data)
+
+rm(test.data)

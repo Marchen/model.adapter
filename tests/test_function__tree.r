@@ -1,13 +1,18 @@
 #==============================================================================
 #	Test for tree
 #==============================================================================
-
-test.tree <- ma.test(
-	call = tree(Sepal.Length ~ ., data = iris),
-	function.name = "tree",
-	formula = Sepal.Length
-		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	data = iris
+test.data <- list(
+	call = list(
+		substitute(tree(Sepal.Length ~ ., data = iris)),
+		substitute(tree(Species ~ ., data = iris))
+	),
+	formula = list(
+		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+		Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+	),
+	model.type = list("regression", "classification")
 )
-test.tree$run.all()
-rm(test.tree)
+
+test.model.adapter("tree", iris, test.data)
+
+rm(test.data)

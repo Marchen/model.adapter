@@ -1,13 +1,18 @@
 #==============================================================================
 #	Test for svm
 #==============================================================================
-
-test.svm <- ma.test(
-	call = svm(Sepal.Length ~ ., data = iris),
-	function.name = "svm",
-	formula = Sepal.Length
-		~ Sepal.Width + Petal.Length + Petal.Width + Species,
-	data = iris
+test.data <- list(
+	call = list(
+		substitute(svm(Sepal.Length ~ ., data = iris)),
+		substitute(svm(Species ~ ., data = iris))
+	),
+	formula = list(
+		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+		Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+	),
+	model.type = list("regression", "classification")
 )
-test.svm$run.all()
-rm(test.svm)
+
+test.model.adapter("svm", iris, test.data)
+
+rm(test.data)

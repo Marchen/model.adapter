@@ -1,27 +1,87 @@
 library(testthat)
 
 #------------------------------------------------------------------------------
+#	model.adapterで期待される値を含んだリストを作成する。
+#		formula: モデル式。
+#		model.type: モデルの種類。"regression"か"classification"。
+#		family: family。
+#		data: モデル作成に使われたデータ。
+#		link: リンク関数。文字列、もしくは関数。
+#		linkinv: リンク関数の逆関数。文字列もしくは関数。
+#------------------------------------------------------------------------------
+#'	Create a list having expected values of fields of model.adapter.
+#'
+#'	@param call
+#'		a call representing expected call.
+#'	@param formula
+#'		a formula object of expected formula.
+#'	@param data
+#'		a data.frame representing expected data.
+#'	@param model.type
+#'		a character representing expected model.type.
+#'		Possible values of "regression" or "classification".
+#'	@param family
+#'		a character representing expected family.
+#'	@param link
+#'		a function representing expected link function.
+#'	@param linkinv
+#'		a function representing expected inverse link function.
+#'
+#'	@return
+#'		a list having expected values of each field of model.adapter.
+#------------------------------------------------------------------------------
+expected <- function(
+	call = base::call("<undef>"), formula = NULL, data = NULL,
+	model.type = NULL, family = NULL, link = NULL, linkinv = NULL
+) {
+	# Set default values.
+	if (is.null(data)) {
+		data <- data.frame()
+	}
+	if (is.null(family)) {
+		family <- character(0)
+	}
+	if (is.null(link)) {
+		link <- identity
+	}
+	if (is.null(linkinv)) {
+		linkinv <- identity
+	}
+	# Make appropriate call.
+	if (!is.call(call)) {
+		call <- substitute(call)
+	}
+	if (!identical(call, base::call("<undef>"))) {
+		call <- match.generic.call(call)
+	}
+	object <- list(
+		call = call, formula = formula, model.type = model.type,
+		family = family, data = data, link = link, linkinv = linkinv
+	)
+	return(object)
+}
+
+
+#------------------------------------------------------------------------------
 #	model.adapterクラスのテストを初期化する。
 #
 #	Args:
 #		call:
-#			関数呼び出しのcall。
+#			テストするモデル呼び出しのcall。
 #		function.name:
 #			関数名を表す文字列。
-#		formula:
-#			モデルのformula。
 #		package:
 #			関数が含まれるパッケージ名。
 #		object.has.call:
 #			モデルオブジェクトがcallを保持しているときにはTRUE。
 #		object.has.data:
 #			モデルオブジェクトだdataを保持しているときにはTURE。
-#		family:
-#			family名の取得がうまくいったときに期待されるfamilyを表す文字列。
 #		data:
 #			モデル作成に使われたdata.frame。
-#		env:
+#		envir:
 #			関数の実行が行われるenvironment.
+#		object:
+#			現在テストに使われているモデルオブジェクト。
 #		adapter.call:
 #			callから作ったmodel.adapterオブジェクト。
 #		adapter.object:
@@ -40,8 +100,33 @@ library(testthat)
 #'	@field function.name
 #'		a character literal of function name to test.
 #'
-#'	@field formula
-#'		an expected formula in 'formula' field.
+#'	@field expected
+#'		a list having following elements representing expected values of fields
+#'		in the resultant \code{model.adapter} object.
+#'		\describe{
+#'			\item{\code{call}}{
+#'				a call representing expected call.
+#'			}
+#'			\item{\code{formula}}{
+#'				a formula representing expected formula.
+#'			}
+#'			\item{\code{model.type}}{
+#'				an character representing expected model type.
+#'				Possible values are "regression" and "classification"
+#'			}
+#'			\item{\code{data}}{
+#'				a data.frame representing expected data field.
+#'			}
+#'			\item{\code{family}}{
+#'				an character representing exptected family.
+#'			}
+#'			\item{\code{link}}{
+#'				an function representing expected link function.
+#'			}
+#'			\item{\code{linkinv}}{
+#'				an function representing expected inverse link function.
+#'			}
+#'		}
 #'
 #'	@field package
 #'		a character literal of a package name which contains the function
@@ -55,14 +140,7 @@ library(testthat)
 #'		a logical to indicate whether the model object has data.
 #'		If the model object keep original data used for modeling, specify TRUE.
 #'
-#'	@field family
-#'		an character literal specifying expected family name in 'family' field.
-#'		If the model is the function without family, this field should be NULL.
-#'
-#'	@field data
-#'		an data.frame containing data used for modeling.
-#'
-#'	@field env
+#'	@field envir
 #'		an environment where the initialization of model object should be done.
 #'		This field is automatically set by the \code{initialize()} method.
 #'
@@ -79,32 +157,17 @@ library(testthat)
 #'		function. This field is automatically set by the \code{initialize()}
 #'		method.
 #'
-#'	@field link.test.data
-#'		a list having following structure used for test of link function.
-#'
-#'		\preformatted{
-#'			list(
-#'				list(call = call1, link = link1, linkinv = linkinv1),
-#'				list(call = call2, link = link2, linkinv = linkinv2),
-#'				list(call = call3, link = link3, linkinv = linkinv3)
-#'			)
-#'		}
-#'
-#'		The data in this field is added by \code{add.link.test()} method.
 #'
 #'	@examples
 #'	# Prepare test object.
 #'	test.glm <- ma.test(
 #'		call = glm(Sepal.Length ~ ., data = iris, family = gaussian),
 #'		function.name = "glm",
-#'		formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
-#'		family = "gaussian", data = iris
-#'	)
-#'
-#'	# Prepare test for link/linkinv functions.
-#'	test.glm$register.link.test.data(
-#'		glm(Sepal.Length ~ ., data = iris, family = gaussian),
-#'		gaussian()$linkfun, gaussian()$linkinv
+#'		expected = list(
+#'			formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+#'			model.type = "regression", family = "gaussian",
+#'			data = iris
+#'		)
 #'	)
 #'
 #'	# Run test.
@@ -117,17 +180,13 @@ ma.test <- setRefClass(
 	field = list(
 		call = "call",
 		function.name = "character",
-		formula = "formula",
 		package = "character",
-		object.has.call = "logical",
-		object.has.data = "logical",
-		family = "ANY",
-		data = "ANY",
-		env = "environment",
+		expected.for.call = "list",
+		expected.for.object = "list",
+		envir = "environment",
 		object = "ANY",
 		adapter.call = "model.adapter",
-		adapter.object = "model.adapter",
-		link.test.data = "list"
+		adapter.object = "model.adapter"
 	)
 )
 
@@ -137,34 +196,39 @@ ma.test <- setRefClass(
 #------------------------------------------------------------------------------
 ma.test$methods(
 	initialize = function(
-		call, function.name, formula,
-		package = package.name(function.name),
-		object.has.call = TRUE, object.has.data = TRUE, family = NULL,
-		data = NULL
+		call, function.name, package = package.name(function.name),
+		expected.for.call = expected(),
+		expected.for.object = expected.for.call,
+		envir = parent.frame(4L)
 	) {
 		"
 		Initialize test object.
 		"
 		message <- "Initializing test for %s in %s...\n"
 		cat(sprintf(message, function.name, package))
-		# Set fields
-		.self$call <- substitute(call)
-		.self$function.name <- function.name
-		.self$formula <- formula
-		.self$package <- package
-		.self$object.has.call <- object.has.call
-		.self$object.has.data <- object.has.data
-		.self$family <- family
-		.self$data <- data
 		# Load package.
+		.self$package <- package
 		suppressPackageStartupMessages(
 			require(.self$package, character.only = TRUE)
 		)
+		# Set fields
+		if (!is.call(call)) {
+			.self$call <- substitute(call)
+		} else {
+			.self$call <- call
+		}
+		.self$function.name <- function.name
+		.self$expected.for.call = expected.for.call
+		.self$expected.for.object = expected.for.object
 		# Initialize other fields.
-		.self$env <- parent.frame()
-		.self$object <- eval(.self$call, .self$env)
-		.self$adapter.call <- model.adapter(.self$call)
-		.self$adapter.object <- model.adapter(.self$object)
+		.self$envir <- envir
+		.self$object <- eval(.self$call, .self$envir)
+		.self$adapter.call <- model.adapter(
+			.self$call, package.name = .self$package, envir = .self$envir
+		)
+		.self$adapter.object <- model.adapter(
+			.self$object, package.name = .self$package, envir = .self$envir
+		)
 	}
 )
 
@@ -178,71 +242,90 @@ ma.test$methods(
 		Test initialization process can produce a correct object of
 		model.interface.
 		"
-		class.name <- get.class.name(function.name)
-		# Test initialization from call.
-		template <- "Initialization of the class by call of %s"
-		test_that(
-			sprintf(template, function.name), {
-				adapter <- model.adapter(call)
-				expect_is(
-					adapter$interface,
-					sprintf("model.interface.%s", class.name)
-				)
-			}
-		)
-		# Test initialization from object.
-		template <- "Initialization the class by object of %s"
-		test_that(
-			sprintf(template, function.name), {
-				adapter <- model.adapter(object)
-				expect_is(
-					adapter$interface,
-					sprintf("model.interface.%s", class.name)
-				)
-			}
-		)
+		class.name <- get.class.name(.self$function.name)
+		template <- "Initialization of the class by %s of %s"
+		# Define internal test function.
+		run.test <- function(adapter) {
+			regexp <- "\\.self\\$adapter\\."
+			type <- gsub(regexp, "", deparse(substitute(adapter)))
+			test_that(
+				sprintf(template, type, .self$function.name),
+				{
+					expect_is(
+						adapter$interface,
+						sprintf("model.interface.%s", class.name)
+					)
+				}
+			)
+		}
+		run.test(.self$adapter.call)
+		run.test(.self$adapter.object)
 	}
 )
 
 
 #------------------------------------------------------------------------------
-#	get.call()関数とcallフィールドの初期化のテスト。
+#	フィールドが期待された値になっているかをテストする。
 #------------------------------------------------------------------------------
 ma.test$methods(
-	test__call = function() {
+	test__expected_fields = function() {
 		"
-		Test call field is actually call object and it's a correct call for the
-		modeling function.
+		Test all expected fields.
 		"
-		# Define internal test sub function.
-		run.test <- function(adapter) {
-			message <- "Initialization of 'call' field by %s of %s"
-			type <- gsub(
-				"\\.self\\$adapter\\.", "", deparse(substitute(adapter))
-			)
-			message <- sprintf(message, type, function.name)
-			test_that(
-				message,
-				{
-					expect_is(adapter$call, "call")
-					expected.call <- match.generic.call(
-						.self$call, .self$package
+		class.name <- get.class.name(.self$function.name)
+		template <- "Test of the '%s' field by %s of %s"
+		# Define internal test function.
+		run.test <- function(adapter, expected) {
+			regexp <- "\\.self\\$adapter\\."
+			type <- gsub(regexp, "", deparse(substitute(adapter)))
+			for (i in names(expected)) {
+				if (!sprintf("test__%s", i) %in% ma.test$methods()) {
+					#print(i)
+					#print(str(adapter[[i]]))
+					#print(str(expected[[i]]))
+					test_that(
+						sprintf(template, i, type, .self$function.name),
+						expect_equal(adapter[[i]], expected[[i]])
 					)
-					if (type == "call") {
-						expect_equal(adapter$call, expected.call)
+				}
+			}
+		}
+		run.test(.self$adapter.call, .self$expected.for.call)
+		run.test(.self$adapter.object, .self$expected.for.object)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	get.data()とdataフィールドのテスト。
+#------------------------------------------------------------------------------
+ma.test$methods(
+	test__data = function() {
+		"
+		Test get.data() method and initialization of 'data' field.
+		"
+		template <- "Initialize 'data' field by %s of %s"
+		run.test <- function(adapter, expected) {
+			regexp <- "\\.self\\$adapter\\."
+			type <- gsub(regexp, "", deparse(substitute(adapter)))
+			message <- sprintf(template, type, function.name)
+			test_that(
+				message, {
+					if (identical(expected$data, data.frame())) {
+						expect_identical(adapter$data, expected$data)
 					} else {
-						if (.self$object.has.call) {
-							expect_equal(adapter$call, expected.call)
-						} else {
-							expect_equal(adapter$call, call("<undef>"))
+						for (i in adapter$x.names()) {
+							expect_identical(
+								adapter$data[[i]], expected$data[[i]],
+								sprintf("Testing %s", i)
+							)
 						}
 					}
 				}
 			)
 		}
-		# Run tests for call and object.
-		run.test(.self$adapter.call)
-		run.test(.self$adapter.object)
+		run.test(.self$adapter.call, .self$expected.for.call)
+		run.test(.self$adapter.object, .self$expected.for.object)
 	}
 )
 
@@ -256,59 +339,20 @@ ma.test$methods(
 		Test for env field to check the field is same as the environment
 		where the model.adapter class was made.
 		"
-		# Test environment from call.
 		template <- "Initialization of 'env' field by %s of %s"
 		run.test <- function(seed) {
 			test_that(
 				sprintf(template, deparse(substitute(seed)), function.name),
 				{
-					adapter <- model.adapter(seed)
-					expect_identical(
-						adapter$env, environment(), info = "default value"
+					adapter <- model.adapter(
+						seed, .self$envir, package.name = .self$package
 					)
-					adapter <- model.adapter(seed, environment())
-					expect_identical(
-						adapter$env, environment(), info = "with value"
-					)
+					expect_identical(adapter$env, .self$envir)
 				}
 			)
 		}
 		run.test(call)
 		run.test(object)
-	}
-)
-
-
-#------------------------------------------------------------------------------
-#	get.family()関数とfamilyフィールドの初期化のテスト。
-#------------------------------------------------------------------------------
-ma.test$methods(
-	test__family = function() {
-		"
-		Test get.family() and family field.
-		"
-		# Prepare testing.
-		template <- "Initialization of 'family' field by %s of %s"
-		run.test <- function(adapter) {
-			regexp <- "\\.self\\$adapter\\."
-			type <- gsub(regexp, "", deparse(substitute(adapter)))
-			message <- sprintf(template, type, function.name)
-			test_that(
-				message, {
-					f <- adapter$family
-					if (!is.null(.self$family)) {
-						f <- format.family(f, "character")
-						expect_equal(f, .self$family)
-					} else {
-						expect_is(f, "character")
-						expect_length(f, 0)
-					}
-				}
-			)
-		}
-		# Run tests.
-		run.test(.self$adapter.call)
-		run.test(.self$adapter.object)
 	}
 )
 
@@ -334,74 +378,15 @@ ma.test$methods(
 			return()
 		}
 		f <- format.family(f, "character")
-		adapter <- model.adapter(copy.call)
+		adapter <- model.adapter(
+			copy.call, package.name = .self$package, envir = .self$envir
+		)
 		test_that(
 			sprintf("Test default family from call of %s", function.name),
 			{
 				expect_equal(f, format.family(adapter$family, "character"))
 			}
 		)
-	}
-)
-
-
-#------------------------------------------------------------------------------
-#	get.formula()とformulaフィールドのテスト。
-#------------------------------------------------------------------------------
-ma.test$methods(
-	test__formula = function() {
-		"
-		Test get.formula() method and initialization of 'formula' field.
-		"
-		template <- "Initialize 'formula' by %s of %s"
-		run.test <- function(adapter) {
-			regexp <- "\\.self\\$adapter\\."
-			type <- gsub(regexp, "", deparse(substitute(adapter)))
-			message <- sprintf(template, type, function.name)
-			test_that(
-				message, {
-					expect_equal(adapter$formula, formula)
-				}
-			)
-		}
-		run.test(.self$adapter.call)
-		run.test(.self$adapter.object)
-	}
-)
-
-
-#------------------------------------------------------------------------------
-#	get.data()とdataフィールドのテスト。
-#------------------------------------------------------------------------------
-ma.test$methods(
-	test__data = function() {
-		"
-		Test get.data() method and initialization of 'data' field.
-		"
-		template <- "Initialize 'data' field by %s of %s"
-		run.test <- function(adapter) {
-			regexp <- "\\.self\\$adapter\\."
-			type <- gsub(regexp, "", deparse(substitute(adapter)))
-			message <- sprintf(template, type, function.name)
-			test_that(
-				message, {
-					if (type == "call" | object.has.call | object.has.data) {
-						for (i in adapter$x.names()) {
-							expect_identical(
-								adapter$data[[i]], data[[i]],
-								sprintf("Testing %s", i)
-							)
-						}
-					} else {
-						expect_is(adapter$data, "data.frame")
-						expect_equal(nrow(adapter$data), 0)
-						expect_equal(ncol(adapter$data), 0)
-					}
-				}
-			)
-		}
-		run.test(.self$adapter.call)
-		run.test(.self$adapter.object)
 	}
 )
 
@@ -439,64 +424,6 @@ ma.test$methods(
 
 
 #------------------------------------------------------------------------------
-#	リンク関数、リンク関数の逆関数用のテストデータを登録する。
-#------------------------------------------------------------------------------
-ma.test$methods(
-	register.link.test.data = function(call, link, linkinv) {
-		"
-		Register test data for the test of link/inverse link function.
-
-		\\describe{
-			\\item{\\code{call}}{call used for testing.}
-			\\item{\\code{link}}{expected link function.}
-			\\item{\\code{linkinv}}{expected inverse link function.}
-		}
-		"
-		new.item <- list(
-			call = substitute(call), link = link, linkinv = linkinv
-		)
-		.self$link.test.data[[length(.self$link.test.data) + 1]] <- new.item
-	}
-)
-
-
-#------------------------------------------------------------------------------
-#	get.link(), get.linkinv()メソッドとlink, linkinvフィールドをテストする。
-#------------------------------------------------------------------------------
-ma.test$methods(
-	test__link = function() {
-		"
-		Test get.link() and get.linkinv() methods and initialization
-		of 'link' and 'linkinv' fields.
-		"
-		template <- "Initialize '%s()' by %s of %s"
-		run.test <- function(adapter, type, link, linkinv) {
-			regexp <- "\\.self\\$adapter\\."
-			message <- sprintf(template, "link", type, function.name)
-			test_that(
-				message, {
-					expect_equal(adapter$link, link)
-				}
-			)
-			message <- sprintf(template, "linkinv", type, function.name)
-			test_that(
-				message, {
-					expect_equal(adapter$linkinv, linkinv)
-				}
-			)
-		}
-		for (i in link.test.data) {
-			adapter <- model.adapter(i$call)
-			run.test(adapter, "call", i$link, i$linkinv)
-			model.object <- eval(i$call, .self$env)
-			adapter <- model.adapter(model.object)
-			run.test(adapter, "object", i$link, i$linkinv)
-		}
-	}
-)
-
-
-#------------------------------------------------------------------------------
 #	全てのテストを実行する。
 #------------------------------------------------------------------------------
 ma.test$methods(
@@ -511,6 +438,283 @@ ma.test$methods(
 		# Run tests.
 		for (test in test.names) {
 			eval(parse(text = sprintf(".self$%s()", test)))
+		}
+	}
+)
+
+
+#==============================================================================
+#	Following functions are helper functions for generating tests.
+#==============================================================================
+
+
+#------------------------------------------------------------------------------
+#	ma.testのラッパー関数。
+#
+#	Args:
+#		function.name: 関数名。
+#		data: データ。
+#		test.data: テストに使うデータが入ったリスト。
+#		object.has.call: オブジェクトがcallを持っていなかったらFALSE。
+#		object.has.data: オブジェクトがdataを持っていなかったらFALSE。
+#		package: ロードするパッケージ名。
+#------------------------------------------------------------------------------
+#'	Wrapper function for ma.test class.
+#'
+#'	This function generate \code{\link{ma.test}} objects from specified
+#'	information.
+#'
+#'	@param function.name
+#'		a character representing function name.
+#'	@param data
+#'		a data.frame used for testing.
+#'	@param test.data
+#'		a list having following field used to generate \code{\link{ma.test}}
+#'		object.
+#'		\describe{
+#'			\item{\code{call}}{a list of call.}
+#'			\item{\code{formula}}{a list of expected formula.}
+#'			\item{\code{model.type}}{a list of expected model.type.}
+#'			\item{\code{family}}{a list of expected family name.}
+#'			\item{\code{link}}{a list of expected link.}
+#'			\item{\code{linkinv}}{a list of expected linkinv.}
+#'		}
+#'	@param object.has.call
+#'		set FALSE if an object of the model doesn't have original call.
+#'	@param object.has.data
+#'		set FALSE if an object of the model doesn't have original data.
+#'	@param package
+#'		a character representing package to be loaded.
+#------------------------------------------------------------------------------
+test.model.adapter <- function(
+	function.name, data, test.data, object.has.call = TRUE,
+	object.has.data = TRUE, package = package.name(function.name)
+) {
+	# Load package.
+	suppressPackageStartupMessages(require(package, character.only = TRUE))
+	for (i in 1:length(test.data[[1]])) {
+		expected.for.call = expected(
+			call = test.data$call[[i]], formula = test.data$formula[[i]],
+			model.type = test.data$model.type[[i]], data = data,
+			family = test.data$family[[i]], link = test.data$link[[i]],
+			linkinv = test.data$linkinv[[i]]
+		)
+		expected.for.object <- expected.for.call
+		if (!object.has.call) {
+			expected.for.object$call <- base::call("<undef>")
+		}
+		if (!object.has.data) {
+			expected.for.object$data <- data.frame()
+		}
+		test <- ma.test(
+			call = test.data$call[[i]],
+			function.name = function.name,
+			expected.for.call = expected.for.call,
+			expected.for.object = expected.for.object,
+			envir = parent.frame(1)
+		)
+		test$run.all()
+	}
+}
+
+
+#------------------------------------------------------------------------------
+#	GLMと同じような形式のモデルのテストを生成するクラス。
+#------------------------------------------------------------------------------
+#'	Generate and run tests for GLM like functions.
+#'
+#'	@field test.info
+#'		a list having information used for testing.
+#'	@field function.name
+#'		a character representing function name.
+#'	@field package
+#'		a character representing package name to be loaded.
+#'	@field families
+#'		a character vector of family names to test.
+#'	@field object.has.call
+#'		set FALSE if object doesn't have call.
+#------------------------------------------------------------------------------
+glm.type.test.runnner <- setRefClass(
+	"glm.type.test.runner",
+	fields = list(
+		test.info = "list",
+		function.name = "character",
+		package = "character",
+		families = "character",
+		object.has.call = "logical"
+	)
+)
+
+
+#------------------------------------------------------------------------------
+#	クラスを初期化する。
+#------------------------------------------------------------------------------
+glm.type.test.runnner$methods(
+	initialize = function(
+		function.name, package = package.name(function.name),
+		families = NULL, object.has.call = TRUE
+	) {
+		"
+		Initialize class object.
+
+		\\describe{
+			\\item{\\code{function.name}}{name of function to test.}
+			\\item{\\code{package}}{name of package to load}
+			\\item{\\code{families}}{names of families to be tested.}
+			\\item{\\code{object.has.call}}{
+				set false if object doesn't have call.
+			}
+		}
+		"
+		.self$init.test.info()
+		.self$function.name <- function.name
+		if (is.null(families)) {
+			.self$families <- .self$test.info$families
+		} else {
+			.self$families <- families
+		}
+		.self$object.has.call <- object.has.call
+		# Load package.
+		.self$package <- package
+		suppressPackageStartupMessages(
+			require(.self$package, character.only = TRUE)
+		)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	test.infoフィールドを初期化する。
+#------------------------------------------------------------------------------
+glm.type.test.runnner$methods(
+	init.test.info = function() {
+		"
+		Initialize test.info field.
+		"
+		.self$test.info <- list()
+		.self$test.info$families = c(
+			"gaussian", "Gamma", "inverse.gaussian", "poisson",
+			"quasipoisson", "binomial", "quasibinomial", "quasi"
+		)
+		.self$test.info$model.types = c(
+			gaussian = "regression", Gamma = "regression",
+			inverse.gaussian = "regression", poisson = "regression",
+			quasipoisson = "regression", binomial = "classification",
+			quasibinomial = "classification", quassi = "classification"
+		)
+		.self$test.info$possible.links = list(
+			gaussian = c("identity", "log", "inverse"),
+			Gamma = c("identity", "log", "inverse"),
+			inverse.gaussian = c("1/mu^2", "identity", "log", "inverse"),
+			poisson = c("identity", "log", "sqrt"),
+			quasipoisson = c(
+				"logit", "probit", "cloglog", "identity", "inverse", "log",
+				"1/mu^2", "sqrt"
+			),
+			binomial = c("logit", "probit", "cauchit", "log", "cloglog"),
+			quasibinomial = c(
+				"logit", "probit", "cloglog", "identity", "inverse", "log",
+				"1/mu^2", "sqrt"
+			),
+			quasi = c(
+				"logit", "probit", "cloglog", "identity", "inverse", "log",
+				"1/mu^2", "sqrt"
+			)
+		)
+		.self$test.info$formulae = list(
+			gaussian = Sepal.Length ~ Petal.Length,
+			Gamma = Sepal.Length ~ Petal.Length,
+			inverse.gaussian = Sepal.Length ~ Petal.Length,
+			poisson = n ~ Petal.Length,
+			quasipoisson = bin ~ Species,
+			binomial = bin ~ Petal.Length,
+			quasibinomial = bin ~ Petal.Length,
+			quasi = Sepal.Length ~ Petal.Length
+		)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	テスト用のデータを作成する。
+#------------------------------------------------------------------------------
+glm.type.test.runnner$methods(
+	make.test.data.frame = function() {
+		"
+		Make a data.frame for testing.
+		"
+		iris2 <- rbind(iris, iris, iris)
+		iris2$bin <- rbinom(
+			nrow(iris2), 1, (as.numeric(iris2$Species == "Setosa") + 0.1) / 1
+		)
+		iris2$bin1 <- iris2$bin
+		iris2$bin2 <- 1 - iris2$bin1
+		iris2$n <- as.numeric(iris2$Species)
+		iris2$n <- iris2$n + rpois(nrow(iris2), 1)
+		return(iris2)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	指定された情報からcallを作成する。
+#------------------------------------------------------------------------------
+glm.type.test.runnner$methods(
+	make.call = function(family, link) {
+		"
+		Generate call from specified information.
+
+		\\describe{
+			\\item{\\code{family}}{name of family.}
+			\\item{\\code{link}}{name of link function.}
+		}
+		"
+		template <- "%s(%s, family = %s(link = '%s'), data = iris2)"
+		formula <- as.character(deparse(.self$test.info$formulae[[family]]))
+		code <- sprintf(template, .self$function.name, formula, family, link)
+		call <- match.call(
+			get(.self$function.name, mode = "function"), parse(text = code)
+		)
+		return(call)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	テストを実行する。
+#------------------------------------------------------------------------------
+glm.type.test.runnner$methods(
+	run = function() {
+		"
+		Run all tests.
+		"
+		# Make data.frame for testing.
+		iris2 <- make.test.data.frame()
+		for (family in .self$families) {
+			model.type <- ifelse(
+				family %in% c("binomial", "quasibinomial"),
+				"classification", "regression"
+			)
+			for (link in .self$test.info$possible.links[[family]]) {
+				fun.call <- .self$make.call(family, link)
+				link.obj <- make.link(link)
+				expected.for.call <- expected(
+					call = fun.call,
+					formula = .self$test.info$formulae[[family]],
+					data = iris2, model.type = model.type, family = family,
+					link = link.obj$linkfun, link.obj$linkinv
+				)
+				expected.for.object <- expected.for.call
+				if (!.self$object.has.call) {
+					expected.for.object$call <- call("<undef>")
+				}
+				test <- ma.test(
+					call = fun.call, function.name = function.name,
+					package = package, expected.for.call = expected.for.call,
+					expected.for.object = expected.for.object
+				)
+				test$run.all()
+			}
 		}
 	}
 )

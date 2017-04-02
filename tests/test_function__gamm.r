@@ -1,16 +1,23 @@
 #==============================================================================
 #	Test for gamm in mgcv package.
 #==============================================================================
-
-test.gamm <- ma.test(
-	call = gamm(
-		Sepal.Length ~ s(Petal.Length), data = iris, family = gaussian
+test <- glm.type.test.runnner(
+	"gamm",
+	families = c(
+		"gaussian", "Gamma", "inverse.gaussian", "poisson", "binomial"
 	),
-	function.name = "gamm",
-	formula = Sepal.Length ~ s(Petal.Length),
-	object.has.call = FALSE,
-	family = "gaussian",
-	data = iris
+	object.has.call = FALSE
 )
-test.gamm$run.all()
-rm(test.gamm)
+test$test.info$formulae <- list(
+	gaussian = Sepal.Length ~ s(Petal.Length),
+	Gamma = Sepal.Length ~ s(Petal.Length),
+	inverse.gaussian = Sepal.Length ~ s(Petal.Length),
+	poisson = n ~ s(Petal.Length),
+	quasipoisson = bin ~ s(Petal.Length),
+	binomial = bin ~ s(Petal.Length),
+	quasibinomial = bin ~ s(Petal.Length),
+	quasi = Sepal.Length ~ s(Petal.Length)
+)
+
+test$run()
+rm(test)
