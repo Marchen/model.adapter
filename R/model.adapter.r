@@ -409,7 +409,7 @@ model.adapter$methods(
 		Ensure the model.adapter object has model object.
 		"
 		if (is.null(.self$object)) {
-			.self$object <- eval(.self$src$call, .self$src$envir)
+			.self$object <- eval(.self$src$call, .self$env)
 		}
 	}
 )
