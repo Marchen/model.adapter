@@ -38,7 +38,7 @@ model.interface.BinaryTree$methods(
 model.interface.BinaryTree$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		if (is.call(x)) {
-			x <- match.call(cforest, x)
+			x <- match.call(ctree, x)
 			return(eval(x$formula, envir))
 		} else {
 			# Shared method with cforest / cforestと同じ手法。
