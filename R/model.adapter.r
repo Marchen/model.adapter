@@ -196,7 +196,7 @@ model.adapter$methods(
 		.self$init.package.name(seed, package.name)
 		.self$init.call(seed)
 		.self$init.object(seed)
-		.self$env <<- envir
+		.self$env <- envir
 		.self$init.family(seed)
 		.self$init.link(seed)
 		.self$init.data(seed, data)
@@ -221,9 +221,9 @@ model.adapter$methods(
 				"model.interface.%s(%s)", get.class.name(fun.name),
 				paste0(deparse(seed), collapse = "")
 			)
-			interface <<- eval(parse(text = code), environment())
+			.self$interface <- eval(parse(text = code), environment())
 		} else {
-			interface <<- model.interface(seed)
+			.self$interface <- model.interface(seed)
 		}
 	}
 )
@@ -238,9 +238,9 @@ model.adapter$methods(
 		Initialize src field.
 		"
 		if (is.call(seed)) {
-			src$call <<- seed
+			.self$src$call <- seed
 		} else {
-			src$object <<- seed
+			.self$src$object <- seed
 		}
 	}
 )
@@ -278,9 +278,9 @@ model.adapter$methods(
 		Initialize object field.
 		"
 		if (is.call(seed)) {
-			object <<- NULL
+			.self$object <- NULL
 		} else {
-			object <<- seed
+			.self$object <- seed
 		}
 	}
 )
@@ -296,7 +296,7 @@ model.adapter$methods(
 		"
 		family.name <- interface$get.family(seed, "character")
 		if (!is.null(family.name)) {
-			family <<- family.name
+			.self$family <- family.name
 		}
 	}
 )
@@ -358,8 +358,8 @@ model.adapter$methods(
 		"
 		Initialize link and linkinv fields.
 		"
-		link <<- interface$get.link(seed)
-		linkinv <<- interface$get.linkinv(seed)
+		.self$link <- interface$get.link(seed)
+		.self$linkinv <- interface$get.linkinv(seed)
 	}
 )
 
