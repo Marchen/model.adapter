@@ -32,6 +32,7 @@ model.interface.glmmadmb$methods(
 			family <- x$family
 		}
 		family <- gsub("^binom$", "binomial", family)
+		family <- gsub("^gamma$", "Gamma", family)
 		if (type == "character") {
 			return(family)
 		}
