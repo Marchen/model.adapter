@@ -81,7 +81,7 @@ model.interface.glmmadmb$methods(
 model.interface.glmmadmb$methods(
 	predict = function(object, newdata, type, ...) {
 		# Change 'fixed' field of object to handle '.' in the formula.
-		object$fixed <- .self$expand.formula(object$formula, object$frame)
+		object$fixed <- .self$expand.formula(object$fixed, object$frame)
 		callSuper(object, newdata, type, ...)
 	}
 )
