@@ -73,3 +73,19 @@ model.interface.BinaryTree$methods(
 		return(make.predict.types(link = "response", class = "response"))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	predictメソッド。
+#------------------------------------------------------------------------------
+model.interface.BinaryTree$methods(
+	predict = function(object, newdata = NULL, type, ...) {
+		pred <- stats::predict(object, newdata = newdata, type = type)
+		if (type == "prob") {
+			pred <- do.call(rbind, pred)
+			response <- object@data@get("response")
+			colnames(pred) <- levels(response[[colnames(response)]])
+		}
+		return(pred)
+	}
+)
