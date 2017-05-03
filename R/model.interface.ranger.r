@@ -44,7 +44,7 @@ model.interface.ranger$methods(
 		f <- callSuper(x, envir)
 		if (is.null(f)) {
 			call <- match.generic.call(x$call)
-			f <- call$formula
+			f <- formula(call$formula)
 		}
 		return(f)
 	}

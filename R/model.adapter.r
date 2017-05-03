@@ -340,12 +340,12 @@ model.adapter$methods(
 		"
 		Initialize formula field.
 		"
-		if (.self$has.call()) {
-			formula <<- interface$get.formula(call, .self$env)
+		if (!is.null(.self$object)) {
+			.self$formula <- interface$get.formula(src$object, .self$env)
 		} else {
-			formula <<- interface$get.formula(src$object, .self$env)
+			.self$formula <- interface$get.formula(call, .self$env)
 		}
-		formula <<- interface$expand.formula(formula, .self$data)
+		.self$formula <- interface$expand.formula(formula, .self$data)
 	}
 )
 

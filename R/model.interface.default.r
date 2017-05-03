@@ -194,10 +194,13 @@ model.interface.default$methods(
 		}
 		"
 		if (is.object(x)) {
-			if (isS4(x)) {
-				f <- eval(x@call$formula, envir)
-			} else {
-				f <- eval(x$call$formula, envir)
+			f <- try(formula(x), silent = TRUE)
+			if (class(f) == "try-error") {
+				if (isS4(x)) {
+					f <- eval(x@call$formula, envir)
+				} else {
+					f <- eval(x$call$formula, envir)
+				}
 			}
 		} else {
 			if (!is.null(x$formula)) {
