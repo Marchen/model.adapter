@@ -74,3 +74,18 @@ model.interface.RandomForest$methods(
 		return(make.predict.types(link = "response", class = "response"))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	predictメソッド。
+#------------------------------------------------------------------------------
+model.interface.RandomForest$methods(
+	predict = function(object, newdata = NULL, type, ...) {
+		pred <- stats::predict(object, newdata = newdata, type = type)
+		if (type == "prob") {
+			pred <- do.call(rbind, pred)
+			colnames(pred) <- gsub("^.+?\\.", "", colnames(pred))
+		}
+		return(pred)
+	}
+)
