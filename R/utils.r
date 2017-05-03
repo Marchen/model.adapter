@@ -325,7 +325,8 @@ make.call.or.object <- function(call, env) {
 
 
 #------------------------------------------------------------------------------
-#	formulaから説明変数名を取得する。
+#	formulaから説明変数名（ランダム変数を含まない）を取得する。
+#
 #	Args:
 #		formula: 説明変数名を取り出す式。
 #		data: .を展開するのに使うdata.frame。
@@ -333,7 +334,7 @@ make.call.or.object <- function(call, env) {
 #	Value:
 #		説明変数名が格納された文字列ベクトル。
 #------------------------------------------------------------------------------
-#'	Get names of explanatory variables from formula.
+#'	Get names of explanatory variables (excluding random factor) from formula.
 #'
 #'	@param formula a formula object from which variable names are obtained.
 #'	@param data a data.frame used to expand . in the formula.
@@ -369,12 +370,13 @@ x.names.from.formula <- function(
 	type = match.arg(type)
 	t <- terms(formula, data = data, specials = specials)
 	vars <- attr(t, "term.labels")
+	# Remove random factor.
+	vars <- vars[!grepl("\\|", vars)]
 	if (type == "all") {
 		return(vars)
 	}
-	# To et basic form of explanatory variables, split interaction
-	# and random factors.
-	vars <- do.call(c, sapply(vars, strsplit, split = ":|\\|"))
+	# To get basic form of explanatory variables, split interaction.
+	vars <- do.call(c, sapply(vars, strsplit, split = ":"))
 	# Remove functions, powers, and space.
 	powers <- "\\^[1-9]*"
 	fun.begin <- "^.*\\("

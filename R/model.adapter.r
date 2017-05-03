@@ -448,7 +448,8 @@ model.adapter$methods(
 
 
 #------------------------------------------------------------------------------
-#	説明変数の一覧を取得する。
+#	説明変数の一覧を取得する（ランダム変数を含まない）。
+#
 #	Args:
 #		specials: termsに渡される引数。
 #		type:
@@ -458,8 +459,8 @@ model.adapter$methods(
 model.adapter$methods(
 	x.names = function(specials = NULL, type = c("all", "base")) {
 		"
-		Get name of explanatory variables.
-		For details, see \\code{\\link[model.adapter]{x.names}}
+		Get name of explanatory variables (excluding random factor).
+
 		\\describe{
 			\\item{\\code{specials = NULL}}{
 				special characters to be passed to \\link{terms}.
