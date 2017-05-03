@@ -331,6 +331,7 @@ make.call.or.object <- function(call, env) {
 #		formula: 説明変数名を取り出す式。
 #		data: .を展開するのに使うdata.frame。
 #		specials: terms.formulaに渡す特殊文字。
+#
 #	Value:
 #		説明変数名が格納された文字列ベクトル。
 #------------------------------------------------------------------------------
