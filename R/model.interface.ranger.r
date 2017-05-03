@@ -30,8 +30,25 @@ model.interface.ranger$methods(
 			return(predictions(object))
 		}
 		# name of 'newdata' argument is 'data' for ranger.
-		pred <- stats::predict(object, data = newdata, ...)
-		return(pred$predictions)
+		if (type == "prob") {
+			# If type is "prob", calculate probability.
+			pred <- stats::predict(
+				object, data = newdata, predict.all = TRUE, ...
+			)
+			n.votes <- apply(
+				pred$predictions, 1, function(x) tapply(x, x, length)
+			)
+			n.votes <- lapply(
+				n.votes, "[", as.character(unique(c(pred$predictions)))
+			)
+			prob <- do.call(rbind, n.votes) / pred$num.trees
+			colnames(prob) <- levels(object$predictions)
+			prob[is.na(prob)] <- 0
+			return(prob)
+		} else {
+			pred <- stats::predict(object, data = newdata, ...)
+			return(pred$predictions)
+		}
 	}
 )
 
