@@ -97,3 +97,13 @@ model.interface.gamm$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	gamm用predict()メソッド。
+#------------------------------------------------------------------------------
+model.interface.gamm$methods(
+	predict = function(object, newdata = NULL, type, ...) {
+		return(callSuper(object$gam, newdata = newdata, type = type, ...))
+	}
+)
