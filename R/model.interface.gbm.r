@@ -61,6 +61,18 @@ model.interface.gbm$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
+#------------------------------------------------------------------------------
+#	予測値を計算する。
+#------------------------------------------------------------------------------
+model.interface.gbm$methods(
+	predict = function(object, newdata, type, random, ...) {
+		pred <- callSuper(object, newdata, type, random, ...)
+		if (is.array(pred)) {
+			pred <- as.matrix(pred[, , 1])
+		}
+		return(pred)
+	}
+)
 
 
 #------------------------------------------------------------------------------
