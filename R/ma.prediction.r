@@ -1,6 +1,11 @@
 #------------------------------------------------------------------------------
 #	モデルの予測値を格納したma.predictionオブジェクトを生成する。
 #	fitはランダム効果のあるモデルだったらpopulation mean。
+#
+#	回帰問題の時、fitは行列でfit, upper, lower列が推定値と、上下の信頼区間。
+#	多クラスの予測問題の時にはtype == "prob"なら、
+#	fitはmatrixで、各列は各クラスの確率。
+#	type == "class"なら１列目が予測されたクラス。
 #------------------------------------------------------------------------------
 #'	ma.prediction-class.
 #'
@@ -17,13 +22,17 @@
 #'
 #'	@param type
 #'		a character literal representing type of prediction. Currently,
-#'		"regression", "probability" and  "class" are supported.
+#'		"response", "link", "prob" and  "class" are supported.
+#'
 #'	@param fixed
 #'		a data.frame containing data used for prediction.
+#'
 #'	@param interval.type
 #'		a character literal representing type of interval.
+#'
 #'	@param interval.level
 #'		a numeric value representing level of interval.
+#'
 #'	@return
 #'		a object of ma.prediction class with following fields.
 #'		\describe{
