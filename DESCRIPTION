@@ -29,7 +29,8 @@ Suggests:
     rpart,
     mgcv,
     gam,
-    ranger
+    ranger,
+	testthat
 RoxygenNote: 5.0.1
 Collate:
     'const.r'
