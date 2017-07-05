@@ -1,4 +1,21 @@
-﻿2017-02-19: 0.0.5
+﻿2017-07-05: 0.0.6
+	- get.family() function use default value of family when family was not specified.
+	- Add support of handling default family in call.
+	- Add model.type field which contains type of models (regression/classification).
+	- Improved predict() method of model.adapter/model.interface.
+	- Several other improvement.
+	- Bug fixes:
+		- couldn't retrieve formula from ranger object.
+		- because MCMCglmm object has 'multinomial' family when 'categorical' is specified, now 'categorical' family is converted to 'multinomial'.
+		- model.interface.glmmadmb$get.family() returns "binom" instead of "binomial".
+		- bug in init.data()
+		- bugs related with environment.
+		- model.interface.glmmadmb$predict did not handle glmmadmb with gamma distribution correctly.
+		- model.interface.glmmadmb$predict method failed when handling model with random effect.
+		- result of model.adapter$x.names() has random effect.
+		- cannot use invalid call (i.e., calls can't produce model object) for model.adapter.
+		- cannot install environments without testthat package.
+2017-02-19: 0.0.5
 	- Add predict.types() method which returns conversion table of common
 	  types for predict method of model.adapter to function specific types
 	  of predict.
