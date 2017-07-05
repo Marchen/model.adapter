@@ -24,10 +24,9 @@ model.interface.ranger <- setRefClass(
 #------------------------------------------------------------------------------
 model.interface.ranger$methods(
 	predict = function(object, newdata = NULL, type, ...) {
-		# If no newdata specified, use predictions() to
-		# extract predicted values.
+		# If no newdata specified, prepare newdata using get.data() method.
 		if (is.null(newdata)) {
-			return(predictions(object))
+			newdata <- .self$get.data(object)
 		}
 		# name of 'newdata' argument is 'data' for ranger.
 		if (type == "prob") {
