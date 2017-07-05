@@ -4,8 +4,10 @@
 
 test.data <- list(
 	call = list(
-		substitute(ranger(Sepal.Length ~ ., data = iris)),
-		substitute(ranger(Species ~ ., data = iris))
+		substitute(
+			ranger(Sepal.Length ~ ., data = iris, write.forest = TRUE)
+		),
+		substitute(ranger(Species ~ ., data = iris, write.forest = TRUE))
 	),
 	formula = list(
 		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,

@@ -424,6 +424,129 @@ ma.test$methods(
 
 
 #------------------------------------------------------------------------------
+#	回帰モデル用predictメソッドのテスト。
+#------------------------------------------------------------------------------
+ma.test$methods(
+	test.predict.regression = function(adapter, message) {
+		"
+		Test function for prediction of regression result.
+		"
+		test_that(
+			message, {
+				pred <- adapter$predict(
+					newdata = .self$expected.for.call$data, type = "response"
+				)
+				expect_is(pred, "ma.prediction")
+				expect_is(pred$fit, "matrix")
+				expect_equal(mode(pred$fit), "numeric")
+				expect_equal(pred$type, "response")
+				if (nrow(pred$fit) == 1) {
+					expect_equal(colnames(pred$fit), "fit")
+				} else if (nrow(pred$fit) == 3) {
+					expect_equal(
+						colnames(pred$fit), c("fit", "upper", "lower")
+					)
+				}
+			}
+		)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	識別モデル確率用predictメソッドのテスト。
+#------------------------------------------------------------------------------
+ma.test$methods(
+	test.predict.classification.prob = function(adapter, message) {
+		"
+		Test for prediction of probability of classification model.
+		"
+		test_that(
+			message, {
+				pred <- adapter$predict(
+					newdata = .self$expected.for.call$data, type = "prob"
+				)
+				expect_is(pred, "ma.prediction")
+				expect_is(pred$fit, "matrix")
+				expect_equal(mode(pred$fit), "numeric")
+				expect_equal(pred$type, "prob")
+				response <- adapter$y.vars()[[adapter$y.names()]]
+				response.levels <- levels(response)
+				if (is.null(response.levels)) {
+					response.levels <- as.character(unique(response))
+					response.levels <- sort(response.levels)
+				}
+				expect_equal(ncol(pred$fit), length(response.levels))
+				expect_equal(colnames(pred$fit), response.levels)
+			}
+		)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	識別モデルクラス用predictメソッドのテスト。
+#------------------------------------------------------------------------------
+ma.test$methods(
+	test.predict.classification.class = function(adapter, message) {
+		"
+		Test for prediction of class from classification model.
+		"
+		test_that(
+			message, {
+				pred <- adapter$predict(
+					newdata = .self$expected.for.call$data, type = "class"
+				)
+				expect_is(pred, "ma.prediction")
+				expect_is(pred$fit, "matrix")
+				expect_equal(mode(pred$fit), "character")
+				expect_equal(pred$type, "class")
+				expect_equal(ncol(pred$fit), 1)
+				response.levels <- levels(
+					adapter$y.vars()[[adapter$y.names()]]
+				)
+				if (is.null(response.levels)) {
+					response.levels <- as.character(
+						unique(adapter$y.vars()[[adapter$y.names()]])
+					)
+				}
+				expect_equal(all(pred$fit %in% response.levels), TRUE)
+			}
+		)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	predict()メソッドのテスト。
+#------------------------------------------------------------------------------
+ma.test$methods(
+	test__predict = function() {
+		"
+		Test for predict() method to check:
+			* the result is ma.prediction object
+			* the fit field is a matrix
+			* the column name
+		"
+		template <- "Test of predict() method from adapter by %s of %s"
+		run.test <- function(adapter) {
+			regexp <- "\\.self\\$adapter\\."
+			type <- gsub(regexp, "", deparse(substitute(adapter)))
+			message <- sprintf(template, type, function.name)
+			if (adapter$model.type == "regression") {
+				.self$test.predict.regression(adapter, message)
+			} else {
+				.self$test.predict.classification.prob(adapter, message)
+				.self$test.predict.classification.class(adapter, message)
+			}
+		}
+		run.test(.self$adapter.call)
+		run.test(.self$adapter.object)
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	全てのテストを実行する。
 #------------------------------------------------------------------------------
 ma.test$methods(

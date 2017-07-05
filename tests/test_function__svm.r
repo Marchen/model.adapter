@@ -3,8 +3,8 @@
 #==============================================================================
 test.data <- list(
 	call = list(
-		substitute(svm(Sepal.Length ~ ., data = iris)),
-		substitute(svm(Species ~ ., data = iris))
+		substitute(svm(Sepal.Length ~ ., data = iris, probability = TRUE)),
+		substitute(svm(Species ~ ., data = iris, probability = TRUE))
 	),
 	formula = list(
 		Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
