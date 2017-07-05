@@ -568,6 +568,11 @@ model.adapter$methods(
 		"
 		.self$ensure.object()
 		type <- match.arg(type)
+		if (
+			.self$model.type == "regression" & type %in% c("prob", "class")
+		) {
+			stop("'prob' and 'class' types are not compatible with regression model.")
+		}
 		pred <- .self$interface$predict(
 			.self$object, newdata = newdata, type = .self$predict.types[type],
 			random = random, ...
