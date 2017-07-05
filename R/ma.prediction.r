@@ -28,11 +28,20 @@
 #'		a object of ma.prediction class with following fields.
 #'		\describe{
 #'			\item{fit}{
-#'				a matrix containing predicted result. For continuous variable,
+#'				a matrix containing predicted result. For continuous variables,
 #'				predicted values are placed in "fit" column. If an interval
 #'				(e.g., confidence, prediction, etc.) is available, its
 #'				upper and lower values are placed in "upper" and "lower"
 #'				columns.
+#'
+#'				For discrete variables, content of this field depends on
+#'				\emph{type} argument. If \emph{type} is "probability", fit is a
+#'				matrix with columns representing probability of each class.
+#'				If response variable is binary (0/1) variable, fit is a matrix
+#'				with the first column representing probability of "0" and the
+#'				second column representing probability of "1".
+#'
+#'				If \emph{type} is "class",
 #'			}
 #'			\item{type}{
 #'				a character literal representing type of prediction.
@@ -59,103 +68,94 @@
 #'	@export
 #'
 #------------------------------------------------------------------------------
-ma.prediction <- function(
-	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
-	interval.type = NULL, interval.level = NULL, ...
-) {
-	type <- match.arg(type)
-	if (!is.null(interval.type)) {
-		interval.type <- match.arg(interval.type, c("confidence", "prediction"))
-	}
-	UseMethod("ma.prediction")
-}
-
-#------------------------------------------------------------------------------
-#'	@describeIn ma.prediction
-#'	Default method handling vectors.
-#'	@method ma.prediction default
-#'	@export
-#------------------------------------------------------------------------------
-ma.prediction.default <- function(
-	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
-	interval.type = NULL, interval.level = NULL, ...
-) {
-	# If fit is not a matrix, convert to matrix.
-	# matrixに変換。
-	if (is.atomic(fit)) {
-		fit <- as.matrix(fit, ncol = 1)
-		obj <- ma.prediction(fit, type, fixed, interval.type, interval.level)
-		return(obj)
-	} else {
-	   	stop("'fit' should be matrix, atomic or ma.prediction object.")
-	}
-}
-
-
-#------------------------------------------------------------------------------
-#'	@describeIn ma.prediction
-#'	Method for matrix.
-#'	@method ma.prediction matrix
-#'	@export
-#------------------------------------------------------------------------------
-ma.prediction.matrix <- function(
-	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
-	interval.type = NULL, interval.level = NULL, ...
-) {
-	# Assign column name / 列名を付ける。
-	if (ncol(fit) == 1) {
-		colnames(fit) <- "fit"
-	} else if (ncol(fit) == 3) {
-		colnames(fit) <- c("fit", "upper", "lower")
-	} else {
-		stop("Number of columns of 'prediction' should be one or three.")
-	}
-	# Assign default values.
-	# デフォルト値の割り当て。
-	if (!is.null(interval.type)) {
-		if (interval.type == "none") {
-			interval.type <- NULL
-			interval.level <- NULL
-		}
-	}
-	if (is.null(interval.level)) {
-		if (!is.null(interval.type)) {
-			interval.level <- 0.95
-		}
-	}
-	# Make object / オブジェクト作成。
-	obj <- list(
-		fit = fit, type = type, fixed = fixed,
-		interval.type = interval.type, interval.level = interval.level
+ma.prediction <- setRefClass(
+	"ma.prediction",
+	list(
+		fit = "ANY",
+		type = "character",
+		fixed = "ANY",
+		interval.type = "ANY",
+		interval.level = "ANY"
 	)
-	class(obj) <- "ma.prediction"
-	return(obj)
-}
+)
 
 
-#------------------------------------------------------------------------------
-#'	@describeIn ma.prediction
-#'	Method for ma.prediction.
-#'	@method ma.prediction ma.prediction
-#'	@export
-#------------------------------------------------------------------------------
-ma.prediction.ma.prediction <- function(
-	fit, type = c("response", "link", "probability", "class"), fixed = NULL,
-	interval.type = NULL, interval.level = NULL, ...
-) {
-	# Update fields / フィールドの更新。
-	if (!is.null(fixed)) {
-		fit$fixed <- fixed
+ma.prediction$methods(
+	initialize = function(
+		fit, type = c("response", "link", "prob", "class"), fixed = NULL,
+		interval.type = NULL, interval.level = NULL, logical.response = FALSE,
+		...
+	) {
+		# Convert 'fit' to matrix.
+		if (!is.matrix(fit)) {
+			if (is.atomic(fit)) {
+				f <- as.matrix(fit, ncol = 1)
+			} else {
+				stop("'fit' should be matrix or atomic.")
+			}
+		} else {
+			f <- fit
+		}
+		# Check error in type.
+		.self$type <- match.arg(type)
+		# Initialize fields.
+		.self$init.fit(f, type, logical.response)
+		.self$init.interval(interval.type, interval.level)
 	}
-	if (!is.null(interval.type)) {
-		fit$interval.type <- interval.type
+)
+
+ma.prediction$methods(
+	init.fit = function(fit, type, logical.response) {
+		.self$fit <- fit
+		# Assign column name.
+		if (type %in% c("response", "link")) {
+			if (ncol(.self$fit) == 1) {
+				colnames(.self$fit) <- "fit"
+			} else if (ncol(.self$fit) == 3) {
+				colnames(.self$fit) <- c("fit", "upper", "lower")
+			} else {
+				stop(
+					"Number of columns of 'prediction' should be one or three."
+				)
+			}
+		}
+		# Convert result of binary response model (e.g. logistic regression)
+		# to probability of 0 and 1 or FALSE and TRUE.
+		if (type == "prob" & ncol(.self$fit) == 1) {
+			.self$fit <- cbind(1 - .self$fit, .self$fit)
+			fun <- ifelse(logical.response, as.logical, identity)
+			colnames(.self$fit) <- fun(0:1)
+		}
+		# Convert result of binary response model to "0" and "1" with the
+		# threshold of 0.5.
+		if (type == "class" & ncol(.self$fit) == 1 & is.numeric(.self$fit)) {
+			.self$fit <- ifelse(.self$fit >= 0.5, "1", "0")
+		}
 	}
-	if (!is.null(interval.level)) {
-		fit$interval.level <- interval.level
+)
+
+
+ma.prediction$methods(
+	init.interval = function(interval.type, interval.level) {
+		# Check error in interval.type.
+		if (!is.null(interval.type)) {
+			.self$interval.type <- match.arg(
+				interval.type, c("confidence", "prediction")
+			)
+		} else {
+			.self$interval.type <- interval.type
+		}
+		.self$interval.level <- interval.level
+		if (!is.null(.self$interval.type)) {
+			if (.self$interval.type == "none") {
+				.self$interval.type <- NULL
+				.self$interval.level <- NULL
+			}
+		}
+		if (is.null(.self$interval.level)) {
+			if (!is.null(.self$interval.type)) {
+				.self$interval.level <- 0.95
+			}
+		}
 	}
-	return(fit)
-}
-
-
-
-
+)

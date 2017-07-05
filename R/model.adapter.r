@@ -576,7 +576,8 @@ model.adapter$methods(
 		args <- as.list(match.call())[-1]
 		pred <- ma.prediction(
 			pred, type = type, fixed = newdata[.self$x.names(type = "base")],
-			interval.type = args$interval, interval.level = args$level
+			interval.type = args$interval, interval.level = args$level,
+			logical.response = is.logical(.self$y.vars()[[1]])
 		)
 		return(pred)
 	}
