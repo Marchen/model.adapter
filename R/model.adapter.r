@@ -171,6 +171,8 @@ model.adapter$methods(
 			}
 			\\item{\\code{envir = parent.frame(4L)}}{
 				envir an environment in which call in x is evaluated.
+				Default value is the environment where the object of
+				model.adapter was made.
 			}
 			\\item{\\code{data}}{data.frame used for further manipulations.}
 			\\item{\\code{package.name}}{
