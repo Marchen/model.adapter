@@ -34,7 +34,7 @@
 #'		a numeric value representing level of interval.
 #'
 #'	@return
-#'		a object of ma.prediction class with following fields.
+#'		an object of ma.prediction class with following fields.
 #'		\describe{
 #'			\item{fit}{
 #'				a matrix containing predicted result. For continuous variables,
