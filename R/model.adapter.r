@@ -203,6 +203,7 @@ model.adapter$methods(
 		.self$init.formula(seed)
 		.self$predict.types <- .self$interface$predict.types()
 		.self$init.model.type(seed)
+		.self$ensure.methods()
 	}
 )
 
@@ -641,6 +642,40 @@ model.adapter$methods(
 		fun <- ifelse(type == "link", .self$link, identity)
 		resid <- fun(y) - pred
 		return(resid)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	メソッドがオブジェクトに割り当てられるように一度メソッドにアクセスする。
+#------------------------------------------------------------------------------
+model.adapter$methods(
+	ensure.methods = function() {
+		"
+		Ensure the object correctly assigned methods.
+
+		Because assignment of a method to the object is done when the method
+		is accessed first time, this method access all methods of this class
+		and ensure the object has every methods correctly. This is important
+		when the object is transfered to parallel computing cluster.
+		"
+		ref.class.methods <- c(
+			".objectPackage", ".objectParent", "callSuper", "copy", "export",
+			"field", "getClass", "getRefClass", "import", "initFields",
+			"initialize", "show", "trace", "untrace", "usingMethods"
+		)
+		init.methods <- c(
+			"init.call", "init.data", "init.family", "init.formula",
+			"init.interface", "init.link", "init.model.type", "init.object",
+			"init.package.name", "init.src"
+		)
+		targets <- model.adapter$methods()
+		targets <- subset(
+			targets, !targets %in% c(ref.class.methods, init.methods)
+		)
+		for (i in targets) {
+			.self[[i]]
+		}
 	}
 )
 
