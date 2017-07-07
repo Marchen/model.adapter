@@ -570,6 +570,7 @@ model.adapter$methods(
 		}
 		"
 		.self$ensure.object()
+		# Error check.
 		type <- match.arg(type)
 		if (
 			.self$model.type == "regression" & type %in% c("prob", "class")
