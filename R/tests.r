@@ -148,6 +148,9 @@ expected <- function(
 #'		an object of the result of statistical/machine learning model function.
 #'		This field is automatically set by the \code{initialize()} method.
 #'
+#'	@field predict.args
+#'		an list having arguments passed to predict method.
+#'
 #'	@field adapter.call
 #'		a model.adapter object initialized by function call.
 #'		This field is automatically set by the \code{initialize()} method.
@@ -185,6 +188,7 @@ ma.test <- setRefClass(
 		expected.for.object = "list",
 		envir = "environment",
 		object = "ANY",
+		predict.args = "list",
 		adapter.call = "model.adapter",
 		adapter.object = "model.adapter"
 	)
@@ -198,7 +202,7 @@ ma.test$methods(
 	initialize = function(
 		call, function.name, package = package.name(function.name),
 		expected.for.call = expected(),
-		expected.for.object = expected.for.call,
+		expected.for.object = expected.for.call, predict.args = list(),
 		envir = parent.frame(4L)
 	) {
 		"
@@ -223,6 +227,7 @@ ma.test$methods(
 		# Initialize other fields.
 		.self$envir <- envir
 		.self$object <- eval(.self$call, .self$envir)
+		.self$predict.args <- predict.args
 		.self$adapter.call <- model.adapter(
 			.self$call, package.name = .self$package, envir = .self$envir
 		)
@@ -427,14 +432,15 @@ ma.test$methods(
 #	回帰モデル用predictメソッドのテスト。
 #------------------------------------------------------------------------------
 ma.test$methods(
-	test.predict.regression = function(adapter, message) {
+	test.predict.regression = function(adapter, message, ...) {
 		"
 		Test function for prediction of regression result.
 		"
 		test_that(
 			message, {
 				pred <- adapter$predict(
-					newdata = .self$expected.for.call$data, type = "response"
+					newdata = .self$expected.for.call$data, type = "response",
+					...
 				)
 				expect_is(pred, "ma.prediction")
 				expect_is(pred$fit, "matrix")
@@ -457,14 +463,15 @@ ma.test$methods(
 #	識別モデル確率用predictメソッドのテスト。
 #------------------------------------------------------------------------------
 ma.test$methods(
-	test.predict.classification.prob = function(adapter, message) {
+	test.predict.classification.prob = function(adapter, message, ...) {
 		"
 		Test for prediction of probability of classification model.
 		"
 		test_that(
 			message, {
 				pred <- adapter$predict(
-					newdata = .self$expected.for.call$data, type = "prob"
+					newdata = .self$expected.for.call$data, type = "prob",
+					...
 				)
 				expect_is(pred, "ma.prediction")
 				expect_is(pred$fit, "matrix")
@@ -488,14 +495,15 @@ ma.test$methods(
 #	識別モデルクラス用predictメソッドのテスト。
 #------------------------------------------------------------------------------
 ma.test$methods(
-	test.predict.classification.class = function(adapter, message) {
+	test.predict.classification.class = function(adapter, message, ...) {
 		"
 		Test for prediction of class from classification model.
 		"
 		test_that(
 			message, {
 				pred <- adapter$predict(
-					newdata = .self$expected.for.call$data, type = "class"
+					newdata = .self$expected.for.call$data, type = "class",
+					...
 				)
 				expect_is(pred, "ma.prediction")
 				expect_is(pred$fit, "matrix")
@@ -533,11 +541,12 @@ ma.test$methods(
 			regexp <- "\\.self\\$adapter\\."
 			type <- gsub(regexp, "", deparse(substitute(adapter)))
 			message <- sprintf(template, type, function.name)
+			args <- c(list(adapter, message), .self$predict.args)
 			if (adapter$model.type == "regression") {
-				.self$test.predict.regression(adapter, message)
+				do.call(.self$test.predict.regression, args)
 			} else {
-				.self$test.predict.classification.prob(adapter, message)
-				.self$test.predict.classification.class(adapter, message)
+				do.call(.self$test.predict.classification.prob, args)
+				do.call(.self$test.predict.classification.class, args)
 			}
 		}
 		run.test(.self$adapter.call)
@@ -608,10 +617,12 @@ ma.test$methods(
 #'		set FALSE if an object of the model doesn't have original data.
 #'	@param package
 #'		a character representing package to be loaded.
+#'	@param ...
+#'		other arguments passed to ma.test
 #------------------------------------------------------------------------------
 test.model.adapter <- function(
 	function.name, data, test.data, object.has.call = TRUE,
-	object.has.data = TRUE, package = package.name(function.name)
+	object.has.data = TRUE, package = package.name(function.name), ...
 ) {
 	# Load package.
 	suppressPackageStartupMessages(require(package, character.only = TRUE))
@@ -634,7 +645,7 @@ test.model.adapter <- function(
 			function.name = function.name,
 			expected.for.call = expected.for.call,
 			expected.for.object = expected.for.object,
-			envir = parent.frame(1)
+			envir = parent.frame(1), ...
 		)
 		test$run.all()
 	}

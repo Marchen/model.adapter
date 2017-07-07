@@ -17,6 +17,6 @@ test.data <- list(
 	model.type = list("regression", "classification")
 )
 
-test.model.adapter("gbm", iris, test.data)
+test.model.adapter("gbm", iris, test.data, predict.args = list(n.trees = 10))
 
 rm(test.data)
