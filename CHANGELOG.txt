@@ -1,4 +1,8 @@
-﻿2017-07-05: 0.0.6
+﻿2017-07-07: 0.0.7
+	- Bug fixes:
+		- predict() method of model.interface.gbm returns probability instead of class label when type = "class" is specified.
+		- get.formula() method of model.interface occasionally fails.
+2017-07-05: 0.0.6
 	- get.family() function use default value of family when family was not specified.
 	- Add support of handling default family in call.
 	- Add model.type field which contains type of models (regression/classification).
