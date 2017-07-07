@@ -70,6 +70,10 @@ model.interface.gbm$methods(
 		if (is.array(pred)) {
 			pred <- as.matrix(pred[, , 1])
 		}
+		# If the prediction type is "class", convert the result to class label.
+		if (names(type) == "class") {
+			pred <- colnames(pred)[apply(pred, 1, which.max)]
+		}
 		return(pred)
 	}
 )
