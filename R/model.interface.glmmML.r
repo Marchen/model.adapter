@@ -72,17 +72,17 @@ model.interface.glmmML$methods(
 #'
 #'	@param object a glmmML object.
 #'	@param newdata
-#		a data.frame containing data used for prediction. If missing, the data
-#		used for the modeling is used. However, because glmmML object does not
-#		contain original data used for the modeling, retrieving the data used
-#		for the modeling may fail if the data is removed from workspace.
+#'		a data.frame containing data used for prediction. If missing, the data
+#'		used for the modeling is used. However, because glmmML object does not
+#'		contain original data used for the modeling, retrieving the data used
+#'		for the modeling may fail if the data is removed from workspace.
 #'	@param type
 #'		type of prediction. Default is scale of response variable.
 #'		If "link" is specified, prediction is of link scale is calculated.
 #'	@param conditional
-#		if FALSE, marginal (using fixed terms only and unconditioned to random
-#		effect) predicted values are calculated. If TRUE, predicted values
-#		conditioned to the random effect is calculated.
+#'		if FALSE, marginal (using fixed terms only and unconditioned to random
+#'		effect) predicted values are calculated. If TRUE, predicted values
+#'		conditioned to the random effect is calculated.
 #'	@param ... further arguments passed to other methods.
 #-------------------------------------------------------------------------------
 predict.glmmML <- function(

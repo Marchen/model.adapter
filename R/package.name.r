@@ -29,8 +29,8 @@ package.name <- function(x){
 }
 
 #-------------------------------------------------------------------------------
-#'	@describeIn package.name
-#'	@method package.name default Default S3 method.
+#'	@describeIn package.name Default S3 method.
+#'	@method package.name default
 #-------------------------------------------------------------------------------
 package.name.default <- function(x){
 	# gamはglmやlmを引き継いでるので、先に評価
@@ -54,8 +54,8 @@ package.name.default <- function(x){
 }
 
 #-------------------------------------------------------------------------------
-#'	@describeIn package.name
-#'	@method package.name character Method for character.
+#'	@describeIn package.name Method for character.
+#'	@method package.name character
 #-------------------------------------------------------------------------------
 package.name.character <- function(x){
 	package.name <- switch(
@@ -77,8 +77,8 @@ package.name.character <- function(x){
 }
 
 #-------------------------------------------------------------------------------
-#'	@describeIn package.name
-#'	@method package.name call Method for call.
+#'	@describeIn package.name Method for call.
+#'	@method package.name call
 #-------------------------------------------------------------------------------
 package.name.call <- function(x) {
 	x <- as.characte(x[1])
