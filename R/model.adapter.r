@@ -192,13 +192,13 @@ model.adapter$methods(
 		if (missing(x)) {
 			return()
 		}
+		.self$env <- envir
 		seed <- make.call.or.object(substitute(x), parent.frame(4L))
 		.self$init.interface(seed)
 		.self$init.src(seed)
 		.self$init.package.name(seed, package.name)
 		.self$init.call(seed)
 		.self$init.object(seed)
-		.self$env <- envir
 		.self$init.family(seed)
 		.self$init.link(seed)
 		.self$init.data(seed, data)
@@ -259,12 +259,14 @@ model.adapter$methods(
 		Initialize call field.
 		"
 		if (is.call(seed)) {
-			.self$call <- match.generic.call(seed, .self$package.name)
+			.self$call <- match.generic.call(
+				seed, .self$package.name, .self$env
+			)
 		} else {
 			if (!is.null(.self$interface$get.call(seed))) {
 				.self$call <- match.generic.call(
 					.self$interface$get.call(seed),
-					.self$package.name
+					.self$package.name, .self$env
 				)
 			}
 		}
