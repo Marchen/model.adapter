@@ -1,4 +1,7 @@
-﻿2017-07-07: 0.0.7
+﻿2017-09-10: 0.0.8
+	- Bug fixes:
+		- cv.models did not run in function.
+2017-07-07: 0.0.7
 	- Bug fixes:
 		- predict() method of model.interface.gbm returns probability instead of class label when type = "class" is specified.
 		- get.formula() method of model.interface occasionally fails.
