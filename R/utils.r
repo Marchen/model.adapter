@@ -11,7 +11,7 @@
 #'	@examples
 #'	is.s3.generic("plot")
 #'	is.s3.generic("glm")
-#'	@describeIn is.generic
+#'	@describeIn is.generic (Internal) function for S3 generic function.
 #------------------------------------------------------------------------------
 is.s3.generic <- function(fun.name) {
 	fun <- match.fun(fun.name)
@@ -36,7 +36,7 @@ is.s3.generic <- function(fun.name) {
 #'	@examples
 #'	is.s4.generic("plot")
 #'	is.s4.generic("lmer")
-#'	@describeIn is.generic
+#'	@describeIn is.generic (Internal) function for S4 generic function.
 #------------------------------------------------------------------------------
 is.s4.generic <- function(fun.name, package = "") {
 	search.path <- sprintf("package:%s", package)
