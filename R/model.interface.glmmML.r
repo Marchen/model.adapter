@@ -102,7 +102,6 @@ predict.glmmML <- function(
 	if (type == "link") {
 		return(result)
 	} else {
-		family()
 		family <- format.family(object$call$family, type = "family")
 		return(family$linkinv(result))
 	}
