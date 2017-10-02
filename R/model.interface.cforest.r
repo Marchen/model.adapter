@@ -84,7 +84,12 @@ model.interface.RandomForest$methods(
 		pred <- stats::predict(object, newdata = newdata, type = type)
 		if (type == "prob") {
 			pred <- do.call(rbind, pred)
-			colnames(pred) <- gsub("^.+?\\.", "", colnames(pred))
+			# Remove the name of response variable from the column name.
+			f <- .self$get.formula(object)
+			y.name <- as.character(f[2])
+			y.name <- gsub("\\.", "\\\\.", y.name)
+			remove.chars <- paste0(y.name, "\\.")
+			colnames(pred) <- gsub(remove.chars, "", colnames(pred))
 		}
 		return(pred)
 	}
