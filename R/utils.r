@@ -241,7 +241,7 @@ format.family <- function(family, type = c("family", "character")) {
 #'		"function" or "character" can be used. "character" is default.
 #'
 #'	@return
-#'		If type is "character", function object.
+#'		If type is "function", function object.
 #'		If type is "character", character literal of function name.
 #'
 #'	@examples
