@@ -51,10 +51,10 @@ model.interface.MCMCglmm$methods(
 #	モデルのfamilyを取得する。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.family = function(x, type = c("character", "family")) {
+	get.family = function(x, type = c("character", "family"), envir) {
 		# Get family
 		if (is.call(x)) {
-			family <- family.from.call(x)
+			family <- family.from.call(x, envir)
 		} else {
 			family <- x$family[[1]]
 		}
@@ -110,8 +110,8 @@ model.interface.MCMCglmm$methods(
 #	リンク関数を返す。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.link = function(x) {
-		f <- .self$get.family(x, "character")
+	get.link = function(x, envir) {
+		f <- .self$get.family(x, "character", envir)
 		check.supported.family(f)
 		link <- switch(
 			f,
@@ -131,8 +131,8 @@ model.interface.MCMCglmm$methods(
 #	リンク関数の逆関数を返す。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.linkinv = function(x) {
-		f <- .self$get.family(x, "character")
+	get.linkinv = function(x, envir) {
+		f <- .self$get.family(x, "character", envir)
 		check.supported.family(f)
 		link <- switch(
 			f,
@@ -154,7 +154,7 @@ model.interface.MCMCglmm$methods(
 model.interface.MCMCglmm$methods(
 	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
 		classification <- c("categorical", "ordinal", "threshold")
-		family <- .self$get.family(x, "character")
+		family <- .self$get.family(x, "character", envir)
 		if (family %in% classification | grepl("^multinomial.*", family)) {
 			return("classification")
 		} else {

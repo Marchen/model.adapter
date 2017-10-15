@@ -23,7 +23,7 @@ model.interface.lm <- setRefClass(
 #	モデルのfamilyを取得する。
 #------------------------------------------------------------------------------
 model.interface.lm$methods(
-	get.family = function(x, type = c("character", "family")) {
+	get.family = function(x, type = c("character", "family"), envir) {
 		return(format.family("gaussian", type))
 	}
 )

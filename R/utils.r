@@ -98,16 +98,18 @@ is.generic <- function(fun.name, package = "") {
 #'
 #'	@param call a call to be matched.
 #'	@param envir an environment to evaluate call.
+#'	@param package
+#'		a character string representing package name of the funciton.
 #'
 #'	@return matched call.
 #'
 #'	@examples
 #'		match.generic.call(substitute(hist(1:10)))
 #------------------------------------------------------------------------------
-match.generic.call <- function(call, package = "", envir = parent.frame(2L)) {
+match.generic.call <- function(call, envir, package = "") {
 	# Match function without considering generic function.
 	# 総省関数を無視して関数をマッチングする。
-	fun.name <- get.function(call)
+	fun.name <- get.function(call, "character", envir)
 	fun <- match.fun(fun.name)
 	matched.call <- match.call(fun, call)
 	# Non-generic functions.
@@ -160,19 +162,22 @@ is.formula <- function(x) {
 #
 #	Args:
 #		x: 関数呼び出しのcall。
+#		envir: callを評価する環境。
 #	Value:
 #		familyが取得できればfamily、取得できなかったらNULL。
 #------------------------------------------------------------------------------
 #'	(Internal) Get family from function call.
 #'
 #'	@param x a call of a function.
+#'	@param envir an environment where \code{x} is evaluated.
 #'	@return returns family in the call if available else NULL.
 #------------------------------------------------------------------------------
-family.from.call <- function(x) {
+family.from.call <- function(x, envir = parent.frame()) {
 	f <- x$family
 	if (is.null(f)) {
 		# If family was not specified, try to get default family.
-		f <- formals(match.fun(as.character(x[1])))$family
+		fun <- get.function(x, "function", envir)
+		f <- formals(fun)$family
 	}
 	return(f)
 }
@@ -221,6 +226,50 @@ format.family <- function(family, type = c("family", "character")) {
 
 
 #------------------------------------------------------------------------------
+#	関数のオリジナルの名前を取得する。
+#
+#	Args:
+#		fun: 関数。
+#
+#	Value:
+#		関数名。
+#------------------------------------------------------------------------------
+#'	(Internal) Find original name of the function.
+#'
+#'	@param fun a function
+#'	@return
+#'		a character string of original function name.
+#'		if the function specified as fun is 'original' of it,
+#'		this funciton returns name of fun itself.
+#'		Note that this function cannot work correctly if a copy of the function
+#'		and the original function are in the same environment.
+#'
+#'	@examples
+#'	a <- ls
+#'	find.original.name(a)
+#'
+#'	a <- glm
+#'	find.original.name(a)
+#'
+#'	a <- function() print("test")
+#'	find.original.name(a)
+#'
+#'	# But in the following situation, this can't work correctly.
+#'	test <- function() print("test")
+#'	a <- test
+#'	find.original.name(a)
+#------------------------------------------------------------------------------
+find.original.name <- function(fun) {
+	objects <- ls(envir = environment(fun))
+	for (i in objects) {
+		if (identical(fun, get(i, envir = environment(fun)))) {
+			return(i)
+		}
+	}
+}
+
+
+#------------------------------------------------------------------------------
 #	関数、関数名をcallから取得する。
 #
 #	Args:
@@ -243,11 +292,15 @@ format.family <- function(family, type = c("family", "character")) {
 #'	@return
 #'		If type is "function", function object.
 #'		If type is "character", character literal of function name.
+#'		Note that if the function in the call is copy of other function,
+#'		this funciton tries to find original name of it.
 #'
 #'	@examples
 #'		get.function(substitute(glm(Sepal.Length ~ ., data = iris)))
 #------------------------------------------------------------------------------
-get.function <- function(call, type = c("function", "character")) {
+get.function <- function(
+	call, type = c("function", "character"), envir = parent.frame()
+) {
 	# Check arguments
 	if (missing(type)) {
 		type <- "character"
@@ -256,10 +309,11 @@ get.function <- function(call, type = c("function", "character")) {
 	# Extract information
 	function.name <- as.character(deparse(call[[1]]))
 	function.name <- gsub(".*::", "", function.name)
+	fun <- get(function.name, envir = envir)
 	if (type == "character") {
+		function.name <- find.original.name(fun)
 		return(function.name)
 	} else {
-		fun <- match.fun(function.name)
 		return(fun)
 	}
 }

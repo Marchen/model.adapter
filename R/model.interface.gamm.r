@@ -36,11 +36,11 @@ model.interface.gamm$methods(
 #	モデルのfamilyを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	get.family = function(x, type = c("character", "family")) {
+	get.family = function(x, type = c("character", "family"), envir) {
 		if (is.call(x)) {
-			return(callSuper(x, type))
+			return(callSuper(x, type, envir))
 		} else {
-			return(callSuper(x$gam, type))
+			return(callSuper(x$gam, type, envir))
 		}
 	}
 )

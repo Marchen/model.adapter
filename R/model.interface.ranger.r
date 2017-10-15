@@ -26,7 +26,8 @@ model.interface.ranger$methods(
 	predict = function(object, newdata = NULL, type, ...) {
 		# If no newdata specified, prepare newdata using get.data() method.
 		if (is.null(newdata)) {
-			newdata <- .self$get.data(object)
+			package <- package.name(object, parent.frame())
+			newdata <- .self$get.data(object, parent.frame(), package)
 		}
 		# name of 'newdata' argument is 'data' for ranger.
 		if (type == "prob") {
@@ -59,7 +60,7 @@ model.interface.ranger$methods(
 	get.formula = function(x, envir = parent.frame()) {
 		f <- callSuper(x, envir)
 		if (is.null(f)) {
-			call <- match.generic.call(x$call)
+			call <- match.generic.call(x$call, envir)
 			f <- formula(call$formula)
 		}
 		return(f)

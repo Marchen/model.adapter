@@ -60,7 +60,7 @@ model.interface.default <- setRefClass(
 #		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.family = function(x, type = c("character", "family")) {
+	get.family = function(x, type = c("character", "family"), envir) {
 		"
 		Get family from call or model object.
 		If family was not specified, return NULL.
@@ -74,10 +74,11 @@ model.interface.default$methods(
 				family of MCMCglmm), their family object is not implimented.
 				For such family, this method raise stop error.
 			}
+			\\{envir}{environment where x is evaluated.}
 		}
 		"
 		if (is.call(x)) {
-			family <- family.from.call(x)
+			family <- family.from.call(x, envir)
 		} else {
 			family <- try(stats::family(x), TRUE)
 			if (class(family) == "try-error") {
@@ -163,7 +164,7 @@ model.interface.default$methods(
 			if (is.null(d)) {
 				# When couldn't retrieve data from object, get it from call.
 				# オブジェクトからdataを取得できなかったらcallから取得を試みる。
-				cl <- match.generic.call(.self$get.call(x), package)
+				cl <- match.generic.call(.self$get.call(x), envir, package)
 				d <- eval(cl$data, envir)
 			}
 		}
@@ -352,7 +353,7 @@ model.interface.default$methods(
 #	リンク関数を返す。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.link = function(x) {
+	get.link = function(x, envir) {
 		"
 		Get link function. If the model does not have link function, this
 		function returns \\code{\\link[base]{identity}} function.
@@ -360,9 +361,12 @@ model.interface.default$methods(
 			\\item{\\code{x}}{
 				an object of statistical model or a call of model function.
 			}
+			\\item{\\code{envir}}{
+				an environment where call in \\code{x} is evaluated.
+			}
 		}
 		"
-		f <- .self$get.family(x, "family")
+		f <- .self$get.family(x, "family", envir)
 		if (!is.null(f)) {
 			return(f$linkfun)
 		} else {
@@ -376,7 +380,7 @@ model.interface.default$methods(
 #	リンク関数の逆関数を返す。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.linkinv = function(x) {
+	get.linkinv = function(x, envir) {
 		"
 		Get inverse function of link function. If the model does not have
 		link function, this function returns \\code{\\link[base]{identity}}
@@ -385,9 +389,12 @@ model.interface.default$methods(
 			\\item{\\code{x}}{
 				an object of statistical model or a call of model function.
 			}
+			\\item{\\code{envir}}{
+				an environment where call in \\code{x} is evaluated.
+			}
 		}
 		"
-		f <- .self$get.family(x, "family")
+		f <- .self$get.family(x, "family", envir)
 		if (!is.null(f)) {
 			return(f$linkinv)
 		} else {
@@ -410,7 +417,7 @@ model.interface.default$methods(
 		If the model is regression model, it returns 'regression'.
 		If the model is classification model, it returns 'classification'.
 		"
-		f <- .self$get.family(x, type = "character")
+		f <- .self$get.family(x, type = "character", envir)
 		if (is.null(f)) {
 			d <- .self$get.data(x, envir, package, ...)
 			response <- model.response(

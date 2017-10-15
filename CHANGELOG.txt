@@ -1,4 +1,6 @@
-﻿2017-10-01: 0.0.9
+﻿2017-10-xx: 0.0.10
+	- model.adapter supports copy of functions.
+2017-10-01: 0.0.9
 	- Bug fixes:
 		- predict method did not work for glmmML.
 2017-09-10: 0.0.8

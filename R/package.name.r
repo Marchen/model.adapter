@@ -1,13 +1,16 @@
 #------------------------------------------------------------------------------
-#' Get package name from function name or object.
+#'	Get package name from function name or object.
 #'
-#' @param x: character representing function name or model object.
+#'	@param x function name, call or model object.
+#'	@param envir an environment where \code{x} is evaluated.
 #'
-#' @return a character representing package name.
+#'	@return a character representing package name.
 #'
-#' @examples
-#'	# Get package name from function name.
-#'	package.name("ctree")
+#'	@examples
+#'	# Get package name from function name
+#'	package.name("cforest")
+#'	# Get package name from function call.
+#'	package.name(substitute(ctree(Petal.Length~., data=iris)))
 #'	# Get package name from object.
 #'	data(iris)
 #'	object <- lm(Petal.Length ~ ., data = iris)
@@ -18,13 +21,14 @@
 #	１つめがパッケージ名だと仮定してパッケージ名を返す。
 #
 #	Args:
-#		x: 関数名を表す文字列、もしくはモデルオブジェクト。
+#		x: 関数名、関数の呼び出し、もしくはモデルオブジェクト。
+#		envir: 関数呼び出しを評価する環境。
 #
 #	Value:
 #		その関数が含まれる/そのオブジェクトを作成した関数が含まれるパッケージ名
 #		を表す文字列。
 #------------------------------------------------------------------------------
-package.name <- function(x){
+package.name <- function(x, envir){
 	UseMethod("package.name", x)
 }
 
@@ -32,7 +36,7 @@ package.name <- function(x){
 #'	@describeIn package.name Default S3 method.
 #'	@method package.name default
 #-------------------------------------------------------------------------------
-package.name.default <- function(x){
+package.name.default <- function(x, envir){
 	# gamはglmやlmを引き継いでるので、先に評価
 	if (is(x, "gam")){
 		return(ifelse(is.null(x$mgcv.conv), "gam", "mgcv"))
@@ -57,31 +61,36 @@ package.name.default <- function(x){
 #'	@describeIn package.name Method for character.
 #'	@method package.name character
 #-------------------------------------------------------------------------------
-package.name.character <- function(x){
-	package.name <- switch(
-		x,
-		cforest		= "party",
-		ctree		= "party",
-		lm			= "stats",
-		glm			= "stats",
-		glmmadmb	= "glmmADMB",
-		lme			= "nlme",
-		lmer		= "lme4",
-		glmer		= "lme4",
-		svm			= "e1071",
-		gam			= "mgcv",
-		gamm		= "mgcv",
-		x
-	)
-	return(package.name)
+package.name.character <- function(x, envir) {
+	fun <- try(get(x, envir = envir), silent = TRUE)
+	if (class(fun) != "try-error") {
+		package <- environmentName(environment(fun))
+	} else {
+		package <- switch(
+			x,
+			cforest = "party",
+			ctree = "party",
+			lm = "stats",
+			glm = "stats",
+			glmmadmb = "glmmADMB",
+			lme = "nlme",
+			lmer = "lme4",
+			glmer = "lme4",
+			svm = "e1071",
+			gam = "mgcv",
+			gamm = "mgcv",
+			x
+		)
+	}
+	return(package)
 }
 
 #-------------------------------------------------------------------------------
 #'	@describeIn package.name Method for call.
 #'	@method package.name call
 #-------------------------------------------------------------------------------
-package.name.call <- function(x) {
-	x <- as.characte(x[1])
-	return(package.name(x))
+package.name.call <- function(x, envir) {
+	fun <- get.function(x, "function", envir)
+	package <- environmentName(environment(fun))
+	return(package)
 }
-

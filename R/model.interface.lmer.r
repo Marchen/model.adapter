@@ -34,7 +34,7 @@ model.interface.lmerMod$methods(
 #	モデルのfamilyを取得する。
 #------------------------------------------------------------------------------
 model.interface.lmerMod$methods(
-	get.family = function(x, type = c("character", "family")) {
+	get.family = function(x, type = c("character", "family"), envir) {
 		return(format.family("gaussian", type))
 	}
 )

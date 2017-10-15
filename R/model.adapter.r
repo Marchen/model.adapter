@@ -219,7 +219,7 @@ model.adapter$methods(
 		Initialize interface field.
 		"
 		if (is.call(seed)) {
-			fun.name <- get.function(seed, "character")
+			fun.name <- get.function(seed, "character", .self$env)
 			code <- sprintf(
 				"model.interface.%s(%s)", get.class.name(fun.name),
 				paste0(deparse(seed), collapse = "")
@@ -260,13 +260,13 @@ model.adapter$methods(
 		"
 		if (is.call(seed)) {
 			.self$call <- match.generic.call(
-				seed, .self$package.name, .self$env
+				seed, .self$env, .self$package.name
 			)
 		} else {
 			if (!is.null(.self$interface$get.call(seed))) {
 				.self$call <- match.generic.call(
-					.self$interface$get.call(seed),
-					.self$package.name, .self$env
+					.self$interface$get.call(seed), .self$env,
+					.self$package.name
 				)
 			}
 		}
@@ -299,7 +299,7 @@ model.adapter$methods(
 		"
 		Initialize family field.
 		"
-		family.name <- interface$get.family(seed, "character")
+		family.name <- interface$get.family(seed, "character", .self$env)
 		if (!is.null(family.name)) {
 			.self$family <- family.name
 		}
@@ -363,8 +363,8 @@ model.adapter$methods(
 		"
 		Initialize link and linkinv fields.
 		"
-		.self$link <- interface$get.link(seed)
-		.self$linkinv <- interface$get.linkinv(seed)
+		.self$link <- interface$get.link(seed, .self$env)
+		.self$linkinv <- interface$get.linkinv(seed, .self$env)
 	}
 )
 
@@ -379,12 +379,8 @@ model.adapter$methods(
 		"
 		if (!is.null(name)) {
 			.self$package.name <- name
-			return()
-		}
-		if (is.call(seed)) {
-			.self$package.name <- package.name(as.character(seed[1]))
 		} else {
-			.self$package.name <- package.name(seed)
+			.self$package.name <- package.name(seed, .self$env)
 		}
 	}
 )

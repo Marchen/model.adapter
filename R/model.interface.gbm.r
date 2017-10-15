@@ -33,7 +33,7 @@ model.interface.gbm$methods(
 		if (is.call(x)) {
 			d <- callSuper(x, envir)
 		} else {
-			model.call <- match.generic.call(.self$get.call(x), package)
+			model.call <- match.generic.call(.self$get.call(x), envir, package)
 			d <- eval(model.call$data)
 		}
 		# If still couldn't get data, use data in the object and make a

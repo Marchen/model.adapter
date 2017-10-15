@@ -52,7 +52,7 @@ expected <- function(
 		call <- substitute(call)
 	}
 	if (!identical(call, base::call("<undef>"))) {
-		call <- match.generic.call(call)
+		call <- match.generic.call(call, parent.frame())
 	}
 	object <- list(
 		call = call, formula = formula, model.type = model.type,
