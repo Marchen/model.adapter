@@ -139,7 +139,7 @@ model.interface.default$methods(
 #		envir: xに入ったcallを評価する環境。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		"
 		Get a data.frame containing the data used for modeling.
 		If data is not available this method returns empty data.frame made by
@@ -148,9 +148,7 @@ model.interface.default$methods(
 			\\item{\\code{x}}{
 				a model object/call from which data is extracted.
 			}
-			\\item{\\code{envir = parent.frame()}}{
-				an environment in which call is evaluated.
-			}
+			\\item{\\code{envir}}{an environment in which call is evaluated.}
 		}
 		"
 		if (is.call(x)) {
@@ -180,7 +178,7 @@ model.interface.default$methods(
 #		envir: xに入ったcallを評価する環境。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.formula = function(x, envir = parent.frame()) {
+	get.formula = function(x, envir) {
 		"
 		Extract formula from model object/call.
 		If couldn't retrieve formula from \\code{x}, this method returns NULL.
@@ -189,7 +187,7 @@ model.interface.default$methods(
 			\\item{\\code{x}}{
 				a model object/call from which formula is extracted.
 			}
-			\\item{\\code{envir = parent.frame()}}{
+			\\item{\\code{envir}}{
 				an environment in which call in x is evaluated.
 			}
 		}
@@ -410,12 +408,20 @@ model.interface.default$methods(
 #		回帰なら"regression"、識別なら"classification"。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
+	get.model.type = function(x, envir, package = "", ...) {
 		"
 		Return a character vector specifying model type
 		(regression or classification).
 		If the model is regression model, it returns 'regression'.
 		If the model is classification model, it returns 'classification'.
+		\\describe{
+			\\item{\\code{x}}{
+				an object of statistical model or a call of model function.
+			}
+			\\item{\\code{envir}}{
+				an environment where call in \\code{x} is evaluated.
+			}
+		}
 		"
 		f <- .self$get.family(x, type = "character", envir)
 		if (is.null(f)) {

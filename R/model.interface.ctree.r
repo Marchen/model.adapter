@@ -36,7 +36,7 @@ model.interface.BinaryTree$methods(
 #	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
-	get.formula = function(x, envir = parent.frame()) {
+	get.formula = function(x, envir) {
 		if (is.call(x)) {
 			x <- match.call(ctree, x)
 			return(eval(x$formula, envir))
@@ -53,7 +53,7 @@ model.interface.BinaryTree$methods(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)) {
 		   	return(callSuper(x, envir, package, ...))
 		} else {

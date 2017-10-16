@@ -53,7 +53,7 @@ model.interface.glmmadmb$methods(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.glmmadmb$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)) {
 			return(callSuper(x, envir, package, ...))
 		} else {

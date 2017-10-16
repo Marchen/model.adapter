@@ -35,7 +35,7 @@ model.interface.RandomForest$methods(
 #	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
-	get.formula = function(x, envir = parent.frame()) {
+	get.formula = function(x, envir) {
 		if (is.object(x)) {
 			# Manually construct formula.
 			y <- as.character(x@data@formula$response[2])
@@ -54,7 +54,7 @@ model.interface.RandomForest$methods(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)){
 			return(callSuper(x, envir, package, ...))
 		} else {
@@ -85,7 +85,7 @@ model.interface.RandomForest$methods(
 		if (type == "prob") {
 			pred <- do.call(rbind, pred)
 			# Remove the name of response variable from the column name.
-			f <- .self$get.formula(object)
+			f <- .self$get.formula(object, envir = parent.frame())
 			y.name <- as.character(f[2])
 			y.name <- gsub("\\.", "\\\\.", y.name)
 			remove.chars <- paste0(y.name, "\\.")

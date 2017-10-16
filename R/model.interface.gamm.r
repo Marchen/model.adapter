@@ -50,7 +50,7 @@ model.interface.gamm$methods(
 #	モデルのformulaを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	get.formula = function(x, envir = parent.frame()) {
+	get.formula = function(x, envir) {
 		f <- callSuper(x, envir)
 		if (is.null(f)) {
 			f <- x$gam$formula
@@ -64,7 +64,7 @@ model.interface.gamm$methods(
 #	モデルのdataを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)){
 			return(callSuper(x, envir, package, ...))
 		} else {

@@ -23,7 +23,7 @@ model.interface.glmerMod <- setRefClass(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.glmerMod$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)){
 			return(callSuper(x, envir, package, ...))
 		} else {

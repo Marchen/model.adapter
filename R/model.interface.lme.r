@@ -35,7 +35,7 @@ model.interface.lme$methods(
 #	モデル構築に使われる引数からモデル式をあらわすformulaを取得する。
 #------------------------------------------------------------------------------
 model.interface.lme$methods(
-	get.formula = function(x, envir = parent.frame()) {
+	get.formula = function(x, envir) {
 		# Get call and convert it to a list / callを取得しリストに変換。
 		if (is.object(x)) {
 			cl <- x$call

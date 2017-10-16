@@ -23,7 +23,7 @@ model.interface.MCMCglmm <- setRefClass(
 #	モデルのdataを取得する。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.data = function(x, envir = parent.frame(), package = "", ...) {
+	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)) {
 			callSuper(x, envir, package, ...)
 		} else {
@@ -37,7 +37,7 @@ model.interface.MCMCglmm$methods(
 #	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.formula = function(x, envir = parent.frame()) {
+	get.formula = function(x, envir) {
 		if (is.call(x)) {
 			return(callSuper(x, envir))
 		} else {
@@ -152,7 +152,7 @@ model.interface.MCMCglmm$methods(
 #	モデルの種類を返す。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
+	get.model.type = function(x, envir, package = "", ...) {
 		classification <- c("categorical", "ordinal", "threshold")
 		family <- .self$get.family(x, "character", envir)
 		if (family %in% classification | grepl("^multinomial.*", family)) {

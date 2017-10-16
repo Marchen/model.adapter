@@ -23,7 +23,7 @@ model.interface.gbm <- setRefClass(
 #	モデル作成に使われたデータを返す。
 #------------------------------------------------------------------------------
 model.interface.gbm$methods(
-	get.data = function(x, envir = parent.frame(), package = "") {
+	get.data = function(x, envir, package = "") {
 		# Extract data from call using default method.
 		# If default method couldn't get data, try to use data in call
 		# in the object.
@@ -83,7 +83,7 @@ model.interface.gbm$methods(
 #	モデルの種類を返す。
 #------------------------------------------------------------------------------
 model.interface.gbm$methods(
-	get.model.type = function(x, envir = parent.frame(), package = "", ...) {
+	get.model.type = function(x, envir, package = "", ...) {
 		"
 		return a character vector specifying model type
 		(regression or classification).

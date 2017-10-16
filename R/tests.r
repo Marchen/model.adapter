@@ -200,7 +200,7 @@ ma.test <- setRefClass(
 #------------------------------------------------------------------------------
 ma.test$methods(
 	initialize = function(
-		call, function.name, package = package.name(function.name),
+		call, function.name, package = package.name(function.name, envir),
 		expected.for.call = expected(),
 		expected.for.object = expected.for.call, predict.args = list(),
 		envir = parent.frame(4L)
@@ -622,7 +622,8 @@ ma.test$methods(
 #------------------------------------------------------------------------------
 test.model.adapter <- function(
 	function.name, data, test.data, object.has.call = TRUE,
-	object.has.data = TRUE, package = package.name(function.name), ...
+	object.has.data = TRUE,
+	package = package.name(function.name, parent.frame()), ...
 ) {
 	# Load package.
 	suppressPackageStartupMessages(require(package, character.only = TRUE))
