@@ -108,12 +108,12 @@ is.generic <- function(fun.name, package = "") {
 #------------------------------------------------------------------------------
 match.generic.call <- function(call, envir, package = "") {
 	# Match function without considering generic function.
-	# 総省関数を無視して関数をマッチングする。
+	# 総称関数を無視して関数をマッチングする。
 	fun.name <- get.function(call, "character", envir)
 	fun <- match.fun(fun.name)
 	matched.call <- match.call(fun, call)
 	# Non-generic functions.
-	# 総省関数でなければ、そのまま値を返す。
+	# 総称関数でなければ、そのまま値を返す。
 	if (!is.generic(fun.name, package)) {
 		return(matched.call)
 	}
