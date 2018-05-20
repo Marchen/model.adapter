@@ -320,66 +320,6 @@ get.function <- function(
 
 
 #------------------------------------------------------------------------------
-#	モデル関数のcall以外を評価する。
-#
-#	Args:
-#		call:
-#			substituteをかけたモデル関数、モデルオブジェクト、
-#			モデル呼び出しのcall。
-#		env:
-#			callを評価する環境。
-#	Value:
-#		モデルオブジェクトもしくはモデル関数の呼び出しを表すcall。
-#------------------------------------------------------------------------------
-#'	(Internal) Keep call of model functions.
-#'
-#'	To keep call for model functions but not to keep call for subsetting of
-#'	list, array, etc., this function evaluate original 'x' parameter if it
-#'	doesn't have function call for models.
-#'
-#'	@param call a call object of substituted original 'x' parameter.
-#'	@param env  an environment in which call is evaluated.
-#'
-#'	@return
-#'		If original 'x' parameter is call, original call in 'x'.
-#'		If original 'x' parameter contains call for a model function,
-#'		call for the model function.
-#'		If original 'x' parameter is a model object, the model object.
-#'
-#'	@examples
-#'		x <- substitute(glm(Sepal.Length ~ ., data = iris))
-#'		make.call.or.object(x)
-#------------------------------------------------------------------------------
-make.call.or.object <- function(call, env) {
-	if (is.call(call)) {
-		# For the case if original object is not call but having function call.
-		# 元のオブジェクトがcallではないが関数呼び出しを含むとき。
-		fun <- as.character(call)[1]
-		if (fun %in% c("$", "@", "[[", "[")) {
-			# If the function call is above operators, return original object.
-			# 関数呼び出しが上の演算子のとき、元のオブジェクトを返す。
-			return(eval(call, env))
-		} else {
-			# If the function call is not the operators return substituted call.
-			# 関数呼び出しが演算子ではないときsubstituteした関数呼び出しを返す。
-			return(call)
-		}
-	} else {
-		evaluated.call <- eval(call, env)
-		if (is.call(evaluated.call)) {
-			# If original object is call, return original object.
-			# 元のオブジェクトがcallだったら元のオブジェクトを返す。
-			return(evaluated.call)
-		} else {
-			# If original parameter is object, return original object.
-			# 元のオブジェクトがモデルオブジェクトだったら元のオブジェクトを返す。
-			return(evaluated.call)
-		}
-	}
-}
-
-
-#------------------------------------------------------------------------------
 #	formulaから説明変数名（ランダム変数を含まない）を取得する。
 #
 #	Args:
