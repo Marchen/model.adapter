@@ -58,7 +58,9 @@ document()
 #	Build package
 #------------------------------------------------------------------------------
 # Build source package
-build(path = "../repos/src/contrib")
+repo.path = "../repos/src/contrib"
+dir.create(repo.path, recursive = TRUE)
+build(path = repo.path)
 
 # Build binary package
 if (version$os == "mingw32") {
