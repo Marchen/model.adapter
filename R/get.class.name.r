@@ -10,6 +10,9 @@
 #------------------------------------------------------------------------------
 #'	(Internal) Find class name of a model object from function name
 #'
+#'	If specified \code{function.name} is not supported, this function assumes
+#'	that class name is same as the \code{function.name}.
+#'
 #'	@param function.name a character literal of function name
 #'
 #'	@return a character literal of class name
