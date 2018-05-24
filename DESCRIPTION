@@ -14,11 +14,13 @@ Depends:
     R (>= 3.0.0),
     base,
     stats,
-    methods
+    methods,
+    R6
 Imports:
     base,
     stats,
-    methods
+    methods,
+    R6
 Suggests:
     randomForest,
     party,
