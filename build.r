@@ -6,16 +6,16 @@ require(devtools)
 #	Change working directory to package directory
 #------------------------------------------------------------------------------
 get.this.file.dir <- function() {
-	cmdArgs <- commandArgs(trailingOnly = FALSE)
-	needle <- "--file="
-	match <- grep(needle, cmdArgs)
-	if (length(match) > 0) {
+	args <- commandArgs(trailingOnly = FALSE)
+	matched <- grep("--file=", args)
+	if (length(matched) > 0) {
 		# Rscript
-		return(dirname(sub(needle, "", cmdArgs[match])))
+		path <- sub("--file=", "", cmdArgs[matched]))
 	} else {
-		# 'source'd via R console
-		return(dirname(normalizePath(sys.frames()[[1]]$ofile)))
+		# source()
+		path <- dirname(normalizePath(sys.frames("ofile")))
 	}
+	return(dirname(path))
 }
 
 old.wd <- setwd(get.this.file.dir())
