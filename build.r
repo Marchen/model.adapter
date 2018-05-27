@@ -3,7 +3,7 @@ require(devtools)
 
 
 #------------------------------------------------------------------------------
-#	Change working directory to package directory
+#	Change working directory to package directory.
 #------------------------------------------------------------------------------
 get.this.file.dir <- function() {
 	args <- commandArgs(trailingOnly = FALSE)
@@ -42,14 +42,14 @@ document()
 
 
 #------------------------------------------------------------------------------
-#	Build package
+#	Build package.
 #------------------------------------------------------------------------------
-# Build source package
+# Build source package.
 repo.path = "../repos/src/contrib"
 dir.create(repo.path, recursive = TRUE)
 build(path = repo.path)
 
-# Build windows binary package
+# Build windows binary package.
 if (version$os == "mingw32") {
 	bin.path <- "../repos/bin/windows/contrib/%s"
 	bin.path <- normalizePath(sprintf(bin.path, r.ver))
@@ -61,7 +61,7 @@ if (version$os == "mingw32") {
 
 
 #------------------------------------------------------------------------------
-#	Deploy
+#	Deploy.
 #------------------------------------------------------------------------------
 path.repos <- file.path(get.this.file.dir(), "../repos/")
 
