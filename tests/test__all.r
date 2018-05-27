@@ -1,6 +1,7 @@
 #------------------------------------------------------------------------------
 #	Run all tests of functions.
 #------------------------------------------------------------------------------
+library(testthat)
 
 get.this.file.dir <- function() {
 	cmdArgs <- commandArgs(trailingOnly = FALSE)
@@ -16,6 +17,8 @@ get.this.file.dir <- function() {
 }
 
 base.path <- get.this.file.dir()
+
+source(file.path(base.path, "tests.r"), encoding = "UTF-8")
 
 source(file.path(base.path, "test_function__cforest.r"), encoding = "UTF-8")
 source(file.path(base.path, "test_function__ctree.r"), encoding = "UTF-8")
