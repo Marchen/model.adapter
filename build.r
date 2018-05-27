@@ -10,7 +10,7 @@ get.this.file.dir <- function() {
 	matched <- grep("--file=", args)
 	if (length(matched) > 0) {
 		# Rscript
-		path <- sub("--file=", "", args[matched]))
+		path <- sub("--file=", "", args[matched])
 	} else {
 		# source()
 		path <- dirname(normalizePath(sys.frames("ofile")))
