@@ -1,7 +1,7 @@
 #==============================================================================
 #	Test for gamm in mgcv package.
 #==============================================================================
-test <- glm.type.test.runnner(
+test <- glm.type.test.runner$new(
 	"gamm",
 	families = c(
 		"gaussian", "Gamma", "inverse.gaussian", "poisson", "binomial"

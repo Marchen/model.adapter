@@ -1,7 +1,6 @@
 #------------------------------------------------------------------------------
 #	Run all tests of functions.
 #------------------------------------------------------------------------------
-library(testthat)
 
 get.this.file.dir <- function() {
 	cmdArgs <- commandArgs(trailingOnly = FALSE)
