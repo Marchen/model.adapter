@@ -61,5 +61,4 @@ Collate:
     'model.interface.tree.r'
     'package.name.r'
     'predict.types.r'
-    'tests.r'
     'utils.r'

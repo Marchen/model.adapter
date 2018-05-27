@@ -177,6 +177,7 @@ expected <- function(
 #'	test.glm$run.all()
 #'
 #'	@export
+#'	@include model.adapter.r
 #------------------------------------------------------------------------------
 ma.test <- setRefClass(
 	"ma.test",
@@ -200,7 +201,8 @@ ma.test <- setRefClass(
 #------------------------------------------------------------------------------
 ma.test$methods(
 	initialize = function(
-		call, function.name, package = package.name(function.name, envir),
+		call, function.name,
+		package = model.adapter:::package.name(function.name, envir),
 		expected.for.call = expected(),
 		expected.for.object = expected.for.call, predict.args = list(),
 		envir = parent.frame(4L)
@@ -477,7 +479,7 @@ ma.test$methods(
 				expect_is(pred$fit, "matrix")
 				expect_equal(mode(pred$fit), "numeric")
 				expect_equal(pred$type, "prob")
-				response <- adapter$y.vars()[[adapter$y.names()]]
+				response <- adapter$y.vars[[adapter$y.names()]]
 				response.levels <- levels(response)
 				if (is.null(response.levels)) {
 					response.levels <- as.character(unique(response))
@@ -511,11 +513,11 @@ ma.test$methods(
 				expect_equal(pred$type, "class")
 				expect_equal(ncol(pred$fit), 1)
 				response.levels <- levels(
-					adapter$y.vars()[[adapter$y.names()]]
+					adapter$y.vars[[adapter$y.names()]]
 				)
 				if (is.null(response.levels)) {
 					response.levels <- as.character(
-						unique(adapter$y.vars()[[adapter$y.names()]])
+						unique(adapter$y.vars[[adapter$y.names()]])
 					)
 				}
 				expect_equal(all(pred$fit %in% response.levels), TRUE)
@@ -623,7 +625,7 @@ ma.test$methods(
 test.model.adapter <- function(
 	function.name, data, test.data, object.has.call = TRUE,
 	object.has.data = TRUE,
-	package = package.name(function.name, parent.frame()), ...
+	package = model.adapter:::package.name(function.name, parent.frame()), ...
 ) {
 	# Load package.
 	suppressPackageStartupMessages(require(package, character.only = TRUE))
@@ -686,7 +688,7 @@ glm.type.test.runnner <- setRefClass(
 #------------------------------------------------------------------------------
 glm.type.test.runnner$methods(
 	initialize = function(
-		function.name, package = package.name(function.name),
+		function.name, package = model.adapter:::package.name(function.name),
 		families = NULL, object.has.call = TRUE
 	) {
 		"
