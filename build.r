@@ -6,16 +6,16 @@ require(devtools)
 #	Change working directory to package directory.
 #------------------------------------------------------------------------------
 get.this.file.dir <- function() {
-	args <- commandArgs(trailingOnly = FALSE)
-	matched <- grep("--file=", args)
-	if (length(matched) > 0) {
-		# Rscript
-		path <- sub("--file=", "", args[matched])
+	args <- commandArgs()
+	with.file <- grepl("--file=", args)
+	if (any(with.file)) {
+		# The script was executed from Rscript.
+		file.path <- sub("--file=", "", args[with.file])
 	} else {
-		# source()
-		path <- dirname(normalizePath(sys.frames("ofile")))
+		# The script was sourced from R.
+		file.path <- sys.frames()[[1]]$ofile
 	}
-	return(dirname(path))
+	return(dirname(normalizePath(file.path)))
 }
 
 old.wd <- setwd(get.this.file.dir())
@@ -46,7 +46,9 @@ document()
 #------------------------------------------------------------------------------
 # Build source package.
 repo.path = "../repos/src/contrib"
-dir.create(repo.path, recursive = TRUE)
+if (!file.exists(repo.path)) {
+	dir.create(repo.path, recursive = TRUE)
+}
 build(path = repo.path)
 
 # Build windows binary package.
