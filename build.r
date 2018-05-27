@@ -49,17 +49,15 @@ repo.path = "../repos/src/contrib"
 dir.create(repo.path, recursive = TRUE)
 build(path = repo.path)
 
-# Build binary package
+# Build windows binary package
 if (version$os == "mingw32") {
 	bin.path <- "../repos/bin/windows/contrib/%s"
-} else {
-	bin.path <- "../repos/bin/macosx/mavericks/contrib/%s"
+	bin.path <- normalizePath(sprintf(bin.path, r.ver))
+	if (!file.exists(bin.path)) {
+		dir.create(bin.path)
+	}
+	build(binary = TRUE, args = "--preclean", path = bin.path)
 }
-bin.path <- normalizePath(sprintf(bin.path, r.ver))
-if (!file.exists(bin.path)) {
-	dir.create(bin.path)
-}
-build(binary = TRUE, args = "--preclean", path = bin.path)
 
 
 #------------------------------------------------------------------------------
@@ -73,10 +71,6 @@ tools::write_PACKAGES(
 tools::write_PACKAGES(
 	file.path(path.repos, sprintf("bin/windows/contrib/%s/", r.ver)),
 	type = "win.binary"
-)
-tools::write_PACKAGES(
-	file.path(path.repos, sprintf("bin/macosx/mavericks/contrib/%s/", r.ver)),
-	type = "mac.binary"
 )
 
 
