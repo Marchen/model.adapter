@@ -26,7 +26,7 @@ result.stepAIC <- lapply(objects, MASS::stepAIC, trace = FALSE)
 
 # Test result of stepAIC does not produce errors.
 expect_silent(
-	null <- lapply(result.stepAIC, model.adapter)
+	null <- lapply(result.stepAIC, model.adapter$new)
 )
 
 # Remove objects.

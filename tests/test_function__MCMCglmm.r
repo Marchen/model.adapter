@@ -3,7 +3,7 @@
 #==============================================================================
 
 # Prepare data.
-iris2 <- glm.type.test.runnner("glmmML")$make.test.data.frame()
+iris2 <- make.test.data.frame()
 
 test.data <- list(
 	call = list(

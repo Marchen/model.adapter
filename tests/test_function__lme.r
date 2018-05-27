@@ -2,7 +2,7 @@
 #	Test for lme
 #==============================================================================
 
-test <- ma.test(
+test <- ma.test$new(
 	call = lme(Sepal.Length ~ ., random = ~1 | Species, data = iris), "lme",
 	expected.for.call = expected(
 		call = lme(Sepal.Length ~ ., random = ~1 | Species, data = iris),

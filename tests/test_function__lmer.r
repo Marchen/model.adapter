@@ -2,7 +2,7 @@
 #	Test for lmer
 #==============================================================================
 
-test <- ma.test(
+test <- ma.test$new(
 	call = lmer(Sepal.Length ~ . + (1 | Species), data = iris), "lmer",
 	expected.for.call = expected(
 		call = lmer(Sepal.Length ~ . + (1 | Species), data = iris),

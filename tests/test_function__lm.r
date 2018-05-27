@@ -2,7 +2,7 @@
 #	Test for lm
 #==============================================================================
 
-test <- ma.test(
+test <- ma.test$new(
 	call = lm(Sepal.Length ~ ., data = iris), "lm",
 	expected.for.call = expected(
 		call = lm(Sepal.Length ~ ., data = iris),

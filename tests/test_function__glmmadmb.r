@@ -2,7 +2,7 @@
 #	Test for randomForest
 #==============================================================================
 
-iris2 <- glm.type.test.runnner("glmmadmb")$make.test.data.frame()
+iris2 <- make.test.data.frame()
 
 test.data <- list(
 	call = list(
