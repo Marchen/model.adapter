@@ -38,9 +38,8 @@ package.name <- function(x, envir){
 #-------------------------------------------------------------------------------
 package.name.default <- function(x, envir){
 	# gamはglmやlmを引き継いでるので、先に評価
-	if (is(x, "gam")){
-		return(ifelse(is.null(x$mgcv.conv), "gam", "mgcv"))
-	}
+	if (is(x, "Gam")) return("gam")
+	if (is(x, "gam")) return("mgdv")
 	if (is(x, "lm")) return("stats")
 	if (is(x, "lme")) return("nlme")
 	if (is(x, "lmerMod")) return("lme4")
