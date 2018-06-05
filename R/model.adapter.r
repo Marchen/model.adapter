@@ -190,9 +190,6 @@ model.adapter$set(
 	function(
 		x, envir = parent.frame(2L), data = NULL, package.name = NULL
 	) {
-#		x <- substitute(x)
-#		private$src <- make.call.or.object(x, envir)
-#		private$src <- prepare.seed(x, envir)
 		private$src <- x
 		private$envir <- envir
 		private$user.data <- data
