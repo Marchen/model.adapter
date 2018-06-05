@@ -14,24 +14,36 @@
 #'	@export model.interface.gam
 #'	@exportClass model.interface.gam
 #------------------------------------------------------------------------------
+
+# gam in mgcv package.
 model.interface.gam <- setRefClass(
 	"model.interface.gam", contains = "model.interface"
 )
+
+# gam in gam package.
+model.interface.Gam <- setRefClass(
+	"model.interface.Gam", contains = "model.interface"
+)
+
 
 
 #------------------------------------------------------------------------------
 #	formulaの.を展開する。
 #------------------------------------------------------------------------------
+
+# mgcv
 model.interface.gam$methods(
 	expand.formula = function(f, d, specials = NULL, package = "mgcv") {
-		# change specials depending on package name (mgcv::gam or gam:gam)
-		# パッケージに応じてで特殊文字の種類を変える。
-		if (package == "mgcv") {
-			return(callSuper(f, d, specials = c("s", "te", "ti", "t2")))
-		} else {
-			require(gam)
-			return(callSuper(f, d, specials = gam::gam.slist))
-		}
+		return(callSuper(f, d, specials = c("s", "te", "ti", "t2")))
+	}
+)
+
+# gam
+model.interface.Gam$methods(
+	expand.formula = function(f, d, specials = NULL, package = "mgcv") {
+		require(gam)
+		# Version > 1.15
+		return(callSuper(f, d, specials = gam.smooth.list$slist))
 	}
 )
 
@@ -39,7 +51,16 @@ model.interface.gam$methods(
 #------------------------------------------------------------------------------
 #	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
+
+# mgcv
 model.interface.gam$methods(
+	predict.types = function() {
+		return(make.predict.types(prob = "response", class = "response"))
+	}
+)
+
+# gam
+model.interface.Gam$methods(
 	predict.types = function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
