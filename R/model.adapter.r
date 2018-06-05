@@ -178,9 +178,6 @@ model.adapter <- R6::R6Class(
 		interface = NULL,
 		# The object brought by evaluating the call.
 		object.cache = NULL
-	),
-	public = list(
-		get = function(x) private[[x]]
 	)
 )
 
