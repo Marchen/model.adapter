@@ -11,7 +11,8 @@ test.data <- list(
 		),
 		substitute(
 			cforest(
-				Species ~ ., data = iris, controls = cforest_control(ntree = 10)
+				Species ~ ., data = iris,
+				controls = cforest_control(ntree = 10)
 			)
 		)
 	),
