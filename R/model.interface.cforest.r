@@ -35,7 +35,7 @@ model.interface.RandomForest$methods(
 #	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
-	get.formula = function(x, envir) {
+	get.formula = function(x, envir, package = "") {
 		if (is.object(x)) {
 			# Manually construct formula.
 			y <- as.character(x@data@formula$response[2])

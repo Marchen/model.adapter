@@ -297,7 +297,9 @@ model.adapter$set(
 model.adapter$set(
 	"active", "formula",
 	function() {
-		formula <- private$interface$get.formula(private$src, private$envir)
+		formula <- private$interface$get.formula(
+			private$src, private$envir, self$package.name
+		)
 		formula <- private$interface$expand.formula(formula, self$data)
 		return(formula)
 	}

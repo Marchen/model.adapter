@@ -57,10 +57,10 @@ model.interface.ranger$methods(
 #	formulaを取得する。
 #------------------------------------------------------------------------------
 model.interface.ranger$methods(
-	get.formula = function(x, envir) {
-		f <- callSuper(x, envir)
+	get.formula = function(x, envir, package = "") {
+		f <- callSuper(x, envir, package)
 		if (is.null(f)) {
-			call <- match.generic.call(x$call, envir)
+			call <- match.generic.call(x$call, envir, package)
 			f <- formula(call$formula)
 		}
 		return(f)

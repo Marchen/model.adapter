@@ -36,14 +36,14 @@ model.interface.BinaryTree$methods(
 #	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
-	get.formula = function(x, envir) {
+	get.formula = function(x, envir, package = "") {
 		if (is.call(x)) {
 			x <- match.call(ctree, x)
 			return(eval(x$formula, envir))
 		} else {
 			# Shared method with cforest / cforestと同じ手法。
 			interface <- model.interface.RandomForest(x)
-			return(interface$get.formula(x, envir))
+			return(interface$get.formula(x, envir, package))
 		}
 	}
 )

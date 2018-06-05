@@ -37,9 +37,9 @@ model.interface.MCMCglmm$methods(
 #	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
-	get.formula = function(x, envir) {
+	get.formula = function(x, envir, package = "") {
 		if (is.call(x)) {
-			return(callSuper(x, envir))
+			return(callSuper(x, envir, package))
 		} else {
 			return(x$Fixed$formula)
 		}
