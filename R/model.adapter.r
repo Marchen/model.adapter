@@ -424,7 +424,13 @@ model.adapter$set(
 model.adapter$set(
 	"public", "y.names",
 	function() {
-		as.character(self$formula[2])
+		# To handle errors produced by functions like gamm, use "try".
+		frame <- try(model.frame(self$formula, self$data), silent = TRUE)
+		if (class(frame) != "try-error" & is.matrix(frame)) {
+			return(colnames(model.response(frame)))
+		} else {
+			as.character(self$formula[2])
+		}
 	}
 )
 
