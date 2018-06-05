@@ -58,8 +58,9 @@
 #'		a read-only character spcifying package name of the model.
 #'
 #'	@field model.type
-#'		a charactere representing model type. The possible values are
+#'		a character representing model type. The possible values are
 #'		"regression" and "classification".
+#'
 #'
 #'	@section Methods:
 #'
