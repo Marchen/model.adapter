@@ -279,14 +279,6 @@ model.adapter$set(
 		d <- private$interface$get.data(
 			private$src, envir = private$envir, self$package.name
 		)
-		if (is.null(d)) {
-			warning(
-				"Couldn't retrieve data from the call/object.
-				This may cause errors.
-				To use full functionality of the class, please specify 'data'
-				argument to supply data."
-			)
-		}
 		return(d)
 	}
 )
