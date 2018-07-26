@@ -203,7 +203,7 @@ model.adapter$set(
 #	Initialize model.interface in interface field.
 #
 #	If the private$src (i.e., the x argument of model.adapter$new()) is an
-#	object containing result of a modeling function, inheritance of the 
+#	object containing result of a modeling function, inheritance of the
 #	model.interface class is determined by usual S3 polymorphism.
 #	On the other hand, if private$src is a call for a modeling function,
 #	inheritance of the mmodel.interface class is determined by the name of
