@@ -413,10 +413,17 @@ model.adapter$set(
 		# To handle errors produced by functions like gamm, use "try".
 		frame <- try(model.frame(self$formula, self$data), silent = TRUE)
 		if (class(frame) != "try-error" & is.matrix(frame)) {
-			return(colnames(model.response(frame)))
+			y.names <- colnames(model.response(frame))
 		} else {
-			as.character(self$formula[2])
+			y.names <- as.character(self$formula[2])
 		}
+		# Handle multiresponse models (i.e., model with cbind in response).
+		regexp <- "cbind\\((.*)\\)"
+		if (grepl(regexp, y.names) ) {
+			y.names <- strsplit(gsub(regexp, "\\1", y.names), ",")[[1]]
+			y.names <- gsub(" |\t", "", y.names)
+		}
+		return(y.names)
 	}
 )
 
