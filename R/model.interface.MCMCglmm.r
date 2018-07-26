@@ -27,7 +27,7 @@ model.interface.MCMCglmm$methods(
 		if (is.call(x)) {
 			callSuper(x, envir, package, ...)
 		} else {
-			return(data.frame())
+			return(NULL)
 		}
 	}
 )

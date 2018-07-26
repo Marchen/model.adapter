@@ -142,8 +142,7 @@ model.interface.default$methods(
 	get.data = function(x, envir, package = "", ...) {
 		"
 		Get a data.frame containing the data used for modeling.
-		If data is not available this method returns empty data.frame made by
-		data.frame().
+		If data is not available this method returns NULL.
 		\\describe{
 			\\item{\\code{x}}{
 				a model object/call from which data is extracted.
