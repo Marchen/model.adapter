@@ -234,20 +234,14 @@ model.adapter$set(
 model.adapter$set(
 	"active", "call",
 	function() {
-		call <- NULL
 		if (is.call(private$src)) {
-			call <- match.generic.call(
-				private$src, private$envir, self$package.name
-			)
+			call <-private$src
+		} else if (!is.null(private$interface$get.call(private$src))) {
+			call <- private$interface$get.call(private$src)
 		} else {
-			if (!is.null(private$interface$get.call(private$src))) {
-				call <- match.generic.call(
-					private$interface$get.call(private$src), private$envir,
-					self$package.name
-				)
-			}
+			return(NULL)
 		}
-		return(call)
+		return(match.generic.call(call, private$envir, self$package.name))
 	}
 )
 
