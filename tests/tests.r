@@ -214,8 +214,6 @@ ma.test$set(
 		envir = parent.frame(2L), args.for.call = list(),
 		args.for.object = list()
 	) {
-		# Set context.
-#		message <- "Initializing test for %s in %s...\n"
 		# Load package.
 		private$package <- package
 		suppressPackageStartupMessages(
