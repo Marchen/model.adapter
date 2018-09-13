@@ -191,13 +191,47 @@ model.adapter$set(
 		x, envir = parent.frame(2L), data = NULL, package.name = NULL
 	) {
 		private$src <- x
+		# Store envir.
+		if (!is(envir, "environment")) {
+			stop(private$message.for.check.argument(envir, "environment"))
+		}
 		private$envir <- envir
+		# Store data.
+		if (!(is(data, "data.frame") | is.null(data))) {
+			stop(private$message.for.check.argument(data, "data.frame"))
+		}
 		private$user.data <- data
+		# Store package name.
+		if (!(is(package.name, "character") | is.null(package.name))) {
+			stop(private$message.for.check.argument(package.name, "character"))
+		}
 		private$user.package.name <- package.name
 		private$init.interface()
 	}
 )
 
+
+#------------------------------------------------------------------------------
+#	Create error message for parameter checking.
+#
+#	Args:
+#		arg (any):
+#			argument to check.
+#		expected.class (character):
+#			expected class for the argument.
+#------------------------------------------------------------------------------
+model.adapter$set(
+	"private", "message.for.check.argument",
+	function(arg, expected.class) {
+		arg.name <- as.character(deparse(substitute(arg)))
+		message.template <- "'%s' should be a %s. '%s' was specified."
+		message <- sprintf(
+			sprintf(message.template, arg.name, expected.class, "%s"),
+			class(arg)
+		)
+		return(message)
+	}
+)
 
 #------------------------------------------------------------------------------
 #	Initialize model.interface in interface field.
