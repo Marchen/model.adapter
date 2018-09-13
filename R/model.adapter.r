@@ -159,6 +159,13 @@
 #'			}
 #'		}
 #'
+#'	@section Details
+#'
+#'		When calling \emph{model.adapter$new} using do.call, please specify
+#'		\emph{quote = TRUE} when using \emph{model.adapter} with call.
+#'		Without it, a call of function in \emph{x} is evaluated and unintended
+#'		result may be returned.
+#'
 #'	@export model.adapter
 #'	@name model.adapter
 #------------------------------------------------------------------------------
