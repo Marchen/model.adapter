@@ -197,6 +197,12 @@ ma.test <- R6::R6Class(
 #			a call for a function to test.
 #		function.name (character):
 #			name of the function to test.
+#
+#		args.for.call (list):
+#			a list of parameters passed to model.adapter from the call.
+#
+#		args.for.object (list):
+#			a list of parameters passed to model.adapter from the object.
 #------------------------------------------------------------------------------
 ma.test$set(
 	"public", "initialize",
@@ -205,7 +211,8 @@ ma.test$set(
 		package = model.adapter:::package.name.character(function.name, envir),
 		expected.for.call = expected(),
 		expected.for.object = expected.for.call, predict.args = list(),
-		envir = parent.frame(2L)
+		envir = parent.frame(2L), args.for.call = list(),
+		args.for.object = list()
 	) {
 		# Set context.
 #		message <- "Initializing test for %s in %s...\n"
@@ -223,14 +230,48 @@ ma.test$set(
 		private$envir <- envir
 		private$object <- eval(call, envir)
 		private$predict.args <- predict.args
-		private$adapter.call <- model.adapter$new(
-			call, package.name = package, envir = envir
+		# Create model.adapter.
+		private$adapter.call <- private$create.model.adapter(
+			args.for.call, call, package, envir
 		)
-		private$adapter.object <- model.adapter$new(
-			private$object, package.name = package, envir = envir
+		private$adapter.object <- private$create.model.adapter(
+			args.for.object, private$object, package, envir
 		)
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	Helper function to create model.adapter.
+#
+#	Args:
+#		arg.list (list):
+#			a list of arguments for model.adapter.
+#			i.e., args.for.call or args.for.model.
+#
+#		x (call or object):
+#			seed of model.adapter.
+#
+#		package.name (character):
+#			package name of the function.
+#
+#		envir (environment):
+#			an environment where the call is evaluated.
+#
+#	Returns:
+#		model.adapter:
+#			model.adapter object create from the supplied settings.
+#------------------------------------------------------------------------------
+ma.test$set(
+	"private", "create.model.adapter",
+	function(arg.list, x, package.name, envir) {
+		arg.list$x <- x
+		arg.list$package.name <- package.name
+		arg.list$envir <- envir
+		return(do.call(model.adapter$new, arg.list, quote = TRUE))
+	}
+)
+
 
 #------------------------------------------------------------------------------
 #	Test initialization process can produce a correct object of
