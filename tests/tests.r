@@ -193,10 +193,30 @@ ma.test <- R6::R6Class(
 #	Initialize test runner object.
 #
 #	Args:
+#
 #		call (call):
 #			a call for a function to test.
+#
 #		function.name (character):
 #			name of the function to test.
+#
+#		package (character):
+#			the name of the package containing the function.
+#			This is passed to model.adapter.
+#
+#		expected.for.call (list):
+#			expected values of the fields of a model.adapter object created
+#			from a function call.
+#			For the list of the field, see the comment on expected() function.
+#
+#		expected.for.object (list):
+#			expected values of the fields of a model.adapter object created
+#			from a object of statistical/machine learning model.
+#			For the list of the field, see the comment on expected() function.
+#
+#		envir (environment):
+#			an environment where the call is evaluated.
+#			Also passed to model.adapter.
 #
 #		args.for.call (list):
 #			a list of parameters passed to model.adapter from the call.
@@ -447,7 +467,18 @@ ma.test$set(
 )
 
 #------------------------------------------------------------------------------
-#	Test function for prediction of regression result.
+#	Helper function testing prediction of regression model.
+#
+#	Args:
+#
+#		adapter (model.adapter):
+#			an object of model.adapter to be tested.
+#
+#		message (character):
+#			error message used for test_that.
+#
+#		...:
+#			other parameters passed to predict method of the model.adapter.
 #------------------------------------------------------------------------------
 ma.test$set(
 	"private", "test.predict.regression",
@@ -476,7 +507,18 @@ ma.test$set(
 
 
 #------------------------------------------------------------------------------
-#	Test for prediction of probability of classification model.
+#	Helper function testing prediction of probability of classification model.
+#
+#	Args:
+#
+#		adapter (model.adapter):
+#			an object of model.adapter to be tested.
+#
+#		message (character):
+#			error message used for test_that.
+#
+#		...:
+#			other parameters passed to predict method of the model.adapter.
 #------------------------------------------------------------------------------
 ma.test$set(
 	"private", "test.predict.classification.prob",
@@ -515,7 +557,18 @@ ma.test$set(
 )
 
 #------------------------------------------------------------------------------
-#	Test for prediction of class from classification model.
+#	Helper function testing prediction of class of classification model.
+#
+#	Args:
+#
+#		adapter (model.adapter):
+#			an object of model.adapter to be tested.
+#
+#		message (character):
+#			error message used for test_that.
+#
+#		...:
+#			other parameters passed to predict method of the model.adapter.
 #------------------------------------------------------------------------------
 ma.test$set(
 	"private", "test.predict.classification.class",
