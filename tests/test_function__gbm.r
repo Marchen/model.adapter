@@ -7,7 +7,7 @@ test.data <- list(
 			gbm(Sepal.Length ~ ., data = iris, distribution = "gaussian")
 		),
 		substitute(
-			gbm(Species ~ ., data = iris)
+			gbm(Species ~ ., data = iris, distribution = "multinomial")
 		)
 	),
 	formula = list(

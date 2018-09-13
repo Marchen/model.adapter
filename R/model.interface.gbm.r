@@ -91,7 +91,7 @@ model.interface.gbm$methods(
 		if (is.call(x)) {
 			distribution <- x$distribution
 			if (is.null(distribution)) {
-				y.name <- as.character(.self$get.formula(x, envir)[2])
+				y.name <- as.character(.self$get.formula(x, envir, package)[2])
 				data <- .self$get.data(x, envir, package)
 				distribution <- gbm::guessDist(data[[y.name]])$name
 			}

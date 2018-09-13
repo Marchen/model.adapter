@@ -58,8 +58,9 @@
 #'		a read-only character spcifying package name of the model.
 #'
 #'	@field model.type
-#'		a charactere representing model type. The possible values are
+#'		a character representing model type. The possible values are
 #'		"regression" and "classification".
+#'
 #'
 #'	@section Methods:
 #'
@@ -158,6 +159,13 @@
 #'			}
 #'		}
 #'
+#'	@section Details
+#'
+#'		When calling \emph{model.adapter$new} using do.call, please specify
+#'		\emph{quote = TRUE} when using \emph{model.adapter} with call.
+#'		Without it, a call of function in \emph{x} is evaluated and unintended
+#'		result may be returned.
+#'
 #'	@export model.adapter
 #'	@name model.adapter
 #------------------------------------------------------------------------------
@@ -178,9 +186,6 @@ model.adapter <- R6::R6Class(
 		interface = NULL,
 		# The object brought by evaluating the call.
 		object.cache = NULL
-	),
-	public = list(
-		get = function(x) private[[x]]
 	)
 )
 
@@ -192,12 +197,21 @@ model.adapter$set(
 	function(
 		x, envir = parent.frame(2L), data = NULL, package.name = NULL
 	) {
-#		x <- substitute(x)
-#		private$src <- make.call.or.object(x, envir)
-#		private$src <- prepare.seed(x, envir)
 		private$src <- x
+		# Store envir.
+		if (!is(envir, "environment")) {
+			stop(private$message.for.check.argument(envir, "environment"))
+		}
 		private$envir <- envir
+		# Store data.
+		if (!(is(data, "data.frame") | is.null(data))) {
+			stop(private$message.for.check.argument(data, "data.frame"))
+		}
 		private$user.data <- data
+		# Store package name.
+		if (!(is(package.name, "character") | is.null(package.name))) {
+			stop(private$message.for.check.argument(package.name, "character"))
+		}
 		private$user.package.name <- package.name
 		private$init.interface()
 	}
@@ -205,10 +219,32 @@ model.adapter$set(
 
 
 #------------------------------------------------------------------------------
+#	Create error message for parameter checking.
+#
+#	Args:
+#		arg (any):
+#			argument to check.
+#		expected.class (character):
+#			expected class for the argument.
+#------------------------------------------------------------------------------
+model.adapter$set(
+	"private", "message.for.check.argument",
+	function(arg, expected.class) {
+		arg.name <- as.character(deparse(substitute(arg)))
+		message.template <- "'%s' should be a %s. '%s' was specified."
+		message <- sprintf(
+			sprintf(message.template, arg.name, expected.class, "%s"),
+			class(arg)
+		)
+		return(message)
+	}
+)
+
+#------------------------------------------------------------------------------
 #	Initialize model.interface in interface field.
 #
 #	If the private$src (i.e., the x argument of model.adapter$new()) is an
-#	object containing result of a modeling function, inheritance of the 
+#	object containing result of a modeling function, inheritance of the
 #	model.interface class is determined by usual S3 polymorphism.
 #	On the other hand, if private$src is a call for a modeling function,
 #	inheritance of the mmodel.interface class is determined by the name of
@@ -239,20 +275,14 @@ model.adapter$set(
 model.adapter$set(
 	"active", "call",
 	function() {
-		call <- NULL
 		if (is.call(private$src)) {
-			call <- match.generic.call(
-				private$src, private$envir, self$package.name
-			)
+			call <-private$src
+		} else if (!is.null(private$interface$get.call(private$src))) {
+			call <- private$interface$get.call(private$src)
 		} else {
-			if (!is.null(private$interface$get.call(private$src))) {
-				call <- match.generic.call(
-					private$interface$get.call(private$src), private$envir,
-					self$package.name
-				)
-			}
+			return(NULL)
 		}
-		return(call)
+		return(match.generic.call(call, private$envir, self$package.name))
 	}
 )
 
@@ -284,14 +314,6 @@ model.adapter$set(
 		d <- private$interface$get.data(
 			private$src, envir = private$envir, self$package.name
 		)
-		if (is.null(d)) {
-			warning(
-				"Couldn't retrieve data from the call/object.
-				This may cause errors.
-				To use full functionality of the class, please specify 'data'
-				argument to supply data."
-			)
-		}
 		return(d)
 	}
 )
@@ -302,7 +324,9 @@ model.adapter$set(
 model.adapter$set(
 	"active", "formula",
 	function() {
-		formula <- private$interface$get.formula(private$src, private$envir)
+		formula <- private$interface$get.formula(
+			private$src, private$envir, self$package.name
+		)
 		formula <- private$interface$expand.formula(formula, self$data)
 		return(formula)
 	}
@@ -427,7 +451,20 @@ model.adapter$set(
 model.adapter$set(
 	"public", "y.names",
 	function() {
-		as.character(self$formula[2])
+		# To handle errors produced by functions like gamm, use "try".
+		frame <- try(model.frame(self$formula, self$data), silent = TRUE)
+		if (class(frame) != "try-error" & is.matrix(frame)) {
+			y.names <- colnames(model.response(frame))
+		} else {
+			y.names <- as.character(self$formula[2])
+		}
+		# Handle multiresponse models (i.e., model with cbind in response).
+		regexp <- "cbind\\((.*)\\)"
+		if (grepl(regexp, y.names) ) {
+			y.names <- strsplit(gsub(regexp, "\\1", y.names), ",")[[1]]
+			y.names <- gsub(" |\t", "", y.names)
+		}
+		return(y.names)
 	}
 )
 

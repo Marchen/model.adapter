@@ -142,8 +142,7 @@ model.interface.default$methods(
 	get.data = function(x, envir, package = "", ...) {
 		"
 		Get a data.frame containing the data used for modeling.
-		If data is not available this method returns empty data.frame made by
-		data.frame().
+		If data is not available this method returns NULL.
 		\\describe{
 			\\item{\\code{x}}{
 				a model object/call from which data is extracted.
@@ -178,7 +177,7 @@ model.interface.default$methods(
 #		envir: xに入ったcallを評価する環境。
 #------------------------------------------------------------------------------
 model.interface.default$methods(
-	get.formula = function(x, envir) {
+	get.formula = function(x, envir, package = "") {
 		"
 		Extract formula from model object/call.
 		If couldn't retrieve formula from \\code{x}, this method returns NULL.
@@ -189,6 +188,9 @@ model.interface.default$methods(
 			}
 			\\item{\\code{envir}}{
 				an environment in which call in x is evaluated.
+			}
+			\\item{\\code{package}}{
+				name of the package having the modeling function.
 			}
 		}
 		"
@@ -205,6 +207,7 @@ model.interface.default$methods(
 				}
 			}
 		} else {
+			x <- match.generic.call(x, envir, package)
 			if (!is.null(x$formula)) {
 				f <- eval(x$formula, envir)
 			} else {
@@ -427,7 +430,7 @@ model.interface.default$methods(
 		if (is.null(f)) {
 			d <- .self$get.data(x, envir, package, ...)
 			response <- model.response(
-				model.frame(.self$get.formula(x, envir), data = d)
+				model.frame(.self$get.formula(x, envir, package), data = d)
 			)
 			if (is(response, "factor")) {
 				return("classification")

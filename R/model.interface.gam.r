@@ -42,7 +42,8 @@ model.interface.gam$methods(
 model.interface.Gam$methods(
 	expand.formula = function(f, d, specials = NULL, package = "mgcv") {
 		require(gam)
-		return(callSuper(f, d, specials = gam::gam.slist))
+		# Version > 1.15
+		return(callSuper(f, d, specials = gam.smooth.list$slist))
 	}
 )
 

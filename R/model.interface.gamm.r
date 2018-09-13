@@ -50,8 +50,8 @@ model.interface.gamm$methods(
 #	モデルのformulaを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
-	get.formula = function(x, envir) {
-		f <- callSuper(x, envir)
+	get.formula = function(x, envir, package = "") {
+		f <- callSuper(x, envir, package)
 		if (is.null(f)) {
 			f <- x$gam$formula
 		}

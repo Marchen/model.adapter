@@ -3,44 +3,38 @@
 #==============================================================================
 
 # Prepare data.
-iris2 <- glm.type.test.runnner("glmmML")$make.test.data.frame()
+iris2 <- make.test.data.frame()
+
+
+#------------------------------------------------------------------------------
+#	Tests without specification of 'data' argument.
+#------------------------------------------------------------------------------
 
 test.data <- list(
 	call = list(
 		substitute(
 			MCMCglmm(
 				Sepal.Length ~ Petal.Length, data = iris2, family = "gaussian",
-				verbose = FALSE
+				verbose = FALSE, nitt = 1000, burnin = 100
 			)
 		),
 		substitute(
 			MCMCglmm(
 				n ~ Petal.Length, data = iris2, family = "poisson",
-				verbose = FALSE
+				verbose = FALSE, nitt = 1000, burnin = 100
 			)
 		),
 		substitute(
 			MCMCglmm(
 				cbind(bin1, bin2) ~ Petal.Length, data = iris2,
-				family = "multinomial2", verbose = FALSE
-			)
-		),
-		substitute(
-			MCMCglmm(
-				bin ~ Petal.Length, data = iris2, family = "categorical",
-				verbose = FALSE
-			)
-		),
-		substitute(
-			MCMCglmm(
-				bin ~ Petal.Length, data = iris2, family = "geometric",
-				verbose = FALSE
+				family = "multinomial2",
+		 		verbose = FALSE, nitt = 500, burnin = 100
 			)
 		),
 		substitute(
 			MCMCglmm(
 				bin ~ Petal.Length, data = iris2, family = "exponential",
-				verbose = FALSE
+				verbose = FALSE, nitt = 500, burnin = 100
 			)
 		)
 	),
@@ -49,27 +43,49 @@ test.data <- list(
 		n ~ Petal.Length,
 		cbind(bin1, bin2) ~ Petal.Length,
 		bin ~ Petal.Length,
-		bin ~ Petal.Length,
 		bin ~ Petal.Length
 	),
 	family = list(
-		"gaussian", "poisson", "multinomial", "multinomial", "geometric",
-		"exponential"
+		"gaussian", "poisson", "multinomial", "exponential"
 	),
 	model.type = list(
-		"regression", "regression", "classification", "classification",
-		"regression", "regression"
+		"regression", "regression", "classification", "regression"
 	),
 	link = list(
-		identity, log, binomial()$linkfun, binomial()$linkfun,
-		binomial()$linkfun, function(x) - log(x)
+		identity, log, binomial()$linkfun, function(x) - log(x)
 	),
 	linkinv = list(
-		identity, exp, binomial()$linkinv, binomial()$linkinv,
-		binomial()$linkinv, function(x) exp(-x)
+		identity, exp, binomial()$linkinv, function(x) exp(-x)
 	)
 )
 
 test.model.adapter("MCMCglmm", iris2, test.data, FALSE, FALSE)
+
+
+#------------------------------------------------------------------------------
+#	Tests with specification of 'data' argument.
+#------------------------------------------------------------------------------
+
+test.data <- list(
+	call = list(
+		substitute(
+			MCMCglmm(
+				cbind(bin1, bin2) ~ Petal.Length, data = iris2,
+				family = "multinomial2", verbose = FALSE,
+				nitt = 500, burnin = 100
+			)
+		)
+	),
+	formula = list(cbind(bin1, bin2) ~ Petal.Length),
+	family = list("multinomial"),
+	model.type = list("classification"),
+	link = list(binomial()$linkfun),
+	linkinv = list(binomial()$linkinv)
+)
+
+test.model.adapter(
+	"MCMCglmm", iris2, test.data, FALSE, TRUE,
+	args.for.object = list(data = iris2)
+)
 
 rm(test.data, iris2)

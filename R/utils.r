@@ -107,25 +107,45 @@ is.generic <- function(fun.name, package = "") {
 #'		match.generic.call(substitute(hist(1:10)))
 #------------------------------------------------------------------------------
 match.generic.call <- function(call, envir, package = "") {
+	# Non-generic functions.
+	# 総称関数でなければ、そのまま値を返す。
+	fun.name <- get.function(call, "character", envir)
+	if (!is.generic(fun.name, package)) {
+		fun <- match.fun(fun.name)
+		return(match.call(fun, call))
+	}
+	if (is.s4.generic(fun.name, package)) {
+		stop("Algorithm for S4 generic method is not implimented.")
+	}
+	return(match.generic.call.s3(call, envir))
+}
+
+
+#------------------------------------------------------------------------------
+#	match.call considering generic functions.
+#
+#	Args:
+#		matched.call (call):
+#			a call to be matched.
+#		envir (environment):
+#			the environment where calls are evaludated.
+#------------------------------------------------------------------------------
+match.generic.call.s3 <- function(call, envir) {
 	# Match function without considering generic function.
-	# 総称関数を無視して関数をマッチングする。
 	fun.name <- get.function(call, "character", envir)
 	fun <- match.fun(fun.name)
 	matched.call <- match.call(fun, call)
-	# Non-generic functions.
-	# 総称関数でなければ、そのまま値を返す。
-	if (!is.generic(fun.name, package)) {
-		return(matched.call)
-	}
-	if (is.s4.generic(fun.name, package)) {
-		stop("Algorithm for S4 generic method is notimplimented.")
-	}
-	# Find class of generic S3 function.
-	# S3総称関数の分岐に使われるクラスを取得。
+	# Find the class name of the argument used for the S3 generic dispatch.
 	generic.class.arg <- names(formals(fun))[1]
 	generic.classes <- class(eval(matched.call[[generic.class.arg]], envir))
+	# If the call does not have the named argument for S3 dispatch,
+	# use the first argument of the call.
+	if (length(generic.classes) == 1) {
+		if (generic.classes == "NULL") {
+			generic.classes <- class(eval(matched.call[[2]], envir))
+		}
+	}
 	# Find generic function for each class.
-	# 各クラスに対応した総省関数を探す。
 	for (i in generic.classes) {
 		fun <- getS3method(fun.name, i, TRUE)
 		if (!is.null(fun)) {
@@ -133,7 +153,6 @@ match.generic.call <- function(call, envir, package = "") {
 		}
 	}
 	# If generic function was not found, try default method.
-	# 総省関数が見つからなかったらdefault関数を試す。
 	try(return(match.call(getS3method(fun.name, "default"), call)))
 	stop(sprintf("Couldn't find matched generic function of %s.", fun.name))
 }
