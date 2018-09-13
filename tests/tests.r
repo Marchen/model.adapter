@@ -491,14 +491,24 @@ ma.test$set(
 				expect_is(pred$fit, "matrix")
 				expect_equal(mode(pred$fit), "numeric")
 				expect_equal(pred$type, "prob")
-				response <- adapter$y.vars[[adapter$y.names()]]
-				response.levels <- levels(response)
-				if (is.null(response.levels)) {
-					response.levels <- as.character(unique(response))
-					response.levels <- sort(response.levels)
+				# Check number of classes and column name.
+				y.names <- adapter$y.names()
+				if (length(y.names) == 1) {
+					response <- adapter$y.vars[[adapter$y.names()]]
+					response.levels <- levels(response)
+					if (is.null(response.levels)) {
+						response.levels <- as.character(unique(response))
+						response.levels <- sort(response.levels)
+					}
+					expect_equal(ncol(pred$fit), length(response.levels))
+					expect_equal(colnames(pred$fit), response.levels)
+				} else if (length(y.names) == 2) {
+					# Assume multi-response model such as logistic regression.
+					expect_equal(ncol(pred$fit), 2)
+					expect_equal(colnames(pred$fit), as.character(0:1))
+				} else {
+					stop("Unknown model type returned from predict method.")
 				}
-				expect_equal(ncol(pred$fit), length(response.levels))
-				expect_equal(colnames(pred$fit), response.levels)
 			}
 		)
 	}
@@ -521,15 +531,21 @@ ma.test$set(
 				expect_equal(mode(pred$fit), "character")
 				expect_equal(pred$type, "class")
 				expect_equal(ncol(pred$fit), 1)
-				response.levels <- levels(
-					adapter$y.vars[[adapter$y.names()]]
-				)
-				if (is.null(response.levels)) {
-					response.levels <- as.character(
-						unique(adapter$y.vars[[adapter$y.names()]])
-					)
+				y.names <- adapter$y.names()
+				if (length(y.names) == 1) {
+					y.vars <- adapter$y.vars[[y.names]]
+					response.levels <- levels(y.vars)
+					if (is.null(response.levels)) {
+						response.levels <- as.character(unique(y.vars))
+					}
+					expect_equal(all(pred$fit %in% response.levels), TRUE)
+				} else if (length(y.names) == 2) {
+					# Expect it is a classification model with binary response
+					# such as logistic regression with cbind in reseponse var.
+					expect_equal(all(pred$fit %in% 0:1), TRUE)
+				} else {
+					stop("Unknown model type returned from predict method.")
 				}
-				expect_equal(all(pred$fit %in% response.levels), TRUE)
 			}
 		)
 	}
