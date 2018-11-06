@@ -1,3 +1,8 @@
+2018-05-27: 0.1.0
+	- model.adapter class uses R6 instead of the reference class.
+	- Moved test scripts into tests folder.
+	- Removed old tests.
+	- y.names() method now can handle cbind in response variable.
 2017-10-01: 0.0.10
 	- model.adapter supports copy of functions.
 2017-10-01: 0.0.9

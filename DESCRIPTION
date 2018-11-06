@@ -1,6 +1,6 @@
 Package: model.adapter
-Version: 0.0.10
-Date: 2017-10-01
+Version: 0.1.0
+Date: 2018-05-27
 Title: model.adapter: a model abstraction layer for statistical/machine learning
     models.
 Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
@@ -31,7 +31,7 @@ Suggests:
     tree,
     rpart,
     mgcv,
-    gam,
+    gam (>= 1.15),
     ranger,
 	testthat
 RoxygenNote: 6.0.1
