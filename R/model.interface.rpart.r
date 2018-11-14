@@ -22,5 +22,3 @@ model.interface.rpart$methods(
 		return(make.predict.types(response = "vector", link = "matrix"))
 	}
 )
-
-

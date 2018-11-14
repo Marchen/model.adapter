@@ -33,6 +33,3 @@ model.interface.lm$methods(
 		return(types)
 	}
 )
-
-
-

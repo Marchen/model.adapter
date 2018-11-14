@@ -73,4 +73,3 @@ model.interface.glmmadmb$methods(
 		callSuper(object, newdata, type, ...)
 	}
 )
-

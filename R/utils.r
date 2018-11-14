@@ -333,4 +333,3 @@ x.names.from.formula <- function(
 	vars <- unique(subset(vars, !vars %in% c("", "1")))
 	return(vars)
 }
-

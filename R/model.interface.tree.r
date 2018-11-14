@@ -25,5 +25,3 @@ model.interface.tree$methods(
 		return(type)
 	}
 )
-
-

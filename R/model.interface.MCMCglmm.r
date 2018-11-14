@@ -167,7 +167,3 @@ check.supported.family <- function(family) {
 		stop(msg)
 	}
 }
-
-
-
-

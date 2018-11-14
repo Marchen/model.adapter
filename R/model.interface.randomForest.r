@@ -22,5 +22,3 @@ model.interface.randomForest$methods(
 		return(make.predict.types(link = "response"))
 	}
 )
-
-

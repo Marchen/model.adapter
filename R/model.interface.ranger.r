@@ -59,4 +59,3 @@ model.interface.ranger$methods(
 		return(f)
 	}
 )
-

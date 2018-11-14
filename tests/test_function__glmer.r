@@ -22,4 +22,3 @@ test$test.info$formulae <- list(
 
 test$run()
 rm(test)
-

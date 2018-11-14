@@ -26,4 +26,3 @@ get.class.name <- function(function.name, package.name){
 	}
 	return(class.name)
 }
-

@@ -36,4 +36,3 @@ model.interface.svm$methods(
 		return(pred)
 	}
 )
-

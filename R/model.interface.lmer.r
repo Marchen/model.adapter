@@ -39,5 +39,3 @@ model.interface.lmerMod$methods(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
-
-
