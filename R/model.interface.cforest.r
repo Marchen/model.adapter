@@ -5,7 +5,7 @@
 #'	\emph{party} package.
 #'	Note that because an object of RandomForest does not keep original call,
 #'	get.call() function always returns NULL. Also, when an instance of this
-#'	class is made from model object, 'call' field is always call("<undef>").
+#'	class is made from model object, 'call' field is always NULL.
 #'
 #'	Following methods are overriden.
 #
