@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for lme
+#'	(Internal) model.interface class for lme
 #'
 #'	This reference class contains methods for \code{\link[nlme]{lme}} in
 #'	\emph{nlme} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.lme
-#'	@exportClass model.interface.lme
 #------------------------------------------------------------------------------
 model.interface.lme <- setRefClass(
 	"model.interface.lme", contains = "model.interface"

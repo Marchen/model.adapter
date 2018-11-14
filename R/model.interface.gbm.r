@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for gbm
+#'	(Internal) model.interface class for gbm
 #'
 #'	This reference class contains methods for \code{\link[gbm]{gbm}} in
 #'	\emph{gbm} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.gbm
-#'	@exportClass model.interface.gbm
 #------------------------------------------------------------------------------
 model.interface.gbm <- setRefClass(
 	"model.interface.gbm", contains = "model.interface"

@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for gamm
+#'	(Internal) model.interface class for gamm
 #'
 #'	This reference class contains methods for \code{\link[mgcv]{gamm}} in
 #'	\emph{mgcv} package.
@@ -11,8 +11,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.gamm
-#'	@exportClass model.interface.gamm
 #------------------------------------------------------------------------------
 model.interface.gamm <- setRefClass(
 	"model.interface.gamm", contains = "model.interface"

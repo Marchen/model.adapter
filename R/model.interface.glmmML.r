@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for glmmML
+#'	(Internal) model.interface class for glmmML
 #'
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in
 #'	\emph{glmmML} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.glmmML
-#'	@exportClass model.interface.glmmML
 #------------------------------------------------------------------------------
 model.interface.glmmML <- setRefClass(
 	"model.interface.glmmML", contains = "model.interface"

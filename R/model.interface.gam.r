@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for gam
+#'	(Internal) model.interface class for gam in gam package
 #'
 #'	This reference class contains methods for \code{\link[mgcv]{gam}} in
 #'	\emph{mgcv} package and \code{\link[gam]{gam}} in \emph{gam} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.gam
-#'	@exportClass model.interface.gam
 #------------------------------------------------------------------------------
 
 # gam in mgcv package.

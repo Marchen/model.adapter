@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for randomForest
+#'	(Internal) model.interface class for randomForest
 #'
 #'	This reference class contains methods for
 #'	\code{\link[randomForest]{randomForest}} in \emph{randomForest} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.randomForest
-#'	@exportClass model.interface.randomForest
 #------------------------------------------------------------------------------
 model.interface.randomForest <- setRefClass(
 	"model.interface.randomForest", contains = "model.interface"

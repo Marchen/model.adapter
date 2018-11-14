@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for ctree
+#'	(Internal) model.interface class for ctree
 #'
 #'	This reference class contains methods for \code{\link[party]{ctree}} in
 #'	\emph{party} package.
@@ -11,8 +11,6 @@
 #
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.BinaryTree
-#'	@exportClass model.interface.BinaryTree
 #------------------------------------------------------------------------------
 model.interface.BinaryTree <- setRefClass(
 	"model.interface.BinaryTree", contains = "model.interface"

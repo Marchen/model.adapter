@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for ranger
+#'	(Internal) model.interface class for ranger
 #'
 #'	This reference class contains methods for \code{\link[ranger]{ranger}} in
 #'	\emph{ranger} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.ranger
-#'	@exportClass model.interface.ranger
 #------------------------------------------------------------------------------
 model.interface.ranger <- setRefClass(
 	"model.interface.ranger", contains = "model.interface"

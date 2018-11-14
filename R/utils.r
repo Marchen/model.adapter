@@ -279,7 +279,7 @@ get.function <- function(
 
 
 #------------------------------------------------------------------------------
-#'	Get names of explanatory variables (excluding random factor) from formula.
+#'	(Internal) Get names of explanatory variables (excluding random factor) from formula.
 #'
 #'	@param formula a formula object from which variable names are obtained.
 #'	@param data a data.frame used to expand . in the formula.
@@ -305,8 +305,6 @@ get.function <- function(
 #'		# Getting explanatory variables in their basic form.
 #'		f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width^2)
 #'		x.vars(f, data = iris, type = "base")
-#'
-#' @export
 #------------------------------------------------------------------------------
 x.names.from.formula <- function(
 	formula, data = NULL, specials = NULL, type = c("all", "base")

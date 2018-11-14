@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for MCMCglmm
+#'	(Internal) model.interface class for MCMCglmm
 #'
 #'	This reference class contains methods for \code{\link[MCMCglmm]{MCMCglmm}}
 #'	in \emph{MCMCglmm} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.MCMCglmm
-#'	@exportClass model.interface.MCMCglmm
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm <- setRefClass(
 	"model.interface.MCMCglmm", contains = "model.interface"

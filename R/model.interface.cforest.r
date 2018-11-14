@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for cforest
+#'	(Internal) model.interface class for cforest
 #'
 #'	This reference class contains methods for \code{\link[party]{cforest}} in
 #'	\emph{party} package.
@@ -11,8 +11,6 @@
 #
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.RandomForest
-#'	@exportClass model.interface.RandomForest
 #------------------------------------------------------------------------------
 model.interface.RandomForest <- setRefClass(
 	"model.interface.RandomForest", contains = "model.interface"

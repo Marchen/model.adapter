@@ -1,11 +1,11 @@
 #------------------------------------------------------------------------------
-#'	Initialize model.interface class.
+#'	(Internal) Initialize model.interface class.
 #'
 #'	This function makes an object of a derived class of \emph{model.interface}
 #'	class that abstracts differences in specifications of supported modeling
 #'	functions.
 #'
-#'	@param x = NULL
+#'	@param x
 #'		an object of supported models.
 #'		This is only used for dispatching S3 methods.
 #'
@@ -16,7 +16,6 @@
 #'		To be continued...
 #'
 #'	@family model.interface
-#'	@export
 #------------------------------------------------------------------------------
 model.interface <- function(x = NULL) {
 	UseMethod("model.interface")
@@ -24,7 +23,7 @@ model.interface <- function(x = NULL) {
 
 
 #------------------------------------------------------------------------------
-#'	An interface for model.adapter and statistical/machine learning models.
+#'	(Internal) An interface for model.adapter and statistical/machine learning models.
 #'
 #'	This class provides unified interface for calls/objects of
 #'	statistical/machine learning models.
@@ -37,7 +36,6 @@ model.interface <- function(x = NULL) {
 #'		four elements named "response", "link", "prob" and "class" and
 #'		each element represents compatible type of character for the model.
 #'
-#'	@export
 #------------------------------------------------------------------------------
 model.interface.default <- setRefClass(
 	"model.interface",

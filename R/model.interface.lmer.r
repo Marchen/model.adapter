@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for lmer
+#'	(Internal) model.interface class for lmer
 #'
 #'	This reference class contains methods for \code{\link[lme4]{lmer}} in
 #'	\emph{lme4} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.lmerMod
-#'	@exportClass model.interface.lmerMod
 #------------------------------------------------------------------------------
 model.interface.lmerMod <- setRefClass(
 	"model.interface.lmerMod", contains = "model.interface"

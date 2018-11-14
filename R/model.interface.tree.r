@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	model.interface class for tree
+#'	(Internal) model.interface class for tree
 #'
 #'	This reference class contains methods for \code{\link[tree]{tree}} in
 #'	\emph{tree} package.
@@ -8,8 +8,6 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.tree
-#'	@exportClass model.interface.tree
 #------------------------------------------------------------------------------
 model.interface.tree <- setRefClass(
 	"model.interface.tree", contains = "model.interface"
