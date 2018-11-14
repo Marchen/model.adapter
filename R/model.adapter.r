@@ -419,19 +419,6 @@ model.adapter$set(
 
 
 #------------------------------------------------------------------------------
-#	Returns a character vector representing conversion table from the
-#	shared predict types to function specific type for each predict method of
-#	the given function.
-#------------------------------------------------------------------------------
-model.adapter$set(
-	"private", "predict.types",
-	function() {
-		return(private$interface$predict.types())
-	}
-)
-
-
-#------------------------------------------------------------------------------
 #	Returns a character vector representing names of explanatory variables.
 #------------------------------------------------------------------------------
 model.adapter$set(
