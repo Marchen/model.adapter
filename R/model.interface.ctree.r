@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	ctree関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for ctree
 #'
 #'	This reference class contains methods for \code{\link[party]{ctree}} in
@@ -23,8 +20,6 @@ model.interface.BinaryTree <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
 	get.call = function(x) {
 		return(NULL)
@@ -33,15 +28,13 @@ model.interface.BinaryTree$methods(
 
 
 #------------------------------------------------------------------------------
-#	formulaを取り出し。
-#------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
 	get.formula = function(x, envir, package = "") {
 		if (is.call(x)) {
 			x <- match.call(ctree, x)
 			return(eval(x$formula, envir))
 		} else {
-			# Shared method with cforest / cforestと同じ手法。
+			# Shared method with cforest.
 			interface <- model.interface.RandomForest(x)
 			return(interface$get.formula(x, envir, package))
 		}
@@ -50,14 +43,12 @@ model.interface.BinaryTree$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
 	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)) {
 		   	return(callSuper(x, envir, package, ...))
 		} else {
-			# Shared method with cforest / cforestと同じ手法。
+			# Shared method with cforest.
 			interface <- model.interface.RandomForest(x)
 			return(interface$get.data(x, envir, package, ...))
 		}
@@ -66,8 +57,6 @@ model.interface.BinaryTree$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
 	predict.types = function() {
 		return(make.predict.types(link = "response", class = "response"))
@@ -75,8 +64,6 @@ model.interface.BinaryTree$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictメソッド。
 #------------------------------------------------------------------------------
 model.interface.BinaryTree$methods(
 	predict = function(object, newdata = NULL, type, ...) {

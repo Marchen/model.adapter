@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	randomForest関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for randomForest
 #'
 #'	This reference class contains methods for
@@ -19,8 +16,6 @@ model.interface.randomForest <- setRefClass(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
 model.interface.randomForest$methods(
 	predict.types = function() {

@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	MCMCglmm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for MCMCglmm
 #'
 #'	This reference class contains methods for \code{\link[MCMCglmm]{MCMCglmm}}
@@ -20,8 +17,6 @@ model.interface.MCMCglmm <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルのdataを取得する。
-#------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)) {
@@ -34,8 +29,6 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	formulaを取り出し。
-#------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.formula = function(x, envir, package = "") {
 		if (is.call(x)) {
@@ -47,8 +40,6 @@ model.interface.MCMCglmm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
@@ -84,8 +75,6 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.call = function(x) {
 		return(NULL)
@@ -93,8 +82,6 @@ model.interface.MCMCglmm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	predict.types = function() {
@@ -106,8 +93,6 @@ model.interface.MCMCglmm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	リンク関数を返す。
 #------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.link = function(x, envir) {
@@ -128,8 +113,6 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	リンク関数の逆関数を返す。
-#------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.linkinv = function(x, envir) {
 		f <- .self$get.family(x, "character", envir)
@@ -149,8 +132,6 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルの種類を返す。
-#------------------------------------------------------------------------------
 model.interface.MCMCglmm$methods(
 	get.model.type = function(x, envir, package = "", ...) {
 		classification <- c("categorical", "ordinal", "threshold")
@@ -164,8 +145,6 @@ model.interface.MCMCglmm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	familyがサポートされてるかをチェックする。
 #------------------------------------------------------------------------------
 #' (Internal) Check if the specified family of MCMCglmm is supported.
 #'

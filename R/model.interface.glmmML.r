@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	glmmML関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for glmmML
 #'
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in
@@ -20,8 +17,6 @@ model.interface.glmmML <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#------------------------------------------------------------------------------
 model.interface.glmmML$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
 		if (is.call(x)) {
@@ -35,8 +30,6 @@ model.interface.glmmML$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
 model.interface.glmmML$methods(
 	predict.types = function() {
 		return(make.predict.types(prob = "response", class = "response"))
@@ -44,27 +37,6 @@ model.interface.glmmML$methods(
 )
 
 
-#-------------------------------------------------------------------------------
-#	glmmML用のpredictメソッド。
-#
-#	Args:
-#		object:
-#			glmmMLオブジェクト。
-#		newdata:
-#			予測に使うデータが入ったデータフレーム。
-#			指定しなかった場合、予測に用いたデータを使うがglmmMLオブジェクトには
-#			データが保存されていないので、データがワークスペースに残っていない場合、
-#			データの取得に失敗する可能性がある。
-#		type:
-#			予測を計算するスケール。
-#			デフォルトでは応答変数のスケールで予測を計算
-#			する。"link"を指定すると、リンク関数のスケールで予測を計算する。
-#		conditional:
-#			TRUEだとconditional（ランダム効果による切片の違いも考慮した）な
-#			予測値を計算する。
-#			FALSEだとmarginal（ランダム効果を無視した固定効果だけ）な予測値を
-#			計算する。
-#		...: 他のメソッドに渡される引数。
 #-------------------------------------------------------------------------------
 #'	predict method for glmmML object.
 #'
@@ -94,7 +66,7 @@ predict.glmmML <- function(
 	type = match.arg(type)
 	design.matrix <- model.matrix(object, data = newdata)
 	result <- design.matrix %*% coef(object)
-	# ランダム効果を使う時にはランダム効果分の切片のずれを加算する。
+	# Add random intercept.
 	if (conditional) {
 		cluster <- eval(object$call$cluster, newdata)
 		result <- result + object$posterior.mode[as.numeric(cluster)]

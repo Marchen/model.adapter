@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	lmer関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for lmer
 #'
 #'	This reference class contains methods for \code{\link[lme4]{lmer}} in
@@ -20,8 +17,6 @@ model.interface.lmerMod <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
 model.interface.lmerMod$methods(
 	get.data = function(x, envir, package = "", ...) {
 		interface <- model.interface.glmerMod(x)
@@ -31,8 +26,6 @@ model.interface.lmerMod$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#------------------------------------------------------------------------------
 model.interface.lmerMod$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
 		return(format.family("gaussian", type))
@@ -40,8 +33,6 @@ model.interface.lmerMod$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
 model.interface.lmerMod$methods(
 	predict.types = function() {

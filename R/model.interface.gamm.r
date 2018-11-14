@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	gamm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for gamm
 #'
 #'	This reference class contains methods for \code{\link[mgcv]{gamm}} in
@@ -23,8 +20,6 @@ model.interface.gamm <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	get.call = function(x) {
 		return(NULL)
@@ -32,8 +27,6 @@ model.interface.gamm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
@@ -47,8 +40,6 @@ model.interface.gamm$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのformulaを取得する。
-#------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	get.formula = function(x, envir, package = "") {
 		f <- callSuper(x, envir, package)
@@ -60,8 +51,6 @@ model.interface.gamm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	モデルのdataを取得する。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	get.data = function(x, envir, package = "", ...) {
@@ -78,8 +67,6 @@ model.interface.gamm$methods(
 
 
 #------------------------------------------------------------------------------
-#	formulaの.を展開する。
-#------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	expand.formula = function(
 		f, d, specials = c("s", "te", "ti", "t2"), package = "mgcv"
@@ -90,8 +77,6 @@ model.interface.gamm$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	predict.types = function() {
 		return(make.predict.types(prob = "response", class = "response"))
@@ -99,8 +84,6 @@ model.interface.gamm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	gamm用predict()メソッド。
 #------------------------------------------------------------------------------
 model.interface.gamm$methods(
 	predict = function(object, newdata = NULL, type, ...) {

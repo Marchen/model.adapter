@@ -1,11 +1,4 @@
 #------------------------------------------------------------------------------
-#	model.interfaceクラスを初期化する。
-#
-#	Args:
-#		x:
-#			サポートされているモデルのオブジェクト。
-#			S3メソッドの決定にしか使われない。
-#------------------------------------------------------------------------------
 #'	Initialize model.interface class.
 #'
 #'	This function makes an object of a derived class of \emph{model.interface}
@@ -31,8 +24,6 @@ model.interface <- function(x = NULL) {
 
 
 #------------------------------------------------------------------------------
-#	モデル抽象化レイヤー
-#------------------------------------------------------------------------------
 #'	An interface for model.adapter and statistical/machine learning models.
 #'
 #'	This class provides unified interface for calls/objects of
@@ -55,9 +46,7 @@ model.interface.default <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#	Args:
-#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
+#	Get family of the model.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
@@ -104,11 +93,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのcallを取得する。
-#	Args:
-#		x: はモデルオブジェクト。
-#	Value:
-#		オブジェクトを作ったcall。
+#	Get model call.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.call = function(x) {
@@ -133,10 +118,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのdataを取得する。
-#	Args:
-#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
-#		envir: xに入ったcallを評価する環境。
+#	Get data of the model.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.data = function(x, envir, package = "", ...) {
@@ -160,7 +142,6 @@ model.interface.default$methods(
 			}
 			if (is.null(d)) {
 				# When couldn't retrieve data from object, get it from call.
-				# オブジェクトからdataを取得できなかったらcallから取得を試みる。
 				cl <- match.generic.call(.self$get.call(x), envir, package)
 				d <- eval(cl$data, envir)
 			}
@@ -171,10 +152,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのformulaを取得する。
-#	Args:
-#		x: 関数呼び出しのcall、もしくはモデルオブジェクト。
-#		envir: xに入ったcallを評価する環境。
+#	Extract formula from model object/call.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.formula = function(x, envir, package = "") {
@@ -229,7 +207,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	formulaの.を展開する。
+#	Expand . in formula.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	expand.formula = function(f, d, specials = NULL, package = NULL) {
@@ -256,7 +234,8 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
+#	Return a character vector representing conversion table of 'type'
+#	argument of predict() method.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	predict.types = function() {
@@ -270,7 +249,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	予測値を計算する。
+#	Calculate predictions.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	predict = function(object, newdata, type, random, ...) {
@@ -351,7 +330,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	リンク関数を返す。
+#	Get link function from the model.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.link = function(x, envir) {
@@ -378,7 +357,7 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	リンク関数の逆関数を返す。
+#	Get inverse link function of the model.
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.linkinv = function(x, envir) {
@@ -406,9 +385,8 @@ model.interface.default$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルが識別なのか回帰なのかを判定する。
-#	Values:
-#		回帰なら"regression"、識別なら"classification"。
+#	Return a character vector specifying model type
+#	(regression or classification).
 #------------------------------------------------------------------------------
 model.interface.default$methods(
 	get.model.type = function(x, envir, package = "", ...) {
@@ -438,7 +416,8 @@ model.interface.default$methods(
 				return("regression")
 			}
 		}
-		# glmとgamの以下のfamilyが識別。それ以外は回帰
+		# For glm and gam, following families are treated as classification.
+		# Other families are regarded as regression.
 		classification.families <- c(
 			"binomial", "quasibinomial", "negbin", "ocat", "nb",
 			"betar", "cox.ph"

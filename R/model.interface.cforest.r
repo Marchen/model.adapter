@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	cforest関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for cforest
 #'
 #'	This reference class contains methods for \code{\link[party]{cforest}} in
@@ -23,16 +20,12 @@ model.interface.RandomForest <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
 	get.call = function(x) {
 		return(NULL)
 	}
 )
 
-#------------------------------------------------------------------------------
-#	formulaを取り出し。
 #------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
 	get.formula = function(x, envir, package = "") {
@@ -51,8 +44,6 @@ model.interface.RandomForest$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
 	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)){
@@ -67,8 +58,6 @@ model.interface.RandomForest$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
 	predict.types = function() {
 		return(make.predict.types(link = "response", class = "response"))
@@ -76,8 +65,6 @@ model.interface.RandomForest$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictメソッド。
 #------------------------------------------------------------------------------
 model.interface.RandomForest$methods(
 	predict = function(object, newdata = NULL, type, ...) {

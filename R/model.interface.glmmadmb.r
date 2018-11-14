@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	glmmML関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for glmmML
 #'
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in
@@ -19,9 +16,6 @@ model.interface.glmmadmb <- setRefClass(
 )
 
 
-#------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#	familyオブジェクトがサポートされていない場合、エラーを投げる。
 #------------------------------------------------------------------------------
 model.interface.glmmadmb$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
@@ -50,8 +44,6 @@ model.interface.glmmadmb$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
 model.interface.glmmadmb$methods(
 	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)) {
@@ -66,8 +58,6 @@ model.interface.glmmadmb$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
 model.interface.glmmadmb$methods(
 	predict.types = function() {
 		return(make.predict.types(prob = "response", class = "response"))
@@ -75,8 +65,6 @@ model.interface.glmmadmb$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	予測値を計算する。
 #------------------------------------------------------------------------------
 model.interface.glmmadmb$methods(
 	predict = function(object, newdata, type, ...) {

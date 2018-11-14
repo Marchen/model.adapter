@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	ranger関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for ranger
 #'
 #'	This reference class contains methods for \code{\link[ranger]{ranger}} in
@@ -19,8 +16,6 @@ model.interface.ranger <- setRefClass(
 )
 
 
-#------------------------------------------------------------------------------
-#	ranger用predict()メソッド。
 #------------------------------------------------------------------------------
 model.interface.ranger$methods(
 	predict = function(object, newdata = NULL, type, ...) {
@@ -53,8 +48,6 @@ model.interface.ranger$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	formulaを取得する。
 #------------------------------------------------------------------------------
 model.interface.ranger$methods(
 	get.formula = function(x, envir, package = "") {

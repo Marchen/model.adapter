@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	glmer関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for glmer
 #'
 #'	This reference class contains methods for \code{\link[lme4]{glmer}} in
@@ -20,8 +17,6 @@ model.interface.glmerMod <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
 model.interface.glmerMod$methods(
 	get.data = function(x, envir, package = "", ...) {
 		if (is.call(x)){
@@ -35,8 +30,6 @@ model.interface.glmerMod$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
 model.interface.glmerMod$methods(
 	predict.types = function() {

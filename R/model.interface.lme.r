@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	lme関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for lme
 #'
 #'	This reference class contains methods for \code{\link[nlme]{lme}} in
@@ -20,8 +17,6 @@ model.interface.lme <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
 model.interface.lme$methods(
 	get.call = function(x) {
 		call.list <- as.list(x$call)
@@ -32,11 +27,9 @@ model.interface.lme$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデル構築に使われる引数からモデル式をあらわすformulaを取得する。
-#------------------------------------------------------------------------------
 model.interface.lme$methods(
 	get.formula = function(x, envir, package = "") {
-		# Get call and convert it to a list / callを取得しリストに変換。
+		# Get call and convert it to a list.
 		if (is.object(x)) {
 			cl <- x$call
 		} else {
@@ -52,9 +45,6 @@ model.interface.lme$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictメソッド。
-#	random効果のmarginalizeのため、levelsを0に設定。
 #------------------------------------------------------------------------------
 model.interface.lme$methods(
 	predict = function(object, newdata, ...) {

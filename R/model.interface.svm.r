@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	svm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for svm
 #'
 #'	This reference class contains methods for \code{\link[e1071]{svm}} in
@@ -19,8 +16,6 @@ model.interface.svm <- setRefClass(
 )
 
 
-#------------------------------------------------------------------------------
-#	svm用predict()メソッド。
 #------------------------------------------------------------------------------
 model.interface.svm$methods(
 	predict = function(object, newdata = NULL, type, ...) {

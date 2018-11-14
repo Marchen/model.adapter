@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	gbm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for gbm
 #'
 #'	This reference class contains methods for \code{\link[gbm]{gbm}} in
@@ -20,16 +17,11 @@ model.interface.gbm <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
 model.interface.gbm$methods(
 	get.data = function(x, envir, package = "") {
 		# Extract data from call using default method.
 		# If default method couldn't get data, try to use data in call
 		# in the object.
-		# デフォルトメソッドでcallからdataを取得。
-		# デフォルトのメソッドでdataを取得できなかったら、
-		# x$callからデータを取り出す。
 		if (is.call(x)) {
 			d <- callSuper(x, envir)
 		} else {
@@ -38,7 +30,6 @@ model.interface.gbm$methods(
 		}
 		# If still couldn't get data, use data in the object and make a
 		# a data.frame manually.
-		# それでもデータをとれなかったらオブジェクトのdataからデータを作成。
 		if (is.null(d)){
 			warning("Making data.frame using data field in gbm object.")
 			y.var <- x$data$y
@@ -54,15 +45,11 @@ model.interface.gbm$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
 model.interface.gbm$methods(
 	predict.types = function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
-#------------------------------------------------------------------------------
-#	予測値を計算する。
 #------------------------------------------------------------------------------
 model.interface.gbm$methods(
 	predict = function(object, newdata, type, random, ...) {
@@ -79,8 +66,6 @@ model.interface.gbm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	モデルの種類を返す。
 #------------------------------------------------------------------------------
 model.interface.gbm$methods(
 	get.model.type = function(x, envir, package = "", ...) {

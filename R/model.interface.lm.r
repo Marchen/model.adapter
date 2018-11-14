@@ -1,7 +1,4 @@
 #------------------------------------------------------------------------------
-#	lm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
 #'	model.interface class for lm
 #'
 #'	This reference class contains methods for \code{\link[stats]{lm}} in
@@ -20,8 +17,6 @@ model.interface.lm <- setRefClass(
 
 
 #------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#------------------------------------------------------------------------------
 model.interface.lm$methods(
 	get.family = function(x, type = c("character", "family"), envir) {
 		return(format.family("gaussian", type))
@@ -29,8 +24,6 @@ model.interface.lm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
 #------------------------------------------------------------------------------
 model.interface.lm$methods(
 	predict.types = function() {
