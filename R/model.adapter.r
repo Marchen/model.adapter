@@ -259,7 +259,7 @@ model.adapter$set(
 			fun.name <- get.function(private$src, "character", private$envir)
 			code <- sprintf(
 				"model.interface.%s(%s)",
-				get.class.name(fun.name, self$package),
+				get.class.name(fun.name, self$package.name),
 				paste0(deparse(private$src), collapse = "")
 			)
 			private$interface <- eval(parse(text = code), environment())
