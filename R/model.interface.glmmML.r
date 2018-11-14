@@ -2,21 +2,26 @@
 #'	(Internal) model.interface class for glmmML
 #'
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in
-#'	\emph{glmmML} package.
-#'
-#'	Following methods are overriden.
+#'	\emph{glmmML} package. 'predict' method is implimented in this package,
+#'	rather than \emph{glmmML} package.
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
+#'	@name model.interface.glmmML-class (glmmML package)
 #------------------------------------------------------------------------------
-model.interface.glmmML <- setRefClass(
-	"model.interface.glmmML", contains = "model.interface"
+NULL
+
+model.interface.glmmML.class <- R6::R6Class(
+	"model.interface.glmmML", inherit = model.interface.default.class
 )
 
+model.interface.glmmML <- model.interface.glmmML.class$new
+
 
 #------------------------------------------------------------------------------
-model.interface.glmmML$methods(
-	get.family = function(x, type = c("character", "family"), envir) {
+model.interface.glmmML.class$set(
+	"public", "get.family",
+	function(x, type = c("character", "family"), envir) {
 		if (is.call(x)) {
 			family <- family.from.call(x, envir)
 		} else {
@@ -28,8 +33,9 @@ model.interface.glmmML$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.glmmML$methods(
-	predict.types = function() {
+model.interface.glmmML.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )

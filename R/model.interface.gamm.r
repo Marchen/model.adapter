@@ -4,43 +4,49 @@
 #'	This reference class contains methods for \code{\link[mgcv]{gamm}} in
 #'	\emph{mgcv} package.
 #'	Note that because an object of gamm does not keep original call,
-#'	get.call() function always returns NULL. Also, when an instance of this
-#'	class is made from model object, 'call' field is always call("<undef>").
-#'
-#'	Following methods are overriden.
+#'	get.call() function always returns NULL.
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
+#'	@name model.interface.gamm-class (mgcv package)
 #------------------------------------------------------------------------------
-model.interface.gamm <- setRefClass(
-	"model.interface.gamm", contains = "model.interface"
+NULL
+
+model.interface.gamm.class <- R6::R6Class(
+	"model.interface.gamm", inherit = model.interface.default.class
 )
 
+model.interface.gamm <- model.interface.gamm.class$new
+
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	get.call = function(x) {
+model.interface.gamm.class$set(
+	"public", "get.call",
+	function(x) {
+		# gamm object does not have call.
 		return(NULL)
 	}
 )
 
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	get.family = function(x, type = c("character", "family"), envir) {
+model.interface.gamm.class$set(
+	"public", "get.family",
+	function(x, type = c("character", "family"), envir) {
 		if (is.call(x)) {
-			return(callSuper(x, type, envir))
+			return(super$get.family(x, type, envir))
 		} else {
-			return(callSuper(x$gam, type, envir))
+			return(super$get.family(x$gam, type, envir))
 		}
 	}
 )
 
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	get.formula = function(x, envir, package = "") {
-		f <- callSuper(x, envir, package)
+model.interface.gamm.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
+		f <- super$get.formula(x, envir, package)
 		if (is.null(f)) {
 			f <- x$gam$formula
 		}
@@ -50,10 +56,11 @@ model.interface.gamm$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	get.data = function(x, envir, package = "", ...) {
+model.interface.gamm.class$set(
+	"public", "get.data",
+	function(x, envir, package = "", ...) {
 		if (is.call(x)){
-			return(callSuper(x, envir, package, ...))
+			return(super$get.data(x, envir, package, ...))
 		} else {
 			d <- x$gam$model
 			var.names <- names(attr(x$gam$terms, "dataClasses"))
@@ -65,26 +72,32 @@ model.interface.gamm$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	expand.formula = function(
+model.interface.gamm.class$set(
+	"public", "expand.formula",
+	function(
 		f, d, specials = c("s", "te", "ti", "t2"), package = "mgcv"
 	) {
-		callSuper(f, d, specials)
+		super$expand.formula(f, d, specials)
 	}
 )
 
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	predict.types = function() {
+model.interface.gamm.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
 
 
 #------------------------------------------------------------------------------
-model.interface.gamm$methods(
-	predict = function(object, newdata = NULL, type, ...) {
-		return(callSuper(object$gam, newdata = newdata, type = type, ...))
+model.interface.gamm.class$set(
+	"public", "predict",
+	function(object, newdata = NULL, type, ...) {
+		result <- super$predict(
+			object$gam, newdata = newdata, type = type, ...
+		)
+		return(result)
 	}
 )

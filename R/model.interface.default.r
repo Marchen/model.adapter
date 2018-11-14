@@ -36,34 +36,170 @@ model.interface <- function(x = NULL) {
 #'		four elements named "response", "link", "prob" and "class" and
 #'		each element represents compatible type of character for the model.
 #'
+#'	@section Methods:
+#'
+#'	\strong{\code{get.family(x, type = c("character", "family"), envir)}}
+#'
+#'		Get family from the model.
+#'
+#'		\describe{
+#'			\item{\code{x}}{call or model object.}
+#'			\item{\code{type = c("character", "family")}}{
+#'				a character literal specifying the type of data returned.
+#'				If "character", this returns character vector of family name.
+#'				If "family", this returns \code{\link{family}} object.
+#'				For some family specific for certain model (e.g., categorical
+#'				family of MCMCglmm), their family object is not implimented.
+#'				For such family, this method raise stop error.
+#'			}
+#'			\item{\code{envir}}{environment where x is evaluated.}
+#'		}
+#'
+#'	\strong{\code{get.call(x)}}
+#'
+#'		This method returns call by which the object is made. If call is not
+#'		available, this returns NULL. To distinguish the returned value of NULL
+#'		is intended action or not, inherited classes are encouraged to
+#'		inherit this method to explicitly return NULL if x does not have call.
+#'
+#'		\describe{
+#'			\item{\code{x}}{call or model object.}
+#'		}
+#'
+#'	\strong{\code{get.data(x, envir, package = "", ...)}}
+#'
+#'		Get a data.frame containing the data used for modeling.
+#'		If data is not available this method returns NULL.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				a model object/call from which data is extracted.
+#'			}
+#'			\item{\code{envir}}{an environment in which call is evaluated.}
+#'		}
+#'
+#'	\strong{\code{get.formula(x, envir, package = "")}}
+#'
+#'		Extract formula from model object/call.
+#'		If couldn't retrieve formula from \code{x}, this method returns NULL.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				a model object/call from which formula is extracted.
+#'			}
+#'			\item{\code{envir}}{
+#'				an environment in which call in x is evaluated.
+#'			}
+#'			\item{\code{package}}{
+#'				name of the package having the modeling function.
+#'			}
+#'		}
+#'
+#'	\strong{\code{expand.formula(f, d, specials = NULL, package = NULL)}}
+#'
+#'		Expand . in formula.
+#'
+#'		\describe{
+#'			\item{\code{f}}{a formula to expand.}
+#'			\item{\code{d}}{a data.frame used to expand . in formula.}
+#'			\item{\code{specials = NULL}}{
+#'				special characterss passed to
+#'				\code{\link[stats]{terms.formula}}.
+#'			}
+#'			\item{\code{package = NULL}}{
+#'				a character literal of package name having the model function.
+#'			}
+#'		}
+#'
+#'	\strong{\code{predict(object, newdata, type, random, ...)}}
+#'
+#'		Calculate predictions.
+#'
+#'		\describe{
+#'			\item{\code{object}}{a model object used for prediction.}
+#'			\item{\code{newdata}}{
+#'				a data.frame containing data used for prediction.
+#'			}
+#'			\item{\code{type}}{
+#'				the type of prediciton. This should be a type specific for
+#'				each modeling functions.
+#'			}
+#'			\item{\code{random = ~0}}{
+#'				the random effect to use.
+#'				Tentatively, ~0 means don't use random effects.
+#'			}
+#'			\item{\code{...}}{other variables passed to predict methods.}
+#'		}
+#'
+#'	\strong{\code{get.link(x, envir)}}
+#'
+#'		Get link function. If the model does not have link function, this
+#'		function returns \code{\link[base]{identity}} function.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				an object of statistical model or a call of model function.
+#'			}
+#'			\item{\code{envir}}{
+#'				an environment where call in \code{x} is evaluated.
+#'			}
+#'		}
+#'
+#'	\strong{\code{get.linkinv(x, envir)}}
+#'
+#'		Get inverse function of link function. If the model does not have
+#'		link function, this function returns \code{\link[base]{identity}}
+#'		function.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				an object of statistical model or a call of model function.
+#'			}
+#'			\item{\code{envir}}{
+#'				an environment where call in \code{x} is evaluated.
+#'			}
+#'		}
+#'
+#'	\strong{\code{get.model.type(x, envir, package = "", ...)}}
+#'
+#'		Return a character vector specifying model type
+#'		(regression or classification).
+#'		If the model is regression model, it returns 'regression'.
+#'		If the model is classification model, it returns 'classification'.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				an object of statistical model or a call of model function.
+#'			}
+#'			\item{\code{envir}}{
+#'				an environment where call in \code{x} is evaluated.
+#'			}
+#'		}
+#'
+#'	@name model.interface-class
 #------------------------------------------------------------------------------
-model.interface.default <- setRefClass(
-	"model.interface",
-	methods = list(initialize = function(x) { })
+NULL
+
+model.interface.default.class <- R6::R6Class(
+	"model.interface"
+)
+model.interface.default <- model.interface.default.class$new
+
+
+#------------------------------------------------------------------------------
+#	Initialize.
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+	"public", "initialize", function(...){}
 )
 
 
 #------------------------------------------------------------------------------
 #	Get family of the model.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.family = function(x, type = c("character", "family"), envir) {
-		"
-		Get family from call or model object.
-		If family was not specified, return NULL.
-		\\describe{
-			\\item{\\code{x}}{call or model object.}
-			\\item{\\code{type = c(\"character\", \"family\")}}{
-				a character literal specifying the type of data returned.
-				If \"character\", this returns character vector of family name.
-				If \"family\", this returns \\code{\\link{family}} object.
-				For some family specific for certain model (e.g., categorical
-				family of MCMCglmm), their family object is not implimented.
-				For such family, this method raise stop error.
-			}
-			\\{envir}{environment where x is evaluated.}
-		}
-		"
+model.interface.default.class$set(
+	"public", "get.family",
+	function(x, type = c("character", "family"), envir) {
 		if (is.call(x)) {
 			family <- family.from.call(x, envir)
 		} else {
@@ -93,15 +229,9 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Get model call.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.call = function(x) {
-		"
-		This method returns call by which the object is made. If call is not
-		available, this returns NULL. To distinguish the return value of NULL
-		is intended action or not, inherited classes are encouraged to
-		inherit this method to explicitly return NULL if x does not have call.
-		\\describe{\\item{\\code{x}}{a model object.}}
-		"
+model.interface.default.class$set(
+	"public", "get.call",
+	function(x) {
 		if (isS4(x)) {
 			result <- x@call
 		} else {
@@ -118,18 +248,9 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Get data of the model.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.data = function(x, envir, package = "", ...) {
-		"
-		Get a data.frame containing the data used for modeling.
-		If data is not available this method returns NULL.
-		\\describe{
-			\\item{\\code{x}}{
-				a model object/call from which data is extracted.
-			}
-			\\item{\\code{envir}}{an environment in which call is evaluated.}
-		}
-		"
+model.interface.default.class$set(
+	"public", "get.data",
+	function(x, envir, package = "", ...) {
 		if (is.call(x)) {
 			d <- eval(x$data, envir)
 		} else {
@@ -140,7 +261,7 @@ model.interface.default$methods(
 			}
 			if (is.null(d)) {
 				# When couldn't retrieve data from object, get it from call.
-				cl <- match.generic.call(.self$get.call(x), envir, package)
+				cl <- match.generic.call(self$get.call(x), envir, package)
 				d <- eval(cl$data, envir)
 			}
 		}
@@ -152,24 +273,9 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Extract formula from model object/call.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.formula = function(x, envir, package = "") {
-		"
-		Extract formula from model object/call.
-		If couldn't retrieve formula from \\code{x}, this method returns NULL.
-
-		\\describe{
-			\\item{\\code{x}}{
-				a model object/call from which formula is extracted.
-			}
-			\\item{\\code{envir}}{
-				an environment in which call in x is evaluated.
-			}
-			\\item{\\code{package}}{
-				name of the package having the modeling function.
-			}
-		}
-		"
+model.interface.default.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
 		if (is.object(x)) {
 			if (isS4(x)) {
 				f <- eval(x@call$formula, envir)
@@ -207,22 +313,9 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Expand . in formula.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	expand.formula = function(f, d, specials = NULL, package = NULL) {
-		"
-		Expand . in formula.
-		\\describe{
-			\\item{\\code{f}}{a formula to expand.}
-			\\item{\\code{d}}{a data.frame used to expand . in formula.}
-			\\item{\\code{specials = NULL}}{
-				special characterss passed to
-				\\code{\\link[stats]{terms.formula}}.
-			}
-			\\item{\\code{package = NULL}}{
-				a character literal of package name having the model function.
-			}
-		}
-		"
+model.interface.default.class$set(
+	"public", "expand.formula",
+	function(f, d, specials = NULL, package = NULL) {
 		result <- terms(f, data = d, specials = specials)
 		attributes(result) <- NULL
 		result <- as.formula(result)
@@ -235,12 +328,9 @@ model.interface.default$methods(
 #	Return a character vector representing conversion table of 'type'
 #	argument of predict() method.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	predict.types = function() {
-		"
-		Return a character vector representing conversion table of 'type'
-		argument of predict() method.
-		"
+model.interface.default.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types())
 	}
 )
@@ -249,26 +339,9 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Calculate predictions.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	predict = function(object, newdata, type, random, ...) {
-		"
-		Calculate predictions and returns \\code{\\link{ma.prediction}} object.
-		\\describe{
-			\\item{\\code{object}}{a model object used for prediction.}
-			\\item{\\code{newdata}}{
-				a data.frame containing data used for prediction.
-			}
-			\\item{\\code{type}}{
-				the type of prediciton. This should be a type specific for
-				each modeling functions.
-			}
-			\\item{\\code{random = ~0}}{
-				the random effect to use.
-				Tentatively, ~0 means don't use random effects.
-			}
-			\\item{\\code{...}}{other variables passed to predict methods.}
-		}
-		"
+model.interface.default.class$set(
+	"public", "predict",
+	function(object, newdata, type, random, ...) {
 		if (is.null(newdata)) {
 			pred <- stats::predict(object, type = type, ...)
 		} else {
@@ -282,21 +355,10 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Get link function from the model.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.link = function(x, envir) {
-		"
-		Get link function. If the model does not have link function, this
-		function returns \\code{\\link[base]{identity}} function.
-		\\describe{
-			\\item{\\code{x}}{
-				an object of statistical model or a call of model function.
-			}
-			\\item{\\code{envir}}{
-				an environment where call in \\code{x} is evaluated.
-			}
-		}
-		"
-		f <- .self$get.family(x, "family", envir)
+model.interface.default.class$set(
+	"public", "get.link",
+	function(x, envir) {
+		f <- self$get.family(x, "family", envir)
 		if (!is.null(f)) {
 			return(f$linkfun)
 		} else {
@@ -309,22 +371,10 @@ model.interface.default$methods(
 #------------------------------------------------------------------------------
 #	Get inverse link function of the model.
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.linkinv = function(x, envir) {
-		"
-		Get inverse function of link function. If the model does not have
-		link function, this function returns \\code{\\link[base]{identity}}
-		function.
-		\\describe{
-			\\item{\\code{x}}{
-				an object of statistical model or a call of model function.
-			}
-			\\item{\\code{envir}}{
-				an environment where call in \\code{x} is evaluated.
-			}
-		}
-		"
-		f <- .self$get.family(x, "family", envir)
+model.interface.default.class$set(
+	"public", "get.linkinv",
+	function(x, envir) {
+		f <- self$get.family(x, "family", envir)
 		if (!is.null(f)) {
 			return(f$linkinv)
 		} else {
@@ -338,27 +388,14 @@ model.interface.default$methods(
 #	Return a character vector specifying model type
 #	(regression or classification).
 #------------------------------------------------------------------------------
-model.interface.default$methods(
-	get.model.type = function(x, envir, package = "", ...) {
-		"
-		Return a character vector specifying model type
-		(regression or classification).
-		If the model is regression model, it returns 'regression'.
-		If the model is classification model, it returns 'classification'.
-		\\describe{
-			\\item{\\code{x}}{
-				an object of statistical model or a call of model function.
-			}
-			\\item{\\code{envir}}{
-				an environment where call in \\code{x} is evaluated.
-			}
-		}
-		"
-		f <- .self$get.family(x, type = "character", envir)
+model.interface.default.class$set(
+	"public", "get.model.type",
+	function(x, envir, package = "", ...) {
+		f <- self$get.family(x, type = "character", envir)
 		if (is.null(f)) {
-			d <- .self$get.data(x, envir, package, ...)
+			d <- self$get.data(x, envir, package, ...)
 			response <- model.response(
-				model.frame(.self$get.formula(x, envir, package), data = d)
+				model.frame(self$get.formula(x, envir, package), data = d)
 			)
 			if (is(response, "factor")) {
 				return("classification")

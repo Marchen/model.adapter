@@ -4,19 +4,23 @@
 #'	This reference class contains methods for \code{\link[e1071]{svm}} in
 #'	\emph{e1071} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
+#'	@name model.interface.svm-class (e1071 package)
 #------------------------------------------------------------------------------
-model.interface.svm <- setRefClass(
-	"model.interface.svm", contains = "model.interface"
+NULL
+
+model.interface.svm.class <- R6::R6Class(
+	"model.interface.svm", inherit = model.interface.default.class
 )
 
+model.interface.svm <- model.interface.svm.class$new
+
 
 #------------------------------------------------------------------------------
-model.interface.svm$methods(
-	predict = function(object, newdata = NULL, type, ...) {
+model.interface.svm.class$set(
+	"public", "predict",
+	function(object, newdata = NULL, type, ...) {
 		if (is.null(newdata)) {
 			pred <- stats::predict(
 				object, predict.all = TRUE, probability = TRUE, ...

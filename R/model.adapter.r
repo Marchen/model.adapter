@@ -487,7 +487,7 @@ model.adapter$set(
 		}
 		pred <- private$interface$predict(
 			self$object, newdata = newdata,
-			type = private$interface$predict.types()[type],
+			type = private$interface$predict.types[type],
 			random = random, ...
 		)
 		# Make ma.prediction object.

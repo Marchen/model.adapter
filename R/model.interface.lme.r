@@ -4,19 +4,23 @@
 #'	This reference class contains methods for \code{\link[nlme]{lme}} in
 #'	\emph{nlme} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
+#'	@name model.interface.lme-class (nlme package)
 #------------------------------------------------------------------------------
-model.interface.lme <- setRefClass(
-	"model.interface.lme", contains = "model.interface"
+NULL
+
+model.interface.lme.class <- R6::R6Class(
+	"model.interface.lme", inherit = model.interface.default.class
 )
 
+model.interface.lme <- model.interface.lme.class$new
+
 
 #------------------------------------------------------------------------------
-model.interface.lme$methods(
-	get.call = function(x) {
+model.interface.lme.class$set(
+	"public", "get.call",
+	function(x) {
 		call.list <- as.list(x$call)
 		call.list[[1]] <- substitute(lme)
 		return(as.call(call.list))
@@ -25,8 +29,9 @@ model.interface.lme$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.lme$methods(
-	get.formula = function(x, envir, package = "") {
+model.interface.lme.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
 		# Get call and convert it to a list.
 		if (is.object(x)) {
 			cl <- x$call
@@ -44,8 +49,9 @@ model.interface.lme$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.lme$methods(
-	predict = function(object, newdata, ...) {
+model.interface.lme.class$set(
+	"public", "predict",
+	function(object, newdata, ...) {
 		# set level = 0 to marginalize random effect.
 		if (is.null(newdata)) {
 			fit <- stats::predict(object, level = 0, ...)

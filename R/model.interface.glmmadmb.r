@@ -4,19 +4,23 @@
 #'	This reference class contains methods for \code{\link[glmmML]{glmmML}} in
 #'	\emph{glmmML} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
+#'	@name model.interface.glmmadmb-class (glmmADMB package)
 #------------------------------------------------------------------------------
-model.interface.glmmadmb <- setRefClass(
-	"model.interface.glmmadmb", contains = "model.interface"
+NULL
+
+model.interface.glmmadmb.class <- R6::R6Class(
+	"model.interface.glmmadmb", inherit = model.interface.default.class
 )
 
+model.interface.glmmadmb <- model.interface.glmmadmb.class$new
+
 
 #------------------------------------------------------------------------------
-model.interface.glmmadmb$methods(
-	get.family = function(x, type = c("character", "family"), envir) {
+model.interface.glmmadmb.class$set(
+	"public", "get.family",
+	function(x, type = c("character", "family"), envir) {
 		# Get family character.
 		if (is.call(x)) {
 			family <- family.from.call(x, envir)
@@ -42,10 +46,11 @@ model.interface.glmmadmb$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.glmmadmb$methods(
-	get.data = function(x, envir, package = "", ...) {
+model.interface.glmmadmb.class$set(
+	"public", "get.data",
+	function(x, envir, package = "", ...) {
 		if (is.call(x)) {
-			return(callSuper(x, envir, package, ...))
+			return(super$get.data(x, envir, package, ...))
 		} else {
 			d <- x$frame
 			attr(d, "terms") <- NULL
@@ -56,18 +61,20 @@ model.interface.glmmadmb$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.glmmadmb$methods(
-	predict.types = function() {
+model.interface.glmmadmb.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
 
 
 #------------------------------------------------------------------------------
-model.interface.glmmadmb$methods(
-	predict = function(object, newdata, type, ...) {
+model.interface.glmmadmb.class$set(
+	"public", "predict",
+	function(object, newdata, type, ...) {
 		# Change 'fixed' field of object to handle '.' in the formula.
-		object$fixed <- .self$expand.formula(object$fixed, object$frame)
-		callSuper(object, newdata, type, ...)
+		object$fixed <- self$expand.formula(object$fixed, object$frame)
+		super$predict(object, newdata, type, ...)
 	}
 )

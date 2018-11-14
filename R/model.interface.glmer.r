@@ -4,21 +4,25 @@
 #'	This reference class contains methods for \code{\link[lme4]{glmer}} in
 #'	\emph{lme4} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
+#'	@name model.interface.glmerMod-class (lme4 package)
 #------------------------------------------------------------------------------
-model.interface.glmerMod <- setRefClass(
-	"model.interface.glmerMod", contains = "model.interface"
+NULL
+
+model.interface.glmerMod.class <- R6::R6Class(
+	"model.interface.glmerMod", inherit = model.interface.default.class
 )
 
+model.interface.glmerMod <- model.interface.glmerMod.class$new
+
 
 #------------------------------------------------------------------------------
-model.interface.glmerMod$methods(
-	get.data = function(x, envir, package = "", ...) {
+model.interface.glmerMod.class$set(
+	"public", "get.data",
+	function(x, envir, package = "", ...) {
 		if (is.call(x)){
-			return(callSuper(x, envir, package, ...))
+			return(super$get.data(x, envir, package, ...))
 		} else {
 			d <- x@frame
 			attr(d, "terms") <- NULL
@@ -29,8 +33,9 @@ model.interface.glmerMod$methods(
 
 
 #------------------------------------------------------------------------------
-model.interface.glmerMod$methods(
-	predict.types = function() {
+model.interface.glmerMod.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
