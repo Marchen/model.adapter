@@ -84,7 +84,7 @@ is.generic <- function(fun.name, package = "") {
 #'	@param package
 #'		a character string representing package name of the funciton.
 #'
-#'	@return matched call.
+#'	@return matched fully-named call.
 #'
 #'	@examples
 #'		match.generic.call(substitute(hist(1:10)))

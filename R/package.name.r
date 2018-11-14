@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	Get package name from function name or object.
+#'	(Internal) Get package name from function name or object.
 #'
 #'	@param x function name, call or model object.
 #'	@param envir an environment where \code{x} is evaluated.

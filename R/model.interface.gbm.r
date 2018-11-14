@@ -22,8 +22,8 @@ model.interface.gbm.class$set(
 	"public", "get.data",
 	function(x, envir, package = "") {
 		# Extract data from call using default method.
-		# If default method couldn't get data, try to use data in call
-		# in the object.
+		# If default method couldn't get data, try extracting data in the call
+		# of the object.
 		if (is.call(x)) {
 			d <- super$get.data(x, envir)
 		} else {
