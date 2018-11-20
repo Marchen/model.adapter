@@ -23,7 +23,7 @@ model.interface.glmmadmb.class$set(
 	function(x, type = c("character", "family"), envir) {
 		# Get family character.
 		if (is.call(x)) {
-			family <- family.from.call(x, envir)
+			family <- extract.family.from.call(x, envir)
 		} else {
 			family <- x$family
 		}

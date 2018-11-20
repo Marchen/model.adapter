@@ -158,7 +158,7 @@ is.formula <- function(x) {
 #'	@param envir an environment where \code{x} is evaluated.
 #'	@return returns family in the call if available else NULL.
 #------------------------------------------------------------------------------
-family.from.call <- function(x, envir = parent.frame()) {
+extract.family.from.call <- function(x, envir = parent.frame()) {
 	f <- x$family
 	if (is.null(f)) {
 		# If family was not specified, try to get default family.

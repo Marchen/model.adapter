@@ -201,7 +201,7 @@ model.interface.default.class$set(
 	"public", "get.family",
 	function(x, type = c("character", "family"), envir) {
 		if (is.call(x)) {
-			family <- family.from.call(x, envir)
+			family <- extract.family.from.call(x, envir)
 		} else {
 			family <- try(stats::family(x), TRUE)
 			if (class(family) == "try-error") {
