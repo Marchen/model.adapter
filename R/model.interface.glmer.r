@@ -5,11 +5,8 @@
 #'	\emph{lme4} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.glmerMod-class (lme4)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.glmerMod.class <- R6::R6Class(
 	"model.interface.glmerMod", inherit = model.interface.default.class
 )

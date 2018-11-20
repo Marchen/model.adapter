@@ -7,7 +7,6 @@
 #'	get.call() function always returns NULL.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.RandomForest-class (party)
 #------------------------------------------------------------------------------
 model.interface.RandomForest.class <- R6::R6Class(

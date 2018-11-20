@@ -5,11 +5,8 @@
 #'	\emph{gbm} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
-#'	@name model.interface.gbm-class (mgcv)
+#'	@name model.interface.gbm-class (gbm)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.gbm.class <- R6::R6Class(
 	"model.interface.gbm", inherit = model.interface.default.class
 )

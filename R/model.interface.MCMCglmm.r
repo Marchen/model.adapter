@@ -10,11 +10,8 @@
 #'	families.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.MCMCglmm-class (MCMCglmm)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.MCMCglmm.class <- R6::R6Class(
 	"model.interface.MCMCglmm", inherit = model.interface.default.class
 )

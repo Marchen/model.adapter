@@ -7,11 +7,8 @@
 #'	get.call() function always returns NULL.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.gamm-class (mgcv)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.gamm.class <- R6::R6Class(
 	"model.interface.gamm", inherit = model.interface.default.class
 )

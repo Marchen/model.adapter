@@ -5,11 +5,8 @@
 #'	\emph{ranger} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.ranger-class (ranger)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.ranger.class <- R6::R6Class(
 	"model.interface.ranger", inherit = model.interface.default.class
 )

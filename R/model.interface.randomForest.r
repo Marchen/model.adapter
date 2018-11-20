@@ -5,11 +5,8 @@
 #'	\code{\link[randomForest]{randomForest}} in \emph{randomForest} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.randomForest-class (randomForest)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.randomForest.class <- R6::R6Class(
 	"model.interface.randomForest", inherit = model.interface.default.class
 )

@@ -5,14 +5,12 @@
 #'	\emph{stats} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.glm-class (stats)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.glm.class <- R6::R6Class(
 	"model.interface.glm", inherit = model.interface.default.class
 )
+
 model.interface.glm <- model.interface.glm.class$new
 
 

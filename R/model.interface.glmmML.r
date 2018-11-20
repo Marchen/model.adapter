@@ -6,11 +6,8 @@
 #'	rather than \emph{glmmML} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.glmmML-class (glmmML)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.glmmML.class <- R6::R6Class(
 	"model.interface.glmmML", inherit = model.interface.default.class
 )

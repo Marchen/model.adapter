@@ -5,11 +5,8 @@
 #'	\emph{tree} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.tree-class (tree)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.tree.class <- R6::R6Class(
 	"model.interface.tree", inherit = model.interface.default.class
 )

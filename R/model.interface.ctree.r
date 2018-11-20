@@ -8,7 +8,6 @@
 #
 #'	@include model.interface.default.r
 #'	@include model.interface.cforest.r
-#'	@family model.interface classes
 #'	@name model.interface.BinaryTree-class (party)
 #------------------------------------------------------------------------------
 model.interface.BinaryTree.class <- R6::R6Class(

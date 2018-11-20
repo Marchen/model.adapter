@@ -5,11 +5,8 @@
 #'	\emph{e1071} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.svm-class (svm)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.svm.class <- R6::R6Class(
 	"model.interface.svm", inherit = model.interface.default.class
 )

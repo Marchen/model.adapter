@@ -5,12 +5,8 @@
 #'	\emph{gam} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface classes
 #'	@name model.interface.Gam-class (gam)
 #------------------------------------------------------------------------------
-NULL
-
-# gam in gam package.
 model.interface.Gam.class <- R6::R6Class(
 	"model.interface.Gam", inherit = model.interface.default.class
 )

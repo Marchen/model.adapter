@@ -174,11 +174,8 @@ model.interface <- function(x = NULL) {
 #'			}
 #'		}
 #'
-#'	@family model.interface classes
 #'	@name model.interface-class
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.default.class <- R6::R6Class(
 	"model.interface"
 )
