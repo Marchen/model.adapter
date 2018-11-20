@@ -227,7 +227,7 @@ convert.family <- function(family, type = c("family", "character")) {
 #'	# But in the following situation, this can't work correctly.
 #'	test <- function() print("test")
 #'	a <- test
-#'	find.original.name(a)
+#'	model.adapter:::find.original.name(a)
 #------------------------------------------------------------------------------
 find.original.name <- function(fun) {
 	objects <- ls(envir = environment(fun))

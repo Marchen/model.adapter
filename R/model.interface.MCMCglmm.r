@@ -162,7 +162,7 @@ model.interface.MCMCglmm.class$set(
 #------------------------------------------------------------------------------
 #' (Internal) Check if the specified family of MCMCglmm is supported.
 #'
-#'	@param a character vector of length one specifing
+#'	@param family a character vector of length one specifing
 #------------------------------------------------------------------------------
 check.supported.family <- function(family) {
 	supported <- c(
