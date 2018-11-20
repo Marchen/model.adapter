@@ -7,8 +7,8 @@
 #'	get.call() function always returns NULL.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.RandomForest-class (party package)
+#'	@family model.interface classes
+#'	@name model.interface.RandomForest-class
 #------------------------------------------------------------------------------
 NULL
 

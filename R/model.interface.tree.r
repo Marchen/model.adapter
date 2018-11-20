@@ -5,8 +5,8 @@
 #'	\emph{tree} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.tree-class (tree package)
+#'	@family model.interface classes
+#'	@name model.interface.tree-class
 #------------------------------------------------------------------------------
 NULL
 

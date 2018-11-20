@@ -14,8 +14,6 @@
 #'
 #'	@section Adding support for new function:
 #'		To be continued...
-#'
-#'	@family model.interface
 #------------------------------------------------------------------------------
 model.interface <- function(x = NULL) {
 	UseMethod("model.interface")
@@ -176,6 +174,7 @@ model.interface <- function(x = NULL) {
 #'			}
 #'		}
 #'
+#'	@family model.interface classes
 #'	@name model.interface-class
 #------------------------------------------------------------------------------
 NULL

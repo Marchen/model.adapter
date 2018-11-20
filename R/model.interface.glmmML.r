@@ -6,8 +6,8 @@
 #'	rather than \emph{glmmML} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.glmmML-class (glmmML package)
+#'	@family model.interface classes
+#'	@name model.interface.glmmML-class
 #------------------------------------------------------------------------------
 NULL
 

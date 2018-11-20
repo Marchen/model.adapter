@@ -5,8 +5,8 @@
 #'	\code{\link[randomForest]{randomForest}} in \emph{randomForest} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.randomForest-class (randomForest package)
+#'	@family model.interface classes
+#'	@name model.interface.randomForest-class
 #------------------------------------------------------------------------------
 NULL
 

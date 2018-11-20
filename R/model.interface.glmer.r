@@ -5,8 +5,8 @@
 #'	\emph{lme4} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.glmerMod-class (lme4 package)
+#'	@family model.interface classes
+#'	@name model.interface.glmerMod-class
 #------------------------------------------------------------------------------
 NULL
 

@@ -5,8 +5,8 @@
 #'	\emph{mgcv} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.gam-class (mgcv package)
+#'	@family model.interface classes
+#'	@name model.interface.gam-class(mgcv)
 #------------------------------------------------------------------------------
 NULL
 

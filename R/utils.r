@@ -216,13 +216,13 @@ convert.family <- function(family, type = c("family", "character")) {
 #'
 #'	@examples
 #'	a <- ls
-#'	find.original.name(a)
+#'	model.adapter:::find.original.name(a)
 #'
 #'	a <- glm
-#'	find.original.name(a)
+#'	model.adapter:::find.original.name(a)
 #'
 #'	a <- function() print("test")
-#'	find.original.name(a)
+#'	model.adapter:::find.original.name(a)
 #'
 #'	# But in the following situation, this can't work correctly.
 #'	test <- function() print("test")

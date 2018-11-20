@@ -8,8 +8,8 @@
 #
 #'	@include model.interface.default.r
 #'	@include model.interface.cforest.r
-#'	@family model.interface
-#'	@name model.interface.BinaryTree-class (party package)
+#'	@family model.interface classes
+#'	@name model.interface.BinaryTree-class
 #------------------------------------------------------------------------------
 NULL
 

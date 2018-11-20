@@ -5,8 +5,8 @@
 #'	\emph{rpart} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.rpart-class (rpart package)
+#'	@family model.interface classes
+#'	@name model.interface.rpart-class
 #------------------------------------------------------------------------------
 NULL
 

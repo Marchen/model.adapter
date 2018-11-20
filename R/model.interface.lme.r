@@ -5,8 +5,8 @@
 #'	\emph{nlme} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.lme-class (nlme package)
+#'	@family model.interface classes
+#'	@name model.interface.lme-class
 #------------------------------------------------------------------------------
 NULL
 

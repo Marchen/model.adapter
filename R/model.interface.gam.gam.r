@@ -5,8 +5,8 @@
 #'	\emph{gam} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.Gam-class (gam package)
+#'	@family model.interface classes
+#'	@name model.interface.Gam-class(gam)
 #------------------------------------------------------------------------------
 NULL
 

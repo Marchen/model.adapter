@@ -5,8 +5,8 @@
 #'	\emph{stats} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.lm-class (stats package)
+#'	@family model.interface classes
+#'	@name model.interface.lm-class
 #------------------------------------------------------------------------------
 NULL
 

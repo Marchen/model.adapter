@@ -180,7 +180,7 @@
 #'		result may be returned.
 #'
 #'	@export model.adapter
-#'	@name model.adapter
+#'	@name model.adapter-class
 #------------------------------------------------------------------------------
 NULL
 

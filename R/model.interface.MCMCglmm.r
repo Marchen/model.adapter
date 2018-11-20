@@ -10,8 +10,8 @@
 #'	families.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.MCMCglmm-class (MCMCglmm package)
+#'	@family model.interface classes
+#'	@name model.interface.MCMCglmm-class
 #------------------------------------------------------------------------------
 NULL
 

@@ -5,8 +5,8 @@
 #'	\emph{e1071} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.svm-class (e1071 package)
+#'	@family model.interface classes
+#'	@name model.interface.svm-class
 #------------------------------------------------------------------------------
 NULL
 

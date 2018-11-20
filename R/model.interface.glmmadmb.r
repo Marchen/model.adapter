@@ -5,8 +5,8 @@
 #'	\emph{glmmML} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.glmmadmb-class (glmmADMB package)
+#'	@family model.interface classes
+#'	@name model.interface.glmmadmb-class
 #------------------------------------------------------------------------------
 NULL
 

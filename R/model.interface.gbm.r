@@ -5,8 +5,8 @@
 #'	\emph{gbm} package.
 #'
 #'	@include model.interface.default.r
-#'	@family model.interface
-#'	@name model.interface.gbm-class (gbm package)
+#'	@family model.interface classes
+#'	@name model.interface.gbm-class
 #------------------------------------------------------------------------------
 NULL
 
