@@ -16,11 +16,6 @@ Depends:
     stats,
     methods,
     R6
-Imports:
-    base,
-    stats,
-    methods,
-    R6
 Suggests:
     randomForest,
     party,
@@ -46,7 +41,8 @@ Collate:
     'model.interface.MCMCglmm.r'
     'model.interface.cforest.r'
     'model.interface.ctree.r'
-    'model.interface.gam.r'
+    'model.interface.gam.gam.r'
+    'model.interface.gam.mgcv.r'
     'model.interface.gamm.r'
     'model.interface.gbm.r'
     'model.interface.glm.r'
