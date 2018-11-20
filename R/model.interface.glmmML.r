@@ -63,6 +63,7 @@ model.interface.glmmML.class$set(
 #'		effect) predicted values are calculated. If TRUE, predicted values
 #'		conditioned to the random effect is calculated.
 #'	@param ... further arguments passed to other methods.
+#'	@importFrom stats model.matrix coef
 #-------------------------------------------------------------------------------
 predict.glmmML <- function(
 	object, newdata, type = c("response", "link"), conditional = FALSE, ...

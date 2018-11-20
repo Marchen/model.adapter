@@ -177,6 +177,7 @@ model.interface <- function(x = NULL, ...) {
 #'		}
 #'
 #'	@name model.interface-class
+#'	@importFrom stats terms
 #------------------------------------------------------------------------------
 model.interface.default.class <- R6::R6Class("model.interface")
 

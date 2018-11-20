@@ -1,16 +1,7 @@
 #------------------------------------------------------------------------------
-#'	(Internal) Is a function S3 generic?
-#'
-#'	This function \emph{roughly} test a function is S3 generic.
-#'
-#'	@param fun.name a character string naming the function.
-#'
-#'	@return
-#'		returns TRUE if fun.name is S3 generic function and FALSE otherwise.
-#'
 #'	@examples
-#'	is.s3.generic("plot")
-#'	is.s3.generic("glm")
+#'	model.adapter:::is.s3.generic("plot")
+#'	model.adapter:::is.s3.generic("glm")
 #'	@describeIn is.generic (Internal) function for S3 generic function.
 #------------------------------------------------------------------------------
 is.s3.generic <- function(fun.name) {
@@ -23,20 +14,11 @@ is.s3.generic <- function(fun.name) {
 
 
 #------------------------------------------------------------------------------
-#'	(Internal) Is a function S4 generic?
-#'
-#'	This function \emph{roughly} test a function is S4 generic.
-#'
-#'	@param fun.name a character string of function name.
-#'	@param packae a character string of package name.
-#'
-#'	@return
-#'		returns TRUE if fun.name is S4 generic function and FALSE otherwise.
-#'
 #'	@examples
-#'	is.s4.generic("plot")
-#'	is.s4.generic("lmer")
+#'	model.adapter:::is.s4.generic("plot")
+#'	model.adapter:::is.s4.generic("lmer")
 #'	@describeIn is.generic (Internal) function for S4 generic function.
+#'	@importFrom methods isGeneric
 #------------------------------------------------------------------------------
 is.s4.generic <- function(fun.name, package = "") {
 	search.path <- sprintf("package:%s", package)
@@ -54,13 +36,13 @@ is.s4.generic <- function(fun.name, package = "") {
 #'	This function \emph{roughly} test a function is generic.
 #'
 #'	@param fun.name a character string naming the function.
-#'	@param packae a character string of package name.
+#'	@param package a character string of package name.
 #'
 #'	@return returns TRUE if fun.name is generic function and FALSE otherwise.
 #'
 #'	@examples
-#'	is.generic("plot")
-#'	is.generic("glm")
+#'	model.adapter:::is.generic("plot")
+#'	model.adapter:::is.generic("glm")
 #------------------------------------------------------------------------------
 is.generic <- function(fun.name, package = "") {
 	return(is.s3.generic(fun.name) | is.s4.generic(fun.name, package))
@@ -87,7 +69,9 @@ is.generic <- function(fun.name, package = "") {
 #'	@return matched fully-named call.
 #'
 #'	@examples
-#'		match.generic.call(substitute(hist(1:10)))
+#'		model.adapter:::match.generic.call(
+#'			substitute(hist(1:10)), environment()
+#'		)
 #------------------------------------------------------------------------------
 match.generic.call <- function(call, envir, package = "") {
 	# Non-generic functions.
@@ -104,13 +88,11 @@ match.generic.call <- function(call, envir, package = "") {
 
 
 #------------------------------------------------------------------------------
-#	match.call considering generic functions.
-#
-#	Args:
-#		matched.call (call):
-#			a call to be matched.
-#		envir (environment):
-#			the environment where calls are evaludated.
+#'	(Internal) 'match.call' considering generic functions.
+#'
+#'	@param call a call to be matched.
+#'	@param envir the environment where calls are evaludated.
+#'	@importFrom utils getS3method
 #------------------------------------------------------------------------------
 match.generic.call.s3 <- function(call, envir) {
 	# Match function without considering generic function.
@@ -145,6 +127,7 @@ match.generic.call.s3 <- function(call, envir) {
 #'
 #'	@param x an object.
 #'	@return returns TRUE if \emph{x} is formula otherwise returns FALSE.
+#'	@importFrom methods is
 #------------------------------------------------------------------------------
 is.formula <- function(x) {
 	return(is(x, "formula"))
@@ -247,6 +230,8 @@ find.original.name <- function(fun) {
 #'	@param type
 #'		a character vector denoting type of return value.
 #'		"function" or "character" can be used. "character" is default.
+#'	@param envir
+#'		an environment where to evaluate the call.
 #'
 #'	@return
 #'		If type is "function", function object.
@@ -255,7 +240,9 @@ find.original.name <- function(fun) {
 #'		this funciton tries to find original name of it.
 #'
 #'	@examples
-#'		get.function(substitute(glm(Sepal.Length ~ ., data = iris)))
+#'		model.adapter:::get.function(
+#'			substitute(glm(Sepal.Length ~ ., data = iris))
+#'		)
 #------------------------------------------------------------------------------
 get.function <- function(
 	call, type = c("function", "character"), envir = parent.frame()
@@ -300,11 +287,11 @@ get.function <- function(
 #'		# . in formula is expanded to full form.
 #'		data(iris)
 #'		f <- Sepal.Length ~ .
-#'		x.vars(f, data = iris)
+#'		model.adapter:::x.names.from.formula(f, data = iris)
 #'
 #'		# Getting explanatory variables in their basic form.
 #'		f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width^2)
-#'		x.vars(f, data = iris, type = "base")
+#'		model.adapter:::x.names.from.formula(f, data = iris, type = "base")
 #------------------------------------------------------------------------------
 x.names.from.formula <- function(
 	formula, data = NULL, specials = NULL, type = c("all", "base")

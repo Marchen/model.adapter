@@ -182,8 +182,6 @@
 #'	@export model.adapter
 #'	@name model.adapter-class
 #------------------------------------------------------------------------------
-NULL
-
 model.adapter <- R6::R6Class(
 	"model.adapter",
 	private = list(

@@ -8,13 +8,16 @@
 #'
 #'	@examples
 #'	# Get package name from function name
-#'	package.name("cforest")
+#'	require(party)
+#'	model.adapter:::package.name("cforest", environment())
 #'	# Get package name from function call.
-#'	package.name(substitute(ctree(Petal.Length~., data=iris)))
+#'	model.adapter:::package.name(
+#'		substitute(ctree(Petal.Length~., data=iris)), environment()
+#'	)
 #'	# Get package name from object.
 #'	data(iris)
 #'	object <- lm(Petal.Length ~ ., data = iris)
-#'	package.name(object)
+#'	model.adapter:::package.name(object, environment())
 #------------------------------------------------------------------------------
 package.name <- function(x, envir){
 	UseMethod("package.name", x)
@@ -23,6 +26,8 @@ package.name <- function(x, envir){
 #-------------------------------------------------------------------------------
 #'	@describeIn package.name Default S3 method.
 #'	@method package.name default
+#'	@export
+#'	@importFrom methods is
 #-------------------------------------------------------------------------------
 package.name.default <- function(x, envir){
 	# Because Gam class inherts glm and lm, evaluate Gam first.
@@ -47,6 +52,7 @@ package.name.default <- function(x, envir){
 #-------------------------------------------------------------------------------
 #'	@describeIn package.name Method for character.
 #'	@method package.name character
+#'	@export
 #-------------------------------------------------------------------------------
 package.name.character <- function(x, envir) {
 	fun <- try(get(x, envir = envir), silent = TRUE)
@@ -75,6 +81,7 @@ package.name.character <- function(x, envir) {
 #-------------------------------------------------------------------------------
 #'	@describeIn package.name Method for call.
 #'	@method package.name call
+#'	@export
 #-------------------------------------------------------------------------------
 package.name.call <- function(x, envir) {
 	fun <- get.function(x, "function", envir)

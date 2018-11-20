@@ -10,7 +10,7 @@
 #'	@return a character literal of class name
 #'
 #'	@examples
-#'	get.class.name("cforest")
+#'	model.adapter:::get.class.name("cforest")
 #------------------------------------------------------------------------------
 get.class.name <- function(function.name, package.name){
 	class.name <- switch(
