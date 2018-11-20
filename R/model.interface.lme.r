@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.lme-class
+#'	@name model.interface.lme-class (nlme)
 #------------------------------------------------------------------------------
 NULL
 

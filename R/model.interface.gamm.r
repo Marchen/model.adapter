@@ -8,7 +8,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.gamm-class
+#'	@name model.interface.gamm-class (mgcv)
 #------------------------------------------------------------------------------
 NULL
 

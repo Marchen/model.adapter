@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.glm-class
+#'	@name model.interface.glm-class (stats)
 #------------------------------------------------------------------------------
 NULL
 

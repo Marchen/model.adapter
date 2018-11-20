@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.Gam-class(gam)
+#'	@name model.interface.Gam-class (gam)
 #------------------------------------------------------------------------------
 NULL
 

@@ -8,10 +8,8 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.RandomForest-class
+#'	@name model.interface.RandomForest-class (party)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.RandomForest.class <- R6::R6Class(
 	"model.interface.RandomForest", inherit = model.interface.default.class
 )

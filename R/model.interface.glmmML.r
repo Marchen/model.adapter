@@ -7,7 +7,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.glmmML-class
+#'	@name model.interface.glmmML-class (glmmML)
 #------------------------------------------------------------------------------
 NULL
 

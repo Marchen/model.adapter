@@ -9,10 +9,8 @@
 #'	@include model.interface.default.r
 #'	@include model.interface.cforest.r
 #'	@family model.interface classes
-#'	@name model.interface.BinaryTree-class
+#'	@name model.interface.BinaryTree-class (party)
 #------------------------------------------------------------------------------
-NULL
-
 model.interface.BinaryTree.class <- R6::R6Class(
 	"model.interface.BinaryTree", inherit = model.interface.default.class
 )

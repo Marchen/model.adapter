@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.gbm-class
+#'	@name model.interface.gbm-class (mgcv)
 #------------------------------------------------------------------------------
 NULL
 

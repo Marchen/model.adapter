@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.ranger-class
+#'	@name model.interface.ranger-class (ranger)
 #------------------------------------------------------------------------------
 NULL
 

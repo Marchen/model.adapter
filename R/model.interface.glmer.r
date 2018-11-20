@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.glmerMod-class
+#'	@name model.interface.glmerMod-class (lme4)
 #------------------------------------------------------------------------------
 NULL
 

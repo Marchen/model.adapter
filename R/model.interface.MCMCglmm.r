@@ -11,7 +11,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.MCMCglmm-class
+#'	@name model.interface.MCMCglmm-class (MCMCglmm)
 #------------------------------------------------------------------------------
 NULL
 

@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.randomForest-class
+#'	@name model.interface.randomForest-class (randomForest)
 #------------------------------------------------------------------------------
 NULL
 

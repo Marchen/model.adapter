@@ -6,7 +6,7 @@
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface classes
-#'	@name model.interface.gam-class(mgcv)
+#'	@name model.interface.gam-class (mgcv)
 #------------------------------------------------------------------------------
 NULL
 
