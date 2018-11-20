@@ -24,6 +24,7 @@ Suggests:
     e1071,
     lme4,
     glmmADMB,
+    MCMCglmm,
     glmmML,
     nlme,
     tree,
