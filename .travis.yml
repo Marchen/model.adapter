@@ -1,19 +1,19 @@
 language: r
 cache: packages
 r_binary_packages:
-  R6,
-  randomForest,
-  party,
-  gbm,
-  e1071,
-  lme4,
-  glmmADMB,
-  glmmML,
-  nlme,
-  tree,
-  rpart,
-  mgcv,
-  gam,
+  R6
+  randomForest
+  party
+  gbm
+  e1071
+  lme4
+  glmmADMB
+  glmmML
+  nlme
+  tree
+  rpart
+  mgcv
+  gam
   ranger
 repos:
   CRAN: https://cloud.r-project.org
