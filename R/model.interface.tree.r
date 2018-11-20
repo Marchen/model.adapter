@@ -11,6 +11,12 @@ model.interface.tree.class <- R6::R6Class(
 	"model.interface.tree", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface tree
+#'	@export
+#'	@describeIn model.interface S3 method for class 'tree'
+#------------------------------------------------------------------------------
 model.interface.tree <- model.interface.tree.class$new
 
 

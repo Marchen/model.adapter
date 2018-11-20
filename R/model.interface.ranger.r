@@ -11,6 +11,12 @@ model.interface.ranger.class <- R6::R6Class(
 	"model.interface.ranger", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface ranger
+#'	@export
+#'	@describeIn model.interface S3 method for class 'ranger'
+#------------------------------------------------------------------------------
 model.interface.ranger <- model.interface.ranger.class$new
 
 

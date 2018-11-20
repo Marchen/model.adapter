@@ -16,6 +16,12 @@ model.interface.MCMCglmm.class <- R6::R6Class(
 	"model.interface.MCMCglmm", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface MCMCglmm
+#'	@export
+#'	@describeIn model.interface S3 method for class 'MCMCglmm'
+#------------------------------------------------------------------------------
 model.interface.MCMCglmm <- model.interface.MCMCglmm.class$new
 
 

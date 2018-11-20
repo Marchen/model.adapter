@@ -11,6 +11,12 @@ model.interface.glmerMod.class <- R6::R6Class(
 	"model.interface.glmerMod", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface glmerMod
+#'	@export
+#'	@describeIn model.interface S3 method for class 'glmerMod'
+#------------------------------------------------------------------------------
 model.interface.glmerMod <- model.interface.glmerMod.class$new
 
 

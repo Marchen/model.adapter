@@ -11,6 +11,12 @@ model.interface.svm.class <- R6::R6Class(
 	"model.interface.svm", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface svm
+#'	@export
+#'	@describeIn model.interface S3 method for class 'svm'
+#------------------------------------------------------------------------------
 model.interface.svm <- model.interface.svm.class$new
 
 

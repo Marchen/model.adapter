@@ -11,6 +11,12 @@ model.interface.randomForest.class <- R6::R6Class(
 	"model.interface.randomForest", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface randomForest
+#'	@export
+#'	@describeIn model.interface S3 method for class 'randomForest'
+#------------------------------------------------------------------------------
 model.interface.randomForest <- model.interface.randomForest.class$new
 
 

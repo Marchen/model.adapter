@@ -177,6 +177,13 @@ model.interface <- function(x = NULL) {
 #'	@name model.interface-class
 #------------------------------------------------------------------------------
 model.interface.default.class <- R6::R6Class("model.interface")
+
+
+#------------------------------------------------------------------------------
+#'	@method model.interface default
+#'	@export
+#'	@describeIn model.interface default S3 method
+#------------------------------------------------------------------------------
 model.interface.default <- model.interface.default.class$new
 
 

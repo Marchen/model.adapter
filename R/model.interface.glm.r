@@ -11,6 +11,12 @@ model.interface.glm.class <- R6::R6Class(
 	"model.interface.glm", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface glm
+#'	@export
+#'	@describeIn model.interface S3 method for class 'glm'
+#------------------------------------------------------------------------------
 model.interface.glm <- model.interface.glm.class$new
 
 

@@ -14,6 +14,12 @@ model.interface.BinaryTree.class <- R6::R6Class(
 	"model.interface.BinaryTree", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface BinaryTree
+#'	@export
+#'	@describeIn model.interface S3 method for class 'BinaryTree'
+#------------------------------------------------------------------------------
 model.interface.BinaryTree <- model.interface.BinaryTree.class$new
 
 

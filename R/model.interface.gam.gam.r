@@ -11,6 +11,12 @@ model.interface.Gam.class <- R6::R6Class(
 	"model.interface.Gam", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface Gam
+#'	@export
+#'	@describeIn model.interface S3 method for class 'Gam'
+#------------------------------------------------------------------------------
 model.interface.Gam <- model.interface.Gam.class$new
 
 

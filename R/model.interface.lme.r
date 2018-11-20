@@ -11,6 +11,12 @@ model.interface.lme.class <- R6::R6Class(
 	"model.interface.lme", inherit = model.interface.default.class
 )
 
+
+#------------------------------------------------------------------------------
+#'	@method model.interface lme
+#'	@export
+#'	@describeIn model.interface S3 method for class 'lme'
+#------------------------------------------------------------------------------
 model.interface.lme <- model.interface.lme.class$new
 
 
