@@ -1,4 +1,3 @@
 language: r
 r: oldrel, release, devel
 cache: packages
-script: Rscript tests/test_all.r
