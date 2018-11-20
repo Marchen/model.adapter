@@ -31,6 +31,7 @@ Suggests:
     mgcv,
     gam (>= 1.15),
     ranger,
+    MASS,
 	testthat
 RoxygenNote: 6.1.1
 Collate:
