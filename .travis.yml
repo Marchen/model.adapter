@@ -15,7 +15,10 @@ r_binary_packages:
   - gam
   - ranger
   - MASS
-repos:
+
+  - class
+
+  repos:
   CRAN: https://cloud.r-project.org
   glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
 before_script:
