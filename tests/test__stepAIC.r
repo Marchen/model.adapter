@@ -1,4 +1,5 @@
 source("tests.r")
+library(lme)
 
 cat("Testing stepAIC...\n")
 # Prepare objects and calls for testing.
