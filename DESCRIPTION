@@ -27,6 +27,8 @@ Suggests:
     gbm,
     e1071,
     lme4,
+    glmmADMB,
+    glmmML,
     nlme,
     tree,
     rpart,
@@ -34,8 +36,8 @@ Suggests:
     gam (>= 1.15),
     ranger,
 	testthat
-RoxygenNote: 6.0.1
-Collate: 
+RoxygenNote: 6.1.1
+Collate:
     'const.r'
     'get.class.name.r'
     'ma.prediction.r'
@@ -44,6 +46,7 @@ Collate:
     'model.interface.MCMCglmm.r'
     'model.interface.cforest.r'
     'model.interface.ctree.r'
+    'model.interface.gam.mgcv.r'
     'model.interface.gam.r'
     'model.interface.gamm.r'
     'model.interface.gbm.r'
