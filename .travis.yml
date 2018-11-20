@@ -16,6 +16,29 @@ r_binary_packages:
   - gam
   - ranger
   - MASS
+  - TH.data
+  - multcomp
+  - gtable
+  - glue
+  - magrittr
+  - stringi
+  - iterators
+  - mvtnorm
+  - modeltools
+  - strucchange
+  - coin
+  - zoo
+  - sandwich
+  - gridExtra
+  - minqa
+  - nloptr
+  - Rcpp
+  - RcppEigen
+  - R2admb
+  - stringr
+  - plyr
+  - coda
+  - foreach
 repos:
   CRAN: https://cloud.r-project.org
   glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
