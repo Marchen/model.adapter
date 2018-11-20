@@ -33,7 +33,7 @@ model.interface.glmmadmb.class$set(
 			return(family)
 		}
 		# Convert family character to family object.
-		result <- try(format.family(family, type))
+		result <- try(convert.family(family, type))
 		if (class(result) == "try-error") {
 			msg <- sprintf(
 				"'%s' family object is not supported by glmmadmb.", family

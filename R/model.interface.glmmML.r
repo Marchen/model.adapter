@@ -27,7 +27,7 @@ model.interface.glmmML.class$set(
 		} else {
 			family <- x$call$family
 		}
-		return(format.family(family, type))
+		return(convert.family(family, type))
 	}
 )
 
@@ -78,7 +78,7 @@ predict.glmmML <- function(
 	if (type == "link") {
 		return(result)
 	} else {
-		family <- format.family(object$call$family, type = "family")
+		family <- convert.family(object$call$family, type = "family")
 		return(family$linkinv(result))
 	}
 }

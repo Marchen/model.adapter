@@ -218,7 +218,7 @@ model.interface.default.class$set(
 			}
 		}
 		if (!is.null(family)) {
-			return(format.family(family, type))
+			return(convert.family(family, type))
 		} else {
 			return(NULL)
 		}

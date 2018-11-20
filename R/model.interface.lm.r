@@ -21,7 +21,7 @@ model.interface.lm <- model.interface.lm.class$new
 model.interface.lm.class$set(
 	"public", "get.family",
 	function(x, type = c("character", "family"), envir) {
-		return(format.family("gaussian", type))
+		return(convert.family("gaussian", type))
 	}
 )
 

@@ -183,7 +183,7 @@ extract.family.from.call <- function(x, envir = parent.frame()) {
 #'		This internal function is called by \code{link{detect.model.type}} and
 #'		\code{\link{predict.glmmML}} functions.
 #------------------------------------------------------------------------------
-format.family <- function(family, type = c("family", "character")) {
+convert.family <- function(family, type = c("family", "character")) {
 	type <- match.arg(type)
 	if (is.character(family)) {
 		family <- get(family)

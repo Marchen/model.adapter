@@ -63,12 +63,12 @@ model.interface.MCMCglmm.class$set(
 		# Convert family object to character.
 		if (type == "character") {
 			if (class(family) != "character") {
-				family <- format.family(family, type)
+				family <- convert.family(family, type)
 			}
 			return(family)
 		}
 		if (type == "family") {
-			result <- try(format.family(family, type))
+			result <- try(convert.family(family, type))
 			if (class(result) == "try-error") {
 				msg <- sprintf(
 					"'%s' family object is not supported by MCMCglmm.", family

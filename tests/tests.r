@@ -417,11 +417,11 @@ ma.test$set(
 		if (is.null(f)) {
 			return()
 		}
-		f <- model.adapter:::format.family(f, "character")
+		f <- model.adapter:::convert.family(f, "character")
 		adapter <- model.adapter$new(
 			copy.call, package.name = private$package, envir = private$envir
 		)
-		adapter.family <- model.adapter:::format.family(
+		adapter.family <- model.adapter:::convert.family(
 			adapter$family, "character"
 		)
 		message <- sprintf(
