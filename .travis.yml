@@ -2,4 +2,6 @@ language: r
 cache: packages
 repos:
   CRAN: https://cloud.r-project.org
-  ropensci: http://glmmadmb.r-forge.r-project.org/repos
+  glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
+before_script:
+  rm .travis.yml
