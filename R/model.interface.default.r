@@ -8,6 +8,8 @@
 #'	@param x
 #'		an object of supported models.
 #'		This is only used for dispatching S3 methods.
+#'	@param ...
+#'		not used.
 #'
 #'	@return
 #'		an object of derived class of \code{\link{model.interface-class}}.
@@ -15,7 +17,7 @@
 #'	@section Adding support for new function:
 #'		To be continued...
 #------------------------------------------------------------------------------
-model.interface <- function(x = NULL) {
+model.interface <- function(x = NULL, ...) {
 	UseMethod("model.interface")
 }
 
