@@ -2,6 +2,8 @@
 #	Test for MCMCglmm
 #==============================================================================
 
+source("tests.r")
+
 # Prepare data.
 iris2 <- make.test.data.frame()
 
@@ -9,8 +11,6 @@ iris2 <- make.test.data.frame()
 #------------------------------------------------------------------------------
 #	Tests without specification of 'data' argument.
 #------------------------------------------------------------------------------
-
-source("tests.r")
 
 test.data <- list(
 	call = list(
