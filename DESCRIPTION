@@ -46,7 +46,6 @@ Collate:
     'model.interface.MCMCglmm.r'
     'model.interface.cforest.r'
     'model.interface.ctree.r'
-    'model.interface.gam.mgcv.r'
     'model.interface.gam.r'
     'model.interface.gamm.r'
     'model.interface.gbm.r'
