@@ -44,3 +44,5 @@ repos:
   glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
 before_script:
   rm .travis.yml
+sudo:
+  true
