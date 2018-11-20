@@ -11,7 +11,8 @@ Description: This package provides standard way to access data and common
     ranger are supported.
 License: MIT + file LICENSE
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.0.0)
+Imports:
     base,
     utils,
     stats,
