@@ -443,14 +443,14 @@ ma.test$set(
 ma.test$set(
 	"private", "test__predict_types",
 	function() {
-		template <- "Test of predict.types() method from adapter by %s of %s"
+		template <- "Test of predict.types field from adapter by %s of %s"
 		run.test <- function(adapter) {
 			regexp <- "private\\$adapter\\."
 			type <- gsub(regexp, "", deparse(substitute(adapter)))
 			message <- sprintf(template, type, private$function.name)
 			test_that(
 				message, {
-					types <- adapter$get("predict.types")()
+					types <- adapter$get("interface")$predict.types
 					expect_type(types, "character")
 					expect_length(types, 4)
 					expect_identical(

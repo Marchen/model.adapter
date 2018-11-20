@@ -1,33 +1,30 @@
 #------------------------------------------------------------------------------
-#	ranger関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
-#'	model.interface class for ranger
+#'	(Internal) model.interface class for ranger
 #'
 #'	This reference class contains methods for \code{\link[ranger]{ranger}} in
 #'	\emph{ranger} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.ranger
-#'	@exportClass model.interface.ranger
+#'	@name model.interface.ranger-class (ranger package)
 #------------------------------------------------------------------------------
-model.interface.ranger <- setRefClass(
-	"model.interface.ranger", contains = "model.interface"
+NULL
+
+model.interface.ranger.class <- R6::R6Class(
+	"model.interface.ranger", inherit = model.interface.default.class
 )
 
+model.interface.ranger <- model.interface.ranger.class$new
+
 
 #------------------------------------------------------------------------------
-#	ranger用predict()メソッド。
-#------------------------------------------------------------------------------
-model.interface.ranger$methods(
-	predict = function(object, newdata = NULL, type, ...) {
+model.interface.ranger.class$set(
+	"public", "predict",
+	function(object, newdata = NULL, type, ...) {
 		# If no newdata specified, prepare newdata using get.data() method.
 		if (is.null(newdata)) {
 			package <- package.name(object, parent.frame())
-			newdata <- .self$get.data(object, parent.frame(), package)
+			newdata <- self$get.data(object, parent.frame(), package)
 		}
 		# name of 'newdata' argument is 'data' for ranger.
 		if (type == "prob") {
@@ -54,11 +51,10 @@ model.interface.ranger$methods(
 
 
 #------------------------------------------------------------------------------
-#	formulaを取得する。
-#------------------------------------------------------------------------------
-model.interface.ranger$methods(
-	get.formula = function(x, envir, package = "") {
-		f <- callSuper(x, envir, package)
+model.interface.ranger.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
+		f <- super$get.formula(x, envir, package)
 		if (is.null(f)) {
 			call <- match.generic.call(x$call, envir, package)
 			f <- formula(call$formula)
@@ -66,4 +62,3 @@ model.interface.ranger$methods(
 		return(f)
 	}
 )
-

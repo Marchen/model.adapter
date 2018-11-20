@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-#'	Get package name from function name or object.
+#'	(Internal) Get package name from function name or object.
 #'
 #'	@param x function name, call or model object.
 #'	@param envir an environment where \code{x} is evaluated.
@@ -16,18 +16,6 @@
 #'	object <- lm(Petal.Length ~ ., data = iris)
 #'	package.name(object)
 #------------------------------------------------------------------------------
-#	関数名やクラスのオブジェクト名からその関数/そのオブジェクトを生成した関数が
-#	含まれるパッケージ名を取得する関数。対応してない関数は関数名やクラス名の
-#	１つめがパッケージ名だと仮定してパッケージ名を返す。
-#
-#	Args:
-#		x: 関数名、関数の呼び出し、もしくはモデルオブジェクト。
-#		envir: 関数呼び出しを評価する環境。
-#
-#	Value:
-#		その関数が含まれる/そのオブジェクトを作成した関数が含まれるパッケージ名
-#		を表す文字列。
-#------------------------------------------------------------------------------
 package.name <- function(x, envir){
 	UseMethod("package.name", x)
 }
@@ -37,7 +25,7 @@ package.name <- function(x, envir){
 #'	@method package.name default
 #-------------------------------------------------------------------------------
 package.name.default <- function(x, envir){
-	# gamはglmやlmを引き継いでるので、先に評価
+	# Because Gam class inherts glm and lm, evaluate Gam first.
 	if (is(x, "Gam")) return("gam")
 	if (is(x, "gam")) return("mgdv")
 	if (is(x, "lm")) return("stats")

@@ -31,4 +31,3 @@ expect_silent(
 
 # Remove objects.
 rm(calls, objects, result.stepAIC, null)
-

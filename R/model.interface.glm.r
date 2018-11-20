@@ -1,29 +1,25 @@
 #------------------------------------------------------------------------------
-#	glm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
-#'	model.interface class for glm
+#'	(Internal) model.interface class for glm
 #'
 #'	This reference class contains methods for \code{\link[stats]{glm}} in
 #'	\emph{stats} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.glm
-#'	@exportClass model.interface.glm
+#'	@name model.interface.glm-class (stats package)
 #------------------------------------------------------------------------------
-model.interface.glm <- setRefClass(
-	"model.interface.glm", contains = "model.interface"
+NULL
+
+model.interface.glm.class <- R6::R6Class(
+	"model.interface.glm", inherit = model.interface.default.class
 )
+model.interface.glm <- model.interface.glm.class$new
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
-model.interface.glm$methods(
-	predict.types = function() {
+model.interface.glm.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )

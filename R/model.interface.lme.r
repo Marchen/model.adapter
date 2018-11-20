@@ -1,29 +1,26 @@
 #------------------------------------------------------------------------------
-#	lme関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
-#'	model.interface class for lme
+#'	(Internal) model.interface class for lme
 #'
 #'	This reference class contains methods for \code{\link[nlme]{lme}} in
 #'	\emph{nlme} package.
 #'
-#'	Following methods are overriden.
-#'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.lme
-#'	@exportClass model.interface.lme
+#'	@name model.interface.lme-class (nlme package)
 #------------------------------------------------------------------------------
-model.interface.lme <- setRefClass(
-	"model.interface.lme", contains = "model.interface"
+NULL
+
+model.interface.lme.class <- R6::R6Class(
+	"model.interface.lme", inherit = model.interface.default.class
 )
 
+model.interface.lme <- model.interface.lme.class$new
+
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
-model.interface.lme$methods(
-	get.call = function(x) {
+model.interface.lme.class$set(
+	"public", "get.call",
+	function(x) {
 		call.list <- as.list(x$call)
 		call.list[[1]] <- substitute(lme)
 		return(as.call(call.list))
@@ -32,11 +29,10 @@ model.interface.lme$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデル構築に使われる引数からモデル式をあらわすformulaを取得する。
-#------------------------------------------------------------------------------
-model.interface.lme$methods(
-	get.formula = function(x, envir, package = "") {
-		# Get call and convert it to a list / callを取得しリストに変換。
+model.interface.lme.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
+		# Get call and convert it to a list.
 		if (is.object(x)) {
 			cl <- x$call
 		} else {
@@ -53,11 +49,9 @@ model.interface.lme$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictメソッド。
-#	random効果のmarginalizeのため、levelsを0に設定。
-#------------------------------------------------------------------------------
-model.interface.lme$methods(
-	predict = function(object, newdata, ...) {
+model.interface.lme.class$set(
+	"public", "predict",
+	function(object, newdata, ...) {
 		# set level = 0 to marginalize random effect.
 		if (is.null(newdata)) {
 			fit <- stats::predict(object, level = 0, ...)
@@ -67,29 +61,3 @@ model.interface.lme$methods(
 		return(fit)
 	}
 )
-
-
-#------------------------------------------------------------------------------
-#	モデルオブジェクトから説明変数の係数を取得する。
-#------------------------------------------------------------------------------
-model.interface.lme$methods(
-	get.fixed = function(object, intercept = TRUE) {
-		result <- object$coefficients$fixed
-		if (!intercept) {
-			result <- result[names(result) != "(Intercept)"]
-		}
-		return(result)
-	}
-)
-
-
-#------------------------------------------------------------------------------
-#	モデルオブジェクトから切片の推定値を取得する。
-#------------------------------------------------------------------------------
-model.interface.lme$methods(
-	get.intercept = function(object) {
-		return(object$coefficients$fixed["(Intercept)"])
-	}
-)
-
-

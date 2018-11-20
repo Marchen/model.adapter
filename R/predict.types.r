@@ -11,18 +11,6 @@
 #'
 #' @return a character representing predict.types.
 #------------------------------------------------------------------------------
-#	predict.typesに使う文字列ベクトルを作成する。
-#
-#	Args:
-#		predict.types: predict.typesに使う文字列。
-#		reponse: 応答変数のスケールでの予測値を計算させる時のtype。
-#		link: リンク関数のスケールでの予測値を計算させる時のtype。
-#		prob: 各クラスの確率を計算させる時のtype。
-#		class: 予測されるクラスのラベルを計算させる時のtype。
-#
-#	Value:
-#		predict.typesに使う文字列。
-#------------------------------------------------------------------------------
 make.predict.types <- function(
 	predict.types,
 	response = "response", link = "link", prob = "prob", class = "class"

@@ -26,4 +26,3 @@ test.data <- list(
 test.model.adapter("glmmadmb", iris2, test.data)
 
 rm(test.data, iris2)
-

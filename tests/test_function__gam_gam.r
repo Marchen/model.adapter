@@ -9,4 +9,3 @@ test <- glm.type.test.runner$new(
 )
 test$run()
 rm(test)
-

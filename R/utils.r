@@ -49,14 +49,6 @@ is.s4.generic <- function(fun.name, package = "") {
 
 
 #------------------------------------------------------------------------------
-#	関数が総称関数かをおおざっぱに調べる。
-#
-#	Args:
-#		fun.name: 関数名を表す文字列。
-#
-#	Value:
-#		総称関数ならTRUE、それ以外ならFALSE。
-#------------------------------------------------------------------------------
 #'	(Internal) Is a function generic?
 #'
 #'	This function \emph{roughly} test a function is generic.
@@ -76,15 +68,6 @@ is.generic <- function(fun.name, package = "") {
 
 
 #------------------------------------------------------------------------------
-#	総称関数もたどってmatch.call()を行う。
-#
-#	Args:
-#		call: 引数をフルネームにするcall。
-#		envir: callを評価する環境。
-#
-#	Value:
-#		引数をフルネームにしたcall。
-#------------------------------------------------------------------------------
 #'	(Internal) match.call() with handling of generic function.
 #'
 #'	Some generic functions have different arguments for different classes. In
@@ -101,14 +84,13 @@ is.generic <- function(fun.name, package = "") {
 #'	@param package
 #'		a character string representing package name of the funciton.
 #'
-#'	@return matched call.
+#'	@return matched fully-named call.
 #'
 #'	@examples
 #'		match.generic.call(substitute(hist(1:10)))
 #------------------------------------------------------------------------------
 match.generic.call <- function(call, envir, package = "") {
 	# Non-generic functions.
-	# 総称関数でなければ、そのまま値を返す。
 	fun.name <- get.function(call, "character", envir)
 	if (!is.generic(fun.name, package)) {
 		fun <- match.fun(fun.name)
@@ -159,13 +141,6 @@ match.generic.call.s3 <- function(call, envir) {
 
 
 #------------------------------------------------------------------------------
-#	変数がformulaかを調べる。
-#
-#	Args:
-#		x: 変数。
-#	Value:
-#		xがformulaならTRUE、違えばFALSE。
-#------------------------------------------------------------------------------
 #'	(Internal) Check an object is formula.
 #'
 #'	@param x an object.
@@ -176,14 +151,6 @@ is.formula <- function(x) {
 }
 
 
-#------------------------------------------------------------------------------
-#	関数呼び出しのcallからfamilyを取得する。
-#
-#	Args:
-#		x: 関数呼び出しのcall。
-#		envir: callを評価する環境。
-#	Value:
-#		familyが取得できればfamily、取得できなかったらNULL。
 #------------------------------------------------------------------------------
 #'	(Internal) Get family from function call.
 #'
@@ -202,14 +169,6 @@ family.from.call <- function(x, envir = parent.frame()) {
 }
 
 
-#------------------------------------------------------------------------------
-#	familyのフォーマットを揃える。
-#
-#	Args:
-#		family: familyオブジェクト、関数、文字列、symbol
-#		type:
-#			familyならfamilyオブジェクトを、characterならfamily名を表す文字列
-#			を返す。
 #------------------------------------------------------------------------------
 #'	(Internal) Format and check consistency of family.
 #'
@@ -244,14 +203,6 @@ format.family <- function(family, type = c("family", "character")) {
 }
 
 
-#------------------------------------------------------------------------------
-#	関数のオリジナルの名前を取得する。
-#
-#	Args:
-#		fun: 関数。
-#
-#	Value:
-#		関数名。
 #------------------------------------------------------------------------------
 #'	(Internal) Find original name of the function.
 #'
@@ -288,17 +239,6 @@ find.original.name <- function(fun) {
 }
 
 
-#------------------------------------------------------------------------------
-#	関数、関数名をcallから取得する。
-#
-#	Args:
-#		call: 関数呼び出しが入ったcall。
-#		type:
-#			結果の種類。"function"なら関数を、"character"なら文字列を返す。
-#			初期値は"character"
-#
-#	Value:
-#		"function"なら関数を、"character"なら文字列を返す。
 #------------------------------------------------------------------------------
 #'	(Internal) Get function and function name from call
 #'
@@ -339,17 +279,7 @@ get.function <- function(
 
 
 #------------------------------------------------------------------------------
-#	formulaから説明変数名（ランダム変数を含まない）を取得する。
-#
-#	Args:
-#		formula: 説明変数名を取り出す式。
-#		data: .を展開するのに使うdata.frame。
-#		specials: terms.formulaに渡す特殊文字。
-#
-#	Value:
-#		説明変数名が格納された文字列ベクトル。
-#------------------------------------------------------------------------------
-#'	Get names of explanatory variables (excluding random factor) from formula.
+#'	(Internal) Get names of explanatory variables (excluding random factor) from formula.
 #'
 #'	@param formula a formula object from which variable names are obtained.
 #'	@param data a data.frame used to expand . in the formula.
@@ -375,8 +305,6 @@ get.function <- function(
 #'		# Getting explanatory variables in their basic form.
 #'		f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width^2)
 #'		x.vars(f, data = iris, type = "base")
-#'
-#' @export
 #------------------------------------------------------------------------------
 x.names.from.formula <- function(
 	formula, data = NULL, specials = NULL, type = c("all", "base")
@@ -403,4 +331,3 @@ x.names.from.formula <- function(
 	vars <- unique(subset(vars, !vars %in% c("", "1")))
 	return(vars)
 }
-

@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 #	Because current version of predict.merMod oes not support predicting
 #	with newdata when formula has ".", following test does not use "."
-#	in the formula. 
+#	in the formula.
 #
 #	object <- lmer(Sepal.Length ~ . + (1 | Species), data = iris)
 #	predict(object, newdata=iris)

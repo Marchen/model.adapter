@@ -64,53 +64,64 @@
 #'
 #'	@section Methods:
 #'
-#'		\subsection{\code{Generate a new object}}{
-#'			\code{
-#				adapter <- model.adapter$new(x, envir = parent.frame(2L), data = NULL, package.name = NULL)
-#'			}
-#'			\describe{
-#'				\item{\code{x}}{
-#'					an object of supported models or a call for a model
-#'					function.
-#'				}
-#'				\item{\code{envir = parent.frame(2L)}}{
-#'					an environment in which call in x is evaluated.
-#'					Default value is the environment where the object of
-#'					model.adapter was created.
-#'				}
-#'				\item{\code{data = NULL}}{
-#'					a data.frame used for further manipulations.
-#'				}
-#'				\item{\code{package.name = NULL}}{
-#'					a character specifying package name of the function/object.
-#'					If not specified, package.name is automatically determined
-#'					from \code{x}. This is mainly used to control functions
-#'					with same name in different packages (e.g., \code{gam} in
-#'					\code{gam} and \code{mgcv} packages).
-#'				}
-#'			}
-#'		}
+#'		\strong{\code{model.adapter$new(x, envir = parent.frame(2L), data = NULL, package.name = NULL)}}
 #'
-#'		\subsection{Access names of explanatory variables}{
-#'			\code{adapter$x.names(specials = NULL, type = c("all", "base"))}
-#'			\describe{
-#'				\item{\code{specials = NULL}}{
-#'					special characters to be passed to \link{terms}.
-#'				}
-#'				\item{\code{type = c("all", "base")}}{
-#'					if "all", this function returns all explanatory variables
-#'					including interactions, higher order terms, splines, etc.
-#'					If "base" only basic form of the variables are returned.
+#'			Generate a new object.
+#'
+#'			\subsection{Args}{
+#'				\describe{
+#'					\item{\code{x}}{
+#'						an object of supported models or a call for a model
+#'						function.
+#'					}
+#'					\item{\code{envir = parent.frame(2L)}}{
+#'						an environment in which call in x is evaluated.
+#'						Default value is the environment where the object of
+#'						model.adapter was created.
+#'					}
+#'					\item{\code{data = NULL}}{
+#'						a data.frame used for further manipulations.
+#'					}
+#'					\item{\code{package.name = NULL}}{
+#'						a character specifying package name of the
+#'						function/object. If not specified, package.name is
+#'						automatically determined from \code{x}. This is mainly
+#'						used to control functions with same name in different
+#'						packages (e.g., \code{gam} in \code{gam} and
+#'						\code{mgcv} packages).
+#'					}
 #'				}
 #'			}
-#'		}
 #'
-#'		\subsection{Access names of response variables}{
-#'			\code{adapter$y.names()}
-#'		}
+#'		\strong{\code{model.adapter$x.names(specials = NULL, type = c("all", "base"))}}
 #'
-#'		\subsection{Use predict method}{
-#'			\code{adapter$predict(newdata = NULL, type = c("response", "link", "prob", "class"), random = ~0, ...)}
+#'			Access names of explanatory variables.
+#'
+#'			\subsection{Args}{
+#'				\describe{
+#'					\item{\code{specials = NULL}}{
+#'						special characters to be passed to \link{terms}.
+#'					}
+#'					\item{\code{type = c("all", "base")}}{
+#'						if "all", this function returns all explanatory variables
+#'						including interactions, higher order terms, splines, etc.
+#'						If "base" only basic form of the variables are returned.
+#'					}
+#'				}
+#'			}
+#'
+#'			\subsection{Returns}{
+#'				a character vector of names of explanatory variables.
+#'			}
+#'
+#'		\strong{\code{model.adapter$y.names()}}
+#'
+#'			Access names of response variables.
+#'
+#'		\strong{\code{model.adapter$predict(newdata = NULL, type = c("response", "link", "prob", "class"), random = ~0, ...)}}
+#'
+#'			Use predict method.
+#'
 #'			\subsection{Args}{
 #'				\describe{
 #'					\item{\code{newdata = NULL}}{
@@ -139,13 +150,15 @@
 #'					}
 #'				}
 #'			}
+#'
 #'			\subsection{Returns}{
 #'				a \code{\link{ma.prediction}} object.
 #'			}
-#'		}
 #'
-#'		\subsection{Calculate residuals of the model}{
-#'			\code{adapter$residuals(type = c("response", "link"))}
+#'		\strong{\code{adapter$residuals(type = c("response", "link"))}}
+#'
+#'			Calculate residuals of the model.
+#'
 #'			\subsection{Args}{
 #'				\describe{
 #'					\item{type = c("response", "link")}{
@@ -154,15 +167,15 @@
 #'					}
 #'				}
 #'			}
+#'
 #'			\subsection{Returns}{
 #'				a numeric vector of residuals.
 #'			}
-#'		}
 #'
-#'	@section Details
+#'	@section Details:
 #'
-#'		When calling \emph{model.adapter$new} using do.call, please specify
-#'		\emph{quote = TRUE} when using \emph{model.adapter} with call.
+#'		When calling \emph{model.adapter$new} using model call by
+#'		\code{do.call}, please specify \emph{quote = TRUE}.
 #'		Without it, a call of function in \emph{x} is evaluated and unintended
 #'		result may be returned.
 #'
@@ -259,7 +272,7 @@ model.adapter$set(
 			fun.name <- get.function(private$src, "character", private$envir)
 			code <- sprintf(
 				"model.interface.%s(%s)",
-				get.class.name(fun.name, self$package),
+				get.class.name(fun.name, self$package.name),
 				paste0(deparse(private$src), collapse = "")
 			)
 			private$interface <- eval(parse(text = code), environment())
@@ -419,19 +432,6 @@ model.adapter$set(
 
 
 #------------------------------------------------------------------------------
-#	Returns a character vector representing conversion table from the
-#	shared predict types to function specific type for each predict method of
-#	the given function.
-#------------------------------------------------------------------------------
-model.adapter$set(
-	"private", "predict.types",
-	function() {
-		return(private$interface$predict.types())
-	}
-)
-
-
-#------------------------------------------------------------------------------
 #	Returns a character vector representing names of explanatory variables.
 #------------------------------------------------------------------------------
 model.adapter$set(
@@ -487,7 +487,7 @@ model.adapter$set(
 		}
 		pred <- private$interface$predict(
 			self$object, newdata = newdata,
-			type = private$interface$predict.types()[type],
+			type = private$interface$predict.types[type],
 			random = random, ...
 		)
 		# Make ma.prediction object.

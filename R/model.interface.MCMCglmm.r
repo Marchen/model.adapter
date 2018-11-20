@@ -1,31 +1,33 @@
 #------------------------------------------------------------------------------
-#	MCMCglmm関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
-#'	model.interface class for MCMCglmm
+#'	(Internal) model.interface class for MCMCglmm
 #'
 #'	This reference class contains methods for \code{\link[MCMCglmm]{MCMCglmm}}
-#'	in \emph{MCMCglmm} package.
-#'
-#'	Following methods are overriden.
+#'	in \emph{MCMCglmm} package. Because MCMCglmm object does not have original
+#'	data, this class can't obtain data from MCMCglmm objects. Also, the objects
+#'	does not have original call, this class cannot obtain call from the
+#'	objects. Link and inverse link functions are implimented only for
+#'	gaussian, poisson, categorical, multinomial, geometric and exponential
+#'	families.
 #'
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.MCMCglmm
-#'	@exportClass model.interface.MCMCglmm
+#'	@name model.interface.MCMCglmm-class (MCMCglmm package)
 #------------------------------------------------------------------------------
-model.interface.MCMCglmm <- setRefClass(
-	"model.interface.MCMCglmm", contains = "model.interface"
+NULL
+
+model.interface.MCMCglmm.class <- R6::R6Class(
+	"model.interface.MCMCglmm", inherit = model.interface.default.class
 )
 
+model.interface.MCMCglmm <- model.interface.MCMCglmm.class$new
+
 
 #------------------------------------------------------------------------------
-#	モデルのdataを取得する。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.data = function(x, envir, package = "", ...) {
+model.interface.MCMCglmm.class$set(
+	"public", "get.data",
+	function(x, envir, package = "", ...) {
 		if (is.call(x)) {
-			callSuper(x, envir, package, ...)
+			super$get.data(x, envir, package, ...)
 		} else {
 			return(NULL)
 		}
@@ -34,12 +36,11 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	formulaを取り出し。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.formula = function(x, envir, package = "") {
+model.interface.MCMCglmm.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
 		if (is.call(x)) {
-			return(callSuper(x, envir, package))
+			return(super$get.formula(x, envir, package))
 		} else {
 			return(x$Fixed$formula)
 		}
@@ -48,10 +49,9 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルのfamilyを取得する。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.family = function(x, type = c("character", "family"), envir) {
+model.interface.MCMCglmm.class$set(
+	"public", "get.family",
+	function(x, type = c("character", "family"), envir) {
 		# Get family
 		if (is.call(x)) {
 			family <- family.from.call(x, envir)
@@ -84,20 +84,18 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.call = function(x) {
+model.interface.MCMCglmm.class$set(
+	"public", "get.call",
+	function(x) {
 		return(NULL)
 	}
 )
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	predict.types = function() {
+model.interface.MCMCglmm.class$set(
+	"active", "predict.types",
+	function() {
 		type <- make.predict.types(
 			link = "terms", prob = "response", class = "response"
 		)
@@ -107,11 +105,10 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	リンク関数を返す。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.link = function(x, envir) {
-		f <- .self$get.family(x, "character", envir)
+model.interface.MCMCglmm.class$set(
+	"public", "get.link",
+	function(x, envir) {
+		f <- self$get.family(x, "character", envir)
 		check.supported.family(f)
 		link <- switch(
 			f,
@@ -128,11 +125,10 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	リンク関数の逆関数を返す。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.linkinv = function(x, envir) {
-		f <- .self$get.family(x, "character", envir)
+model.interface.MCMCglmm.class$set(
+	"public", "get.linkinv",
+	function(x, envir) {
+		f <- self$get.family(x, "character", envir)
 		check.supported.family(f)
 		link <- switch(
 			f,
@@ -149,12 +145,11 @@ model.interface.MCMCglmm$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデルの種類を返す。
-#------------------------------------------------------------------------------
-model.interface.MCMCglmm$methods(
-	get.model.type = function(x, envir, package = "", ...) {
+model.interface.MCMCglmm.class$set(
+	"public", "get.model.type",
+	function(x, envir, package = "", ...) {
 		classification <- c("categorical", "ordinal", "threshold")
-		family <- .self$get.family(x, "character", envir)
+		family <- self$get.family(x, "character", envir)
 		if (family %in% classification | grepl("^multinomial.*", family)) {
 			return("classification")
 		} else {
@@ -164,8 +159,6 @@ model.interface.MCMCglmm$methods(
 )
 
 
-#------------------------------------------------------------------------------
-#	familyがサポートされてるかをチェックする。
 #------------------------------------------------------------------------------
 #' (Internal) Check if the specified family of MCMCglmm is supported.
 #'
@@ -188,7 +181,3 @@ check.supported.family <- function(family) {
 		stop(msg)
 	}
 }
-
-
-
-

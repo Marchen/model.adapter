@@ -1,41 +1,38 @@
 #------------------------------------------------------------------------------
-#	cforest関数用のmodel.interfaceオブジェクトのジェネレーター。
-#	以下のメソッドをオーバーライドした。
-#------------------------------------------------------------------------------
-#'	model.interface class for cforest
+#'	(Internal) model.interface class for cforest
 #'
 #'	This reference class contains methods for \code{\link[party]{cforest}} in
 #'	\emph{party} package.
 #'	Note that because an object of RandomForest does not keep original call,
-#'	get.call() function always returns NULL. Also, when an instance of this
-#'	class is made from model object, 'call' field is always call("<undef>").
+#'	get.call() function always returns NULL.
 #'
-#'	Following methods are overriden.
-#
 #'	@include model.interface.default.r
 #'	@family model.interface
-#'	@export model.interface.RandomForest
-#'	@exportClass model.interface.RandomForest
+#'	@name model.interface.RandomForest-class (party package)
 #------------------------------------------------------------------------------
-model.interface.RandomForest <- setRefClass(
-	"model.interface.RandomForest", contains = "model.interface"
+NULL
+
+model.interface.RandomForest.class <- R6::R6Class(
+	"model.interface.RandomForest", inherit = model.interface.default.class
 )
 
+model.interface.RandomForest <- model.interface.RandomForest.class$new
+
 
 #------------------------------------------------------------------------------
-#	モデルオブジェクトからcallを取得する。
-#------------------------------------------------------------------------------
-model.interface.RandomForest$methods(
-	get.call = function(x) {
+model.interface.RandomForest.class$set(
+	"public", "get.call",
+	function(x) {
+		# RandomForest class does not have call.
 		return(NULL)
 	}
 )
 
+
 #------------------------------------------------------------------------------
-#	formulaを取り出し。
-#------------------------------------------------------------------------------
-model.interface.RandomForest$methods(
-	get.formula = function(x, envir, package = "") {
+model.interface.RandomForest.class$set(
+	"public", "get.formula",
+	function(x, envir, package = "") {
 		if (is.object(x)) {
 			# Manually construct formula.
 			y <- as.character(x@data@formula$response[2])
@@ -51,12 +48,11 @@ model.interface.RandomForest$methods(
 
 
 #------------------------------------------------------------------------------
-#	モデル作成に使われたデータを返す。
-#------------------------------------------------------------------------------
-model.interface.RandomForest$methods(
-	get.data = function(x, envir, package = "", ...) {
+model.interface.RandomForest.class$set(
+	"public", "get.data",
+	function(x, envir, package = "", ...) {
 		if (is.call(x)){
-			return(callSuper(x, envir, package, ...))
+			return(super$get.data(x, envir, package, ...))
 		} else {
 			input <- x@data@get("input")
 			response <- x@data@get("response")
@@ -67,25 +63,23 @@ model.interface.RandomForest$methods(
 
 
 #------------------------------------------------------------------------------
-#	predictのtypeを関数に合わせて変換する変換表を取得する。
-#------------------------------------------------------------------------------
-model.interface.RandomForest$methods(
-	predict.types = function() {
+model.interface.RandomForest.class$set(
+	"active", "predict.types",
+	function() {
 		return(make.predict.types(link = "response", class = "response"))
 	}
 )
 
 
 #------------------------------------------------------------------------------
-#	predictメソッド。
-#------------------------------------------------------------------------------
-model.interface.RandomForest$methods(
-	predict = function(object, newdata = NULL, type, ...) {
+model.interface.RandomForest.class$set(
+	"public", "predict",
+	function(object, newdata = NULL, type, ...) {
 		pred <- stats::predict(object, newdata = newdata, type = type)
 		if (type == "prob") {
 			pred <- do.call(rbind, pred)
 			# Remove the name of response variable from the column name.
-			f <- .self$get.formula(object, envir = parent.frame())
+			f <- self$get.formula(object, envir = parent.frame())
 			y.name <- as.character(f[2])
 			y.name <- gsub("\\.", "\\\\.", y.name)
 			remove.chars <- paste0(y.name, "\\.")
