@@ -36,6 +36,8 @@ Suggests:
     gam (>= 1.15),
     ranger,
 	testthat
+Remotes:
+    http://glmmadmb.r-forge.r-project.org/repos
 RoxygenNote: 6.1.1
 Collate:
     'const.r'

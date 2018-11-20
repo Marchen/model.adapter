@@ -1,0 +1,7 @@
+language: r
+r: oldrel, release, devel
+cache: packages
+install:
+  Rscript install.r
+script:
+  Rscript tests/test_all.r
