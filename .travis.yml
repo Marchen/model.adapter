@@ -15,7 +15,6 @@ r_binary_packages:
   - ranger
   - MASS
   - MCMCglmm
-  - e1071
 repos:
   CRAN: https://cloud.r-project.org
   glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
