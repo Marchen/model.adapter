@@ -19,7 +19,7 @@ repos:
   CRAN: https://cloud.r-project.org
   glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
 before_script:
-  rm .travis.yml
-  R -e 'devtools::document()'
+  - rm .travis.yml
+  - R -e 'devtools::document()'
 sudo:
   required
