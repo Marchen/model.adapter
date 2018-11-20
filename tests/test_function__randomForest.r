@@ -1,6 +1,9 @@
 #==============================================================================
 #	Test for randomForest
 #==============================================================================
+
+source("tests.r")
+
 test.data <- list(
 	call = list(
 		substitute(randomForest(Sepal.Length ~ ., data = iris)),

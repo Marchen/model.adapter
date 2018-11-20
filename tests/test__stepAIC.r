@@ -1,5 +1,4 @@
-library(nlme)
-library(testthat)
+source("tests.r")
 
 cat("Testing stepAIC...\n")
 # Prepare objects and calls for testing.

@@ -11,6 +11,8 @@
 #	predict(object, newdata=iris)
 #------------------------------------------------------------------------------
 
+source("tests.r")
+
 test <- ma.test$new(
 	call = substitute(
 		lmer(

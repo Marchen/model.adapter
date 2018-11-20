@@ -2,6 +2,7 @@
 #	Test for lm
 #==============================================================================
 
+source("tests.r")
 test <- ma.test$new(
 	call = substitute(lm(Sepal.Length ~ ., data = iris)), "lm",
 	expected.for.call = expected(

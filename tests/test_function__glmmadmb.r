@@ -2,6 +2,8 @@
 #	Test for randomForest
 #==============================================================================
 
+source("tests.r")
+
 iris2 <- make.test.data.frame()
 
 test.data <- list(

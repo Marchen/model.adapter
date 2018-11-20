@@ -10,6 +10,8 @@ iris2 <- make.test.data.frame()
 #	Tests without specification of 'data' argument.
 #------------------------------------------------------------------------------
 
+source("tests.r")
+
 test.data <- list(
 	call = list(
 		substitute(

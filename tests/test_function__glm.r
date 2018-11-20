@@ -2,6 +2,7 @@
 #	Test for glm
 #==============================================================================
 
+source("tests.r")
 test <- glm.type.test.runner$new(
 	"glm",
 	families = c(

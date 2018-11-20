@@ -11,6 +11,9 @@
 #	m <- lme(Sepal.Length ~ ., random = ~1 | Species, data = iris)
 #	predict(m, newdata = iris) # <- fail!
 #------------------------------------------------------------------------------
+
+source("tests.r")
+
 ma.test.lme <- R6Class(
 	"ma.test.lme", inherit = ma.test,
 	private = list(test__predict = function(...) {})

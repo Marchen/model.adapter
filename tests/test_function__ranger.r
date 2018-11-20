@@ -2,6 +2,8 @@
 #	Test for ranger
 #==============================================================================
 
+source("tests.r")
+
 test.data <- list(
 	call = list(
 		substitute(

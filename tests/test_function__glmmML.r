@@ -2,6 +2,8 @@
 #	Test for glmmML
 #==============================================================================
 
+source("tests.r")
+
 iris2 <- make.test.data.frame()
 
 test.data <- list(

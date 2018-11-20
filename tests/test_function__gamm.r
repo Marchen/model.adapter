@@ -1,6 +1,9 @@
 #==============================================================================
 #	Test for gamm in mgcv package.
 #==============================================================================
+
+source("tests.r")
+
 test <- glm.type.test.runner$new(
 	"gamm",
 	families = c(
@@ -8,6 +11,7 @@ test <- glm.type.test.runner$new(
 	),
 	object.has.call = FALSE
 )
+
 test$test.info$formulae <- list(
 	gaussian = Sepal.Length ~ s(Petal.Length),
 	Gamma = Sepal.Length ~ s(Petal.Length),

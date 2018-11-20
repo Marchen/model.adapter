@@ -2,6 +2,8 @@
 #	Test for glmer
 #==============================================================================
 
+source("tests.r")
+
 test <- glm.type.test.runner$new(
 	"glmer",
 	families = c(

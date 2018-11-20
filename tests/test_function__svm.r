@@ -1,6 +1,9 @@
 #==============================================================================
 #	Test for svm
 #==============================================================================
+
+source("tests.r")
+
 test.data <- list(
 	call = list(
 		substitute(svm(Sepal.Length ~ ., data = iris, probability = TRUE)),
