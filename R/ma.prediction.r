@@ -55,8 +55,7 @@ model.adapter.prediction.class$set(
 	"public", "initialize",
 	function(
 		fit, type = c("response", "link", "prob", "class"), fixed = NULL,
-		interval.type = NULL, interval.level = NULL, logical.response = FALSE,
-		...
+		interval.type = NULL, interval.level = NULL, logical.response = FALSE
 	) {
 		# Convert 'fit' to matrix.
 		if (!is.matrix(fit)) {
