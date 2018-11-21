@@ -175,4 +175,13 @@ model.adapter.prediction.class$set(
 #'		an object of
 #'		\code{\link[model.adapter.prediction-class]{model.adapter.prediction}}
 #------------------------------------------------------------------------------
-model.adapter.prediction <- model.adapter.prediction.class$new
+model.adapter.prediction <- function(
+	fit, type = c("response", "link", "prob", "class"), fixed = NULL,
+	interval.type = NULL, interval.level = NULL, logical.response = FALSE
+) {
+	object <- model.adapter.prediction.class$new(
+		fit = fit, type = type, fixed = fixed, interval.type = interval.type,
+		interval.level = interval.level, logical.response = logical.response
+	)
+	return(object)
+}
