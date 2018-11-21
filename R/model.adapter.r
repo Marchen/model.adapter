@@ -152,7 +152,7 @@
 #'			}
 #'
 #'			\subsection{Returns}{
-#'				a \code{\link{ma.prediction}} object.
+#'				a \code{\link{model.adapter.prediction}} object.
 #'			}
 #'
 #'		\strong{\code{adapter$residuals(type = c("response", "link"))}}
@@ -488,9 +488,9 @@ model.adapter$set(
 			type = private$interface$predict.types[type],
 			random = random, ...
 		)
-		# Make ma.prediction object.
+		# Make model.adapter.prediction object.
 		args <- as.list(match.call())[-1]
-		pred <- ma.prediction(
+		pred <- model.adapter.prediction(
 			pred, type = type, fixed = newdata[self$x.names(type = "base")],
 			interval.type = args$interval, interval.level = args$level,
 			logical.response = is.logical(self$y.vars[[1]])

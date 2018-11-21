@@ -487,7 +487,7 @@ ma.test$set(
 					newdata = private$expected.for.call$data, type = "response",
 					...
 				)
-				expect_is(pred, "ma.prediction")
+				expect_is(pred, "model.adapter.prediction")
 				expect_is(pred$fit, "matrix")
 				expect_equal(mode(pred$fit), "numeric")
 				expect_equal(pred$type, "response")
@@ -527,7 +527,7 @@ ma.test$set(
 					newdata = private$expected.for.call$data, type = "prob",
 					...
 				)
-				expect_is(pred, "ma.prediction")
+				expect_is(pred, "model.adapter.prediction")
 				expect_is(pred$fit, "matrix")
 				expect_equal(mode(pred$fit), "numeric")
 				expect_equal(pred$type, "prob")
@@ -577,7 +577,7 @@ ma.test$set(
 					newdata = private$expected.for.call$data, type = "class",
 					...
 				)
-				expect_is(pred, "ma.prediction")
+				expect_is(pred, "model.adapter.prediction")
 				expect_is(pred$fit, "matrix")
 				expect_equal(mode(pred$fit), "character")
 				expect_equal(pred$type, "class")
@@ -604,7 +604,7 @@ ma.test$set(
 
 #------------------------------------------------------------------------------
 #	Test for predict() method to check:
-#		* the result is ma.prediction object
+#		* the result is model.adapter.prediction object
 #		* the fit field is a matrix
 #		* the column name
 #------------------------------------------------------------------------------
