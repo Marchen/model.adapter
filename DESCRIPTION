@@ -1,6 +1,6 @@
 Package: model.adapter
-Version: 0.1.0
-Date: 2018-05-27
+Version: 0.1.1
+Date: 2018-11-21
 Title: model.adapter: an R package providing abstraction layer for statistical/machine learning models
 Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
 Maintainer: Michio Oguro <mogu@biology.tohoku.ac.jp>
