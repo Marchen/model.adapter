@@ -1,8 +1,7 @@
 Package: model.adapter
 Version: 0.1.0
 Date: 2018-05-27
-Title: model.adapter: a model abstraction layer for statistical/machine learning
-    models
+Title: model.adapter: an R package providing abstraction layer for statistical/machine learning models
 Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
 Maintainer: Michio Oguro <mogu@biology.tohoku.ac.jp>
 Description: This package provides standard way to access data and common
@@ -39,7 +38,7 @@ RoxygenNote: 6.1.1
 Collate:
     'const.r'
     'get.class.name.r'
-    'ma.prediction.r'
+    'model.adapter.prediction.r'
     'model.adapter.r'
     'model.interface.default.r'
     'model.interface.MCMCglmm.r'
