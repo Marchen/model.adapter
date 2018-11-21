@@ -171,9 +171,13 @@ model.adapter.prediction.class$set(
 #'	@param interval.level
 #'		a numeric value representing level of interval.
 #'
+#'	@param logical.response
+#'		a logical indicationg response variable is logical.
+#'
 #'	@return
 #'		an object of
-#'		\code{\link[model.adapter.prediction-class]{model.adapter.prediction}}
+#'		\code{\link[=model.adapter.prediction.class]{model.adapter.prediction}}
+#'		class.
 #------------------------------------------------------------------------------
 model.adapter.prediction <- function(
 	fit, type = c("response", "link", "prob", "class"), fixed = NULL,
