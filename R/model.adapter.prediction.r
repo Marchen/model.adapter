@@ -55,8 +55,7 @@ model.adapter.prediction.class$set(
 	"public", "initialize",
 	function(
 		fit, type = c("response", "link", "prob", "class"), fixed = NULL,
-		interval.type = NULL, interval.level = NULL, logical.response = FALSE,
-		...
+		interval.type = NULL, interval.level = NULL, logical.response = FALSE
 	) {
 		# Convert 'fit' to matrix.
 		if (!is.matrix(fit)) {
@@ -172,8 +171,21 @@ model.adapter.prediction.class$set(
 #'	@param interval.level
 #'		a numeric value representing level of interval.
 #'
+#'	@param logical.response
+#'		a logical indicationg response variable is logical.
+#'
 #'	@return
 #'		an object of
-#'		\code{\link[model.adapter.prediction-class]{model.adapter.prediction}}
+#'		\code{\link[=model.adapter.prediction.class]{model.adapter.prediction}}
+#'		class.
 #------------------------------------------------------------------------------
-model.adapter.prediction <- model.adapter.prediction.class$new
+model.adapter.prediction <- function(
+	fit, type = c("response", "link", "prob", "class"), fixed = NULL,
+	interval.type = NULL, interval.level = NULL, logical.response = FALSE
+) {
+	object <- model.adapter.prediction.class$new(
+		fit = fit, type = type, fixed = fixed, interval.type = interval.type,
+		interval.level = interval.level, logical.response = logical.response
+	)
+	return(object)
+}
