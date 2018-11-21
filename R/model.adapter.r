@@ -152,10 +152,12 @@
 #'			}
 #'
 #'			\subsection{Returns}{
-#'				a \code{\link{model.adapter.prediction}} object.
+#'				a \code{
+#'					\link[=model.adapter.prediction.class]{model.adapter.prediction}
+#'				} object.
 #'			}
 #'
-#'		\strong{\code{adapter$residuals(type = c("response", "link"))}}
+#'		\strong{\code{model.adapter$residuals(type = c("response", "link"))}}
 #'
 #'			Calculate residuals of the model.
 #'
