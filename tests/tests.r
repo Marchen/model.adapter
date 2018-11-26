@@ -638,7 +638,7 @@ ma.test$set(
 		cat(sprintf("Testing %s...\n", private$function.name))
 		# Find tests.
 		test.names <- names(private)
-		test.names <- subset(test.names, grepl("^test__.*", test.names))
+		test.names <- test.names[grepl("^test__.*", test.names)]
 		# Run tests.
 		for (test in test.names) {
 			eval(parse(text = sprintf("private$%s()", test)))
