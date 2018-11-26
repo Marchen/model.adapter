@@ -1,5 +1,8 @@
 language: r
-r: oldrel, release, devel
+r:
+  - oldrel
+  - release
+  - devel
 cache: packages
 r_binary_packages:
   - R6
