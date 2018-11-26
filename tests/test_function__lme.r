@@ -14,7 +14,7 @@
 
 source("tests.r")
 
-ma.test.lme <- R6Class(
+ma.test.lme <- R6::R6Class(
 	"ma.test.lme", inherit = ma.test,
 	private = list(test__predict = function(...) {})
 )

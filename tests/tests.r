@@ -1,5 +1,4 @@
 library(testthat)
-library(R6)
 library(model.adapter)
 
 
@@ -731,7 +730,7 @@ test.model.adapter <- function(
 #'	@field object.has.call
 #'		set FALSE if object doesn't have call.
 #==============================================================================
-glm.type.test.runner <- R6Class(
+glm.type.test.runner <- R6::R6Class(
 	"glm.type.test.runner",
 	public = list(
 		test.info = list()
