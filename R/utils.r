@@ -315,6 +315,6 @@ x.names.from.formula <- function(
 	remove.chars <- paste(powers, fun.begin, fun.end, space, sep = "|")
 	vars <- gsub(remove.chars, "", vars)
 	# Remove duplicated and empty names.
-	vars <- unique(subset(vars, !vars %in% c("", "1")))
+	vars <- unique(vars[!vars %in% c("", "1")])
 	return(vars)
 }
