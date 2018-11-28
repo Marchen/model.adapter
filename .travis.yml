@@ -11,9 +11,8 @@ repos:
   CRAN: https://cloud.r-project.org
 before_install:
   - rm .travis.yml
-  - R -e 'install.packages("R2admb")'
+  - R -e 'install.packages("roxygen2", "devtools", "R2admb")'
   - R -e 'install.packages("glmmADMB", repos=c("http://glmmadmb.r-forge.r-project.org/repos", getOption("repos")), type="source")'
-  - R -e 'install.packages("roxygen2")'
   - R -e 'devtools::document()'
 sudo:
   required
