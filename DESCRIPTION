@@ -2,8 +2,8 @@ Package: model.adapter
 Version: 0.1.1.999
 Date: 2018-11-21
 Title: model.adapter: an R package providing abstraction layer for statistical/machine learning models
-Author: Michio Oguro <mogu@biology.tohoku.ac.jp>
-Maintainer: Michio Oguro <mogu@biology.tohoku.ac.jp>
+Author: Michio Oguro <mog@ffpri.affrc.go.jp>
+Maintainer: Michio Oguro <mog@ffpri.affrc.go.jp>
 Description: This package provides standard way to access data and common
     methods for several kind of models. Currently, lm, glm, lme, glmmML, lmer,
     glmer, ctree, cforest, randomForest, gbm, svm, tree, rpart, gam, gamm, and
