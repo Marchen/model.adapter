@@ -25,7 +25,7 @@ r_binary_packages:
 repos:
   CRAN: https://cloud.r-project.org
   glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
-before_script:
+before_install:
   - rm .travis.yml
   - R -e 'install.packages("R2admb")'
   - R -e 'install.packages("glmmADMB", repos=c("http://glmmadmb.r-forge.r-project.org/repos", getOption("repos")), type="source")'
