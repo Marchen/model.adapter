@@ -7,24 +7,8 @@ r:
   - release
   - devel
 cache: packages
-r_binary_packages:
-  - R6
-  - randomForest
-  - party
-  - gbm
-  - lme4
-  - glmmML
-  - nlme
-  - tree
-  - rpart
-  - mgcv
-  - gam
-  - ranger
-  - MASS
-  - MCMCglmm
 repos:
   CRAN: https://cloud.r-project.org
-  glmmadmb: http://glmmadmb.r-forge.r-project.org/repos
 before_install:
   - rm .travis.yml
   - R -e 'install.packages("R2admb")'
