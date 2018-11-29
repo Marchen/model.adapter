@@ -18,5 +18,3 @@ before_install:
 before_script:
   - rm .travis.yml
   - rm install.r
-sudo:
-  required
