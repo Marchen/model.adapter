@@ -78,7 +78,7 @@ match.generic.call <- function(call, envir, package = "") {
 	fun.name <- get.function(call, "character", envir)
 	if (!is.generic(fun.name, package)) {
 		fun <- match.fun(fun.name)
-		return(match.call(fun, call))
+		return(match.call(fun, call, expand.dots = FALSE))
 	}
 	if (is.s4.generic(fun.name, package)) {
 		stop("Algorithm for S4 generic method is not implimented.")
