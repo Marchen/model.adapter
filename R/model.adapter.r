@@ -61,6 +61,11 @@
 #'		a character representing model type. The possible values are
 #'		"regression" and "classification".
 #'
+#'	@field x.vars
+#'		a data.frame having all explanatory variables.
+#'
+#'	@field y.vars
+#'		a data.frame having all response variables.
 #'
 #'	@section Methods:
 #'
