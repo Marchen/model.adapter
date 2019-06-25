@@ -34,7 +34,7 @@ model.interface.gbm.class$set(
 			d <- eval(model.call$data)
 		}
 		# If still couldn't get data, use data in the object and make a
-		# a data.frame manually.
+		# data.frame manually.
 		if (is.null(d)){
 			warning("Making data.frame using data field in gbm object.")
 			y.var <- x$data$y
