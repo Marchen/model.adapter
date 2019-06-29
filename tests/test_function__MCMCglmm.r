@@ -61,7 +61,10 @@ test.data <- list(
 	)
 )
 
-test.model.adapter("MCMCglmm", iris2, test.data, FALSE, FALSE)
+test.model.adapter(
+	"MCMCglmm", iris2, test.data,
+	object.has.call = FALSE, object.has.data = FALSE
+)
 
 
 #------------------------------------------------------------------------------

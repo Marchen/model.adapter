@@ -16,6 +16,6 @@ test.data <- list(
 	model.type = list("regression", "classification")
 )
 
-test.model.adapter("ctree", iris, test.data, FALSE)
+test.model.adapter("ctree", iris, test.data, object.has.call = FALSE)
 
 rm(test.data)
