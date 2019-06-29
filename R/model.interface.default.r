@@ -176,6 +176,38 @@ model.interface <- function(x = NULL, ...) {
 #'			}
 #'		}
 #'
+#'	\strong{\code{has.offset.argument(x, envir, package = "")}}
+#'
+#'		Check whether the model has offset argument.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				an object of statistical model or a call of model function.
+#'			}
+#'			\item{\code{envir}}{
+#'				an environment where call in \code{x} is evaluated.
+#'			}
+#'			\item{\code{package = NULL}}{
+#'				a character literal of package name having the model function.
+#'			}
+#'		}
+#'
+#'	\strong{\code{has.offset.in.formula(x, envir, package = "")}}
+#'
+#'		Check whether the model has offset term(s) in formula.
+#'
+#'		\describe{
+#'			\item{\code{x}}{
+#'				an object of statistical model or a call of model function.
+#'			}
+#'			\item{\code{envir}}{
+#'				an environment where formula and data in \code{x} is evaluated.
+#'			}
+#'			\item{\code{package = NULL}}{
+#'				a character literal of package name having the model function.
+#'			}
+#'		}
+#'
 #'	@name model.interface-class
 #'	@importFrom stats terms
 #------------------------------------------------------------------------------
