@@ -48,6 +48,8 @@ make.test.data.frame <- function() {
 #'		a function representing expected link function.
 #'	@param linkinv
 #'		a function representing expected inverse link function.
+#'	@param package.name
+#'		a character representing the package name of the model.
 #'
 #'	@return
 #'		a list having expected values of each field of model.adapter.
