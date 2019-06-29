@@ -419,3 +419,39 @@ model.interface.default.class$set(
 		return("regression")
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	Check whether the model having offset argument.
+#
+#	Only the availability of offset argument in thecall is evaluated
+#	by default method.
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+	"public", "has.offset.argument",
+	function(x, envir, package = "") {
+		if (!is.call(x)) {
+			x <- self$get.call(x)
+			if (is.null(x)) {
+				return(FALSE)
+			}
+		}
+		# Check offset argument.
+		x <- match.generic.call(x, envir, package)
+		return("offset" %in% names(x))
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	Check the model having offset term(s) in formula.
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+	"public", "has.offset.in.formula",
+	function(x, envir, package = "") {
+		# Check formula.
+		f <- self$get.formula(x, envir, package)
+		data <- self$get.data(x, envir, package)
+		return(!is.null(model.offset(model.frame(f, data = data))))
+	}
+)
