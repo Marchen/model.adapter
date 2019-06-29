@@ -30,7 +30,7 @@ model.interface.ranger.class$set(
 			newdata <- self$get.data(object, parent.frame(), package)
 		}
 		# name of 'newdata' argument is 'data' for ranger.
-		if (type == "prob") {
+		if (type == "prob" & object$treetype != "Probability estimation") {
 			# If type is "prob", calculate probability.
 			pred <- stats::predict(
 				object, data = newdata, predict.all = TRUE, ...
@@ -45,6 +45,11 @@ model.interface.ranger.class$set(
 			colnames(prob) <- levels(object$predictions)
 			prob[is.na(prob)] <- 0
 			return(prob)
+		} else if (
+			type == "class" & object$treetype == "Probability estimation"
+		) {
+			pred <- stats::predict(object, data = newdata, ...)$predictions
+			return(colnames(pred)[apply(pred, 1, which.max)])
 		} else {
 			pred <- stats::predict(object, data = newdata, ...)
 			return(pred$predictions)
