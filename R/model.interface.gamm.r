@@ -68,7 +68,7 @@ model.interface.gamm.class$set(
 			d <- x$gam$model
 			var.names <- names(attr(x$gam$terms, "dataClasses"))
 			d <- d[var.names]
-			return(d)
+			return(strip.offset.in.colnames(d))
 		}
 	}
 )

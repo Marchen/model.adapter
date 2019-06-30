@@ -57,7 +57,7 @@ model.interface.glmmadmb.class$set(
 		} else {
 			d <- x$frame
 			attr(d, "terms") <- NULL
-			return(d)
+			return(strip.offset.in.colnames(d))
 		}
 	}
 )

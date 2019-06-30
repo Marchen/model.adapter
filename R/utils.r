@@ -349,3 +349,14 @@ strip.function.call <- function(x, maxit = 100) {
 	attributes(x) <- NULL
 	return(x)
 }
+
+
+#------------------------------------------------------------------------------
+#'	(Internal) Strip offset from column names
+#'
+#'	@param df a data.frame.
+#------------------------------------------------------------------------------
+strip.offset.in.colnames <- function(df) {
+	colnames(df) <- gsub("^offset\\((.*)\\)$", "\\1", colnames(df))
+	return(df)
+}

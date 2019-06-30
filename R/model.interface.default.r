@@ -301,7 +301,7 @@ model.interface.default.class$set(
 				d <- eval(cl$data, envir)
 			}
 		}
-		return(d)
+		return(strip.offset.in.colnames(d))
 	}
 )
 
