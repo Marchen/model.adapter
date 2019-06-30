@@ -66,6 +66,17 @@ model.interface.BinaryTree.class$set(
 
 #------------------------------------------------------------------------------
 model.interface.BinaryTree.class$set(
+	"public", "get.model.type",
+	function(x, envir, package = "", ...) {
+		# Shared method with cforest.
+		interface <- model.interface.RandomForest()
+		return(interface$get.model.type(x, envir, package, ...))
+	}
+)
+
+
+#------------------------------------------------------------------------------
+model.interface.BinaryTree.class$set(
 	"active", "predict.types",
 	function() {
 		return(make.predict.types(link = "response", class = "response"))

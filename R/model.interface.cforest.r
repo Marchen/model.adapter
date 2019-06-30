@@ -67,6 +67,20 @@ model.interface.RandomForest.class$set(
 
 #------------------------------------------------------------------------------
 model.interface.RandomForest.class$set(
+	"public", "get.model.type",
+	function(x, envir, package = "", ...) {
+		response <- x@data@get("response")
+		if (is(response, "factor") | is(response, "character")) {
+			return("classification")
+		} else {
+			return("regression")
+		}
+	}
+)
+
+
+#------------------------------------------------------------------------------
+model.interface.RandomForest.class$set(
 	"active", "predict.types",
 	function() {
 		return(make.predict.types(link = "response", class = "response"))
