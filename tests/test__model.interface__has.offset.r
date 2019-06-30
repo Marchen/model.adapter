@@ -48,16 +48,21 @@ for (i in names(test.data)) {
 test_that(
 	"Testing model.interface.derault$has.offset()",
 	{
+		generator <- model.adapter:::model.interface.default.class
+		generator$set(
+			"public", "get", function(x) private[[x]]
+		)
 		interface <- model.adapter:::model.interface.default()
 		for (i in names(test.data)) {
 			expect_equal(
-				interface$has.offset.in.formula(
+				interface$get("has.offset.in.formula")(
 					test.data[[i]]$x, .GlobalEnv, "stats"
 				),
 				test.data[[i]]$has.offset.in.formula,
 				info = i
 			)
 		}
+		generator$public_methods$get <- NULL
 	}
 )
 
