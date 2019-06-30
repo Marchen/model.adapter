@@ -1,0 +1,76 @@
+---
+title: "Specification of supported models"
+author: "Michio Oguro"
+date: "`r Sys.Date()`"
+output:
+    html_document:
+        fig_width: 6
+        fig_height: 6
+        fig_retina: 2
+        dpi: 300
+        dev.args: list(dpi = 300)
+        toc: true
+        toc_depth: 3
+        md_extensions: -ascii_identifiers
+vignette: >
+    %\VignetteIndexEntry{Model specifications}
+    %\VignetteEngine{knitr::rmarkdown}
+    \usepackage[utf8]{inputenc}
+---
+
+# Availability of `call` in model objects
+
+`model.adapter` returns original `call` when it's `call` active binding is called.
+Therefore, availabilitiies of call from model objects are listed.
+
+Package      | Function     | Availability
+-------------|--------------|--------------
+party        | cforest      | x
+party        | ctree        | x
+gam          | gam          | o
+mgcv         | gam          | o
+mgcv         | gamm         | x
+gbm          | gmb          | o
+stats        | glm          | o
+lme4         | glmer        | o
+glmmADMB     | glmmadmb     | o
+glmmML       | glmmML       | o
+stats        | lm           | o
+nlme         | lme          | o
+lme4         | lmer         | o
+MCMCglmm     | MCMCglmm     | x
+randomForest | randomForest | o
+ranger       | ranger       | o
+rpart        | rpart        | o
+e1071        | svm          | o
+tree         | tree         | o
+
+# Availability of `data` in model objects
+
+`model.adapter` returns original data in call when it's `data` active binding is called.
+Therefore, availabilitiies of `data` from model objects are listed.
+**Not that availability of data specified by `offset` terms are not tested**
+
+Package      | Function     | Availability
+-------------|--------------|--------------
+party        | cforest      | o
+party        | ctree        | o
+gam          | gam          | o
+mgcv         | gam          | o 
+mgcv         | gamm         | Needs reconstruction
+gbm          | gmb          | o
+stats        | glm          | o
+lme4         | glmer        | Needs reconstruction
+glmmADMB     | glmmadmb     | Needs reconstruction
+glmmML       | glmmML       | o
+stats        | lm           | o
+nlme         | lme          | o
+lme4         | lmer         | Needs reconstruction
+MCMCglmm     | MCMCglmm     | x
+randomForest | randomForest | o
+ranger       | ranger       | o
+rpart        | rpart        | o
+e1071        | svm          | o
+tree         | tree         | o
+
+

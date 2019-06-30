@@ -1,0 +1,613 @@
+---
+title: "Support for offset terms by predict methods"
+author: "Michio Oguro"
+date: "`r Sys.Date()`"
+output:
+    html_document:
+        fig_width: 6
+        fig_height: 6
+        fig_retina: 2
+        dpi: 300
+        dev.args: list(dpi = 300)
+        toc: true
+        toc_depth: 3
+        md_extensions: -ascii_identifiers
+vignette: >
+    %\VignetteIndexEntry{Support for offset terms by predict methods}
+    %\VignetteEngine{knitr::rmarkdown}
+    \usepackage[utf8]{inputenc}
+---
+
+# Introduction
+
+This is a document describing support of offset terms by `predict` method of models and support by `model.adapter`.
+
+# Support for offset terms by models
+
+Package      | Function     | Offset in `formula` | `offset` argument 
+-------------|--------------|---------------------|-------------------
+party        | cforest      | o                   | x
+party        | ctree        | o                   | x
+gam          | gam          | o                   | o
+mgcv         | gam          | o                   | o
+mgcv         | gamm         | o                   | x
+gbm          | gmb          | o                   | x
+stats        | glm          | o                   | o
+lme4         | glmer        | o                   | o
+glmmADMB     | glmmadmb     | o                   | x
+glmmML       | glmmML       | o                   | x
+stats        | lm           | o                   | o
+nlme         | lme          | o                   | x
+lme4         | lmer         | o                   | o
+MCMCglmm     | MCMCglmm     | o                   | x
+randomForest | randomForest | o                   | x
+ranger       | ranger       | ?                   | ?
+rpart        | rpart        | o                   | x
+e1071        | svm          | o                   | x
+tree         | tree         | o                   | x
+
+# Current support for `offset` in `predict` methods for regression models
+
+Package      | Function     | Interface | Status | Support by model.adapter
+-------------|--------------|-----------|--------|-------------------------
+party        | cforest      | formula   | ?      | Seems OK
+party        | ctree        | formula   | ?      | Seems OK
+gam          | gam          | formula   | o      | NA
+gam          | gam          | argument  | x      | o
+mgcv         | gam          | formula   | o      | NA
+mgcv         | gam          | argument  | x      | o
+mgcv         | gamm         | formula   | x      | o
+gbm          | gmb          | formula   | x      | o
+stats        | glm          | formula   | o      | NA
+stats        | glm          | argument  | o      | NA
+lme4         | glmer        | formula   | o      | NA
+lme4         | glmer        | argument  | o      | NA
+glmmADMB     | glmmadmb     | formula   | x      | o
+glmmML       | glmmML       | formula   | x      | Unknown
+glmmML       | glmmML       | argument  | x      | Unknown
+stats        | lm           | formula   | x      | o
+stats        | lm           | argument  | x      | o
+nlme         | lme          | formula   | x      | o
+lme4         | lmer         | formula   | x      | o
+lme4         | lmer         | argument  | x      | o
+MCMCglmm     | MCMCglmm     | formula   | x      | o
+randomForest | randomForest | formula   | x      | o
+ranger       | ranger       | formula   | ?      | ?
+rpart        | rpart        | formula   | x      | o
+e1071        | svm          | formula   | x      | o
+tree         | tree         | formula   | x      | o
+
+**Interface**:  
+*formula*: offset() in formula.  
+*argument*: offset argument of the model.
+
+**Status**:  
+*NA*: the model doesn't support offset terms.  
+*o*: the model support offset terms correctly.  
+*x*: the model has some problems with their support for offset terms.
+
+# Model specific information
+
+------------------------------------------------------------------------------
+
+## `gbm` in `gbm` package
+
+`gbm` function in `gbm` package support an offset term in `formula` when creating models. When the `predict` method of `model.adapter` called with `newdata`, the method automatically adjust the offset. However, because `gbm` object doesn't have original data in the object, `predict` method cannot adjust the result if the method is called without `newdata`. In this situation, users can obtain an offset-adjusted result by specifiying original data used for modeling for the `newdata` argument.
+
+Although document of the `gbm` function says *"The formula may include an offset term (e.g. y~offset(n)+x)"*, `gbm` actually accepts multiple offset terms in the formula. However because details of the implementation is not clear, `predict` method of `model.adapter` doesn't adjust offset term in this situation.
+
+------------------------------------------------------------------------------
+
+## `ranger` in `ranger` package
+
+Because necessity of adjustment for offset terms in `ranger` model is unclear, `model.adapter` doesn't adjust offset term for `ranger`.
+
+------------------------------------------------------------------------------
+
+## `glmmML` in `glmmML` package
+
+Because `glmmML` package doesn't provide `predict` method for `glmmML` object, `model.adapter` has own `predict` method for `glmmML` object. Because method of the adjustement is not clear, `model.adapter` doesn't adjust offset term for this model.
+
+------------------------------------------------------------------------------
+
+# Behavior of models
+
+------------------------------------------------------------------------------
+
+## Create test data
+
+```{R}
+set.seed(12345)
+test.data <- data.frame(
+	x = rnorm(1000, 1000, 100),
+	offset = runif(1000, 1, 10) %/% 1,
+	random = runif(1000, 1, 100) %/% 1
+)
+test.data$y.norm <- rnorm(1000, test.data$x) * test.data$offset
+test.data$y.pois <- rpois(1000, test.data$x) * test.data$offset
+test.data$y.norm.with.random <- (
+	rnorm(1000, test.data$x) * test.data$offset + rnorm(100)[test.data$random]
+)
+test.data$y.pois.with.random <- (
+	rpois(1000, test.data$x + rnorm(100)[test.data$random]) * test.data$offset
+)
+test.data$random <- factor(test.data$random)
+```
+
+------------------------------------------------------------------------------
+
+## party::cforest
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- party::cforest(
+	y.pois ~ x + offset(offset),
+	data = test.data, control = party::cforest_unbiased(mtry = 1)
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## party::ctree
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- party::ctree(
+	y.pois ~ x + offset(offset),
+	data = test.data, control = party::ctree_control(mtry = 1)
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## gam::gam
+
+Specifiying offset in formula works well.
+
+```{R, message = FALSE}
+model <- gam::gam(
+	y.pois ~ x + offset(log(offset)), data = test.data, family = poisson(log)
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x + 0, add = TRUE, col = "red")
+```
+
+Yet, specifing offset using `offset` argument does not work when predicting.
+
+```{R, message = FALSE}
+library(gam)
+# Prediction doesn't work well.
+model <- gam::gam(
+	y.pois ~ x , data = test.data, family = poisson(log),
+	offset = log(offset), control = gam::gam.control(maxit = 100)
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x + 0, add = TRUE, col = "red")
+
+# Workaround.
+plot(
+	test.data$y.pois,
+	predict(model, type = "response")
+	* test.data$offset / mean(test.data$offset)
+)
+curve(x + 0, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## mgcv::gam
+
+Specifyling offset in `formula` interface is OK.
+
+```{R, message = FALSE}
+model <- mgcv::gam(
+	y.pois ~ x + offset(log(offset)), data = test.data,
+	family = poisson(log)
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x + 0, add = TRUE, col = "red")
+```
+
+But `offset` option does not work as explained in the help page.
+
+```{R, message = FALSE}
+# Prediction doesn't work well.
+model <- mgcv::gam(
+	y.pois ~ x, data = test.data, offset = log(offset),
+	family = poisson(log)
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x + 0, add = TRUE, col = "red")
+
+# Workaround.
+plot(
+	test.data$y.pois, predict(model, type = "response") * test.data$offset
+)
+curve(x + 0, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## mgcv::gamm
+
+`mgcv::gamm` doesn't allow offset argument.
+
+```{R, message = FALSE}
+# Pre-transformed offset in formula.
+test.data$log.offset <- log(test.data$offset)
+model <- mgcv::gamm(
+	y.pois.with.random ~ x + offset(log.offset), random = list(random = ~ 1),
+	data = test.data, family = poisson(log)
+)
+plot(test.data$y.pois, predict(model$gam, type = "response"))
+curve(x + 0, add = TRUE, col = "red")
+
+# offset argument is not allowed.
+model1 <- mgcv::gamm(
+	y.pois.with.random ~ x, random = list(random = ~ 1),
+	data = test.data, family = poisson(log)
+)
+model2 <- mgcv::gamm(
+	y.pois.with.random ~ x, random = list(random = ~ 1), offset = log(offset),
+	data = test.data, family = poisson(log)
+)
+identical(model1, model2, ignore.environment = TRUE)
+
+```
+
+------------------------------------------------------------------------------
+
+## gbm
+
+As explained by the warning message, predit.gbm doesn't consider offset terms.
+
+```{R, message = FALSE}
+library(gbm)
+# Using offset term in formula.
+model <- gbm::gbm(
+	y.pois ~ x + offset(log(offset)),
+	data = test.data, distribution = "poisson", n.trees = 100
+)
+plot(test.data$y.pois, predict(model, type = "response", n.trees = 100))
+curve(x + 0, add = TRUE, col = "red")
+
+# Workarround
+plot(
+	test.data$y.pois,
+	predict(model, type = "response", n.trees = 100) * test.data$offset
+)
+curve(x + 0, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## glm
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- stats::glm(
+	y.pois ~ x + offset(log(offset)), data = test.data, family = poisson
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+
+# Using offset term in offset argument.
+model <- stats::glm(
+	y.pois ~ x, offset = log(offset), data = test.data, family = poisson
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## glmer
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- lme4::glmer(
+	y.pois.with.random ~ x + (1 | random) + offset(log(offset)),
+	data = test.data, family = poisson
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+
+# Using offset argument.
+model <- lme4::glmer(
+	y.pois.with.random ~ x + (1 | random), offset = log(offset),
+	data = test.data, family = poisson
+)
+plot(test.data$y.pois, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## glmmadmb
+
+```{R, message = FALSE}
+library(glmmADMB)
+# Using offset term in formula.
+model <- glmmADMB::glmmadmb(
+	y.norm ~ x + offset(offset), data = test.data, family = "gaussian"
+)
+plot(test.data$y.norm, predict(model, type = "response"))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.pois,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## glmmML
+
+```{R, message = FALSE}
+library(glmmML)
+library(model.adapter)
+# Using offset term in formula.
+model <- glmmML::glmmML(
+	y.pois.with.random ~ x + offset(log(offset)),
+	cluster = random, data = test.data, family = poisson
+)
+plot(
+	test.data$y.pois.with.random,
+	model.adapter$new(model)$predict()$fit[, "fit"]
+)
+curve(x * 1, add = TRUE, col = "red")
+
+# Can't find workarounds
+plot(
+	test.data$y.pois.with.random,
+	model.adapter$new(model)$predict()$fit[, "fit"] * test.data$offset
+)
+curve(x * 1, add = TRUE, col = "red")
+
+# Using offset argument.
+model <- glmmML::glmmML(
+	y.pois.with.random ~ x, offset = log(offset),
+	cluster = random, data = test.data, family = poisson
+)
+plot(
+	test.data$y.pois.with.random,
+	model.adapter$new(model)$predict()$fit[, "fit"]
+)
+curve(x * 1, add = TRUE, col = "red")
+
+# Can't find workarounds
+plot(
+	test.data$y.pois.with.random,
+	model.adapter$new(model)$predict()$fit[, "fit"]
+	* test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## lm
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- stats::lm(y.norm ~ x + offset(offset), data = test.data)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+
+
+# Using offset term in offset argument.
+model <- stats::lm(y.norm ~ x, offset = offset, data = test.data)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## lme
+
+```{R, message = FALSE}
+library(nlme)
+
+# Using offset term in formula.
+model <- nlme::lme(
+	y.norm.with.random ~ x + offset(offset), data = test.data,
+	random = ~ 1 | random
+)
+plot(test.data$y.norm.with.random, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## lmer
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- lme4::lmer(
+	y.norm.with.random ~ x + (1 | random) + offset(offset), data = test.data
+)
+plot(test.data$y.norm.with.random, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+
+
+# Using offset term in offset argument.
+model <- lme4::lmer(
+	y.norm.with.random ~ x + (1 | random), offset = offset, data = test.data
+)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## MCMCglmm
+
+```{R, message = FALSE}
+# Using offset term in formula.
+model <- MCMCglmm::MCMCglmm(
+	y.pois ~ x + offset(log(offset)), data = test.data, family = "poisson",
+	verbose = FALSE
+)
+plot(test.data$y.pois, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.pois,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## randomForest
+
+```{R, message = FALSE}
+library(randomForest)
+# Using offset term in formula.
+model <- randomForest::randomForest(
+	y.norm ~ x + offset(offset), data = test.data
+)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## ranger
+
+It's not clear that predict method for ranger supports offset.
+
+```{R}
+library(ranger)
+
+# Using offset term in formula.
+model <- ranger::ranger(y.norm ~ x + offset(offset), data = test.data)
+plot(test.data$y.norm, predict(model, data = test.data)$predictions)
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround?
+plot(
+	test.data$y.norm,
+	predict(model, data = test.data)$predictions
+	* test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+
+# model.adapter
+plot(
+	model.adapter$new(model)$predict()$fit[, "fit"],
+	predict(model, data = test.data)$predictions
+	* test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## rpart
+
+```{R}
+library(rpart)
+
+# Using offset term in formula.
+model <- rpart::rpart(y.norm ~ x + offset(offset), data = test.data)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround.
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## svm
+
+```{R}
+library(e1071)
+
+# Using offset term in formula.
+model <- e1071::svm(y.norm ~ x + offset(offset), data = test.data)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround.
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```
+
+------------------------------------------------------------------------------
+
+## tree
+
+```{R}
+library(tree)
+# Using offset term in formula.
+model <- tree::tree(y.norm ~ x + offset(offset), data = test.data)
+plot(test.data$y.norm, predict(model))
+curve(x * 1, add = TRUE, col = "red")
+
+# Workaround
+plot(
+	test.data$y.norm,
+	predict(model) * test.data$offset / mean(test.data$offset)
+)
+curve(x * 1, add = TRUE, col = "red")
+```

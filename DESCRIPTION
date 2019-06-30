@@ -33,7 +33,9 @@ Suggests:
     gam (>= 1.15),
     ranger,
     MASS,
-	testthat
+	testthat,
+	rmarkdown,
+    knitr
 RoxygenNote: 6.1.1
 Collate:
     'const.r'
