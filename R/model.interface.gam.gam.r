@@ -38,3 +38,15 @@ model.interface.Gam.class$set(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+model.interface.Gam.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, newdata, ...) {
+		if (private$has.offset.argument(x, envir, package)) {
+			return(super$adjust.offset(x, envir, package, pred, newdata, ...))
+		}
+		return(pred)
+	}
+)

@@ -519,3 +519,60 @@ model.interface.default.class$set(
 		return(strip.function.call(offset.names))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	Check offset names for adjustment possibility
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+	"private", "can.adjust.offset", function(offset.names) {
+		if (length(offset.names) == 0) {
+			return(FALSE)
+		}
+		if (length(offset.names) > 1) {
+			warning(
+				"Currently, 'model.adapter' can't adjust models having > 2 ",
+				"offset terms."
+			)
+			return(FALSE)
+		}
+		if (grepl("\\$", offset.names)) {
+			warning(
+				"Currently, 'model.adapter' can't adjust the offset terms ",
+				"for the models specifying offset term as 'data$offset' ",
+				"format. Please use 'offset = offset' or ",
+				"'y ~ x + offset(offset)' format depending on the model and ",
+				"specify 'data = data'."
+			)
+			return(FALSE)
+		}
+		return(TRUE)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+#	Adjust offset term for prediction.
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, newdata, divide.by.mean = TRUE) {
+		offset.names <- self$get.offset.names(x, envir, package)
+		if (!private$can.adjust.offset(offset.names)) {
+			return(pred)
+		}
+		if (!is.null(newdata)) {
+			offset <- newdata[[offset.names]]
+		} else {
+			if (is.null(self$get.data(x, envir, package))) {
+				warning(
+					"Can't adjust offset because couldn't access ",
+					"offset data."
+				)
+				return(pred)
+			}
+			offset <- self$get.data(x, envir, package)[[offset.names]]
+		}
+		return(pred * offset / ifelse(divide.by.mean, mean(offset), 1))
+	}
+)

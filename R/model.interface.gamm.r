@@ -104,3 +104,12 @@ model.interface.gamm.class$set(
 		return(result)
 	}
 )
+
+
+#------------------------------------------------------------------------------
+model.interface.gamm.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, ...) {
+		return(pred)
+	}
+)

@@ -36,3 +36,18 @@ model.interface.gam.class$set(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+model.interface.gam.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, newdata, ...) {
+		if (private$has.offset.argument(x, envir, package)){
+			pred <- super$adjust.offset(
+				x, envir, package, pred, newdata, divide.by.mean = FALSE
+			)
+		}
+		return(pred)
+	}
+)
+

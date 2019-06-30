@@ -57,12 +57,54 @@ model.interface.gbm.class$set(
 	}
 )
 
+#------------------------------------------------------------------------------
+model.interface.gbm.class$set(
+	"private", "predict.with.offset",
+	function(object, newdata, type, random, ...) {
+		# To selectively ignore the warning produced for offset term,
+		# warning messages produced by predict method are captured.
+		# Yet the code is not enough elegant, but to capture output of the
+		# predict and warning together, withCallingHandlers was used.
+		envir <- environment()
+		pred <- withCallingHandlers(
+			super$predict(object, newdata, type, random, ...),
+			warning = function(w) {
+				# Capture warnings into 'warn'.
+				assign("warn", w, envir = envir)
+				invokeRestart("muffleWarning")
+			}
+		)
+		# If the captured warning seems not to be the one produced for
+		# prediction using a model with offset, show warnings.
+		if ("warn" %in% ls(envir = envir)) {
+			expected.warning <- (
+				"predict.gbm does not add the offset to the predicted values."
+			)
+			if (warn$message != expected.warning) {
+				warning(warn)
+			}
+		}
+		return(pred)
+	}
+)
 
+
+#------------------------------------------------------------------------------
+#	Because predict method of gbm doesn't add offset to the prediction,
+#	manually adjust offset term.
 #------------------------------------------------------------------------------
 model.interface.gbm.class$set(
 	"public", "predict",
 	function(object, newdata, type, random, ...) {
-		pred <- super$predict(object, newdata, type, random, ...)
+		# If no offset is specified (i.e., no need to adjustment)
+		# or newdata is NULL (i.e., can't adjust), use default predict method.
+		if (all(is.na(object$data$offset)) | is.null(newdata)) {
+			pred <- super$predict(object, newdata, type, random, ...)
+		} else {
+			pred <- private$predict.with.offset(
+				object, newdata, type, random, ...
+			)
+		}
 		if (is.array(pred)) {
 			pred <- as.matrix(pred[, , 1])
 		}
@@ -71,6 +113,20 @@ model.interface.gbm.class$set(
 			pred <- colnames(pred)[apply(pred, 1, which.max)]
 		}
 		return(pred)
+	}
+)
+
+
+#------------------------------------------------------------------------------
+model.interface.gbm.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, newdata, ...) {
+		return(
+			super$adjust.offset(
+				x, envir, package, pred, newdata,
+				divide.by.mean = FALSE
+			)
+		)
 	}
 )
 

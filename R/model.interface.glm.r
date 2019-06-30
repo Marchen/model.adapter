@@ -27,3 +27,12 @@ model.interface.glm.class$set(
 		return(make.predict.types(prob = "response", class = "response"))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+model.interface.glm.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, ...) {
+		return(pred)
+	}
+)

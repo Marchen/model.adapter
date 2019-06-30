@@ -483,6 +483,30 @@ model.adapter$set(
 
 
 #------------------------------------------------------------------------------
+#	Calculate prediction.
+#------------------------------------------------------------------------------
+model.adapter$set(
+	"private", "run.predict",
+	function(
+		newdata = NULL, type = c("response", "link", "prob", "class"),
+		random = ~0, ...
+	) {
+		pred <- private$interface$predict(
+			self$object, newdata = newdata,
+			type = private$interface$predict.types[type],
+			random = random, ...
+		)
+		# Adjust offset.
+		if (self$model.type == "regression") {
+			pred <- private$interface$adjust.offset(
+				private$src, private$envir, self$package.name, pred, newdata
+			)
+		}
+	}
+)
+
+
+#------------------------------------------------------------------------------
 #	Call predict method of the model.
 #------------------------------------------------------------------------------
 model.adapter$set(
@@ -493,16 +517,14 @@ model.adapter$set(
 	) {
 		# Error check.
 		type <- match.arg(type)
-		if (
-			self$model.type == "regression" & type %in% c("prob", "class")
-		) {
-			stop("'prob' and 'class' types are not compatible with regression model.")
+		error <- self$model.type == "regression" & type %in% c("prob", "class")
+		if (error) {
+			stop(
+				"'prob' and 'class' types are not compatible ",
+				"with regression model."
+			)
 		}
-		pred <- private$interface$predict(
-			self$object, newdata = newdata,
-			type = private$interface$predict.types[type],
-			random = random, ...
-		)
+		pred <- private$run.predict(newdata, type, random, ...)
 		# Make model.adapter.prediction object.
 		args <- as.list(match.call())[-1]
 		pred <- model.adapter.prediction(

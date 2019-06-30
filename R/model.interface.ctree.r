@@ -97,3 +97,12 @@ model.interface.BinaryTree.class$set(
 		return(pred)
 	}
 )
+
+
+#------------------------------------------------------------------------------
+model.interface.BinaryTree.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, ...) {
+		return(pred)
+	}
+)

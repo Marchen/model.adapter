@@ -105,3 +105,12 @@ model.interface.RandomForest.class$set(
 		return(pred)
 	}
 )
+
+
+#------------------------------------------------------------------------------
+model.interface.RandomForest.class$set(
+	"public", "adjust.offset",
+	function(x, envir, package, pred, ...) {
+		return(pred)
+	}
+)
