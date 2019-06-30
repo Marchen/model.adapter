@@ -489,7 +489,7 @@ model.adapter$set(
 	"private", "run.predict",
 	function(
 		newdata = NULL, type = c("response", "link", "prob", "class"),
-		random = ~0, ...
+		random = ~ 0, ...
 	) {
 		pred <- private$interface$predict(
 			self$object, newdata = newdata,
