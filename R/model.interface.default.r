@@ -487,3 +487,36 @@ model.interface.default.class$set(
 		return(!is.null(model.offset(model.frame(f, data = data))))
 	}
 )
+
+
+#------------------------------------------------------------------------------
+#	Get offset name.
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+	"public", "get.offset.names",
+	function(x, envir, package = "") {
+		# Find offset terms from formula.
+		model.terms <- terms(
+			self$get.formula(x, envir, package),
+			data = self$get.data(x, envir, package)
+		)
+		offset.names <- as.character(attr(model.terms, "variables"))[
+			# Adjust position of offset term considering 'list'.
+			attr(model.terms, "offset") + 1
+		]
+		# If 'x' is not call, get call from the object.
+		if (!is.call(x)) {
+			x <- self$get.call(x)
+			if (is.null(x)) {
+				return(offset.names)
+			}
+		}
+		# Check offset argument.
+		x <- match.generic.call(x, envir, package)
+		if ("offset" %in% names(x)) {
+			offset.names <- c(offset.names, deparse(x$offset))
+		}
+		offset.names <- strip.function.call(offset.names)
+		return(offset.names)
+	}
+)
