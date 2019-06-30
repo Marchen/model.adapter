@@ -3,3 +3,5 @@ man/
 NAMESPACE
 .vs
 .Rproj.user
+vignettes/*.R
+vignettes/*.html
