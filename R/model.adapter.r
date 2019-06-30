@@ -125,7 +125,20 @@
 #'
 #'		\strong{\code{model.adapter$predict(newdata = NULL, type = c("response", "link", "prob", "class"), random = ~0, ...)}}
 #'
-#'			Use predict method.
+#'			Call predict method.
+#'			
+#'			For regression models, offset term is adjusted if 1) type is not "link",
+#'			2) the model having only one offset term, 3) offset was specified as
+#'			\code{offset = offset} or \code{formula = y ~ x + offset(offset)}
+#'			rather than \code{offset = data$offset} or
+#'			\code{formula = y ~ x + offset(data$offset)}, 4) the model is not
+#'			\code{glmmML} or \code{ranger}.
+#'			
+#'			Also, it is users responsibility to use offset term with appropreate
+#'			scale. For example if the model is \code{glm} with \code{poisson}
+#'			family with \code{log} link function, the offset term should be
+#'			\code{offset = log(offset)} or
+#'			\code{formula = y ~ x + offset(log(offset))}.
 #'
 #'			\subsection{Args}{
 #'				\describe{
