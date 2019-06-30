@@ -508,7 +508,7 @@ model.interface.default.class$set(
 		if (!is.call(x)) {
 			x <- self$get.call(x)
 			if (is.null(x)) {
-				return(offset.names)
+				return(strip.function.call(offset.names))
 			}
 		}
 		# Check offset argument.
@@ -516,7 +516,6 @@ model.interface.default.class$set(
 		if ("offset" %in% names(x)) {
 			offset.names <- c(offset.names, deparse(x$offset))
 		}
-		offset.names <- strip.function.call(offset.names)
-		return(offset.names)
+		return(strip.function.call(offset.names))
 	}
 )
