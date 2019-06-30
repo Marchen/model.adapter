@@ -29,6 +29,11 @@ model.interface.glmerMod.class$set(
 		} else {
 			d <- x@frame
 			attr(d, "terms") <- NULL
+			# Restore name of offset variable.
+			if ("(offset)" %in% colnames(d)) {
+				offset.name <- as.character(attr(x@frame, "offset"))
+				colnames(d)[colnames(d) == "(offset)"] <- offset.name
+			}
 			return(strip.offset.in.colnames(d))
 		}
 	}
