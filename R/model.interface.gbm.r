@@ -121,10 +121,10 @@ model.interface.gbm.class$set(
 #------------------------------------------------------------------------------
 model.interface.gbm.class$set(
 	"public", "adjust.offset",
-	function(x, envir, package, pred, newdata, ...) {
+	function(x, envir, package, pred, newdata, type, ...) {
 		return(
 			super$adjust.offset(
-				x, envir, package, pred, newdata,
+				x, envir, package, pred, newdata, type,
 				divide.by.mean = FALSE
 			)
 		)

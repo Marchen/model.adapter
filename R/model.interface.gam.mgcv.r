@@ -41,10 +41,10 @@ model.interface.gam.class$set(
 #------------------------------------------------------------------------------
 model.interface.gam.class$set(
 	"public", "adjust.offset",
-	function(x, envir, package, pred, newdata, ...) {
+	function(x, envir, package, pred, newdata, type, ...) {
 		if (private$has.offset.argument(x, envir, package)){
 			pred <- super$adjust.offset(
-				x, envir, package, pred, newdata, divide.by.mean = FALSE
+				x, envir, package, pred, newdata, type, divide.by.mean = FALSE
 			)
 		}
 		return(pred)

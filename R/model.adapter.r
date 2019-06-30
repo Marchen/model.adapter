@@ -499,7 +499,8 @@ model.adapter$set(
 		# Adjust offset.
 		if (self$model.type == "regression") {
 			pred <- private$interface$adjust.offset(
-				private$src, private$envir, self$package.name, pred, newdata
+				private$src, private$envir, self$package.name, pred, newdata,
+				type
 			)
 		}
 	}

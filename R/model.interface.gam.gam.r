@@ -43,9 +43,11 @@ model.interface.Gam.class$set(
 #------------------------------------------------------------------------------
 model.interface.Gam.class$set(
 	"public", "adjust.offset",
-	function(x, envir, package, pred, newdata, ...) {
+	function(x, envir, package, pred, newdata, type, ...) {
 		if (private$has.offset.argument(x, envir, package)) {
-			return(super$adjust.offset(x, envir, package, pred, newdata, ...))
+			return(super$adjust.offset(
+				x, envir, package, pred, newdata, type, ...
+			))
 		}
 		return(pred)
 	}

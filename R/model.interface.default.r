@@ -525,16 +525,24 @@ model.interface.default.class$set(
 #	Check offset names for adjustment possibility
 #------------------------------------------------------------------------------
 model.interface.default.class$set(
-	"private", "can.adjust.offset", function(offset.names) {
+	"private", "can.adjust.offset", function(offset.names, type) {
+		can.adjust <- TRUE
+		if (type == "link") {
+			warning(
+				"Currently, adjustment for offset terms is not ",
+				"implemented for prediction in link scale."
+			)
+			can.adjust <- FALSE
+		}
 		if (length(offset.names) == 0) {
-			return(FALSE)
+			can.adjust <- FALSE
 		}
 		if (length(offset.names) > 1) {
 			warning(
 				"Currently, 'model.adapter' can't adjust models having > 2 ",
 				"offset terms."
 			)
-			return(FALSE)
+			can.adjust <- FALSE
 		}
 		if (grepl("\\$", offset.names)) {
 			warning(
@@ -544,9 +552,9 @@ model.interface.default.class$set(
 				"'y ~ x + offset(offset)' format depending on the model and ",
 				"specify 'data = data'."
 			)
-			return(FALSE)
+			can.adjust <- FALSE
 		}
-		return(TRUE)
+		return(can.adjust)
 	}
 )
 
@@ -556,9 +564,9 @@ model.interface.default.class$set(
 #------------------------------------------------------------------------------
 model.interface.default.class$set(
 	"public", "adjust.offset",
-	function(x, envir, package, pred, newdata, divide.by.mean = TRUE) {
+	function(x, envir, package, pred, newdata, type, divide.by.mean = TRUE) {
 		offset.names <- self$get.offset.names(x, envir, package)
-		if (!private$can.adjust.offset(offset.names)) {
+		if (!private$can.adjust.offset(offset.names, type)) {
 			return(pred)
 		}
 		if (!is.null(newdata)) {
