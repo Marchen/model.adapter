@@ -318,3 +318,34 @@ x.names.from.formula <- function(
 	vars <- unique(vars[!vars %in% c("", "1")])
 	return(vars)
 }
+
+
+#------------------------------------------------------------------------------
+#'	(Internal) Strip function call from variable name(s)
+#'
+#'	This function removes function call (i.e. 'function(' and ')') from list
+#'	of variable names.
+#'
+#'	@param x a vector of variable names.
+#'	@param maxit maximum number of iterations for nested functions.
+#------------------------------------------------------------------------------
+strip.function.call <- function(x, maxit = 100) {
+	# If 'x' has no elements, return 'x' as is.
+	if (length(x) == 0) {
+		return(x)
+	}
+	# Remove function call iteratively
+	strip <- function(x) {
+		return(gsub("[^(]*\\(([^)]*)\\)", "\\1", x))
+	}
+	prev.x <- x
+	for (i in 1:maxit) {
+		x <- sapply(x, strip)
+		if (all(x == prev.x)) {
+			break
+		}
+		prev.x <- x
+	}
+	attributes(x) <- NULL
+	return(x)
+}
