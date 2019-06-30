@@ -1,6 +1,7 @@
 os:
   - linux
   - osx
+    osx_image: xcode10.2
 language: r
 r:
   - oldrel
