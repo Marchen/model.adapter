@@ -433,7 +433,7 @@ model.interface.default.class$set(
 			response <- model.response(
 				model.frame(self$get.formula(x, envir, package), data = d)
 			)
-			if (is(response, "factor")) {
+			if (is(response, "factor") | is(response, "character")) {
 				return("classification")
 			} else {
 				return("regression")
