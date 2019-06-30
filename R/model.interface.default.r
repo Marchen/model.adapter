@@ -460,7 +460,7 @@ model.interface.default.class$set(
 #	by default method.
 #------------------------------------------------------------------------------
 model.interface.default.class$set(
-	"public", "has.offset.argument",
+	"private", "has.offset.argument",
 	function(x, envir, package = "") {
 		if (!is.call(x)) {
 			x <- self$get.call(x)
@@ -479,7 +479,7 @@ model.interface.default.class$set(
 #	Check the model having offset term(s) in formula.
 #------------------------------------------------------------------------------
 model.interface.default.class$set(
-	"public", "has.offset.in.formula",
+	"private", "has.offset.in.formula",
 	function(x, envir, package = "") {
 		# Check formula.
 		f <- self$get.formula(x, envir, package)
