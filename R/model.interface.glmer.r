@@ -34,6 +34,8 @@ model.interface.glmerMod.class$set(
 				offset.name <- deparse(attr(x@frame, "offset"))
 				colnames(d)[colnames(d) == "(offset)"] <- offset.name
 			}
+			attr(d, "formula") <- NULL
+			attr(d, "offset") <- NULL
 			return(strip.offset.in.colnames(d))
 		}
 	}
