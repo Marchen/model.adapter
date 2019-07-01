@@ -4,11 +4,10 @@ author: "Michio Oguro"
 date: "`r Sys.Date()`"
 output:
     html_document:
-        fig_width: 6
-        fig_height: 6
-        fig_retina: 2
-        dpi: 300
-        dev.args: list(dpi = 300)
+        fig_width: 4
+        fig_height: 4
+        dpi: 72
+        dev.args: list(dpi = 72)
         toc: true
         toc_depth: 3
         md_extensions: -ascii_identifiers
@@ -544,11 +543,14 @@ plot(
 )
 curve(x * 1, add = TRUE, col = "red")
 
-# model.adapter
+# Test effect of offset.
+set.seed(1)
+model1 <- ranger::ranger(y.norm ~ x + offset(offset), data = test.data)
+set.seed(1)
+model2 <- ranger::ranger(y.norm ~ x + offset, data = test.data)
 plot(
-	model.adapter$new(model)$predict()$fit[, "fit"],
-	predict(model, data = test.data)$predictions
-	* test.data$offset / mean(test.data$offset)
+	predict(model1, data = test.data)$predictions,
+	predict(model2, data = test.data)$predictions
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
