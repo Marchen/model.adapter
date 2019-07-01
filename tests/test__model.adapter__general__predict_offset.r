@@ -49,8 +49,7 @@ test_that(
 test_that(
 	"Test handling of offset terms for party::ctree", {
 		model <- party::ctree(
-			y.pois ~ x + offset(offset),
-			data = test.data, control = party::cforest_unbiased(mtry = 1)
+			y.pois ~ x + offset(offset), data = test.data
 		)
 		expect_equal(
 			model.adapter$new(model)$predict()$fit[, "fit"],
