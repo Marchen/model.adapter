@@ -36,7 +36,6 @@ Suggests:
 	testthat,
 	rmarkdown,
     knitr
-VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Collate:
     'const.r'

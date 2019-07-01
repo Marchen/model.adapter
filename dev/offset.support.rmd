@@ -6,8 +6,8 @@ output:
     html_document:
         fig_width: 4
         fig_height: 4
-        dpi: 72
-        dev.args: list(dpi = 72)
+        dpi: 36
+        dev.args: list(dpi = 36)
         toc: true
         toc_depth: 3
         md_extensions: -ascii_identifiers
