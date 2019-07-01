@@ -526,23 +526,22 @@ model.interface.default.class$set(
 #------------------------------------------------------------------------------
 model.interface.default.class$set(
 	"private", "can.adjust.offset", function(offset.names, type) {
-		can.adjust <- TRUE
 		if (type == "link") {
 			warning(
 				"Currently, adjustment for offset terms is not ",
 				"implemented for prediction in link scale."
 			)
-			can.adjust <- FALSE
+			return(FALSE)
 		}
 		if (length(offset.names) == 0) {
-			can.adjust <- FALSE
+			return(FALSE)
 		}
 		if (length(offset.names) > 1) {
 			warning(
 				"Currently, 'model.adapter' can't adjust models having > 2 ",
 				"offset terms."
 			)
-			can.adjust <- FALSE
+			return(FALSE)
 		}
 		if (grepl("\\$", offset.names)) {
 			warning(
@@ -552,9 +551,9 @@ model.interface.default.class$set(
 				"'y ~ x + offset(offset)' format depending on the model and ",
 				"specify 'data = data'."
 			)
-			can.adjust <- FALSE
+			return(FALSE)
 		}
-		return(can.adjust)
+		return(TRUE)
 	}
 )
 
