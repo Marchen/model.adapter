@@ -31,7 +31,7 @@ model.interface.glmerMod.class$set(
 			attr(d, "terms") <- NULL
 			# Restore name of offset variable.
 			if ("(offset)" %in% colnames(d)) {
-				offset.name <- as.character(attr(x@frame, "offset"))
+				offset.name <- deparse(attr(x@frame, "offset"))
 				colnames(d)[colnames(d) == "(offset)"] <- offset.name
 			}
 			return(strip.offset.in.colnames(d))
