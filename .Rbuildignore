@@ -1,4 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^.travis.yml$
-^.vs.*$
+^\.travis\.yml$
+^\.vs/.*$
+^dev$
+^.*\.sh$
+^.*\.sln$
+^.*\.rxproj$
+^include\.r$
