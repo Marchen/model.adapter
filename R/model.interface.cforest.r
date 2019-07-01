@@ -60,6 +60,7 @@ model.interface.RandomForest.class$set(
 			input <- x@data@get("input")
 			response <- x@data@get("response")
 			d <- cbind(input, response)
+			d <- strip.offset.in.colnames(d)
 		}
 	}
 )
