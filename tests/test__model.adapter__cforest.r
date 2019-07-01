@@ -9,13 +9,13 @@ test.data <- list(
 		substitute(
 			cforest(
 				Sepal.Length ~ ., data = iris,
-				controls = cforest_control(ntree = 10)
+				controls = cforest_control(ntree = 10, mtry = 3)
 			)
 		),
 		substitute(
 			cforest(
 				Species ~ ., data = iris,
-				controls = cforest_control(ntree = 10)
+				controls = cforest_control(ntree = 10, mtry = 3)
 			)
 		)
 	),
