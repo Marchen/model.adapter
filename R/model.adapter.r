@@ -516,6 +516,7 @@ model.adapter$set(
 				type
 			)
 		}
+		return(pred)
 	}
 )
 
