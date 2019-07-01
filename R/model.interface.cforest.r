@@ -69,7 +69,9 @@ model.interface.RandomForest.class$set(
 model.interface.RandomForest.class$set(
 	"public", "get.model.type",
 	function(x, envir, package = "", ...) {
-		response <- x@data@get("response")
+		data <- self$get.data(x, envir, package)
+		y.name <- as.character(self$get.formula(x, envir, package)[2])
+		response <- data[[y.name]]
 		if (is(response, "factor") | is(response, "character")) {
 			return("classification")
 		} else {
