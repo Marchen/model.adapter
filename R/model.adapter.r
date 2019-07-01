@@ -30,9 +30,13 @@
 #'		At least, all columns used for the modeling are stored in this field.
 #'		Because some modeling function doesn't keep original \code{data.frame}
 #'		used for modeling or \code{call} in resultant object, this field can't
-#'		have the same \code{data.frame} used for modeling in such case.
+#'		have the same \code{data.frame} used for modeling in such situation.
 #'		When all the columns used for the modeling is not available from this
 #'		field becomes \code{NULL}.
+#'		Also, when the model doesn't store original data and some function
+#'		such as `log()` was applied in model construction, the `data.frame`
+#'		stored in this field can be different from original values.
+#'		At least, this is applicable for `glmer` and `lmer`.
 #'
 #'	@field formula
 #'		a read-only \code{formula} object specifying structure of the model.
