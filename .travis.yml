@@ -6,6 +6,10 @@ r:
   - oldrel
   - release
   - devel
+# Tentative, until Travis-CI can test devel on osx.
+exclude:
+    - r: devel
+      os: osx
 cache: packages
 repos:
   CRAN: https://cloud.r-project.org
@@ -19,4 +23,6 @@ before_script:
   - rm include.r
   - R -e 'install.packages("roxygen2")'
   - R -e 'devtools::document()'
-
+# Tentative.
+before_script:
+  - R -e 'install.packages("tree")'
