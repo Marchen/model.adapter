@@ -21,8 +21,5 @@ before_install:
 # Tentative.
   - R -e 'install.packages("tree", repos = "https://mran.microsoft.com/snapshot/2019-04-15")'
 before_script:
-  - rm .travis.yml
-  - rm install.sh
-  - rm include.r
   - R -e 'install.packages("roxygen2")'
   - R -e 'devtools::document()'
