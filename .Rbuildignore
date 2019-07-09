@@ -6,4 +6,3 @@
 ^.*\.sh$
 ^.*\.sln$
 ^.*\.rxproj$
-^include\.r$
