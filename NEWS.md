@@ -1,3 +1,11 @@
+# 2019-07-09: 0.1.2
+
+- Add support for probability forest by `cforest` in `ranger` package.
+- Integrate with Travis-CI.
+- Improved support for models with offset terms.
+  - Support prediction with an offset term by `predict` method.
+- Bug fixes.
+
 # 2018-11-21: 0.1.1
 
 - Replaced ma.prediction class with model.adapter.prediction class.
