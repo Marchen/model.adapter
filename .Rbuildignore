@@ -3,6 +3,5 @@
 ^\.travis\.yml$
 ^\.vs/.*$
 ^dev$
-^.*\.sh$
 ^.*\.sln$
 ^.*\.rxproj$
