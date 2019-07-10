@@ -12,13 +12,7 @@ For the details of the class, please see the document of model.adapter in the he
 
 ## Install
 
-If you have `devtools` package, copy & paste following code into R.
-
-```{R}
-devtools::install_github("marchen/model.adapter@*release")
-```
-
-If not, use following code.
+To install the package, copy & paste following code into R console.
 
 ```{R}
 install.packages(
