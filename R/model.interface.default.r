@@ -339,7 +339,7 @@ model.interface.default.class$set(
 		if (!is.null(f)) {
 			f <- formula(f)
 			# Remove environment with formula.
-			f <- as.formula(as.character(deparse(f)))
+			f <- as.formula(as.character(paste(deparse(f), collapse = " ")))
 		}
 		return(f)
 	}
