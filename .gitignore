@@ -1,6 +1,4 @@
 .RHistory
-man/
-NAMESPACE
 .vs
 .Rproj.user
 dev/*.R
