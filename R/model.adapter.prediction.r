@@ -88,6 +88,9 @@ model.adapter.prediction.class$set(
 			if (ncol(self$fit) == 1) {
 				colnames(self$fit) <- "fit"
 			} else if (ncol(self$fit) == 3) {
+				if (self$fit[1, 3] > self$fit[1, 2]) {
+					self$fit <- self$fit[, c(1, 3, 2)]
+				}
 				colnames(self$fit) <- c("fit", "upper", "lower")
 			} else {
 				stop(
