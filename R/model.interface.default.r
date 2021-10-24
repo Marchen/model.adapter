@@ -526,13 +526,6 @@ model.interface.default.class$set(
 #------------------------------------------------------------------------------
 model.interface.default.class$set(
 	"private", "can.adjust.offset", function(offset.names, type) {
-		if (type == "link") {
-			warning(
-				"Currently, adjustment for offset terms is not ",
-				"implemented for prediction in link scale."
-			)
-			return(FALSE)
-		}
 		if (length(offset.names) == 0) {
 			return(FALSE)
 		}
@@ -540,6 +533,13 @@ model.interface.default.class$set(
 			warning(
 				"Currently, 'model.adapter' can't adjust models having > 2 ",
 				"offset terms."
+			)
+			return(FALSE)
+		}
+		if (type == "link") {
+			warning(
+				"Currently, adjustment for offset terms is not ",
+				"implemented for prediction in link scale."
 			)
 			return(FALSE)
 		}
