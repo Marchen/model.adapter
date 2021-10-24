@@ -37,7 +37,7 @@ Suggests:
 	testthat,
 	rmarkdown,
     knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Collate:
     'const.r'
     'get.class.name.r'
