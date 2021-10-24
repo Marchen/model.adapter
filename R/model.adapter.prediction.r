@@ -119,7 +119,9 @@ model.adapter.prediction.class$set(
 #------------------------------------------------------------------------------
 model.adapter.prediction.class$set(
 	"private", "init.interval",
-	function(interval.type, interval.level =  c("confidence", "prediction")) {
+	function(
+		interval.type = c("none", "confidence", "prediction"), interval.level
+	) {
 		# Check error in interval.type.
 		if (!is.null(interval.type)) {
 			self$interval.type <- match.arg(interval.type)
