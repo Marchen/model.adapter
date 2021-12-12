@@ -254,7 +254,11 @@ model.interface.default.class$set(
 			}
 		}
 		if (!is.null(family)) {
-			return(convert.family(family, type))
+			# Because is.na() produces a warning when family is a language
+			# object, use suppressWarnings() here.
+			if (suppressWarnings(any(!is.na(family)))) {
+				return(convert.family(family, type))
+			}
 		} else {
 			return(NULL)
 		}
