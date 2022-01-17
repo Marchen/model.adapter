@@ -26,7 +26,6 @@ families.
 \item \href{#method-get.link}{\code{model.interface.MCMCglmm.class$get.link()}}
 \item \href{#method-get.linkinv}{\code{model.interface.MCMCglmm.class$get.linkinv()}}
 \item \href{#method-get.model.type}{\code{model.interface.MCMCglmm.class$get.model.type()}}
-\item \href{#method-predict}{\code{model.interface.MCMCglmm.class$predict()}}
 \item \href{#method-clone}{\code{model.interface.MCMCglmm.class$clone()}}
 }
 }
@@ -37,6 +36,7 @@ families.
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula">}\href{../../model.adapter/html/model.interface.html#method-expand.formula}{\code{model.adapter::model.interface$expand.formula()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names">}\href{../../model.adapter/html/model.interface.html#method-get.offset.names}{\code{model.adapter::model.interface$get.offset.names()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="predict">}\href{../../model.adapter/html/model.interface.html#method-predict}{\code{model.adapter::model.interface$predict()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -104,15 +104,6 @@ families.
 \subsection{Method \code{get.model.type()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.model.type(x, envir, package = "", ...)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
-\subsection{Method \code{predict()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$predict(object, newdata, type, random, ...)}\if{html}{\out{</div>}}
 }
 
 }

@@ -46,6 +46,7 @@ package.name.default <- function(x, envir){
 	if (is(x, "tree")) return("tree")
 	if (is(x, "rpart")) return("rpart")
 	if (is(x, "gamm")) return("mgcv")
+	if (is(x, "averaging")) return("MuMIn")
 	return(class(x)[1])
 }
 

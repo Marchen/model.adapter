@@ -14,15 +14,18 @@ have several limitations.
 }
 \details{
 \describe{
-	\item{\code{get.formula}}{
+	\item{\code{get.formula}} {
 		because nature of \emph{\code{averaging}} object,
 		this class constructs formula from all variable names in
 		\emph{\code{sw}} field of the object.
 	}
-	\item{\code{get.familiy}, \code{get.data}}{
+	\item{\code{get.familiy}, \code{get.data}} {
 		family and data are obtained from the first model of the
 		\emph{\code{model.calls}} or \emph{\code{modelList}} attributes
 		depending on the object.
+	}
+	\item{\code{adjust.offset}} {
+		not implemented.
 	}
 }
 }
@@ -35,6 +38,7 @@ have several limitations.
 \item \href{#method-get.formula}{\code{model.interface.averaging.class$get.formula()}}
 \item \href{#method-get.family}{\code{model.interface.averaging.class$get.family()}}
 \item \href{#method-get.data}{\code{model.interface.averaging.class$get.data()}}
+\item \href{#method-get.offset.names}{\code{model.interface.averaging.class$get.offset.names()}}
 \item \href{#method-clone}{\code{model.interface.averaging.class$clone()}}
 }
 }
@@ -47,7 +51,6 @@ have several limitations.
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link">}\href{../../model.adapter/html/model.interface.html#method-get.link}{\code{model.adapter::model.interface$get.link()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv">}\href{../../model.adapter/html/model.interface.html#method-get.linkinv}{\code{model.adapter::model.interface$get.linkinv()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type">}\href{../../model.adapter/html/model.interface.html#method-get.model.type}{\code{model.adapter::model.interface$get.model.type()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names">}\href{../../model.adapter/html/model.interface.html#method-get.offset.names}{\code{model.adapter::model.interface$get.offset.names()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="predict">}\href{../../model.adapter/html/model.interface.html#method-predict}{\code{model.adapter::model.interface$predict()}}\out{</span>}
 }
@@ -81,6 +84,15 @@ have several limitations.
 \subsection{Method \code{get.data()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.averaging.class$get.data(x, envir, package = "", ...)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get.offset.names"></a>}}
+\if{latex}{\out{\hypertarget{method-get.offset.names}{}}}
+\subsection{Method \code{get.offset.names()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{model.interface.averaging.class$get.offset.names(x, envir, package = "")}\if{html}{\out{</div>}}
 }
 
 }

@@ -45,6 +45,7 @@ Collate:
     'model.adapter.r'
     'model.interface.default.r'
     'model.interface.MCMCglmm.r'
+    'model.interface.averaging.r'
     'model.interface.cforest.r'
     'model.interface.ctree.r'
     'model.interface.gam.gam.r'
