@@ -118,17 +118,17 @@ Because `glmmML` package doesn't provide `predict` method for `glmmML` object, `
 ```{R}
 set.seed(12345)
 test.data <- data.frame(
-	x = rnorm(1000, 1000, 100),
-	offset = runif(1000, 1, 10) %/% 1,
-	random = runif(1000, 1, 100) %/% 1
+    x = rnorm(1000, 1000, 100),
+    offset = runif(1000, 1, 10) %/% 1,
+    random = runif(1000, 1, 100) %/% 1
 )
 test.data$y.norm <- rnorm(1000, test.data$x) * test.data$offset
 test.data$y.pois <- rpois(1000, test.data$x) * test.data$offset
 test.data$y.norm.with.random <- (
-	rnorm(1000, test.data$x) * test.data$offset + rnorm(100)[test.data$random]
+    rnorm(1000, test.data$x) * test.data$offset + rnorm(100)[test.data$random]
 )
 test.data$y.pois.with.random <- (
-	rpois(1000, test.data$x + rnorm(100)[test.data$random]) * test.data$offset
+    rpois(1000, test.data$x + rnorm(100)[test.data$random]) * test.data$offset
 )
 test.data$random <- factor(test.data$random)
 ```
@@ -140,8 +140,8 @@ test.data$random <- factor(test.data$random)
 ```{R, message = FALSE}
 # Using offset term in formula.
 model <- party::cforest(
-	y.pois ~ x + offset(offset),
-	data = test.data, control = party::cforest_unbiased(mtry = 1)
+    y.pois ~ x + offset(offset),
+    data = test.data, control = party::cforest_unbiased(mtry = 1)
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
@@ -154,8 +154,8 @@ curve(x * 1, add = TRUE, col = "red")
 ```{R, message = FALSE}
 # Using offset term in formula.
 model <- party::ctree(
-	y.pois ~ x + offset(offset),
-	data = test.data, control = party::ctree_control(mtry = 1)
+    y.pois ~ x + offset(offset),
+    data = test.data, control = party::ctree_control(mtry = 1)
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
@@ -169,7 +169,7 @@ Specifiying offset in formula works well.
 
 ```{R, message = FALSE}
 model <- gam::gam(
-	y.pois ~ x + offset(log(offset)), data = test.data, family = poisson(log)
+    y.pois ~ x + offset(log(offset)), data = test.data, family = poisson(log)
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x + 0, add = TRUE, col = "red")
@@ -181,17 +181,17 @@ Yet, specifing offset using `offset` argument does not work when predicting.
 library(gam)
 # Prediction doesn't work well.
 model <- gam::gam(
-	y.pois ~ x , data = test.data, family = poisson(log),
-	offset = log(offset), control = gam::gam.control(maxit = 100)
+    y.pois ~ x , data = test.data, family = poisson(log),
+    offset = log(offset), control = gam::gam.control(maxit = 100)
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x + 0, add = TRUE, col = "red")
 
 # Workaround.
 plot(
-	test.data$y.pois,
-	predict(model, type = "response")
-	* test.data$offset / mean(test.data$offset)
+    test.data$y.pois,
+    predict(model, type = "response")
+    * test.data$offset / mean(test.data$offset)
 )
 curve(x + 0, add = TRUE, col = "red")
 ```
@@ -204,8 +204,8 @@ Specifyling offset in `formula` interface is OK.
 
 ```{R, message = FALSE}
 model <- mgcv::gam(
-	y.pois ~ x + offset(log(offset)), data = test.data,
-	family = poisson(log)
+    y.pois ~ x + offset(log(offset)), data = test.data,
+    family = poisson(log)
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x + 0, add = TRUE, col = "red")
@@ -216,15 +216,15 @@ But `offset` option does not work as explained in the help page.
 ```{R, message = FALSE}
 # Prediction doesn't work well.
 model <- mgcv::gam(
-	y.pois ~ x, data = test.data, offset = log(offset),
-	family = poisson(log)
+    y.pois ~ x, data = test.data, offset = log(offset),
+    family = poisson(log)
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x + 0, add = TRUE, col = "red")
 
 # Workaround.
 plot(
-	test.data$y.pois, predict(model, type = "response") * test.data$offset
+    test.data$y.pois, predict(model, type = "response") * test.data$offset
 )
 curve(x + 0, add = TRUE, col = "red")
 ```
@@ -239,20 +239,20 @@ curve(x + 0, add = TRUE, col = "red")
 # Pre-transformed offset in formula.
 test.data$log.offset <- log(test.data$offset)
 model <- mgcv::gamm(
-	y.pois.with.random ~ x + offset(log.offset), random = list(random = ~ 1),
-	data = test.data, family = poisson(log)
+    y.pois.with.random ~ x + offset(log.offset), random = list(random = ~ 1),
+    data = test.data, family = poisson(log)
 )
 plot(test.data$y.pois, predict(model$gam, type = "response"))
 curve(x + 0, add = TRUE, col = "red")
 
 # offset argument is not allowed.
 model1 <- mgcv::gamm(
-	y.pois.with.random ~ x, random = list(random = ~ 1),
-	data = test.data, family = poisson(log)
+    y.pois.with.random ~ x, random = list(random = ~ 1),
+    data = test.data, family = poisson(log)
 )
 model2 <- mgcv::gamm(
-	y.pois.with.random ~ x, random = list(random = ~ 1), offset = log(offset),
-	data = test.data, family = poisson(log)
+    y.pois.with.random ~ x, random = list(random = ~ 1), offset = log(offset),
+    data = test.data, family = poisson(log)
 )
 identical(model1, model2, ignore.environment = TRUE)
 
@@ -268,16 +268,16 @@ As explained by the warning message, predit.gbm doesn't consider offset terms.
 library(gbm)
 # Using offset term in formula.
 model <- gbm::gbm(
-	y.pois ~ x + offset(log(offset)),
-	data = test.data, distribution = "poisson", n.trees = 100
+    y.pois ~ x + offset(log(offset)),
+    data = test.data, distribution = "poisson", n.trees = 100
 )
 plot(test.data$y.pois, predict(model, type = "response", n.trees = 100))
 curve(x + 0, add = TRUE, col = "red")
 
 # Workarround
 plot(
-	test.data$y.pois,
-	predict(model, type = "response", n.trees = 100) * test.data$offset
+    test.data$y.pois,
+    predict(model, type = "response", n.trees = 100) * test.data$offset
 )
 curve(x + 0, add = TRUE, col = "red")
 ```
@@ -289,14 +289,14 @@ curve(x + 0, add = TRUE, col = "red")
 ```{R, message = FALSE}
 # Using offset term in formula.
 model <- stats::glm(
-	y.pois ~ x + offset(log(offset)), data = test.data, family = poisson
+    y.pois ~ x + offset(log(offset)), data = test.data, family = poisson
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
 
 # Using offset term in offset argument.
 model <- stats::glm(
-	y.pois ~ x, offset = log(offset), data = test.data, family = poisson
+    y.pois ~ x, offset = log(offset), data = test.data, family = poisson
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
@@ -309,16 +309,16 @@ curve(x * 1, add = TRUE, col = "red")
 ```{R, message = FALSE}
 # Using offset term in formula.
 model <- lme4::glmer(
-	y.pois.with.random ~ x + (1 | random) + offset(log(offset)),
-	data = test.data, family = poisson
+    y.pois.with.random ~ x + (1 | random) + offset(log(offset)),
+    data = test.data, family = poisson
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
 
 # Using offset argument.
 model <- lme4::glmer(
-	y.pois.with.random ~ x + (1 | random), offset = log(offset),
-	data = test.data, family = poisson
+    y.pois.with.random ~ x + (1 | random), offset = log(offset),
+    data = test.data, family = poisson
 )
 plot(test.data$y.pois, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
@@ -332,15 +332,15 @@ curve(x * 1, add = TRUE, col = "red")
 library(glmmADMB)
 # Using offset term in formula.
 model <- glmmADMB::glmmadmb(
-	y.norm ~ x + offset(offset), data = test.data, family = "gaussian"
+    y.norm ~ x + offset(offset), data = test.data, family = "gaussian"
 )
 plot(test.data$y.norm, predict(model, type = "response"))
 curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.pois,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.pois,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -354,38 +354,38 @@ library(glmmML)
 library(model.adapter)
 # Using offset term in formula.
 model <- glmmML::glmmML(
-	y.pois.with.random ~ x + offset(log(offset)),
-	cluster = random, data = test.data, family = poisson
+    y.pois.with.random ~ x + offset(log(offset)),
+    cluster = random, data = test.data, family = poisson
 )
 plot(
-	test.data$y.pois.with.random,
-	model.adapter$new(model)$predict()$fit[, "fit"]
+    test.data$y.pois.with.random,
+    model.adapter$new(model)$predict()$fit[, "fit"]
 )
 curve(x * 1, add = TRUE, col = "red")
 
 # Can't find workarounds
 plot(
-	test.data$y.pois.with.random,
-	model.adapter$new(model)$predict()$fit[, "fit"] * test.data$offset
+    test.data$y.pois.with.random,
+    model.adapter$new(model)$predict()$fit[, "fit"] * test.data$offset
 )
 curve(x * 1, add = TRUE, col = "red")
 
 # Using offset argument.
 model <- glmmML::glmmML(
-	y.pois.with.random ~ x, offset = log(offset),
-	cluster = random, data = test.data, family = poisson
+    y.pois.with.random ~ x, offset = log(offset),
+    cluster = random, data = test.data, family = poisson
 )
 plot(
-	test.data$y.pois.with.random,
-	model.adapter$new(model)$predict()$fit[, "fit"]
+    test.data$y.pois.with.random,
+    model.adapter$new(model)$predict()$fit[, "fit"]
 )
 curve(x * 1, add = TRUE, col = "red")
 
 # Can't find workarounds
 plot(
-	test.data$y.pois.with.random,
-	model.adapter$new(model)$predict()$fit[, "fit"]
-	* test.data$offset / mean(test.data$offset)
+    test.data$y.pois.with.random,
+    model.adapter$new(model)$predict()$fit[, "fit"]
+    * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -402,8 +402,8 @@ curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 
@@ -415,8 +415,8 @@ curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -430,16 +430,16 @@ library(nlme)
 
 # Using offset term in formula.
 model <- nlme::lme(
-	y.norm.with.random ~ x + offset(offset), data = test.data,
-	random = ~ 1 | random
+    y.norm.with.random ~ x + offset(offset), data = test.data,
+    random = ~ 1 | random
 )
 plot(test.data$y.norm.with.random, predict(model))
 curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -451,30 +451,30 @@ curve(x * 1, add = TRUE, col = "red")
 ```{R, message = FALSE}
 # Using offset term in formula.
 model <- lme4::lmer(
-	y.norm.with.random ~ x + (1 | random) + offset(offset), data = test.data
+    y.norm.with.random ~ x + (1 | random) + offset(offset), data = test.data
 )
 plot(test.data$y.norm.with.random, predict(model))
 curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 
 
 # Using offset term in offset argument.
 model <- lme4::lmer(
-	y.norm.with.random ~ x + (1 | random), offset = offset, data = test.data
+    y.norm.with.random ~ x + (1 | random), offset = offset, data = test.data
 )
 plot(test.data$y.norm, predict(model))
 curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -486,16 +486,16 @@ curve(x * 1, add = TRUE, col = "red")
 ```{R, message = FALSE}
 # Using offset term in formula.
 model <- MCMCglmm::MCMCglmm(
-	y.pois ~ x + offset(log(offset)), data = test.data, family = "poisson",
-	verbose = FALSE
+    y.pois ~ x + offset(log(offset)), data = test.data, family = "poisson",
+    verbose = FALSE
 )
 plot(test.data$y.pois, predict(model))
 curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.pois,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.pois,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -508,15 +508,15 @@ curve(x * 1, add = TRUE, col = "red")
 library(randomForest)
 # Using offset term in formula.
 model <- randomForest::randomForest(
-	y.norm ~ x + offset(offset), data = test.data
+    y.norm ~ x + offset(offset), data = test.data
 )
 plot(test.data$y.norm, predict(model))
 curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -537,9 +537,9 @@ curve(x * 1, add = TRUE, col = "red")
 
 # Workaround?
 plot(
-	test.data$y.norm,
-	predict(model, data = test.data)$predictions
-	* test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model, data = test.data)$predictions
+    * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 
@@ -549,8 +549,8 @@ model1 <- ranger::ranger(y.norm ~ x + offset(offset), data = test.data)
 set.seed(1)
 model2 <- ranger::ranger(y.norm ~ x + offset, data = test.data)
 plot(
-	predict(model1, data = test.data)$predictions,
-	predict(model2, data = test.data)$predictions
+    predict(model1, data = test.data)$predictions,
+    predict(model2, data = test.data)$predictions
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -569,8 +569,8 @@ curve(x * 1, add = TRUE, col = "red")
 
 # Workaround.
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -589,8 +589,8 @@ curve(x * 1, add = TRUE, col = "red")
 
 # Workaround.
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```
@@ -608,8 +608,8 @@ curve(x * 1, add = TRUE, col = "red")
 
 # Workaround
 plot(
-	test.data$y.norm,
-	predict(model) * test.data$offset / mean(test.data$offset)
+    test.data$y.norm,
+    predict(model) * test.data$offset / mean(test.data$offset)
 )
 curve(x * 1, add = TRUE, col = "red")
 ```

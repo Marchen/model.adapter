@@ -12,12 +12,12 @@
 #' @return a character representing predict.types.
 #------------------------------------------------------------------------------
 make.predict.types <- function(
-	predict.types,
-	response = "response", link = "link", prob = "prob", class = "class"
+    predict.types,
+    response = "response", link = "link", prob = "prob", class = "class"
 ) {
-	if (missing(predict.types)) {
-		predict.types <- c(response, link, prob, class)
-	}
-	names(predict.types) <- c("response", "link", "prob", "class")
-	return(predict.types)
+    if (missing(predict.types)) {
+        predict.types <- c(response, link, prob, class)
+    }
+    names(predict.types) <- c("response", "link", "prob", "class")
+    return(predict.types)
 }

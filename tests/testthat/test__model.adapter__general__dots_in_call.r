@@ -1,5 +1,5 @@
 #==============================================================================
-#	Test model.adapter$call when initialized by call with ellipsis (...).
+#   Test model.adapter$call when initialized by call with ellipsis (...).
 #==============================================================================
 
 library(testthat)
