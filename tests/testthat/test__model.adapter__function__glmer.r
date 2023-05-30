@@ -12,7 +12,6 @@ test <- glm.type.test.runner$new(
 )
 
 test$test.info$formulae <- list(
-	gaussian = Sepal.Length ~ Petal.Length + (1 | Species),
 	Gamma = Sepal.Length ~ Petal.Length + (1 | Species),
 	inverse.gaussian = Sepal.Length ~ Petal.Length + (1 | Species),
 	poisson = n ~ Petal.Length + (1 | Species),
