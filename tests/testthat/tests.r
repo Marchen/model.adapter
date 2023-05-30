@@ -307,7 +307,7 @@ ma.test$set(
 			type <- gsub(regexp, "", deparse(substitute(adapter)))
 			test_that(
 				sprintf(template, type, private$function.name), {
-					expect_is(
+					expect_s3_class(
 						adapter$get("interface"),
 						sprintf("model.interface.%s", class.name)
 					)
@@ -339,7 +339,7 @@ ma.test$set(
 				if (!sprintf("test__%s", i) %in% names(private)) {
 					test_that(
 						sprintf(template, i, type, private$function.name),
-						expect_equal(adapter[[i]], expected[[i]])
+						expect_true(all.equal(adapter[[i]], expected[[i]]))
 					)
 				}
 			}
@@ -488,8 +488,8 @@ ma.test$set(
 					newdata = private$expected.for.call$data, type = "response",
 					...
 				)
-				expect_is(pred, "model.adapter.prediction")
-				expect_is(pred$fit, "matrix")
+				expect_s3_class(pred, "model.adapter.prediction")
+				expect_true(is.matrix(pred$fit))
 				expect_equal(mode(pred$fit), "numeric")
 				expect_equal(pred$type, "response")
 				if (nrow(pred$fit) == 1) {
@@ -528,8 +528,8 @@ ma.test$set(
 					newdata = private$expected.for.call$data, type = "prob",
 					...
 				)
-				expect_is(pred, "model.adapter.prediction")
-				expect_is(pred$fit, "matrix")
+				expect_s3_class(pred, "model.adapter.prediction")
+				expect_equal(is.matrix(pred$fit))
 				expect_equal(mode(pred$fit), "numeric")
 				expect_equal(pred$type, "prob")
 				# Check number of classes and column name.
@@ -578,8 +578,8 @@ ma.test$set(
 					newdata = private$expected.for.call$data, type = "class",
 					...
 				)
-				expect_is(pred, "model.adapter.prediction")
-				expect_is(pred$fit, "matrix")
+				expect_s3_class(pred, "model.adapter.prediction")
+				expect_true(is.matrix(pred$fit))
 				expect_equal(mode(pred$fit), "character")
 				expect_equal(pred$type, "class")
 				expect_equal(ncol(pred$fit), 1)
