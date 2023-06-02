@@ -97,53 +97,53 @@ functions.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: default S3 method
+\item \code{model.interface(default)}: default S3 method
 
-\item \code{MCMCglmm}: S3 method for class 'MCMCglmm'
+\item \code{model.interface(MCMCglmm)}: S3 method for class 'MCMCglmm'
 
-\item \code{averaging}: S3 method for class 'averaging'
+\item \code{model.interface(averaging)}: S3 method for class 'averaging'
 
-\item \code{RandomForest}: S3 method for class 'RandomForest'
+\item \code{model.interface(RandomForest)}: S3 method for class 'RandomForest'
 
-\item \code{BinaryTree}: S3 method for class 'BinaryTree'
+\item \code{model.interface(BinaryTree)}: S3 method for class 'BinaryTree'
 
-\item \code{Gam}: S3 method for class 'Gam'
+\item \code{model.interface(Gam)}: S3 method for class 'Gam'
 
-\item \code{gam}: S3 method for class 'gam'
+\item \code{model.interface(gam)}: S3 method for class 'gam'
 
-\item \code{gamm}: S3 method for class 'gamm'
+\item \code{model.interface(gamm)}: S3 method for class 'gamm'
 
-\item \code{gbm}: S3 method for class 'gbm'
+\item \code{model.interface(gbm)}: S3 method for class 'gbm'
 
-\item \code{glm}: S3 method for class 'glm'
+\item \code{model.interface(glm)}: S3 method for class 'glm'
 
-\item \code{glmerMod}: S3 method for class 'glmerMod'
+\item \code{model.interface(glmerMod)}: S3 method for class 'glmerMod'
 
-\item \code{glmmML}: S3 method for class 'glmmML'
+\item \code{model.interface(glmmML)}: S3 method for class 'glmmML'
 
-\item \code{glmmTMB}: S3 method for class 'glmmTMB'
+\item \code{model.interface(glmmTMB)}: S3 method for class 'glmmTMB'
 
-\item \code{glmmadmb}: S3 method for class 'glmmadmb'
+\item \code{model.interface(glmmadmb)}: S3 method for class 'glmmadmb'
 
-\item \code{lm}: S3 method for class 'lm'
+\item \code{model.interface(lm)}: S3 method for class 'lm'
 
-\item \code{lme}: S3 method for class 'lme'
+\item \code{model.interface(lme)}: S3 method for class 'lme'
 
-\item \code{lmerMod}: S3 method for class 'lmerMod'
+\item \code{model.interface(lmerMod)}: S3 method for class 'lmerMod'
 
-\item \code{randomForest}: S3 method for class 'randomForest'
+\item \code{model.interface(randomForest)}: S3 method for class 'randomForest'
 
-\item \code{ranger}: S3 method for class 'ranger'
+\item \code{model.interface(ranger)}: S3 method for class 'ranger'
 
-\item \code{rpart}: S3 method for class 'rpart'
+\item \code{model.interface(rpart)}: S3 method for class 'rpart'
 
-\item \code{svm}: S3 method for class 'svm'
+\item \code{model.interface(svm)}: S3 method for class 'svm'
 
-\item \code{tree}: S3 method for class 'tree'
+\item \code{model.interface(tree)}: S3 method for class 'tree'
+
 }}
-
 \section{Adding support for new function}{
 
-	To be continued...
+     To be continued...
 }
 

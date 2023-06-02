@@ -14,30 +14,30 @@ This reference class contains methods for \code{\link[ranger]{ranger}} in
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-predict}{\code{model.interface.ranger.class$predict()}}
-\item \href{#method-get.formula}{\code{model.interface.ranger.class$get.formula()}}
-\item \href{#method-clone}{\code{model.interface.ranger.class$clone()}}
+\item \href{#method-model.interface.ranger-predict}{\code{model.interface.ranger.class$predict()}}
+\item \href{#method-model.interface.ranger-get.formula}{\code{model.interface.ranger.class$get.formula()}}
+\item \href{#method-model.interface.ranger-clone}{\code{model.interface.ranger.class$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="adjust.offset">}\href{../../model.adapter/html/model.interface.html#method-adjust.offset}{\code{model.adapter::model.interface$adjust.offset()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula">}\href{../../model.adapter/html/model.interface.html#method-expand.formula}{\code{model.adapter::model.interface$expand.formula()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.call">}\href{../../model.adapter/html/model.interface.html#method-get.call}{\code{model.adapter::model.interface$get.call()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.data">}\href{../../model.adapter/html/model.interface.html#method-get.data}{\code{model.adapter::model.interface$get.data()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.family">}\href{../../model.adapter/html/model.interface.html#method-get.family}{\code{model.adapter::model.interface$get.family()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link">}\href{../../model.adapter/html/model.interface.html#method-get.link}{\code{model.adapter::model.interface$get.link()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv">}\href{../../model.adapter/html/model.interface.html#method-get.linkinv}{\code{model.adapter::model.interface$get.linkinv()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type">}\href{../../model.adapter/html/model.interface.html#method-get.model.type}{\code{model.adapter::model.interface$get.model.type()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names">}\href{../../model.adapter/html/model.interface.html#method-get.offset.names}{\code{model.adapter::model.interface$get.offset.names()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="adjust.offset"><a href='../../model.adapter/html/model.interface.html#method-model.interface-adjust.offset'><code>model.adapter::model.interface$adjust.offset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula"><a href='../../model.adapter/html/model.interface.html#method-model.interface-expand.formula'><code>model.adapter::model.interface$expand.formula()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.call"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.call'><code>model.adapter::model.interface$get.call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.data"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.data'><code>model.adapter::model.interface$get.data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.family"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.family'><code>model.adapter::model.interface$get.family()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.link'><code>model.adapter::model.interface$get.link()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.linkinv'><code>model.adapter::model.interface$get.linkinv()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.model.type'><code>model.adapter::model.interface$get.model.type()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.offset.names'><code>model.adapter::model.interface$get.offset.names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize"><a href='../../model.adapter/html/model.interface.html#method-model.interface-initialize'><code>model.adapter::model.interface$initialize()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-model.interface.ranger-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.ranger-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.ranger.class$predict(object, newdata = NULL, type, ...)}\if{html}{\out{</div>}}
@@ -45,8 +45,8 @@ This reference class contains methods for \code{\link[ranger]{ranger}} in
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-get.formula}{}}}
+\if{html}{\out{<a id="method-model.interface.ranger-get.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.ranger-get.formula}{}}}
 \subsection{Method \code{get.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.ranger.class$get.formula(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -54,8 +54,8 @@ This reference class contains methods for \code{\link[ranger]{ranger}} in
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.interface.ranger-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.ranger-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

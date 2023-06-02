@@ -28,7 +28,7 @@ If an object has more than two classes, the first class in the result of
 class() with generic function is used.
 }
 \examples{
-	model.adapter:::match.generic.call(
-		substitute(hist(1:10)), environment()
-	)
+     model.adapter:::match.generic.call(
+         substitute(hist(1:10)), environment()
+     )
 }

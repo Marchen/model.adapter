@@ -13,18 +13,18 @@ model.adapter.prediction-class
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{fit}}{a matrix containing predicted result. For continuous variables,
-    predicted values are placed in "fit" column. If an interval
-    (e.g., confidence, prediction, etc.) is available, iupper and lower
-    values are placed in "upper" and "lower" columns.
+     predicted values are placed in "fit" column. If an interval
+     (e.g., confidence, prediction, etc.) is available, iupper and lower
+     values are placed in "upper" and "lower" columns.
 
-    For discrete variables, content of this field depends on value of
-    \emph{type} field. If \emph{type} is "probability", fit is a matrix
-    with columns representing probability of each class.
-    If response variable is binary (0/1) variable, fit is a matrix with the
-    first column representing probability of "0" and the second column
-    representing probability of "1".
+     For discrete variables, content of this field depends on value of
+     \emph{type} field. If \emph{type} is "probability", fit is a matrix
+     with columns representing probability of each class.
+     If response variable is binary (0/1) variable, fit is a matrix with the
+     first column representing probability of "0" and the second column
+     representing probability of "1".
 
-    For classification models and type = "class", predicted classes.}
+     For classification models and type = "class", predicted classes.}
 
 \item{\code{type}}{a character literal representing type of prediction, one of
 "response", "link", "prob" and  "class".}
@@ -45,13 +45,13 @@ If no interval is calculated, this field should be NULL.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{model.adapter.prediction.class$new()}}
-\item \href{#method-clone}{\code{model.adapter.prediction.class$clone()}}
+\item \href{#method-model.adapter.prediction-new}{\code{model.adapter.prediction.class$new()}}
+\item \href{#method-model.adapter.prediction-clone}{\code{model.adapter.prediction.class$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-model.adapter.prediction-new"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter.prediction-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.adapter.prediction.class$new(
@@ -66,8 +66,8 @@ If no interval is calculated, this field should be NULL.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.adapter.prediction-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter.prediction-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

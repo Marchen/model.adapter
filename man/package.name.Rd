@@ -28,20 +28,20 @@ a character representing package name.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Default S3 method.
+\item \code{package.name(default)}: Default S3 method.
 
-\item \code{character}: Method for character.
+\item \code{package.name(character)}: Method for character.
 
-\item \code{call}: Method for call.
+\item \code{package.name(call)}: Method for call.
+
 }}
-
 \examples{
 # Get package name from function name
 require(party)
 model.adapter:::package.name("cforest", environment())
 # Get package name from function call.
 model.adapter:::package.name(
-	substitute(ctree(Petal.Length~., data=iris)), environment()
+     substitute(ctree(Petal.Length~., data=iris)), environment()
 )
 # Get package name from object.
 data(iris)

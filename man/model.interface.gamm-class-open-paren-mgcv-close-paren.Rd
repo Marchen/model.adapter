@@ -16,30 +16,30 @@ get.call() function always returns NULL.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-get.call}{\code{model.interface.gamm.class$get.call()}}
-\item \href{#method-get.family}{\code{model.interface.gamm.class$get.family()}}
-\item \href{#method-get.formula}{\code{model.interface.gamm.class$get.formula()}}
-\item \href{#method-get.data}{\code{model.interface.gamm.class$get.data()}}
-\item \href{#method-expand.formula}{\code{model.interface.gamm.class$expand.formula()}}
-\item \href{#method-predict}{\code{model.interface.gamm.class$predict()}}
-\item \href{#method-adjust.offset}{\code{model.interface.gamm.class$adjust.offset()}}
-\item \href{#method-clone}{\code{model.interface.gamm.class$clone()}}
+\item \href{#method-model.interface.gamm-get.call}{\code{model.interface.gamm.class$get.call()}}
+\item \href{#method-model.interface.gamm-get.family}{\code{model.interface.gamm.class$get.family()}}
+\item \href{#method-model.interface.gamm-get.formula}{\code{model.interface.gamm.class$get.formula()}}
+\item \href{#method-model.interface.gamm-get.data}{\code{model.interface.gamm.class$get.data()}}
+\item \href{#method-model.interface.gamm-expand.formula}{\code{model.interface.gamm.class$expand.formula()}}
+\item \href{#method-model.interface.gamm-predict}{\code{model.interface.gamm.class$predict()}}
+\item \href{#method-model.interface.gamm-adjust.offset}{\code{model.interface.gamm.class$adjust.offset()}}
+\item \href{#method-model.interface.gamm-clone}{\code{model.interface.gamm.class$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link">}\href{../../model.adapter/html/model.interface.html#method-get.link}{\code{model.adapter::model.interface$get.link()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv">}\href{../../model.adapter/html/model.interface.html#method-get.linkinv}{\code{model.adapter::model.interface$get.linkinv()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type">}\href{../../model.adapter/html/model.interface.html#method-get.model.type}{\code{model.adapter::model.interface$get.model.type()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names">}\href{../../model.adapter/html/model.interface.html#method-get.offset.names}{\code{model.adapter::model.interface$get.offset.names()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.link'><code>model.adapter::model.interface$get.link()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.linkinv'><code>model.adapter::model.interface$get.linkinv()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.model.type'><code>model.adapter::model.interface$get.model.type()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.offset.names'><code>model.adapter::model.interface$get.offset.names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize"><a href='../../model.adapter/html/model.interface.html#method-model.interface-initialize'><code>model.adapter::model.interface$initialize()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.call"></a>}}
-\if{latex}{\out{\hypertarget{method-get.call}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-get.call"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-get.call}{}}}
 \subsection{Method \code{get.call()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$get.call(x)}\if{html}{\out{</div>}}
@@ -47,8 +47,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.family"></a>}}
-\if{latex}{\out{\hypertarget{method-get.family}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-get.family"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-get.family}{}}}
 \subsection{Method \code{get.family()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$get.family(
@@ -60,8 +60,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-get.formula}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-get.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-get.formula}{}}}
 \subsection{Method \code{get.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$get.formula(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -69,8 +69,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.data"></a>}}
-\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-get.data}{}}}
 \subsection{Method \code{get.data()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$get.data(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -78,8 +78,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-expand.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-expand.formula}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-expand.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-expand.formula}{}}}
 \subsection{Method \code{expand.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$expand.formula(
@@ -92,8 +92,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$predict(object, newdata = NULL, type, ...)}\if{html}{\out{</div>}}
@@ -101,8 +101,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-adjust.offset"></a>}}
-\if{latex}{\out{\hypertarget{method-adjust.offset}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-adjust.offset"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-adjust.offset}{}}}
 \subsection{Method \code{adjust.offset()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gamm.class$adjust.offset(x, envir, package, pred, ...)}\if{html}{\out{</div>}}
@@ -110,8 +110,8 @@ get.call() function always returns NULL.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.interface.gamm-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gamm-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

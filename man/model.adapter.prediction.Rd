@@ -15,16 +15,16 @@ model.adapter.prediction(
 }
 \arguments{
 \item{fit}{a matrix containing predicted result.
-    For continuous response variables, predicted values should be placed in
-    the first column. Also, if the prediction has interval (e.g., confidence
-    interval, prediction interval, etc.) upper and lower values of them
-    should be placed in the second and third columns, respectively.
+     For continuous response variables, predicted values should be placed in
+     the first column. Also, if the prediction has interval (e.g., confidence
+     interval, prediction interval, etc.) upper and lower values of them
+     should be placed in the second and third columns, respectively.
 
-    For binary model, matrix with one column with probability of positive
-    case or two columns with probability of negative and positive cases.
-    For classification model with >3 classes, probability of each class.
+     For binary model, matrix with one column with probability of positive
+     case or two columns with probability of negative and positive cases.
+     For classification model with >3 classes, probability of each class.
 
-    For classification models and type = "class", predicted classes.}
+     For classification models and type = "class", predicted classes.}
 
 \item{type}{a character literal representing type of prediction. Currently,
 "response", "link", "prob" and  "class" are supported.}
@@ -39,8 +39,8 @@ model.adapter.prediction(
 }
 \value{
 an object of
-	\code{\link[=model.adapter.prediction.class]{model.adapter.prediction}}
-	class.
+     \code{\link[=model.adapter.prediction.class]{model.adapter.prediction}}
+     class.
 }
 \description{
 model.adapter.prediction function initialize model.adapter.prediction

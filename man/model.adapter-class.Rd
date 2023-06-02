@@ -15,137 +15,137 @@ cannot work well with the model should be overriden.
 \section{Methods}{
 
 
-	\strong{\code{model.adapter$new(x, envir = parent.frame(2L), data = NULL, package.name = NULL)}}
+     \strong{\code{model.adapter$new(x, envir = parent.frame(2L), data = NULL, package.name = NULL)}}
 
-		Generate a new object.
+     Generate a new object.
 
-		\subsection{Args}{
-			\describe{
-				\item{\code{x}}{
-					an object of supported models or a call for a model
-					function.
-				}
-				\item{\code{envir = parent.frame(2L)}}{
-					an environment in which call in x is evaluated.
-					Default value is the environment where the object of
-					model.adapter was created.
-				}
-				\item{\code{data = NULL}}{
-					a data.frame used for further manipulations.
-				}
-				\item{\code{package.name = NULL}}{
-					a character specifying package name of the
-					function/object. If not specified, package.name is
-					automatically determined from \code{x}. This is mainly
-					used to control functions with same name in different
-					packages (e.g., \code{gam} in \code{gam} and
-					\code{mgcv} packages).
-				}
-			}
-		}
+     \subsection{Args}{
+         \describe{
+             \item{\code{x}}{
+                 an object of supported models or a call for a model
+                 function.
+             }
+             \item{\code{envir = parent.frame(2L)}}{
+                 an environment in which call in x is evaluated.
+                 Default value is the environment where the object of
+                 model.adapter was created.
+             }
+             \item{\code{data = NULL}}{
+                 a data.frame used for further manipulations.
+             }
+             \item{\code{package.name = NULL}}{
+                 a character specifying package name of the
+                 function/object. If not specified, package.name is
+                 automatically determined from \code{x}. This is mainly
+                 used to control functions with same name in different
+                 packages (e.g., \code{gam} in \code{gam} and
+                 \code{mgcv} packages).
+             }
+         }
+     }
 
-	\strong{\code{model.adapter$x.names(specials = NULL, type = c("all", "base"))}}
+     \strong{\code{model.adapter$x.names(specials = NULL, type = c("all", "base"))}}
 
-		Access names of explanatory variables.
+     Access names of explanatory variables.
 
-		\subsection{Args}{
-			\describe{
-				\item{\code{specials = NULL}}{
-					special characters to be passed to \link{terms}.
-				}
-				\item{\code{type = c("all", "base")}}{
-					if "all", this function returns all explanatory variables
-					including interactions, higher order terms, splines, etc.
-					If "base" only basic form of the variables are returned.
-				}
-			}
-		}
+     \subsection{Args}{
+         \describe{
+             \item{\code{specials = NULL}}{
+                 special characters to be passed to \link{terms}.
+             }
+             \item{\code{type = c("all", "base")}}{
+                 if "all", this function returns all explanatory variables
+                 including interactions, higher order terms, splines, etc.
+                 If "base" only basic form of the variables are returned.
+             }
+         }
+     }
 
-		\subsection{Returns}{
-			a character vector of names of explanatory variables.
-		}
+     \subsection{Returns}{
+         a character vector of names of explanatory variables.
+     }
 
-	\strong{\code{model.adapter$y.names()}}
+     \strong{\code{model.adapter$y.names()}}
 
-		Access names of response variables.
+     Access names of response variables.
 
-	\strong{\code{model.adapter$predict(newdata = NULL, type = c("response", "link", "prob", "class"), random = ~0, ...)}}
+     \strong{\code{model.adapter$predict(newdata = NULL, type = c("response", "link", "prob", "class"), random = ~0, ...)}}
 
-		Call predict method.
+     Call predict method.
 
-		For regression models, offset term is adjusted if 1) type is not "link",
-		2) the model having only one offset term, 3) offset was specified as
-		\code{offset = offset} or \code{formula = y ~ x + offset(offset)}
-		rather than \code{offset = data$offset} or
-		\code{formula = y ~ x + offset(data$offset)}, 4) the model is not
-		\code{glmmML} or \code{ranger}.
+     For regression models, offset term is adjusted if 1) type is not "link",
+     2) the model having only one offset term, 3) offset was specified as
+     \code{offset = offset} or \code{formula = y ~ x + offset(offset)}
+     rather than \code{offset = data$offset} or
+     \code{formula = y ~ x + offset(data$offset)}, 4) the model is not
+     \code{glmmML} or \code{ranger}.
 
-		Also, it is users responsibility to use offset term with appropreate
-		scale. For example if the model is \code{glm} with \code{poisson}
-		family with \code{log} link function, the offset term should be
-		\code{offset = log(offset)} or
-		\code{formula = y ~ x + offset(log(offset))}.
+     Also, it is users responsibility to use offset term with appropreate
+     scale. For example if the model is \code{glm} with \code{poisson}
+     family with \code{log} link function, the offset term should be
+     \code{offset = log(offset)} or
+     \code{formula = y ~ x + offset(log(offset))}.
 
-		\subsection{Args}{
-			\describe{
-				\item{\code{newdata = NULL}}{
-					a \code{data.frame} containing data used for
-					prediction.
-				}
-				\item{
-					\code{type = c("response", "link", "prob", "class")}
-				}{
-					the type of prediciton. "response" and "link" can be
-					used for generalized linear (mixed) model and spcify
-					scale of prediction.
-					"response" is on the scale of the response variable.
-					"link" is on the scale of the link function.
-					"prob" and "class" are used for classification models.
-					"prob" calculate probability of being each class of
-					response variable.
-					"class" makes predicted class for each observation.
-				}
-				\item{\code{random = ~0}}{
-					the random effect to use.
-					Tentatively, ~0 means don't use random effects.
-				}
-				\item{\code{...}}{
-					other variables passed to predict methods.
-				}
-			}
-		}
+     \subsection{Args}{
+         \describe{
+             \item{\code{newdata = NULL}}{
+                 a \code{data.frame} containing data used for
+                 prediction.
+             }
+             \item{
+                 \code{type = c("response", "link", "prob", "class")}
+             }{
+                 the type of prediciton. "response" and "link" can be
+                 used for generalized linear (mixed) model and spcify
+                 scale of prediction.
+                 "response" is on the scale of the response variable.
+                 "link" is on the scale of the link function.
+                 "prob" and "class" are used for classification models.
+                 "prob" calculate probability of being each class of
+                 response variable.
+                 "class" makes predicted class for each observation.
+             }
+             \item{\code{random = ~0}}{
+                 the random effect to use.
+                 Tentatively, ~0 means don't use random effects.
+             }
+             \item{\code{...}}{
+                 other variables passed to predict methods.
+             }
+         }
+     }
 
-		\subsection{Returns}{
-			a \code{
-				\link[=model.adapter.prediction.class]{model.adapter.prediction}
-			} object.
-		}
+     \subsection{Returns}{
+         a \code{
+             \link[=model.adapter.prediction.class]{model.adapter.prediction}
+         } object.
+     }
 
-	\strong{\code{model.adapter$residuals(type = c("response", "link"))}}
+     \strong{\code{model.adapter$residuals(type = c("response", "link"))}}
 
-		Calculate residuals of the model.
+     Calculate residuals of the model.
 
-		\subsection{Args}{
-			\describe{
-				\item{type = c("response", "link")}{
-					a character specifying type of residual (i.e., scale of
-					residual) to be calculated.
-				}
-			}
-		}
+     \subsection{Args}{
+         \describe{
+             \item{type = c("response", "link")}{
+                 a character specifying type of residual (i.e., scale of
+                 residual) to be calculated.
+             }
+         }
+     }
 
-		\subsection{Returns}{
-			a numeric vector of residuals.
-		}
+     \subsection{Returns}{
+         a numeric vector of residuals.
+     }
 }
 
 \section{Details}{
 
 
-	When calling \emph{model.adapter$new} using model call by
-	\code{do.call}, please specify \emph{quote = TRUE}.
-	Without it, a call of function in \emph{x} is evaluated and unintended
-	result may be returned.
+     When calling \emph{model.adapter$new} using model call by
+     \code{do.call}, please specify \emph{quote = TRUE}.
+     Without it, a call of function in \emph{x} is evaluated and unintended
+     result may be returned.
 }
 
 \section{Active bindings}{
@@ -208,17 +208,17 @@ does not have inverse link function, this field has
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{model.adapter$new()}}
-\item \href{#method-x.names}{\code{model.adapter$x.names()}}
-\item \href{#method-y.names}{\code{model.adapter$y.names()}}
-\item \href{#method-predict}{\code{model.adapter$predict()}}
-\item \href{#method-residuals}{\code{model.adapter$residuals()}}
-\item \href{#method-clone}{\code{model.adapter$clone()}}
+\item \href{#method-model.adapter-new}{\code{model.adapter$new()}}
+\item \href{#method-model.adapter-x.names}{\code{model.adapter$x.names()}}
+\item \href{#method-model.adapter-y.names}{\code{model.adapter$y.names()}}
+\item \href{#method-model.adapter-predict}{\code{model.adapter$predict()}}
+\item \href{#method-model.adapter-residuals}{\code{model.adapter$residuals()}}
+\item \href{#method-model.adapter-clone}{\code{model.adapter$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-model.adapter-new"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.adapter$new(
@@ -231,8 +231,8 @@ does not have inverse link function, this field has
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-x.names"></a>}}
-\if{latex}{\out{\hypertarget{method-x.names}{}}}
+\if{html}{\out{<a id="method-model.adapter-x.names"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter-x.names}{}}}
 \subsection{Method \code{x.names()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.adapter$x.names(specials = NULL, type = c("all", "base"))}\if{html}{\out{</div>}}
@@ -240,8 +240,8 @@ does not have inverse link function, this field has
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-y.names"></a>}}
-\if{latex}{\out{\hypertarget{method-y.names}{}}}
+\if{html}{\out{<a id="method-model.adapter-y.names"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter-y.names}{}}}
 \subsection{Method \code{y.names()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.adapter$y.names()}\if{html}{\out{</div>}}
@@ -249,8 +249,8 @@ does not have inverse link function, this field has
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-model.adapter-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.adapter$predict(
@@ -263,8 +263,8 @@ does not have inverse link function, this field has
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-residuals"></a>}}
-\if{latex}{\out{\hypertarget{method-residuals}{}}}
+\if{html}{\out{<a id="method-model.adapter-residuals"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter-residuals}{}}}
 \subsection{Method \code{residuals()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.adapter$residuals(type = c("response", "link"))}\if{html}{\out{</div>}}
@@ -272,8 +272,8 @@ does not have inverse link function, this field has
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.adapter-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.adapter-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

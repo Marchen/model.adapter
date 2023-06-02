@@ -16,15 +16,15 @@ get.function(call, type = c("function", "character"), envir = parent.frame())
 }
 \value{
 If type is "function", function object.
-	If type is "character", character literal of function name.
-	Note that if the function in the call is copy of other function,
-	this funciton tries to find original name of it.
+     If type is "character", character literal of function name.
+     Note that if the function in the call is copy of other function,
+     this funciton tries to find original name of it.
 }
 \description{
 (Internal) Get function and function name from call
 }
 \examples{
-	model.adapter:::get.function(
-		substitute(glm(Sepal.Length ~ ., data = iris))
-	)
+     model.adapter:::get.function(
+         substitute(glm(Sepal.Length ~ ., data = iris))
+     )
 }

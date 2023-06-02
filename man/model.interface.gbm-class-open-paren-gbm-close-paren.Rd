@@ -14,30 +14,30 @@ This reference class contains methods for \code{\link[gbm]{gbm}} in
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-get.data}{\code{model.interface.gbm.class$get.data()}}
-\item \href{#method-predict}{\code{model.interface.gbm.class$predict()}}
-\item \href{#method-adjust.offset}{\code{model.interface.gbm.class$adjust.offset()}}
-\item \href{#method-get.model.type}{\code{model.interface.gbm.class$get.model.type()}}
-\item \href{#method-clone}{\code{model.interface.gbm.class$clone()}}
+\item \href{#method-model.interface.gbm-get.data}{\code{model.interface.gbm.class$get.data()}}
+\item \href{#method-model.interface.gbm-predict}{\code{model.interface.gbm.class$predict()}}
+\item \href{#method-model.interface.gbm-adjust.offset}{\code{model.interface.gbm.class$adjust.offset()}}
+\item \href{#method-model.interface.gbm-get.model.type}{\code{model.interface.gbm.class$get.model.type()}}
+\item \href{#method-model.interface.gbm-clone}{\code{model.interface.gbm.class$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula">}\href{../../model.adapter/html/model.interface.html#method-expand.formula}{\code{model.adapter::model.interface$expand.formula()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.call">}\href{../../model.adapter/html/model.interface.html#method-get.call}{\code{model.adapter::model.interface$get.call()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.family">}\href{../../model.adapter/html/model.interface.html#method-get.family}{\code{model.adapter::model.interface$get.family()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.formula">}\href{../../model.adapter/html/model.interface.html#method-get.formula}{\code{model.adapter::model.interface$get.formula()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link">}\href{../../model.adapter/html/model.interface.html#method-get.link}{\code{model.adapter::model.interface$get.link()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv">}\href{../../model.adapter/html/model.interface.html#method-get.linkinv}{\code{model.adapter::model.interface$get.linkinv()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names">}\href{../../model.adapter/html/model.interface.html#method-get.offset.names}{\code{model.adapter::model.interface$get.offset.names()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula"><a href='../../model.adapter/html/model.interface.html#method-model.interface-expand.formula'><code>model.adapter::model.interface$expand.formula()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.call"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.call'><code>model.adapter::model.interface$get.call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.family"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.family'><code>model.adapter::model.interface$get.family()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.formula"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.formula'><code>model.adapter::model.interface$get.formula()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.link'><code>model.adapter::model.interface$get.link()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.linkinv'><code>model.adapter::model.interface$get.linkinv()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.offset.names'><code>model.adapter::model.interface$get.offset.names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize"><a href='../../model.adapter/html/model.interface.html#method-model.interface-initialize'><code>model.adapter::model.interface$initialize()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.data"></a>}}
-\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\if{html}{\out{<a id="method-model.interface.gbm-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gbm-get.data}{}}}
 \subsection{Method \code{get.data()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gbm.class$get.data(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -45,8 +45,8 @@ This reference class contains methods for \code{\link[gbm]{gbm}} in
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-model.interface.gbm-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gbm-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gbm.class$predict(object, newdata, type, random, ...)}\if{html}{\out{</div>}}
@@ -54,8 +54,8 @@ This reference class contains methods for \code{\link[gbm]{gbm}} in
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-adjust.offset"></a>}}
-\if{latex}{\out{\hypertarget{method-adjust.offset}{}}}
+\if{html}{\out{<a id="method-model.interface.gbm-adjust.offset"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gbm-adjust.offset}{}}}
 \subsection{Method \code{adjust.offset()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gbm.class$adjust.offset(
@@ -71,8 +71,8 @@ This reference class contains methods for \code{\link[gbm]{gbm}} in
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.model.type"></a>}}
-\if{latex}{\out{\hypertarget{method-get.model.type}{}}}
+\if{html}{\out{<a id="method-model.interface.gbm-get.model.type"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gbm-get.model.type}{}}}
 \subsection{Method \code{get.model.type()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.gbm.class$get.model.type(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -80,8 +80,8 @@ This reference class contains methods for \code{\link[gbm]{gbm}} in
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.interface.gbm-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.gbm-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

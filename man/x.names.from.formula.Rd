@@ -22,22 +22,23 @@ x.names.from.formula(
 }
 \value{
 a character vector of names of explanatory variables.
-	If \emph{type} is "all", returns all explanatory variables in the
-	formula as is.
-	If \emph{type} is "base", this function returns all explanatory
-	variables in their basic form.
+     If \emph{type} is "all", returns all explanatory variables in the
+     formula as is.
+     If \emph{type} is "base", this function returns all explanatory
+     variables in their basic form.
 }
 \description{
 (Internal) Get names of explanatory variables (excluding random factor) from formula.
 }
 \examples{
-	# Getting explanatory variables from formula.
-	# . in formula is expanded to full form.
-	data(iris)
-	f <- Sepal.Length ~ .
-	model.adapter:::x.names.from.formula(f, data = iris)
 
-	# Getting explanatory variables in their basic form.
-	f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width^2)
-	model.adapter:::x.names.from.formula(f, data = iris, type = "base")
+# Getting explanatory variables from formula.
+# . in formula is expanded to full form.
+data(iris)
+f <- Sepal.Length ~ .
+model.adapter:::x.names.from.formula(f, data = iris)
+
+# Getting explanatory variables in their basic form.
+f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width ^ 2)
+model.adapter:::x.names.from.formula(f, data = iris, type = "base")
 }

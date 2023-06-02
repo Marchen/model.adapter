@@ -13,175 +13,175 @@ of this class to get information from model calls/objects.
 \section{Methods}{
 
 
-\strong{\code{get.family(x, type = c("character", "family"), envir)}}
+     \strong{\code{get.family(x, type = c("character", "family"), envir)}}
 
-	Get family from the model.
+     Get family from the model.
 
-	\describe{
-		\item{\code{x}}{call or model object.}
-		\item{\code{type = c("character", "family")}}{
-			a character literal specifying the type of data returned.
-			If "character", this returns character vector of family name.
-			If "family", this returns \code{\link{family}} object.
-			For some family specific for certain model (e.g., categorical
-			family of MCMCglmm), their family object is not implimented.
-			For such family, this method raise stop error.
-		}
-		\item{\code{envir}}{environment where x is evaluated.}
-	}
+     \describe{
+         \item{\code{x}}{call or model object.}
+         \item{\code{type = c("character", "family")}}{
+             a character literal specifying the type of data returned.
+             If "character", this returns character vector of family name.
+             If "family", this returns \code{\link{family}} object.
+             For some family specific for certain model (e.g., categorical
+             family of MCMCglmm), their family object is not implimented.
+             For such family, this method raise stop error.
+         }
+         \item{\code{envir}}{environment where x is evaluated.}
+     }
 
-\strong{\code{get.call(x)}}
+     \strong{\code{get.call(x)}}
 
-	This method returns call by which the object is made. If call is not
-	available, this returns NULL. To distinguish the returned value of NULL
-	is intended action or not, inherited classes are encouraged to
-	inherit this method to explicitly return NULL if x does not have call.
+     This method returns call by which the object is made. If call is not
+     available, this returns NULL. To distinguish the returned value of NULL
+     is intended action or not, inherited classes are encouraged to
+     inherit this method to explicitly return NULL if x does not have call.
 
-	\describe{
-		\item{\code{x}}{call or model object.}
-	}
+     \describe{
+         \item{\code{x}}{call or model object.}
+     }
 
-\strong{\code{get.data(x, envir, package = "", ...)}}
+     \strong{\code{get.data(x, envir, package = "", ...)}}
 
-	Get a data.frame containing the data used for modeling.
-	If data is not available this method returns NULL.
+     Get a data.frame containing the data used for modeling.
+     If data is not available this method returns NULL.
 
-	\describe{
-		\item{\code{x}}{
-			a model object/call from which data is extracted.
-		}
-		\item{\code{envir}}{an environment in which call is evaluated.}
-	}
+     \describe{
+         \item{\code{x}}{
+             a model object/call from which data is extracted.
+         }
+         \item{\code{envir}}{an environment in which call is evaluated.}
+     }
 
-\strong{\code{get.formula(x, envir, package = "")}}
+     \strong{\code{get.formula(x, envir, package = "")}}
 
-	Extract formula from model object/call.
-	If couldn't retrieve formula from \code{x}, this method returns NULL.
+     Extract formula from model object/call.
+     If couldn't retrieve formula from \code{x}, this method returns NULL.
 
-	\describe{
-		\item{\code{x}}{
-			a model object/call from which formula is extracted.
-		}
-		\item{\code{envir}}{
-			an environment in which call in x is evaluated.
-		}
-		\item{\code{package}}{
-			name of the package having the modeling function.
-		}
-	}
+     \describe{
+         \item{\code{x}}{
+             a model object/call from which formula is extracted.
+         }
+         \item{\code{envir}}{
+             an environment in which call in x is evaluated.
+         }
+         \item{\code{package}}{
+             name of the package having the modeling function.
+         }
+     }
 
-\strong{\code{expand.formula(f, d, specials = NULL, package = NULL)}}
+     \strong{\code{expand.formula(f, d, specials = NULL, package = NULL)}}
 
-	Expand . in formula.
+     Expand . in formula.
 
-	\describe{
-		\item{\code{f}}{a formula to expand.}
-		\item{\code{d}}{a data.frame used to expand . in formula.}
-		\item{\code{specials = NULL}}{
-			special characterss passed to
-			\code{\link[stats]{terms.formula}}.
-		}
-		\item{\code{package = NULL}}{
-			a character literal of package name having the model function.
-		}
-	}
+     \describe{
+         \item{\code{f}}{a formula to expand.}
+         \item{\code{d}}{a data.frame used to expand . in formula.}
+         \item{\code{specials = NULL}}{
+             special characterss passed to
+             \code{\link[stats]{terms.formula}}.
+         }
+         \item{\code{package = NULL}}{
+             a character literal of package name having the model function.
+         }
+     }
 
-\strong{\code{predict(object, newdata, type, random, ...)}}
+     \strong{\code{predict(object, newdata, type, random, ...)}}
 
-	Calculate predictions.
+     Calculate predictions.
 
-	\describe{
-		\item{\code{object}}{a model object used for prediction.}
-		\item{\code{newdata}}{
-			a data.frame containing data used for prediction.
-		}
-		\item{\code{type}}{
-			the type of prediciton. This should be a type specific for
-			each modeling functions.
-		}
-		\item{\code{random = ~0}}{
-			the random effect to use.
-			Tentatively, ~0 means don't use random effects.
-		}
-		\item{\code{...}}{other variables passed to predict methods.}
-	}
+     \describe{
+         \item{\code{object}}{a model object used for prediction.}
+         \item{\code{newdata}}{
+             a data.frame containing data used for prediction.
+         }
+         \item{\code{type}}{
+             the type of prediciton. This should be a type specific for
+             each modeling functions.
+         }
+         \item{\code{random = ~0}}{
+             the random effect to use.
+             Tentatively, ~0 means don't use random effects.
+         }
+         \item{\code{...}}{other variables passed to predict methods.}
+     }
 
-\strong{\code{get.link(x, envir)}}
+     \strong{\code{get.link(x, envir)}}
 
-	Get link function. If the model does not have link function, this
-	function returns \code{\link[base]{identity}} function.
+     Get link function. If the model does not have link function, this
+     function returns \code{\link[base]{identity}} function.
 
-	\describe{
-		\item{\code{x}}{
-			an object of statistical model or a call of model function.
-		}
-		\item{\code{envir}}{
-			an environment where call in \code{x} is evaluated.
-		}
-	}
+     \describe{
+         \item{\code{x}}{
+             an object of statistical model or a call of model function.
+         }
+         \item{\code{envir}}{
+             an environment where call in \code{x} is evaluated.
+         }
+     }
 
-\strong{\code{get.linkinv(x, envir)}}
+     \strong{\code{get.linkinv(x, envir)}}
 
-	Get inverse function of link function. If the model does not have
-	link function, this function returns \code{\link[base]{identity}}
-	function.
+     Get inverse function of link function. If the model does not have
+     link function, this function returns \code{\link[base]{identity}}
+     function.
 
-	\describe{
-		\item{\code{x}}{
-			an object of statistical model or a call of model function.
-		}
-		\item{\code{envir}}{
-			an environment where call in \code{x} is evaluated.
-		}
-	}
+     \describe{
+         \item{\code{x}}{
+             an object of statistical model or a call of model function.
+         }
+         \item{\code{envir}}{
+             an environment where call in \code{x} is evaluated.
+         }
+     }
 
-\strong{\code{get.model.type(x, envir, package = "", ...)}}
+     \strong{\code{get.model.type(x, envir, package = "", ...)}}
 
-	Return a character vector specifying model type
-	(regression or classification).
-	If the model is regression model, it returns 'regression'.
-	If the model is classification model, it returns 'classification'.
+     Return a character vector specifying model type
+     (regression or classification).
+     If the model is regression model, it returns 'regression'.
+     If the model is classification model, it returns 'classification'.
 
-	\describe{
-		\item{\code{x}}{
-			an object of statistical model or a call of model function.
-		}
-		\item{\code{envir}}{
-			an environment where call in \code{x} is evaluated.
-		}
-	}
+     \describe{
+         \item{\code{x}}{
+             an object of statistical model or a call of model function.
+         }
+         \item{\code{envir}}{
+             an environment where call in \code{x} is evaluated.
+         }
+     }
 
-\strong{\code{has.offset.argument(x, envir, package = "")}}
+     \strong{\code{has.offset.argument(x, envir, package = "")}}
 
-	Check whether the model has offset argument.
+     Check whether the model has offset argument.
 
-	\describe{
-		\item{\code{x}}{
-			an object of statistical model or a call of model function.
-		}
-		\item{\code{envir}}{
-			an environment where call in \code{x} is evaluated.
-		}
-		\item{\code{package = NULL}}{
-			a character literal of package name having the model function.
-		}
-	}
+     \describe{
+         \item{\code{x}}{
+             an object of statistical model or a call of model function.
+         }
+         \item{\code{envir}}{
+             an environment where call in \code{x} is evaluated.
+         }
+         \item{\code{package = NULL}}{
+             a character literal of package name having the model function.
+         }
+     }
 
-\strong{\code{has.offset.in.formula(x, envir, package = "")}}
+     \strong{\code{has.offset.in.formula(x, envir, package = "")}}
 
-	Check whether the model has offset term(s) in formula.
+     Check whether the model has offset term(s) in formula.
 
-	\describe{
-		\item{\code{x}}{
-			an object of statistical model or a call of model function.
-		}
-		\item{\code{envir}}{
-			an environment where formula and data in \code{x} is evaluated.
-		}
-		\item{\code{package = NULL}}{
-			a character literal of package name having the model function.
-		}
-	}
+     \describe{
+         \item{\code{x}}{
+             an object of statistical model or a call of model function.
+         }
+         \item{\code{envir}}{
+             an environment where formula and data in \code{x} is evaluated.
+         }
+         \item{\code{package = NULL}}{
+             a character literal of package name having the model function.
+         }
+     }
 }
 
 \section{Active bindings}{
@@ -197,24 +197,24 @@ each element represents compatible type of character for the model.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{model.interface.default.class$new()}}
-\item \href{#method-get.family}{\code{model.interface.default.class$get.family()}}
-\item \href{#method-get.call}{\code{model.interface.default.class$get.call()}}
-\item \href{#method-get.data}{\code{model.interface.default.class$get.data()}}
-\item \href{#method-get.formula}{\code{model.interface.default.class$get.formula()}}
-\item \href{#method-expand.formula}{\code{model.interface.default.class$expand.formula()}}
-\item \href{#method-predict}{\code{model.interface.default.class$predict()}}
-\item \href{#method-get.link}{\code{model.interface.default.class$get.link()}}
-\item \href{#method-get.linkinv}{\code{model.interface.default.class$get.linkinv()}}
-\item \href{#method-get.model.type}{\code{model.interface.default.class$get.model.type()}}
-\item \href{#method-get.offset.names}{\code{model.interface.default.class$get.offset.names()}}
-\item \href{#method-adjust.offset}{\code{model.interface.default.class$adjust.offset()}}
-\item \href{#method-clone}{\code{model.interface.default.class$clone()}}
+\item \href{#method-model.interface-new}{\code{model.interface.default.class$new()}}
+\item \href{#method-model.interface-get.family}{\code{model.interface.default.class$get.family()}}
+\item \href{#method-model.interface-get.call}{\code{model.interface.default.class$get.call()}}
+\item \href{#method-model.interface-get.data}{\code{model.interface.default.class$get.data()}}
+\item \href{#method-model.interface-get.formula}{\code{model.interface.default.class$get.formula()}}
+\item \href{#method-model.interface-expand.formula}{\code{model.interface.default.class$expand.formula()}}
+\item \href{#method-model.interface-predict}{\code{model.interface.default.class$predict()}}
+\item \href{#method-model.interface-get.link}{\code{model.interface.default.class$get.link()}}
+\item \href{#method-model.interface-get.linkinv}{\code{model.interface.default.class$get.linkinv()}}
+\item \href{#method-model.interface-get.model.type}{\code{model.interface.default.class$get.model.type()}}
+\item \href{#method-model.interface-get.offset.names}{\code{model.interface.default.class$get.offset.names()}}
+\item \href{#method-model.interface-adjust.offset}{\code{model.interface.default.class$adjust.offset()}}
+\item \href{#method-model.interface-clone}{\code{model.interface.default.class$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-model.interface-new"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$new(...)}\if{html}{\out{</div>}}
@@ -222,8 +222,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.family"></a>}}
-\if{latex}{\out{\hypertarget{method-get.family}{}}}
+\if{html}{\out{<a id="method-model.interface-get.family"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.family}{}}}
 \subsection{Method \code{get.family()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.family(
@@ -235,8 +235,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.call"></a>}}
-\if{latex}{\out{\hypertarget{method-get.call}{}}}
+\if{html}{\out{<a id="method-model.interface-get.call"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.call}{}}}
 \subsection{Method \code{get.call()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.call(x)}\if{html}{\out{</div>}}
@@ -244,8 +244,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.data"></a>}}
-\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\if{html}{\out{<a id="method-model.interface-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.data}{}}}
 \subsection{Method \code{get.data()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.data(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -253,8 +253,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-get.formula}{}}}
+\if{html}{\out{<a id="method-model.interface-get.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.formula}{}}}
 \subsection{Method \code{get.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.formula(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -262,8 +262,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-expand.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-expand.formula}{}}}
+\if{html}{\out{<a id="method-model.interface-expand.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-expand.formula}{}}}
 \subsection{Method \code{expand.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$expand.formula(
@@ -276,8 +276,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-model.interface-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$predict(object, newdata, type, random, ...)}\if{html}{\out{</div>}}
@@ -285,8 +285,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.link"></a>}}
-\if{latex}{\out{\hypertarget{method-get.link}{}}}
+\if{html}{\out{<a id="method-model.interface-get.link"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.link}{}}}
 \subsection{Method \code{get.link()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.link(x, envir)}\if{html}{\out{</div>}}
@@ -294,8 +294,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.linkinv"></a>}}
-\if{latex}{\out{\hypertarget{method-get.linkinv}{}}}
+\if{html}{\out{<a id="method-model.interface-get.linkinv"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.linkinv}{}}}
 \subsection{Method \code{get.linkinv()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.linkinv(x, envir)}\if{html}{\out{</div>}}
@@ -303,8 +303,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.model.type"></a>}}
-\if{latex}{\out{\hypertarget{method-get.model.type}{}}}
+\if{html}{\out{<a id="method-model.interface-get.model.type"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.model.type}{}}}
 \subsection{Method \code{get.model.type()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.model.type(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -312,8 +312,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.offset.names"></a>}}
-\if{latex}{\out{\hypertarget{method-get.offset.names}{}}}
+\if{html}{\out{<a id="method-model.interface-get.offset.names"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-get.offset.names}{}}}
 \subsection{Method \code{get.offset.names()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$get.offset.names(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -321,8 +321,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-adjust.offset"></a>}}
-\if{latex}{\out{\hypertarget{method-adjust.offset}{}}}
+\if{html}{\out{<a id="method-model.interface-adjust.offset"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-adjust.offset}{}}}
 \subsection{Method \code{adjust.offset()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.default.class$adjust.offset(
@@ -338,8 +338,8 @@ each element represents compatible type of character for the model.}
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.interface-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

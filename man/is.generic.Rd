@@ -25,11 +25,11 @@ This function \emph{roughly} test a function is generic.
 }
 \section{Functions}{
 \itemize{
-\item \code{is.s3.generic}: (Internal) function for S3 generic function.
+\item \code{is.s3.generic()}: (Internal) function for S3 generic function.
 
-\item \code{is.s4.generic}: (Internal) function for S4 generic function.
+\item \code{is.s4.generic()}: (Internal) function for S4 generic function.
+
 }}
-
 \examples{
 model.adapter:::is.s3.generic("plot")
 model.adapter:::is.s3.generic("glm")

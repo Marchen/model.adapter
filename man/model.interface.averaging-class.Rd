@@ -14,19 +14,19 @@ have several limitations.
 }
 \details{
 \describe{
-	\item{\code{get.formula}} {
-		because nature of \emph{\code{averaging}} object,
-		this class constructs formula from all variable names in
-		\emph{\code{sw}} field of the object.
-	}
-	\item{\code{get.familiy}, \code{get.data}} {
-		family and data are obtained from the first model of the
-		\emph{\code{model.calls}} or \emph{\code{modelList}} attributes
-		depending on the object.
-	}
-	\item{\code{adjust.offset}} {
-		not implemented.
-	}
+     \item{\code{get.formula}}{
+         because nature of \emph{\code{averaging}} object,
+         this class constructs formula from all variable names in
+         \emph{\code{sw}} field of the object.
+     }
+     \item{\code{get.family}, \code{get.data}}{
+         family and data are obtained from the first model of the
+         \emph{\code{model.calls}} or \emph{\code{modelList}} attributes
+         depending on the object.
+     }
+     \item{\code{adjust.offset}}{
+         not implemented.
+     }
 }
 }
 \section{Super class}{
@@ -35,30 +35,30 @@ have several limitations.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-get.formula}{\code{model.interface.averaging.class$get.formula()}}
-\item \href{#method-get.family}{\code{model.interface.averaging.class$get.family()}}
-\item \href{#method-get.data}{\code{model.interface.averaging.class$get.data()}}
-\item \href{#method-get.offset.names}{\code{model.interface.averaging.class$get.offset.names()}}
-\item \href{#method-clone}{\code{model.interface.averaging.class$clone()}}
+\item \href{#method-model.interface.averaging-get.formula}{\code{model.interface.averaging.class$get.formula()}}
+\item \href{#method-model.interface.averaging-get.family}{\code{model.interface.averaging.class$get.family()}}
+\item \href{#method-model.interface.averaging-get.data}{\code{model.interface.averaging.class$get.data()}}
+\item \href{#method-model.interface.averaging-get.offset.names}{\code{model.interface.averaging.class$get.offset.names()}}
+\item \href{#method-model.interface.averaging-clone}{\code{model.interface.averaging.class$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="adjust.offset">}\href{../../model.adapter/html/model.interface.html#method-adjust.offset}{\code{model.adapter::model.interface$adjust.offset()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula">}\href{../../model.adapter/html/model.interface.html#method-expand.formula}{\code{model.adapter::model.interface$expand.formula()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.call">}\href{../../model.adapter/html/model.interface.html#method-get.call}{\code{model.adapter::model.interface$get.call()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link">}\href{../../model.adapter/html/model.interface.html#method-get.link}{\code{model.adapter::model.interface$get.link()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv">}\href{../../model.adapter/html/model.interface.html#method-get.linkinv}{\code{model.adapter::model.interface$get.linkinv()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type">}\href{../../model.adapter/html/model.interface.html#method-get.model.type}{\code{model.adapter::model.interface$get.model.type()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="predict">}\href{../../model.adapter/html/model.interface.html#method-predict}{\code{model.adapter::model.interface$predict()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="adjust.offset"><a href='../../model.adapter/html/model.interface.html#method-model.interface-adjust.offset'><code>model.adapter::model.interface$adjust.offset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula"><a href='../../model.adapter/html/model.interface.html#method-model.interface-expand.formula'><code>model.adapter::model.interface$expand.formula()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.call"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.call'><code>model.adapter::model.interface$get.call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.link"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.link'><code>model.adapter::model.interface$get.link()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.linkinv"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.linkinv'><code>model.adapter::model.interface$get.linkinv()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.model.type"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.model.type'><code>model.adapter::model.interface$get.model.type()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize"><a href='../../model.adapter/html/model.interface.html#method-model.interface-initialize'><code>model.adapter::model.interface$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="predict"><a href='../../model.adapter/html/model.interface.html#method-model.interface-predict'><code>model.adapter::model.interface$predict()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-get.formula}{}}}
+\if{html}{\out{<a id="method-model.interface.averaging-get.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.averaging-get.formula}{}}}
 \subsection{Method \code{get.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.averaging.class$get.formula(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -66,8 +66,8 @@ have several limitations.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.family"></a>}}
-\if{latex}{\out{\hypertarget{method-get.family}{}}}
+\if{html}{\out{<a id="method-model.interface.averaging-get.family"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.averaging-get.family}{}}}
 \subsection{Method \code{get.family()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.averaging.class$get.family(
@@ -79,8 +79,8 @@ have several limitations.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.data"></a>}}
-\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\if{html}{\out{<a id="method-model.interface.averaging-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.averaging-get.data}{}}}
 \subsection{Method \code{get.data()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.averaging.class$get.data(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -88,8 +88,8 @@ have several limitations.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.offset.names"></a>}}
-\if{latex}{\out{\hypertarget{method-get.offset.names}{}}}
+\if{html}{\out{<a id="method-model.interface.averaging-get.offset.names"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.averaging-get.offset.names}{}}}
 \subsection{Method \code{get.offset.names()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.averaging.class$get.offset.names(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -97,8 +97,8 @@ have several limitations.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.interface.averaging-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.averaging-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

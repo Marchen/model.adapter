@@ -19,30 +19,30 @@ families.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-get.data}{\code{model.interface.MCMCglmm.class$get.data()}}
-\item \href{#method-get.formula}{\code{model.interface.MCMCglmm.class$get.formula()}}
-\item \href{#method-get.family}{\code{model.interface.MCMCglmm.class$get.family()}}
-\item \href{#method-get.call}{\code{model.interface.MCMCglmm.class$get.call()}}
-\item \href{#method-get.link}{\code{model.interface.MCMCglmm.class$get.link()}}
-\item \href{#method-get.linkinv}{\code{model.interface.MCMCglmm.class$get.linkinv()}}
-\item \href{#method-get.model.type}{\code{model.interface.MCMCglmm.class$get.model.type()}}
-\item \href{#method-clone}{\code{model.interface.MCMCglmm.class$clone()}}
+\item \href{#method-model.interface.MCMCglmm-get.data}{\code{model.interface.MCMCglmm.class$get.data()}}
+\item \href{#method-model.interface.MCMCglmm-get.formula}{\code{model.interface.MCMCglmm.class$get.formula()}}
+\item \href{#method-model.interface.MCMCglmm-get.family}{\code{model.interface.MCMCglmm.class$get.family()}}
+\item \href{#method-model.interface.MCMCglmm-get.call}{\code{model.interface.MCMCglmm.class$get.call()}}
+\item \href{#method-model.interface.MCMCglmm-get.link}{\code{model.interface.MCMCglmm.class$get.link()}}
+\item \href{#method-model.interface.MCMCglmm-get.linkinv}{\code{model.interface.MCMCglmm.class$get.linkinv()}}
+\item \href{#method-model.interface.MCMCglmm-get.model.type}{\code{model.interface.MCMCglmm.class$get.model.type()}}
+\item \href{#method-model.interface.MCMCglmm-clone}{\code{model.interface.MCMCglmm.class$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="adjust.offset">}\href{../../model.adapter/html/model.interface.html#method-adjust.offset}{\code{model.adapter::model.interface$adjust.offset()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula">}\href{../../model.adapter/html/model.interface.html#method-expand.formula}{\code{model.adapter::model.interface$expand.formula()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names">}\href{../../model.adapter/html/model.interface.html#method-get.offset.names}{\code{model.adapter::model.interface$get.offset.names()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize">}\href{../../model.adapter/html/model.interface.html#method-initialize}{\code{model.adapter::model.interface$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="predict">}\href{../../model.adapter/html/model.interface.html#method-predict}{\code{model.adapter::model.interface$predict()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="adjust.offset"><a href='../../model.adapter/html/model.interface.html#method-model.interface-adjust.offset'><code>model.adapter::model.interface$adjust.offset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="expand.formula"><a href='../../model.adapter/html/model.interface.html#method-model.interface-expand.formula'><code>model.adapter::model.interface$expand.formula()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="get.offset.names"><a href='../../model.adapter/html/model.interface.html#method-model.interface-get.offset.names'><code>model.adapter::model.interface$get.offset.names()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="initialize"><a href='../../model.adapter/html/model.interface.html#method-model.interface-initialize'><code>model.adapter::model.interface$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="model.adapter" data-topic="model.interface" data-id="predict"><a href='../../model.adapter/html/model.interface.html#method-model.interface-predict'><code>model.adapter::model.interface$predict()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.data"></a>}}
-\if{latex}{\out{\hypertarget{method-get.data}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.data"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.data}{}}}
 \subsection{Method \code{get.data()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.data(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -50,8 +50,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.formula"></a>}}
-\if{latex}{\out{\hypertarget{method-get.formula}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.formula"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.formula}{}}}
 \subsection{Method \code{get.formula()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.formula(x, envir, package = "")}\if{html}{\out{</div>}}
@@ -59,8 +59,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.family"></a>}}
-\if{latex}{\out{\hypertarget{method-get.family}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.family"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.family}{}}}
 \subsection{Method \code{get.family()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.family(
@@ -72,8 +72,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.call"></a>}}
-\if{latex}{\out{\hypertarget{method-get.call}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.call"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.call}{}}}
 \subsection{Method \code{get.call()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.call(x)}\if{html}{\out{</div>}}
@@ -81,8 +81,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.link"></a>}}
-\if{latex}{\out{\hypertarget{method-get.link}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.link"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.link}{}}}
 \subsection{Method \code{get.link()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.link(x, envir)}\if{html}{\out{</div>}}
@@ -90,8 +90,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.linkinv"></a>}}
-\if{latex}{\out{\hypertarget{method-get.linkinv}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.linkinv"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.linkinv}{}}}
 \subsection{Method \code{get.linkinv()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.linkinv(x, envir)}\if{html}{\out{</div>}}
@@ -99,8 +99,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get.model.type"></a>}}
-\if{latex}{\out{\hypertarget{method-get.model.type}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-get.model.type"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-get.model.type}{}}}
 \subsection{Method \code{get.model.type()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{model.interface.MCMCglmm.class$get.model.type(x, envir, package = "", ...)}\if{html}{\out{</div>}}
@@ -108,8 +108,8 @@ families.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-model.interface.MCMCglmm-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-model.interface.MCMCglmm-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

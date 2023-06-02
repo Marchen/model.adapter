@@ -11,10 +11,10 @@ find.original.name(fun)
 }
 \value{
 a character string of original function name.
-	if the function specified as fun is 'original' of it,
-	this funciton returns name of fun itself.
-	Note that this function cannot work correctly if a copy of the function
-	and the original function are in the same environment.
+     if the function specified as fun is 'original' of it,
+     this funciton returns name of fun itself.
+     Note that this function cannot work correctly if a copy of the function
+     and the original function are in the same environment.
 }
 \description{
 (Internal) Find original name of the function.

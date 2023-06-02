@@ -10,12 +10,12 @@ convert.family(family, type = c("family", "character"))
 \item{family}{a family function, character of family name, symbol, or family object.}
 
 \item{type}{a character to specify the type of the value this function returns.
-    If "family", this function returns 'family' object. If "character" is
-    specified, this function returns a character string denoting the name
-    of the family.
+     If "family", this function returns 'family' object. If "character" is
+     specified, this function returns a character string denoting the name
+     of the family.
 
-    This internal function is called by \code{link{detect.model.type}} and
-    \code{\link{predict.glmmML}} functions.}
+     This internal function is called by \code{link{detect.model.type}} and
+     \code{\link{predict.glmmML}} functions.}
 }
 \description{
 (Internal) Format and check consistency of family.
