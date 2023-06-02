@@ -68,7 +68,7 @@ model.adapter.prediction.class$set(
             f <- fit
         }
         # Check error in type.
-        self$type <- match.arg(type)
+        self$type <- match.arg(type, c("response", "link", "prob", "class"))
         # Initialize fields.
         private$init.fit(f, type, logical.response)
         private$init.interval(interval.type, interval.level)
@@ -124,7 +124,9 @@ model.adapter.prediction.class$set(
     ) {
         # Check error in interval.type.
         if (!is.null(interval.type)) {
-            self$interval.type <- match.arg(interval.type)
+            self$interval.type <- match.arg(
+                interval.type, c("none", "confidence", "prediction")
+            )
         } else {
             self$interval.type <- interval.type
         }

@@ -167,7 +167,7 @@ extract.family.from.call <- function(x, envir = parent.frame()) {
 #'      \code{\link{predict.glmmML}} functions.
 #------------------------------------------------------------------------------
 convert.family <- function(family, type = c("family", "character")) {
-    type <- match.arg(type)
+    type <- match.arg(type, c("family", "character"))
     if (is.character(family)) {
         family <- get(family)
     }
@@ -251,7 +251,7 @@ get.function <- function(
     if (missing(type)) {
         type <- "character"
     }
-    type <- match.arg(type)
+    type <- match.arg(type, c("function", "character"))
     # Extract information
     function.name <- as.character(deparse(call[[1]]))
     function.name <- gsub(".*::", "", function.name)
@@ -297,7 +297,7 @@ x.names.from.formula <- function(
     formula, data = NULL, specials = NULL, type = c("all", "base")
 ) {
     # Get all explanatory variables from formula.
-    type = match.arg(type)
+    type <- match.arg(type, c("all", "base"))
     t <- terms(formula, data = data, specials = specials)
     vars <- attr(t, "term.labels")
     # Remove random factor.

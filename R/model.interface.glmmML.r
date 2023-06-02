@@ -71,7 +71,7 @@ predict.glmmML <- function(
     if (missing(newdata)) {
         newdata <- eval(object$call$data)
     }
-    type = match.arg(type)
+    type <- match.arg(type, c("response", "link"))
     design.matrix <- model.matrix(object, data = newdata)
     result <- design.matrix %*% coef(object)
     # Add random intercept.

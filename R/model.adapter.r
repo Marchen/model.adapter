@@ -467,7 +467,7 @@ model.adapter$set(
 model.adapter$set(
     "public", "x.names",
     function(specials = NULL, type = c("all", "base")) {
-        type <- match.arg(type)
+        type <- match.arg(type, c("all", "base"))
         return(
             x.names.from.formula(self$formula, self$data, specials, type)
         )
@@ -535,7 +535,7 @@ model.adapter$set(
         random = ~0, ...
     ) {
         # Error check.
-        type <- match.arg(type)
+        type <- match.arg(type, c("response", "link", "prob", "class"))
         error <- self$model.type == "regression" & type %in% c("prob", "class")
         if (error) {
             stop(
@@ -565,7 +565,7 @@ model.adapter$set(
         "
         Return residuals of the model.
         "
-        type <- match.arg(type)
+        type <- match.arg(type, c("response", "link"))
         # Calculate residual as (response variable) - (predicted value)
         pred <- self$predict(type = type)$fit[, "fit"]
         y <- self$y.vars[[1]]
