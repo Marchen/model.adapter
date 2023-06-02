@@ -34,10 +34,10 @@ Suggests:
     gam (>= 1.15),
     ranger,
     MASS,
-	testthat,
-	rmarkdown,
+    testthat (>= 3.0.0),
+    rmarkdown,
     knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Collate:
     'const.r'
     'get.class.name.r'
@@ -68,3 +68,4 @@ Collate:
     'package.name.r'
     'predict.types.r'
     'utils.r'
+Config/testthat/edition: 3
