@@ -15,10 +15,6 @@ For the details of the class, please see the document of model.adapter in the he
 To install the package, copy & paste following code into R console.
 
 ```{R}
-install.packages(
-    "model.adapter", type = "source",
-    repos = c(
-        "http://florivory.net/R/repos", options()$repos
-    )
-)
+library(devtools)
+install_github("https://github.com/Marchen/model.adapter")
 ```
