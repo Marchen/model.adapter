@@ -283,15 +283,16 @@ get.function <- function(
 #'      variables in their basic form.
 #'
 #' @examples
-#'      # Getting explanatory variables from formula.
-#'      # . in formula is expanded to full form.
-#'      data(iris)
-#'      f <- Sepal.Length ~ .
-#'      model.adapter:::x.names.from.formula(f, data = iris)
 #'
-#'      # Getting explanatory variables in their basic form.
-#'      f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width^2)
-#'      model.adapter:::x.names.from.formula(f, data = iris, type = "base")
+#' # Getting explanatory variables from formula.
+#' # . in formula is expanded to full form.
+#' data(iris)
+#' f <- Sepal.Length ~ .
+#' model.adapter:::x.names.from.formula(f, data = iris)
+#'
+#' # Getting explanatory variables in their basic form.
+#' f <- Sepal.Length ~ Petal.Length + Petal.Length:Species + I(Sepal.Width ^ 2)
+#' model.adapter:::x.names.from.formula(f, data = iris, type = "base")
 #------------------------------------------------------------------------------
 x.names.from.formula <- function(
     formula, data = NULL, specials = NULL, type = c("all", "base")
