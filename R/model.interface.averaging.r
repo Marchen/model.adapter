@@ -9,17 +9,17 @@
 #' have several limitations.
 #'
 #' \describe{
-#'      \item{\code{get.formula}} {
+#'      \item{\code{get.formula}}{
 #'          because nature of \emph{\code{averaging}} object,
 #'          this class constructs formula from all variable names in
 #'          \emph{\code{sw}} field of the object.
 #'      }
-#'      \item{\code{get.familiy}, \code{get.data}} {
+#'      \item{\code{get.family}, \code{get.data}}{
 #'          family and data are obtained from the first model of the
 #'          \emph{\code{model.calls}} or \emph{\code{modelList}} attributes
 #'          depending on the object.
 #'      }
-#'      \item{\code{adjust.offset}} {
+#'      \item{\code{adjust.offset}}{
 #'          not implemented.
 #'      }
 #' }
