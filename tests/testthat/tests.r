@@ -529,7 +529,7 @@ ma.test$set(
                     ...
                 )
                 expect_s3_class(pred, "model.adapter.prediction")
-                expect_equal(is.matrix(pred$fit))
+                expect_true(is.matrix(pred$fit))
                 expect_equal(mode(pred$fit), "numeric")
                 expect_equal(pred$type, "prob")
                 # Check number of classes and column name.
