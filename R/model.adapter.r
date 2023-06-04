@@ -574,3 +574,14 @@ model.adapter$set(
         return(resid)
     }
 )
+
+
+#------------------------------------------------------------------------------
+#   Check if model is zero inflated.
+#------------------------------------------------------------------------------
+model.adapter$set(
+    "active", "zero_inflated",
+    function() {
+        return(private$interface$zero_inflated(private$src))
+    }
+)

@@ -587,3 +587,14 @@ model.interface.default.class$set(
         return(pred * offset / ifelse(divide.by.mean, mean(offset), 1))
     }
 )
+
+
+#------------------------------------------------------------------------------
+#   Check if model is zero inflated.
+#------------------------------------------------------------------------------
+model.interface.default.class$set(
+    "public", "zero_inflated",
+    function(object) {
+        return(FALSE)
+    }
+)

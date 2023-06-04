@@ -44,3 +44,17 @@ model.interface.glmmTMB.class$set(
     }
 )
 
+
+#------------------------------------------------------------------------------
+#   Check if model is zero inflated.
+#------------------------------------------------------------------------------
+model.interface.glmmTMB.class$set(
+    "public", "zero_inflated",
+    function(object) {
+        if (is.call(object)) {
+            return(!isTRUE(all.equal(object$ziformula, ~0)))
+        } else {
+            return(!is.null(object$modelInfo$reTrms$zi$terms))
+        }
+    }
+)
