@@ -27,3 +27,20 @@ model.interface.glmmTMB.class$set(
         return(make.predict.types(prob = "response", class = "response"))
     }
 )
+
+
+#------------------------------------------------------------------------------
+#   Calculate predictions.
+#------------------------------------------------------------------------------
+model.interface.glmmTMB.class$set(
+    "public", "predict",
+    function(object, newdata, type, random, interval, ...) {
+        if (is.null(newdata)) {
+            pred <- stats::predict(object, type = type, re.form=...)
+        } else {
+            pred <- stats::predict(object, newdata = newdata, type = type, ...)
+        }
+        return(pred)
+    }
+)
+
