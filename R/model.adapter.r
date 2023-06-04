@@ -482,7 +482,9 @@ model.adapter$set(
     "public", "y.names",
     function() {
         # To handle errors produced by functions like gamm, use "try".
-        frame <- try(model.frame(self$formula, self$data), silent = TRUE)
+        frame <- suppressWarnings(
+        	try(model.frame(self$formula, self$data), silent = TRUE)
+        )
         if (class(frame) != "try-error" & is.matrix(frame)) {
             y.names <- colnames(model.response(frame))
         } else {
